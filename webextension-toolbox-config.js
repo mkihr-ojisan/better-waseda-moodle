@@ -1,6 +1,7 @@
 const { resolve } = require('path');
 const GlobEntriesPlugin = require('webpack-watched-glob-entries-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const WebextensionPlugin = require('webpack-webextension-plugin');
 
 module.exports = {
     webpack: (config, { dev, vendor }) => {
@@ -38,6 +39,8 @@ module.exports = {
                 })]
             };
         }
+
+        config.plugins.find(p => p instanceof WebextensionPlugin).autoreload = false;
 
 
         // Important: return the modified config
