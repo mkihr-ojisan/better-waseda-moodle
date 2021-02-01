@@ -1,0 +1,34 @@
+{
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appShortName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.0.0",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "icons": {
+    "16": "res/images/icon-16.png",
+    "128": "res/images/icon-128.png"
+  },
+  "background": {
+    "scripts": [
+      "src/background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "*://*.waseda.jp/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://iaidp.ia.waseda.jp/idp/profile/SAML2/Redirect/*"
+      ],
+      "js": [
+        "src/autoLogin/myWasedaLoginPage.js"
+      ]
+    }
+  ]
+}
