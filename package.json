@@ -16,6 +16,8 @@
     "webextension-toolbox": "latest"
   },
   "dependencies": {
-    "ts-loader": "^8.0.14"
+    "config": "^3.3.3",
+    "ts-loader": "^8.0.14",
+    "webpack-webextension-plugin": "^0.1.1"
   }
 }
