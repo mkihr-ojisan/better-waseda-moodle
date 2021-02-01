@@ -4,7 +4,7 @@
   "description": "__MSG_appDescription__",
   "version": "0.0.0",
   "manifest_version": 2,
-  "default_locale": "en",
+  "default_locale": "ja",
   "icons": {
     "16": "res/images/icon-16.png",
     "128": "res/images/icon-128.png"

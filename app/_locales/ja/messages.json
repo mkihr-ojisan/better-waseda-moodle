@@ -1,0 +1,29 @@
+{
+  "appName": {
+    "message": "Better Waseda Moodle"
+  },
+  "appShortName": {
+    "message": "BWM"
+  },
+  "appDescription": {
+    "message": "Waseda Moodleの使い勝手を多少良くします。"
+  },
+  "browserActionTitle": {
+    "message": "Better Waseda Moodle"
+  },
+  "autoLoginCheckboxLabel": {
+    "message": "MyWaseda・Waseda Moodleへの自動ログインを有効にする (Better Waseda Moodle)"
+  },
+  "autoLoginPageMessage": {
+    "message": "ログイン処理中です..."
+  },
+  "autoLoginPageTitle": {
+    "message": "自動ログイン"
+  },
+  "autoLoginFailedMessage": {
+    "message": "自動ログインに失敗しました。ID・パスワードを確認してください。"
+  },
+  "autoLoginFallbackButtonText": {
+    "message": "通常のログインページに移動する"
+  }
+}
