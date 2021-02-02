@@ -13,6 +13,8 @@ module.exports = {
         config.entry = GlobEntriesPlugin.getEntries(
             [
                 resolve('app', '?(src)/background.ts'),
+                resolve('app', '?(src)/?(autoLogin)/myWasedaLoginPage.ts'),
+                resolve('app', '?(src)/?(autoLogin)/autoLoginPage.ts')
             ]
         );
 

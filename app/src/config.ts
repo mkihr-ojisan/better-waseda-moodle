@@ -8,3 +8,8 @@ export async function setConfig<T>(key: string, value: T): Promise<void> {
 }
 export async function removeConfig(key: string): Promise<void> {
     await storage.remove(key);
+}
+
+export const AUTO_LOGIN_ENABLED = 'autoLogin.enabled';
+export const AUTO_LOGIN_ID = 'autoLogin.loginId';
+export const AUTO_LOGIN_PASSWORD = 'autoLogin.password';
