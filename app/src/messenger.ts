@@ -1,4 +1,4 @@
-class MessengerServer {
+export class MessengerServer {
     instructions: { [key: string]: Function; } = {};
     constructor() {
         browser.runtime.onConnect.addListener(port => {
@@ -27,14 +27,13 @@ class MessengerServer {
             });
         });
     }
-    addInstruction(name: string, f: Function) {
+    addInstruction(name: string, f: Function): void {
         if (name in this.instructions) {
             throw new Error(`Instruction '${name}' already exists`);
         }
         this.instructions[name] = f;
     }
 }
-export const messengerServer = new MessengerServer();
 
 export class MessengerClient {
     promises: { [key: number]: { resolve: Function, reject: Function; }; } = {};
