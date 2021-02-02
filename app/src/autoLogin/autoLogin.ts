@@ -1,20 +1,33 @@
 import { messengerServer } from '../background';
-import { getConfig, AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../config';
-import { fetchHtml } from '../tools';
+import { getConfig, AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD, setConfig } from '../config';
+import { fetchHtml, getBrowser } from '../tools';
 
-export function initAutoLogin(): void {
-    browser.webRequest.onHeadersReceived.addListener(
-        webRequestListener,
-        { urls: ['https://wsdmoodle.waseda.jp/*'] },
-        ['blocking', 'responseHeaders']
-    );
+export async function initAutoLogin(): Promise<void> {
+    switch (await getBrowser()) {
+        case 'firefox':
+            browser.webRequest.onHeadersReceived.addListener(
+                webRequestListenerFirefox,
+                { urls: ['https://wsdmoodle.waseda.jp/*'] },
+                ['blocking', 'responseHeaders']
+            );
+            break;
+        case 'other':
+            browser.webRequest.onBeforeRequest.addListener(
+                webRequestListenerOtherBrowser,
+                { urls: ['https://wsdmoodle.waseda.jp/*'] },
+                ['blocking']
+            );
+
+            isAutoLoginEnabled = await getConfig(AUTO_LOGIN_ENABLED) === true;
+            break;
+    }
 
     messengerServer.addInstruction('doLogin', doLogin);
 }
-async function webRequestListener(details: browser.webRequest._OnHeadersReceivedDetails) {
+
+// バグだかなんだか知らんがこれはFirefoxでしか動かない
+async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersReceivedDetails) {
     // ログインページにリダイレクトされたときにリダイレクト先を/src/autoLogin/autoLoginPage.htmlに変更する
-    // doLogin中は何もしない
-    if (doLoginPromise) return {};
     if (details.statusCode === 302 || details.statusCode === 303) {
         for (const header of details.responseHeaders ?? []) {
             if (header.name.toLowerCase() === 'location' && header.value === 'https://wsdmoodle.waseda.jp/login/index.php') {
@@ -27,6 +40,20 @@ async function webRequestListener(details: browser.webRequest._OnHeadersReceived
     }
 
     return {};
+}
+
+// これはFirefox以外でも動く
+// Firefox以外ではasyncなlistenerが使えないので、コンフィグ値を適当に変数に入れておく
+let isAutoLoginEnabled = false;
+function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeRequestDetails) {
+    getConfig(AUTO_LOGIN_ENABLED).then(enabled => isAutoLoginEnabled = enabled === true);
+
+    if (isAutoLoginEnabled && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
+        return {
+            // アクセスしようとしていたページがわからないのでMoodleのトップページに飛ばしておく
+            redirectUrl: browser.runtime.getURL(`/src/autoLogin/autoLoginPage.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`)
+        };
+    }
 }
 
 let doLoginPromise: Promise<string> | null = null;
@@ -81,6 +108,11 @@ export async function doLogin(): Promise<string> {
             sessionKeyExpire.setHours(sessionKeyExpire.getDate() + 1);
 
             return sessionKey;
+        } catch (ex) {
+            //自動ログインが失敗したら自動ログインを無効にする。
+            await setConfig(AUTO_LOGIN_ENABLED, false);
+            isAutoLoginEnabled = false;
+            throw ex;
         } finally {
             doLoginPromise = null;
         }
@@ -96,7 +128,7 @@ export async function logout(): Promise<void> {
     }
     logoutPromise = (async () => {
         try {
-            const cookies_promise = ['.waseda.jp'].map(
+            const cookies_promise = ['waseda.jp'].map(
                 domain => browser.cookies.getAll({ domain })
             );
             const cookies = await Promise.all(cookies_promise);
@@ -105,7 +137,7 @@ export async function logout(): Promise<void> {
             for (const cookies_domain of cookies) {
                 for (const cookie of cookies_domain) {
                     remove_promise.push(browser.cookies.remove({
-                        url: 'https://' + cookie.domain + cookie.path,
+                        url: 'https://waseda.jp',
                         name: cookie.name,
                     }));
                 }
