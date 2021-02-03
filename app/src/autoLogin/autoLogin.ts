@@ -121,22 +121,10 @@ export async function logout(): Promise<void> {
     }
     logoutPromise = (async () => {
         try {
-            const cookies_promise = ['waseda.jp'].map(
-                domain => browser.cookies.getAll({ domain })
-            );
-            const cookies = await Promise.all(cookies_promise);
-
-            const remove_promise = [];
-            for (const cookies_domain of cookies) {
-                for (const cookie of cookies_domain) {
-                    remove_promise.push(browser.cookies.remove({
-                        url: 'https://waseda.jp',
-                        name: cookie.name,
-                    }));
-                }
-            }
-
-            await Promise.all(remove_promise);
+            await Promise.all(['my.waseda.jp', 'iaidp.ia.waseda.jp', 'wsdmoodle.waseda.jp'].map(async domain => {
+                const cookies = await browser.cookies.getAll({ domain });
+                await Promise.all(cookies.map(cookie => browser.cookies.remove({ url: `https://${cookie.domain}${cookie.path}`, name: cookie.name })));
+            }));
         } finally {
             logoutPromise = null;
         }
