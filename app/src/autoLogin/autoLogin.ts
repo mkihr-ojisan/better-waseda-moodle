@@ -17,8 +17,6 @@ export async function initAutoLogin(): Promise<void> {
                 { urls: ['https://wsdmoodle.waseda.jp/*'] },
                 ['blocking']
             );
-
-            isAutoLoginEnabled = await getConfig(AUTO_LOGIN_ENABLED) === true;
             break;
     }
 
@@ -31,7 +29,7 @@ async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersR
     if (details.statusCode === 302 || details.statusCode === 303) {
         for (const header of details.responseHeaders ?? []) {
             if (header.name.toLowerCase() === 'location' && header.value === 'https://wsdmoodle.waseda.jp/login/index.php') {
-                if (!await getConfig(AUTO_LOGIN_ENABLED)) return {};
+                if (!getConfig(AUTO_LOGIN_ENABLED)) return {};
                 return {
                     redirectUrl: browser.runtime.getURL(`/src/autoLogin/autoLoginPage.html?redirectUrl=${encodeURIComponent(details.url)}`),
                 };
@@ -43,12 +41,8 @@ async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersR
 }
 
 // これはFirefox以外でも動く
-// Firefox以外ではasyncなlistenerが使えないので、コンフィグ値を適当に変数に入れておく
-let isAutoLoginEnabled = false;
 function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeRequestDetails) {
-    getConfig(AUTO_LOGIN_ENABLED).then(enabled => isAutoLoginEnabled = enabled === true);
-
-    if (isAutoLoginEnabled && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
+    if (getConfig(AUTO_LOGIN_ENABLED) && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
         return {
             // アクセスしようとしていたページがわからないのでMoodleのトップページに飛ばしておく
             redirectUrl: browser.runtime.getURL(`/src/autoLogin/autoLoginPage.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`)
@@ -76,8 +70,8 @@ export async function doLogin(): Promise<string> {
             const csrfToken = loginPage.querySelector('input[name="csrf_token"]')?.getAttribute('value');
             if (!csrfToken) throw Error('cannot find csrfToken');
 
-            const userId = await getConfig<string>(AUTO_LOGIN_ID);
-            const password = await getConfig<string>(AUTO_LOGIN_PASSWORD);
+            const userId = getConfig<string>(AUTO_LOGIN_ID);
+            const password = getConfig<string>(AUTO_LOGIN_PASSWORD);
             if (!userId || !password) throw Error('userId or password is not set');
 
             const loginResponse = await fetchHtml(loginInfoPostUrlFull.href, {
@@ -110,8 +104,7 @@ export async function doLogin(): Promise<string> {
             return sessionKey;
         } catch (ex) {
             //自動ログインが失敗したら自動ログインを無効にする。
-            await setConfig(AUTO_LOGIN_ENABLED, false);
-            isAutoLoginEnabled = false;
+            setConfig(AUTO_LOGIN_ENABLED, false);
             throw ex;
         } finally {
             doLoginPromise = null;

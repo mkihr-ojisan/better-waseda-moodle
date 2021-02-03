@@ -1,6 +1,10 @@
 import { initAutoLogin } from './autoLogin/autoLogin';
+import { initConfig } from './config';
 import { MessengerServer } from './messenger';
 
 export const messengerServer = new MessengerServer();
 
-initAutoLogin();
+(async () => {
+    await initConfig();
+    initAutoLogin();
+})();
