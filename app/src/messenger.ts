@@ -1,5 +1,11 @@
+import { getConfig, setConfig, removeConfig } from './config';
+
 export class MessengerServer {
-    instructions: { [key: string]: Function; } = {};
+    instructions: { [key: string]: Function; } = {
+        getConfig,
+        setConfig,
+        removeConfig,
+    };
     constructor() {
         browser.runtime.onConnect.addListener(port => {
             port.onMessage.addListener((message: any) => {

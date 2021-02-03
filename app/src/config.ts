@@ -1,17 +1,11 @@
 // background scriptでだけ使う
 
-import { messengerServer } from './background';
-
 const storage = browser.storage.local;
 let cache: { [key: string]: any; } = {};
 const listeners: { [key: string]: Function[]; } = {};
 
 export async function initConfig(): Promise<void> {
     cache = await storage.get(undefined);
-
-    messengerServer.addInstruction('getConfig', getConfig);
-    messengerServer.addInstruction('setConfig', setConfig);
-    messengerServer.addInstruction('removeConfig', removeConfig);
 }
 
 export function getConfig<T>(key: string): T | undefined {
