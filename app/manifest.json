@@ -36,6 +36,7 @@
     }
   ],
   "web_accessible_resources": [
-    "src/autoLogin/autoLoginPage.html"
+    "src/autoLogin/autoLoginPage.html",
+    "res/videos/dummyVideo.mp4"
   ]
 }
