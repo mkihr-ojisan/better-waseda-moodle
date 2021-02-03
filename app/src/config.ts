@@ -43,7 +43,7 @@ export const AUTO_LOGIN_ID = 'autoLogin.loginId';
 export const AUTO_LOGIN_PASSWORD = 'autoLogin.password';
 export const REMOVE_LOADING_VIDEO_ENABLED = 'removeLoadingVideo.enabled';
 
-const defaultValue: Record<string, any> = {
+export const defaultValue: Record<string, any> = {
     [AUTO_LOGIN_ENABLED]: false,
     [AUTO_LOGIN_ID]: undefined,
     [AUTO_LOGIN_PASSWORD]: undefined,
