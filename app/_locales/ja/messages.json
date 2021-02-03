@@ -12,7 +12,7 @@
     "description": "この拡張機能の説明文"
   },
   "autoLoginCheckboxLabel": {
-    "message": "MyWaseda・Waseda Moodleへの自動ログインを有効にする (Better Waseda Moodle)",
+    "message": "Waseda Moodleへの自動ログインを有効にする (Better Waseda Moodle)",
     "description": "MyWasedaのログインフォームに表示するチェックボックスのラベル"
   },
   "autoLoginPageMessage": {
