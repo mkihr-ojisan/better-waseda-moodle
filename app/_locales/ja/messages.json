@@ -1,29 +1,34 @@
 {
   "appName": {
-    "message": "Better Waseda Moodle"
+    "message": "Better Waseda Moodle",
+    "description": "この拡張機能の名前"
   },
   "appShortName": {
-    "message": "BWM"
+    "message": "BWM",
+    "description": "この拡張機能の略称"
   },
   "appDescription": {
-    "message": "Waseda Moodleの使い勝手を多少良くします。"
-  },
-  "browserActionTitle": {
-    "message": "Better Waseda Moodle"
+    "message": "Waseda Moodleの使い勝手を多少良くします。",
+    "description": "この拡張機能の説明文"
   },
   "autoLoginCheckboxLabel": {
-    "message": "MyWaseda・Waseda Moodleへの自動ログインを有効にする (Better Waseda Moodle)"
+    "message": "MyWaseda・Waseda Moodleへの自動ログインを有効にする (Better Waseda Moodle)",
+    "description": "MyWasedaのログインフォームに表示するチェックボックスのラベル"
   },
   "autoLoginPageMessage": {
-    "message": "ログイン処理中です..."
+    "message": "ログイン処理中です...",
+    "description": "自動ログイン中に表示するメッセージ"
   },
   "autoLoginPageTitle": {
-    "message": "自動ログイン"
+    "message": "自動ログイン",
+    "description": "自動ログイン中のページタイトル"
   },
   "autoLoginFailedMessage": {
-    "message": "自動ログインに失敗しました。ID・パスワードを確認してください。"
+    "message": "自動ログインに失敗しました。ID・パスワードを確認してください。",
+    "description": "自動ログインに失敗したときに表示するメッセージ"
   },
   "autoLoginFallbackButtonText": {
-    "message": "通常のログインページに移動する"
+    "message": "通常のログインページに移動する",
+    "description": "自動ログインに失敗したときに、MyWasedaのログインページに移動するボタンに表示する文字列"
   }
 }
