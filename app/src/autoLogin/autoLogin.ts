@@ -23,6 +23,7 @@ export async function initAutoLogin(): Promise<void> {
     }
 
     messengerServer.addInstruction('doLogin', doLogin);
+    messengerServer.addInstruction('logout', logout);
 }
 
 // バグだかなんだか知らんがこれはFirefoxでしか動かない
