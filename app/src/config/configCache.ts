@@ -6,8 +6,6 @@ import defaultValue from './defaultValue';
 let cache: { [key: string]: any; } | undefined;
 
 export async function initConfigCache(): Promise<void> {
-    if (!cache) throw Error('cache is not initialized');
-
     cache = await storage.get(undefined);
 
     browser.storage.onChanged.addListener(changes => {
