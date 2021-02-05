@@ -1,12 +1,12 @@
 import { initAutoLogin } from './autoLogin/autoLogin';
-import { initConfig } from './config';
+import { initConfigCache } from './config/configCache';
 import { MessengerServer } from './messenger';
 import { initRemoveLoadingVideo } from './removeLoadingVideo/removeLoadingVideo';
 
 export const messengerServer = new MessengerServer();
 
 (async () => {
-    await initConfig();
+    await initConfigCache();
     initAutoLogin();
     initRemoveLoadingVideo();
 })();
