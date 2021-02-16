@@ -13,7 +13,7 @@ export async function removeConfig(key: string): Promise<void> {
     await storage.remove([key]);
 }
 
-export async function onConfigChange<T>(key: string, listener: (oldValue: T | undefined, newValue: T | undefined) => void, initCall: boolean): Promise<void> {
+export async function onConfigChange<T>(key: string, listener: (oldValue: T | undefined, newValue: T) => void, initCall: boolean): Promise<void> {
     if (!listeners[key]) listeners[key] = [];
     listeners[key].push(listener);
     if (initCall) listener(undefined, await getConfig(key));
@@ -25,6 +25,6 @@ export async function onConfigChange<T>(key: string, listener: (oldValue: T | un
 
 function storageChangeListener(changes: Record<string, browser.storage.StorageChange>): void {
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-        listeners[key]?.forEach(listener => listener(oldValue, newValue));
+        listeners[key]?.forEach(listener => listener(oldValue, newValue ?? defaultValue[key]));
     }
 }
