@@ -19,6 +19,16 @@ export async function postJson(url: string, body: any, init: RequestInit = {}): 
     });
     return await (await fetch(url, init)).json();
 }
+export async function postForm(url: string, form: Record<string, string>, init: RequestInit = {}): Promise<Response> {
+    Object.assign(init, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: Object.entries(form).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&'),
+    });
+    return await fetch(url, init);
+}
 
 export function sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
