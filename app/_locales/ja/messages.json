@@ -30,5 +30,36 @@
   "autoLoginFallbackButtonText": {
     "message": "通常のログインページに移動する",
     "description": "自動ログインに失敗したときに、MyWasedaのログインページに移動するボタンに表示する文字列"
+  },
+  "optionsSectionAutoLogin": {
+    "message": "自動ログイン",
+    "description": "設定ページの「自動ログイン」セクションの見出し"
+  },
+  "optionsEnableAutoLogin": {
+    "message": "自動ログインを有効にする",
+    "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
+  },
+  "optionsEnableAutoLoginDescription": {
+    "message": "ログインが必要なときに自動でログイン処理を行います。ログインIDとパスワードを設定する必要があります。"
+  },
+  "optionsLoginId": {
+    "message": "ログインID",
+    "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
+  },
+  "optionsPassword": {
+    "message": "パスワード",
+    "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
+  },
+  "optionsSectionVideo": {
+    "message": "動画",
+    "description": "設定ページの「動画」セクションの見出し"
+  },
+  "optionsRemoveLoadingVideo": {
+    "message": "動画コンテンツの読み込み中に再生される動画を削除する。",
+    "description": "設定ページの「動画」セクションに表示するメッセージ"
+  },
+  "optionsRemoveLoadingVideoDescription": {
+    "message": "<a href=\"https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?force\" target=\"_blank\">この動画</a>が再生されないようにします。",
+    "description": "設定ページの「動画」セクションに表示するメッセージ"
   }
 }

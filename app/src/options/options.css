@@ -1,0 +1,40 @@
+@media (prefers-color-scheme: dark) {
+    body {
+        background: rgb(32, 32, 35);
+        color: white;
+    }
+    .description {
+        color: rgb(180, 180, 180);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background: white;
+        color: rgb(12, 12, 12);
+    }
+    .description {
+        color: rgba(115, 115, 115);
+    }
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+.block {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+section > :not(h2) {
+    margin-inline-start: 1em;
+}
+
+.description {
+    display: block;
+    margin-inline-start: 3em;
+}
