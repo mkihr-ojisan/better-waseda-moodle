@@ -28,8 +28,6 @@ export async function login(userId: string, password: string): Promise<string> {
                 body: `csrf_token=${csrfToken}&j_username=${encodeURIComponent(userId)}&j_password=${encodeURIComponent(password)}&_eventId_proceed=Login`,
             });
 
-            console.log(loginResponse);
-
             const RelayState = loginResponse.querySelector('input[name="RelayState"]')?.getAttribute('value');
             if (!RelayState) throw Error('cannot find RelayState');
             const SAMLResponse = loginResponse.querySelector('input[name="SAMLResponse"]')?.getAttribute('value');
