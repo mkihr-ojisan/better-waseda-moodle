@@ -1,3 +1,4 @@
+import { logout } from '../autoLogin/autoLogin';
 import { fetchHtml } from '../util/util';
 
 let loginPromise: Promise<string> | null = null;
@@ -54,23 +55,4 @@ export async function login(userId: string, password: string): Promise<string> {
     })();
 
     return await loginPromise;
-}
-
-let logoutPromise: Promise<void> | null = null;
-export async function logout(): Promise<void> {
-    if (logoutPromise) {
-        return await logoutPromise;
-    }
-    logoutPromise = (async () => {
-        try {
-            await Promise.all(['my.waseda.jp', 'iaidp.ia.waseda.jp', 'wsdmoodle.waseda.jp'].map(async domain => {
-                const cookies = await browser.cookies.getAll({ domain });
-                await Promise.all(cookies.map(cookie => browser.cookies.remove({ url: `https://${cookie.domain}${cookie.path}`, name: cookie.name })));
-            }));
-        } finally {
-            logoutPromise = null;
-        }
-    })();
-
-    return await logoutPromise;
 }

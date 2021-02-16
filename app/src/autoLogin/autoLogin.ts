@@ -2,7 +2,7 @@ import { messengerServer } from '../background';
 import { getConfig } from '../config/config';
 import { getConfigCache } from '../config/configCache';
 import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../config/configKeys';
-import { login, logout } from '../moodle/login';
+import { login } from '../moodle/login';
 import { getBrowser } from '../util/util';
 
 export async function initAutoLogin(): Promise<void> {
@@ -60,8 +60,29 @@ export async function doLogin(): Promise<boolean> {
         const userId = await getConfig<string>(AUTO_LOGIN_ID);
         const password = await getConfig<string>(AUTO_LOGIN_PASSWORD);
         await login(userId, password);
+        lastEnsureLogin = Date.now();
         return true;
     } else {
         return false;
     }
+}
+
+
+let logoutPromise: Promise<void> | null = null;
+export async function logout(): Promise<void> {
+    if (logoutPromise) {
+        return await logoutPromise;
+    }
+    logoutPromise = (async () => {
+        try {
+            await Promise.all(['my.waseda.jp', 'iaidp.ia.waseda.jp', 'wsdmoodle.waseda.jp'].map(async domain => {
+                const cookies = await browser.cookies.getAll({ domain });
+                await Promise.all(cookies.map(cookie => browser.cookies.remove({ url: `https://${cookie.domain}${cookie.path}`, name: cookie.name })));
+            }));
+        } finally {
+            logoutPromise = null;
+        }
+    })();
+
+    return await logoutPromise;
 }
