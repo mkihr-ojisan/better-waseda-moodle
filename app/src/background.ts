@@ -2,6 +2,7 @@ import { initAutoLogin } from './autoLogin/autoLogin';
 import { initConfigCache } from './config/configCache';
 import { MessengerServer } from './util/messenger';
 import { initRemoveLoadingVideo } from './removeLoadingVideo/removeLoadingVideo';
+import { initViewInBrowser } from './viewInBrowser/viewInBrowser';
 
 export const messengerServer = new MessengerServer();
 
@@ -9,4 +10,5 @@ export const messengerServer = new MessengerServer();
     await initConfigCache();
     initAutoLogin();
     initRemoveLoadingVideo();
+    initViewInBrowser();
 })();

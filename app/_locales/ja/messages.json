@@ -61,5 +61,17 @@
   "optionsRemoveLoadingVideoDescription": {
     "message": "<a href=\"https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?force\" target=\"_blank\">この動画</a>が再生されないようにします。",
     "description": "設定ページの「動画」セクションに表示するメッセージ"
+  },
+  "optionsSectionOthers": {
+    "message": "その他",
+    "description": "設定ページの「その他」セクションの見出し"
+  },
+  "optionsViewInBrowserEnabled": {
+    "message": "PDF、画像等をブラウザで開く",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsViewInBrowserDescription": {
+    "message": "PDF、画像等をダウンロードせずに直接ブラウザで開けるようにします。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
   }
 }
