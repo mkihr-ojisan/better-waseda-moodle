@@ -83,6 +83,33 @@ export async function logout(): Promise<void> {
             logoutPromise = null;
         }
     })();
+    lastEnsureLogin = null;
 
     return await logoutPromise;
+}
+
+let lastEnsureLogin: number | null = null;
+export async function ensureLogin(): Promise<boolean> {
+    if (!lastEnsureLogin || lastEnsureLogin + 60000 < Date.now()) { //1分くらいは勝手にログアウトされんやろ
+        const response = await fetch('https://wsdmoodle.waseda.jp/my/', {
+            method: 'HEAD',
+            credentials: 'include',
+            mode: 'cors',
+            redirect: 'manual',
+        });
+
+        if (response.redirected) {
+            if (await doLogin()) {
+                lastEnsureLogin = Date.now();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            lastEnsureLogin = Date.now();
+            return true;
+        }
+    } else {
+        return true;
+    }
 }
