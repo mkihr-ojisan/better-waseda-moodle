@@ -1,14 +1,14 @@
-export async function fetchHtml(url: string, init?: RequestInit): Promise<Document> {
-    Object.assign(init ?? {}, { credentials: 'include', mode: 'cors' });
+export async function fetchHtml(url: string, init: RequestInit = {}): Promise<Document> {
+    Object.assign(init, { credentials: 'include', mode: 'cors' });
     return new DOMParser().parseFromString(await (await fetch(url, init)).text(), 'text/html');
 }
-export async function fetchJson(url: string, init?: RequestInit): Promise<any> {
-    Object.assign(init ?? {}, { credentials: 'include', mode: 'cors' });
+export async function fetchJson(url: string, init: RequestInit = {}): Promise<any> {
+    Object.assign(init, { credentials: 'include', mode: 'cors' });
     return JSON.parse(await (await fetch(url, init)).text());
 }
 
-export async function postJson(url: string, body: any, init?: RequestInit): Promise<any> {
-    Object.assign(init ?? {}, {
+export async function postJson(url: string, body: any, init: RequestInit = {}): Promise<any> {
+    Object.assign(init, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
