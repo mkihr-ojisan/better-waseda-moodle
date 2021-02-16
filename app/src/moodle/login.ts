@@ -1,4 +1,4 @@
-import { fetchHtml } from '../util';
+import { fetchHtml } from '../util/util';
 
 let loginPromise: Promise<string> | null = null;
 export async function login(userId: string, password: string): Promise<string> {

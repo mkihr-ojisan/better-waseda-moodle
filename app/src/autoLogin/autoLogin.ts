@@ -3,7 +3,7 @@ import { getConfig } from '../config/config';
 import { getConfigCache } from '../config/configCache';
 import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../config/configKeys';
 import { login, logout } from '../moodle/login';
-import { getBrowser } from '../util';
+import { getBrowser } from '../util/util';
 
 export async function initAutoLogin(): Promise<void> {
     switch (await getBrowser()) {
