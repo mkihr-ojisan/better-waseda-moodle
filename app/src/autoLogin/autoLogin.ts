@@ -55,8 +55,13 @@ function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeReq
     }
 }
 
-async function doLogin() {
-    const userId = await getConfig<string>(AUTO_LOGIN_ID);
-    const password = await getConfig<string>(AUTO_LOGIN_PASSWORD);
-    await login(userId, password);
+export async function doLogin(): Promise<boolean> {
+    if (await getConfig<boolean>(AUTO_LOGIN_ENABLED)) {
+        const userId = await getConfig<string>(AUTO_LOGIN_ID);
+        const password = await getConfig<string>(AUTO_LOGIN_PASSWORD);
+        await login(userId, password);
+        return true;
+    } else {
+        return false;
+    }
 }
