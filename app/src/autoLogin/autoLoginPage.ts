@@ -1,4 +1,4 @@
-import { MessengerClient } from '../messenger';
+import { MessengerClient } from '../util/messenger';
 
 const elemMessage = document.getElementById('message');
 const btnGotoFallbackPage = document.getElementById('gotoFallbackPage');
