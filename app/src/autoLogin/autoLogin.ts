@@ -2,7 +2,7 @@ import { messengerServer } from '../background';
 import { getConfig, setConfig } from '../config/config';
 import { getConfigCache } from '../config/configCache';
 import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../config/configKeys';
-import { fetchHtml, getBrowser } from '../tools';
+import { fetchHtml, getBrowser } from '../util';
 
 export async function initAutoLogin(): Promise<void> {
     switch (await getBrowser()) {
