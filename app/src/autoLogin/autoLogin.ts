@@ -103,7 +103,7 @@ export async function ensureLogin(): Promise<boolean> {
                 lastEnsureLogin = Date.now();
                 return true;
             } else {
-                return false;
+                throw Error('auto login is disabled');
             }
         } else {
             lastEnsureLogin = Date.now();
