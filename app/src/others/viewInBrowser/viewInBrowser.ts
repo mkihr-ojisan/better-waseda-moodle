@@ -1,5 +1,5 @@
-import { onConfigChange } from '../config/config';
-import { VIEW_IN_BROWSER_ENABLED } from '../config/configKeys';
+import { onConfigChange } from '../../config/config';
+import { VIEW_IN_BROWSER_ENABLED } from '../../config/configKeys';
 
 export function initViewInBrowser(): void {
     onConfigChange(VIEW_IN_BROWSER_ENABLED, (_, newValue) => {

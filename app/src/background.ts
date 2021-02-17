@@ -1,8 +1,8 @@
 import { initAutoLogin } from './autoLogin/autoLogin';
 import { initConfigCache } from './config/configCache';
 import { MessengerServer } from './util/messenger';
-import { initRemoveLoadingVideo } from './removeLoadingVideo/removeLoadingVideo';
-import { initViewInBrowser } from './viewInBrowser/viewInBrowser';
+import { initRemoveLoadingVideo } from './video/removeLoadingVideo/removeLoadingVideo';
+import { initViewInBrowser } from './others/viewInBrowser/viewInBrowser';
 
 export const messengerServer = new MessengerServer();
 
