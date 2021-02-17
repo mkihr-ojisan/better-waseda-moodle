@@ -3,10 +3,10 @@ import { getConfig } from '../config/config';
 import { getConfigCache } from '../config/configCache';
 import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../config/configKeys';
 import { login } from '../moodle/login';
-import { getBrowser } from '../util/util';
+import { VENDOR } from '../util/util';
 
 export async function initAutoLogin(): Promise<void> {
-    switch (await getBrowser()) {
+    switch (VENDOR) {
         case 'firefox':
             browser.webRequest.onHeadersReceived.addListener(
                 webRequestListenerFirefox,
@@ -14,7 +14,7 @@ export async function initAutoLogin(): Promise<void> {
                 ['blocking', 'responseHeaders']
             );
             break;
-        case 'other':
+        default:
             browser.webRequest.onBeforeRequest.addListener(
                 webRequestListenerOtherBrowser,
                 { urls: ['https://wsdmoodle.waseda.jp/*'] },
