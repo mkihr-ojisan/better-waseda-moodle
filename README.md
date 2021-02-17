@@ -31,7 +31,7 @@ $ ls dist/$YOUR_BROWSER
 ### 使用ツール
 - [webextension-toolbox](https://github.com/webextension-toolbox/webextension-toolbox)
 
-## 構造
+### 構造
 ```
 .
 ├ app/                              このディレクトリの下に諸々のファイルを置く
