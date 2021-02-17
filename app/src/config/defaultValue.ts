@@ -5,6 +5,6 @@ export default {
     [AUTO_LOGIN_ID]: '',
     [AUTO_LOGIN_PASSWORD]: '',
     [REMOVE_LOADING_VIDEO_ENABLED]: true,
-    [VIEW_IN_BROWSER_ENABLED]: true,
+    [VIEW_IN_BROWSER_ENABLED]: false,
     [CHECK_NOTES_ON_SUBMITTING_ENABLED]: true,
 } as Record<string, any>;
