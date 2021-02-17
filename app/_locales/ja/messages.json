@@ -74,6 +74,18 @@
     "message": "課題の提出時に毎回チェックを入れる必要があるチェックボックスに自動でチェックを入れます。",
     "description": "設定ページの「提出ページ」セクションに表示するメッセージ"
   },
+  "optionsSectionQuiz": {
+    "message": "小テスト",
+    "description": "設定ページの「小テスト」セクションの見出し"
+  },
+  "optionsMoreVisibleRemainingTime": {
+    "message": "残り時間を見やすくする",
+    "description": "「小テスト」セクションに表示するメッセージ"
+  },
+  "optionsMoreVisibleRemainingTimeDescription": {
+    "message": "長い小テストではスクロールしなければ見えなかった小テストの残り時間を、画面の右下に固定して常に見えるようにします。",
+    "description": "「小テスト」セクションに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"

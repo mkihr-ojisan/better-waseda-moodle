@@ -3,6 +3,7 @@ import { initConfigCache } from './config/configCache';
 import { MessengerServer } from './util/messenger';
 import { initRemoveLoadingVideo } from './video/removeLoadingVideo/removeLoadingVideo';
 import { initViewInBrowser } from './others/viewInBrowser/viewInBrowser';
+import { initMoreVisibleRemainingTime } from './quiz/moreVisibleRemainingTime/moreVisibleRemainingTime';
 
 export const messengerServer = new MessengerServer();
 
@@ -11,4 +12,5 @@ export const messengerServer = new MessengerServer();
     initAutoLogin();
     initRemoveLoadingVideo();
     initViewInBrowser();
+    initMoreVisibleRemainingTime();
 })();
