@@ -59,7 +59,7 @@
     "description": "設定ページの「動画」セクションに表示するメッセージ"
   },
   "optionsRemoveLoadingVideoDescription": {
-    "message": "<a href=\"https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?force\" target=\"_blank\">この動画</a>が再生されないようにします。",
+    "message": "<a href=\"https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?\" target=\"_blank\">この動画</a>が再生されないようにします。",
     "description": "設定ページの「動画」セクションに表示するメッセージ"
   },
   "optionsSectionSubmissionPage": {
