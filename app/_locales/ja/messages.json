@@ -62,6 +62,18 @@
     "message": "<a href=\"https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?force\" target=\"_blank\">この動画</a>が再生されないようにします。",
     "description": "設定ページの「動画」セクションに表示するメッセージ"
   },
+  "optionsSectionSubmissionPage": {
+    "message": "提出ページ",
+    "description": "設定ページの「提出ページ」セクションの見出し"
+  },
+  "optionsCheckNotesOnSubmitting": {
+    "message": "「レポート・論文等の提出に関する注意」に自動でチェックを入れる",
+    "description": "設定ページの「提出ページ」セクションに表示するメッセージ"
+  },
+  "optionsCheckNotesOnSubmittingDescription": {
+    "message": "課題の提出時に毎回チェックを入れる必要があるチェックボックスに自動でチェックを入れます。",
+    "description": "設定ページの「提出ページ」セクションに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"

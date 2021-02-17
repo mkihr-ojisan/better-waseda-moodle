@@ -15,7 +15,8 @@ module.exports = {
                 resolve('app', '?(src)/background.ts'),
                 resolve('app', '?(src)/?(autoLogin)/myWasedaLoginPage.ts'),
                 resolve('app', '?(src)/?(autoLogin)/autoLoginPage.ts'),
-                resolve('app', '?(src)/?(options)/options.ts')
+                resolve('app', '?(src)/?(options)/options.ts'),
+                resolve('app', '?(src)/?(submissionPage)/?(checkNotesOnSubmitting)/contentScript.ts')
             ]
         );
 
