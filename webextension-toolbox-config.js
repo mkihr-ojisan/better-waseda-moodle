@@ -8,6 +8,7 @@ const webpack = require('webpack');
 module.exports = {
     webpack: (config, { dev, vendor }) => {
         config.resolve.extensions.push('.ts');
+        config.resolve.extensions.push('.tsx');
 
         if (dev) {
             config.devtool = 'inline-source-map';
