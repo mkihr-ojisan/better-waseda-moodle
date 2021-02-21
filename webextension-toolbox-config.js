@@ -47,7 +47,7 @@ module.exports = {
 function generateWebpackEntry() {
     const entryPoints = getEntryPoints();
     
-    const regex = new RegExp(`^${resolve('app')}/(.*).ts$`);
+    const regex = new RegExp(`^${resolve('app')}/(.*).tsx?$`);
 
     return Object.fromEntries(entryPoints.map(entryPoint => {
         console.assert(regex.test(entryPoint));
