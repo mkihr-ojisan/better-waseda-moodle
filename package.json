@@ -18,6 +18,7 @@
     "webextension-toolbox": "latest"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "config": "^3.3.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
