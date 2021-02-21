@@ -1,5 +1,5 @@
-import { onConfigChange } from '../../config/config';
-import { MORE_VISIBLE_REMAINING_TIME_ENABLED } from '../../config/configKeys';
+import { onConfigChange } from '../../common/config/config';
+import { MORE_VISIBLE_REMAINING_TIME_ENABLED } from '../../common/config/configKeys';
 
 let registeredContentScript: browser.contentScripts.RegisteredContentScript | null = null;
 

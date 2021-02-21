@@ -1,4 +1,4 @@
-import { setConfig, onConfigChange } from '../config/config';
+import { setConfig, onConfigChange } from '../common/config/config';
 
 //#region data-*の処理
 document.querySelectorAll('[data-message]').forEach(elem => {

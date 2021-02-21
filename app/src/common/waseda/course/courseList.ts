@@ -1,8 +1,8 @@
+import { CourseListItem } from '../../course';
 import { postJson } from '../../util/util';
 import { fetchSessionKey } from '../sessionKey';
-import { Course } from './course';
 
-export async function fetchCourseList(options: FetchCourseListOptions = {}): Promise<CourseListEntry[]> {
+export async function fetchCourseList(options: FetchCourseListOptions = {}): Promise<CourseListItem[]> {
     const requests = [];
 
     requests.push([
@@ -50,16 +50,16 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
                 throw Error('data is null');
 
             for (const course of response[0].data.courses) {
-                courseList.push(new CourseListEntry(
-                    course.id,
-                    course.fullname,
-                    new Date(course.startdate * 1000),
-                    new Date(course.enddate * 1000),
-                    course.hidden,
-                    course.courseimage,
-                    course.isfavourite,
-                    course.coursecategory,
-                ));
+                courseList.push({
+                    id: course.id,
+                    name: course.fullname,
+                    startDate: new Date(course.startdate * 1000),
+                    endDate: new Date(course.enddate * 1000),
+                    isHidden: course.hidden,
+                    imageUrl: course.courseimage,
+                    isFavorite: course.isfavourite,
+                    category: course.coursecategory,
+                });
             }
 
         } catch (ex) {
@@ -69,21 +69,6 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
 
 
     return courseList;
-}
-
-export class CourseListEntry extends Course {
-    constructor(
-        id: number,
-        public name: string,
-        public startDate: Date,
-        public endDate: Date,
-        public isHidden: boolean,
-        public imageUrl: string,
-        public isFavorite: boolean,
-        public category: string,
-    ) {
-        super(id);
-    }
 }
 
 export interface FetchCourseListOptions {

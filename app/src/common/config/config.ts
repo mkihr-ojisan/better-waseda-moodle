@@ -23,6 +23,14 @@ export async function onConfigChange<T>(key: string, listener: (oldValue: T | un
     }
 }
 
+export function removeConfigChangeListener<T>(key: string, listener: (oldValue: T | undefined, newValue: T) => void): boolean {
+    if (!listeners[key]) return false;
+    const index = listeners[key].indexOf(listener);
+    if (index === -1) return false;
+    listeners[key].splice(index, 1);
+    return true;
+}
+
 function storageChangeListener(changes: Record<string, browser.storage.StorageChange>): void {
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
         listeners[key]?.forEach(listener => listener(oldValue, newValue ?? defaultValue[key]));

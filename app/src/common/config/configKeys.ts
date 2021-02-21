@@ -5,3 +5,5 @@ export const REMOVE_LOADING_VIDEO_ENABLED = 'removeLoadingVideo.enabled';
 export const VIEW_IN_BROWSER_ENABLED = 'viewInBrowser.enabled';
 export const CHECK_NOTES_ON_SUBMITTING_ENABLED = 'checkNotesOnSubmitting.enabled';
 export const MORE_VISIBLE_REMAINING_TIME_ENABLED = 'moreVisibleRemainingTime.enabled';
+export const COURSE_OVERVIEW_ENABLED = 'courseOverview.enabled';
+export const COURSE_OVERVIEW_TYPE = 'courseOverview.type';

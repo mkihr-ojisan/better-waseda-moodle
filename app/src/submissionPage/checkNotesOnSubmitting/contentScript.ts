@@ -1,5 +1,5 @@
-import { getConfig } from '../../config/config';
-import { CHECK_NOTES_ON_SUBMITTING_ENABLED } from '../../config/configKeys';
+import { getConfig } from '../../common/config/config';
+import { CHECK_NOTES_ON_SUBMITTING_ENABLED } from '../../common/config/configKeys';
 
 (async () => {
     if (await getConfig<boolean>(CHECK_NOTES_ON_SUBMITTING_ENABLED)) {

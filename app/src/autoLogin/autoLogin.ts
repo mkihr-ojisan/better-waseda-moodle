@@ -1,9 +1,9 @@
 import { messengerServer } from '../background';
-import { getConfig } from '../config/config';
-import { getConfigCache } from '../config/configCache';
-import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../config/configKeys';
-import { login } from '../moodle/login';
-import { VENDOR } from '../util/util';
+import { getConfig } from '../common/config/config';
+import { getConfigCache } from '../common/config/configCache';
+import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../common/config/configKeys';
+import { login } from '../common/waseda/login';
+import { VENDOR } from '../common/util/util';
 
 export async function initAutoLogin(): Promise<void> {
     switch (VENDOR) {

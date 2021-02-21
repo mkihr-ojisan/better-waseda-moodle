@@ -1,4 +1,4 @@
-import { logout } from '../autoLogin/autoLogin';
+import { logout } from '../../autoLogin/autoLogin';
 import { fetchHtml } from '../util/util';
 
 let loginPromise: Promise<string> | null = null;
