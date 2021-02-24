@@ -1,12 +1,24 @@
 import { CourseListItem } from '../../course';
 import { postJson } from '../../util/util';
 import { fetchSessionKey } from '../sessionKey';
+import * as idb from 'idb-keyval';
+import parseEntities from 'parse-entities';
+
+const cacheStore = idb.createStore('courseListCache', 'courseListCache');
 
 export async function fetchCourseList(options: FetchCourseListOptions = {}): Promise<CourseListItem[]> {
-    const requests = [];
+    const cache: CourseListItem[] | undefined = await idb.get('cache', cacheStore);
+    if (!options.forceFetch && cache) {
+        doFetchCourseList(); //update cache
+        return cache;
+    } else {
+        return await doFetchCourseList();
+    }
+}
 
-    requests.push([
-        {
+async function doFetchCourseList() {
+    const requests = [
+        [{
             args: {
                 classification: 'all',
                 customfieldname: '',
@@ -17,25 +29,20 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
             },
             index: 0,
             methodname: 'core_course_get_enrolled_courses_by_timeline_classification',
-        },
-    ]);
-
-    if (options.includeHiddenCourses) {
-        requests.push([
-            {
-                args: {
-                    classification: 'hidden',
-                    customfieldname: '',
-                    customfieldvalue: '',
-                    limit: 0,
-                    offset: 0,
-                    sort: 'fullname',
-                },
-                index: 0,
-                methodname: 'core_course_get_enrolled_courses_by_timeline_classification',
+        }],
+        [{
+            args: {
+                classification: 'hidden',
+                customfieldname: '',
+                customfieldvalue: '',
+                limit: 0,
+                offset: 0,
+                sort: 'fullname',
             },
-        ]);
-    }
+            index: 0,
+            methodname: 'core_course_get_enrolled_courses_by_timeline_classification',
+        }],
+    ];
 
     const sessionKey = await fetchSessionKey();
 
@@ -52,7 +59,7 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
             for (const course of response[0].data.courses) {
                 courseList.push({
                     id: course.id,
-                    name: course.fullname,
+                    name: parseEntities(course.fullname),
                     startDate: new Date(course.startdate * 1000),
                     endDate: new Date(course.enddate * 1000),
                     isHidden: course.hidden,
@@ -67,12 +74,13 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
         }
     }
 
+    idb.set('cache', courseList, cacheStore);
 
     return courseList;
 }
 
 export interface FetchCourseListOptions {
-    includeHiddenCourses?: boolean;
+    forceFetch?: boolean;
 }
 
 type Response = [{
