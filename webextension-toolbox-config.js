@@ -29,8 +29,20 @@ module.exports = {
 
         config.module.rules.push({
             test: /\.tsx?$/,
-            loader: 'ts-loader'
+            loaders: [
+                'ts-loader',
+                {
+                    loader: require.resolve('webpack-preprocessor-loader'),
+                    options: {
+                        directives: {
+                            blink_only: vendor !== 'firefox',
+                        },
+                    },
+                },
+            ],
+            exclude: [/node_modules/],
         });
+       
 
         config.plugins.push(new webpack.DefinePlugin({
             __VENDOR__: JSON.stringify(vendor)
