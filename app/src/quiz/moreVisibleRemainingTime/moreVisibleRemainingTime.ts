@@ -15,7 +15,7 @@ export function initMoreVisibleRemainingTime(): void {
 async function register() {
     registeredContentScript = await browser.contentScripts.register({
         matches: ['https://wsdmoodle.waseda.jp/mod/quiz/attempt.php*'],
-        css: [{ file: 'src/quiz/moreVisibleRemainingTime/style.css' }]
+        css: [{ file: 'src/quiz/moreVisibleRemainingTime/style.css' }],
     });
 }
 function unregister() {

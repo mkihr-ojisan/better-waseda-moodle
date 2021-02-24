@@ -23,7 +23,7 @@ export async function postForm(url: string, form: Record<string, string>, init: 
     Object.assign(init, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: Object.entries(form).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&'),
     });

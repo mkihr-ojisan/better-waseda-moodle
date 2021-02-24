@@ -8,10 +8,10 @@ export function initViewInBrowser(): void {
                 listener,
                 {
                     urls: [
-                        '*://*/*'
-                    ]
+                        '*://*/*',
+                    ],
                 },
-                ['blocking', 'responseHeaders']
+                ['blocking', 'responseHeaders'],
             );
         } else {
             browser.webRequest.onHeadersReceived.removeListener(listener);
@@ -27,7 +27,7 @@ function listener(details: browser.webRequest._OnHeadersReceivedDetails) {
     if (index !== -1) {
         headers.splice(index, 1);
         return {
-            responseHeaders: headers
+            responseHeaders: headers,
         };
     } else {
         return undefined;

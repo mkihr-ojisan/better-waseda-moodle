@@ -13,6 +13,6 @@ export function initRemoveLoadingVideo(): void {
 
 function redirectToEmptyVideo(): browser.webRequest.BlockingResponse {
     return {
-        redirectUrl: browser.runtime.getURL('/res/videos/dummyVideo.mp4')
+        redirectUrl: browser.runtime.getURL('/res/videos/dummyVideo.mp4'),
     };
 }

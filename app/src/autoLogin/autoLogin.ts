@@ -11,14 +11,14 @@ export async function initAutoLogin(): Promise<void> {
             browser.webRequest.onHeadersReceived.addListener(
                 webRequestListenerFirefox,
                 { urls: ['https://wsdmoodle.waseda.jp/*'] },
-                ['blocking', 'responseHeaders']
+                ['blocking', 'responseHeaders'],
             );
             break;
         default:
             browser.webRequest.onBeforeRequest.addListener(
                 webRequestListenerOtherBrowser,
                 { urls: ['https://wsdmoodle.waseda.jp/*'] },
-                ['blocking']
+                ['blocking'],
             );
             break;
     }
@@ -50,7 +50,7 @@ function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeReq
     if (getConfigCache(AUTO_LOGIN_ENABLED) && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
         return {
             // アクセスしようとしていたページがわからないのでMoodleのトップページに飛ばしておく
-            redirectUrl: browser.runtime.getURL(`/src/autoLogin/autoLoginPage.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`)
+            redirectUrl: browser.runtime.getURL(`/src/autoLogin/autoLoginPage.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`),
         };
     }
 }
