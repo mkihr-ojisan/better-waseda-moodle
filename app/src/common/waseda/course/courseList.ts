@@ -16,7 +16,7 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
     }
 }
 
-async function doFetchCourseList() {
+async function doFetchCourseList(): Promise<CourseListItem[]> {
     const request = [
         {
             args: {
@@ -51,8 +51,13 @@ async function doFetchCourseList() {
         const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}&info=core_course_get_enrolled_courses_by_timeline_classification`, request) as Response;
 
         for (const responseItem of response) {
-            if (responseItem.error)
+            if (responseItem.error) {
+                if (responseItem.exception?.errorcode === 'invalidsesskey') {
+                    await fetchSessionKey(true);
+                    return await doFetchCourseList();
+                }
                 throw Error(response[0].exception?.message);
+            }
             if (!responseItem.data)
                 throw Error('data is null');
 
@@ -132,6 +137,10 @@ export async function setHiddenFromCourseList(course: Course, isHidden: boolean)
     const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}&info=core_user_update_user_preferences`, request);
 
     if (response[0]?.error) {
+        if (response[0]?.exception?.errorcode === 'invalidsesskey') {
+            await fetchSessionKey(true);
+            return await setHiddenFromCourseList(course, isHidden);
+        }
         throw Error(response[0]?.exception?.message ?? 'invalid response');
     }
 
