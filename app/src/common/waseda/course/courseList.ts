@@ -1,4 +1,4 @@
-import { CourseListItem } from '../../course';
+import { Course, CourseListItem } from '../../course';
 import { postJson } from '../../util/util';
 import { fetchSessionKey } from '../sessionKey';
 import * as idb from 'idb-keyval';
@@ -117,3 +117,31 @@ type Response = [{
         nextoffset: number;
     };
 }];
+
+export async function setHiddenFromCourseList(course: Course, isHidden: boolean): Promise<void> {
+    const request = [{
+        args: {
+            preferences: [{
+                type: `block_myoverview_hidden_course_${course.id}`,
+                value: isHidden ? true : null,
+            }],
+        },
+        index: 0,
+        methodname: 'core_user_update_user_preferences',
+    }];
+
+    const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}&info=core_user_update_user_preferences`, request);
+
+    if (response[0]?.error) {
+        throw Error(response[0]?.exception?.message ?? 'invalid response');
+    }
+
+    const cache: CourseListItem[] | undefined = await idb.get('cache', cacheStore);
+    if (cache) {
+        const index = cache.findIndex(c => c.id === course.id);
+        if (index >= 0) {
+            cache[index].isHidden = isHidden;
+            await idb.set('cache', cache, cacheStore);
+        }
+    }
+}
