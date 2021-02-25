@@ -17,8 +17,8 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
 }
 
 async function doFetchCourseList() {
-    const requests = [
-        [{
+    const request = [
+        {
             args: {
                 classification: 'all',
                 customfieldname: '',
@@ -29,8 +29,8 @@ async function doFetchCourseList() {
             },
             index: 0,
             methodname: 'core_course_get_enrolled_courses_by_timeline_classification',
-        }],
-        [{
+        },
+        {
             args: {
                 classification: 'hidden',
                 customfieldname: '',
@@ -39,24 +39,24 @@ async function doFetchCourseList() {
                 offset: 0,
                 sort: 'fullname',
             },
-            index: 0,
+            index: 1,
             methodname: 'core_course_get_enrolled_courses_by_timeline_classification',
-        }],
+        },
     ];
 
     const sessionKey = await fetchSessionKey();
 
     const courseList = [];
-    for (const request of requests) {
-        try {
-            const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}&info=core_course_get_enrolled_courses_by_timeline_classification`, request) as Response;
+    try {
+        const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}&info=core_course_get_enrolled_courses_by_timeline_classification`, request) as Response;
 
-            if (response[0].error)
+        for (const responseItem of response) {
+            if (responseItem.error)
                 throw Error(response[0].exception?.message);
-            if (!response[0].data)
+            if (!responseItem.data)
                 throw Error('data is null');
 
-            for (const course of response[0].data.courses) {
+            for (const course of responseItem.data.courses) {
                 courseList.push({
                     id: course.id,
                     name: parseEntities(course.fullname),
@@ -68,10 +68,9 @@ async function doFetchCourseList() {
                     category: course.coursecategory,
                 });
             }
-
-        } catch (ex) {
-            throw Error(`received invalid response: ${ex.message}`);
         }
+    } catch (ex) {
+        throw Error(`received invalid response: ${ex.message}`);
     }
 
     idb.set('cache', courseList, cacheStore);
