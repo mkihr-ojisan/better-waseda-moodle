@@ -6,8 +6,8 @@ let cache: {
     expireAt: Date,
 } | null = null;
 
-export async function fetchSessionKey(): Promise<string> {
-    if (!cache || cache.expireAt < new Date()) {
+export async function fetchSessionKey(force?: boolean): Promise<string> {
+    if (force || !cache || cache.expireAt < new Date()) {
         await ensureLogin();
 
         const expireAt = new Date();
