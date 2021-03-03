@@ -8,6 +8,7 @@ export default {
     [VIEW_IN_BROWSER_ENABLED]: false,
     [CHECK_NOTES_ON_SUBMITTING_ENABLED]: true,
     [MORE_VISIBLE_REMAINING_TIME_ENABLED]: true,
+    [DISABLE_RATE_LIMIT_ENABLED]: true,
     [COURSE_OVERVIEW_ENABLED]: true,
     [COURSE_OVERVIEW_TYPE]: 'card',
 } as Record<string, any>;
