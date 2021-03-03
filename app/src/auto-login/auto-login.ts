@@ -1,7 +1,7 @@
 import { messengerServer } from '../background';
 import { getConfig } from '../common/config/config';
-import { getConfigCache } from '../common/config/configCache';
-import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../common/config/configKeys';
+import { getConfigCache } from '../common/config/config-cache';
+import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../common/config/config-keys';
 import { login } from '../common/waseda/login';
 import { VENDOR } from '../common/util/util';
 
@@ -29,13 +29,13 @@ export async function initAutoLogin(): Promise<void> {
 
 // バグだかなんだか知らんがこれはFirefoxでしか動かない
 async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersReceivedDetails) {
-    // ログインページにリダイレクトされたときにリダイレクト先を/src/autoLogin/autoLoginPage.htmlに変更する
+    // ログインページにリダイレクトされたときにリダイレクト先を/src/auto-login/auto-login-page.htmlに変更する
     if (details.statusCode === 302 || details.statusCode === 303) {
         for (const header of details.responseHeaders ?? []) {
             if (header.name.toLowerCase() === 'location' && header.value === 'https://wsdmoodle.waseda.jp/login/index.php') {
                 if (!await getConfig(AUTO_LOGIN_ENABLED)) return {};
                 return {
-                    redirectUrl: browser.runtime.getURL(`/src/autoLogin/autoLoginPage.html?redirectUrl=${encodeURIComponent(details.url)}`),
+                    redirectUrl: browser.runtime.getURL(`/src/auto-login/auto-login-page.html?redirectUrl=${encodeURIComponent(details.url)}`),
                 };
             }
         }
@@ -50,7 +50,7 @@ function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeReq
     if (getConfigCache(AUTO_LOGIN_ENABLED) && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
         return {
             // アクセスしようとしていたページがわからないのでMoodleのトップページに飛ばしておく
-            redirectUrl: browser.runtime.getURL(`/src/autoLogin/autoLoginPage.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`),
+            redirectUrl: browser.runtime.getURL(`/src/auto-login/auto-login-page.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`),
         };
     }
 }

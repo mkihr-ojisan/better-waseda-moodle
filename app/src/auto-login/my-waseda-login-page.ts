@@ -1,5 +1,5 @@
 import { getConfig, removeConfig, setConfig } from '../common/config/config';
-import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../common/config/configKeys';
+import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../common/config/config-keys';
 
 const checkboxAutoLogin = document.createElement('input');
 const labelAutoLogin = document.createElement('label');

@@ -1,4 +1,4 @@
 [
     "src/options/options.ts",
-    "src/autoLogin/autoLoginPage.ts"
+    "src/auto-login/auto-login-page.ts"
 ]

@@ -1,6 +1,6 @@
 import { Course, CourseListItem } from '../../course';
 import { postJson } from '../../util/util';
-import { fetchSessionKey } from '../sessionKey';
+import { fetchSessionKey } from '../session-key';
 import * as idb from 'idb-keyval';
 import parseEntities from 'parse-entities';
 

@@ -1,5 +1,5 @@
 import { onConfigChange } from '../../common/config/config';
-import { REMOVE_LOADING_VIDEO_ENABLED } from '../../common/config/configKeys';
+import { REMOVE_LOADING_VIDEO_ENABLED } from '../../common/config/config-keys';
 
 export function initRemoveLoadingVideo(): void {
     onConfigChange(REMOVE_LOADING_VIDEO_ENABLED, (_, newValue) => {

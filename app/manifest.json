@@ -32,7 +32,7 @@
         "https://iaidp.ia.waseda.jp/idp/profile/SAML2/Redirect/SSO?*"
       ],
       "js": [
-        "src/autoLogin/myWasedaLoginPage.js"
+        "src/auto-login/my-waseda-login-page.js"
       ]
     },
     {
@@ -40,12 +40,12 @@
         "https://wsdmoodle.waseda.jp/mod/assign/view.php?*"
       ],
       "js": [
-        "src/submissionPage/checkNotesOnSubmitting/contentScript.js"
+        "src/submission-page/check-notes-on-submitting/content-script.js"
       ]
     }
   ],
   "web_accessible_resources": [
-    "src/autoLogin/autoLoginPage.html",
-    "res/videos/dummyVideo.mp4"
+    "src/auto-login/auto-login-page.html",
+    "res/videos/dummy-video.mp4"
   ]
 }

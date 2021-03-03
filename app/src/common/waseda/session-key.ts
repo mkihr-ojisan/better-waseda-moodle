@@ -1,4 +1,4 @@
-import { ensureLogin } from '../../autoLogin/autoLogin';
+import { ensureLogin } from '../../auto-login/auto-login';
 import { fetchHtml } from '../util/util';
 
 let cache: {

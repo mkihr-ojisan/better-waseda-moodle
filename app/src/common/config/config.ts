@@ -1,4 +1,4 @@
-import defaultValue from './defaultValue';
+import defaultValue from './default-value';
 
 export const storage = browser.storage.local;
 const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined) => void)[]; } = {};

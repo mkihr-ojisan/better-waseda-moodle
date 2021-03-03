@@ -1,9 +1,9 @@
-import { initAutoLogin } from './autoLogin/autoLogin';
-import { initConfigCache } from './common/config/configCache';
+import { initAutoLogin } from './auto-login/auto-login';
+import { initConfigCache } from './common/config/config-cache';
 import { MessengerServer } from './common/util/messenger';
-import { initRemoveLoadingVideo } from './video/removeLoadingVideo/removeLoadingVideo';
-import { initViewInBrowser } from './others/viewInBrowser/viewInBrowser';
-import { initMoreVisibleRemainingTime } from './quiz/moreVisibleRemainingTime/moreVisibleRemainingTime';
+import { initRemoveLoadingVideo } from './video/remove-loading-video/remove-loading-video';
+import { initViewInBrowser } from './others/view-in-browser/view-in-browser';
+import { initMoreVisibleRemainingTime } from './quiz/more-visible-remaining-time/more-visible-remaining-time';
 // #!blink_only
 import './common/polyfills/content-script-register';
 

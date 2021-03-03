@@ -1,7 +1,7 @@
 // キャッシュして同期関数にしたgetConfig, setConfig, removeConfig
 
 import { storage } from './config';
-import defaultValue from './defaultValue';
+import defaultValue from './default-value';
 
 let cache: { [key: string]: any; } | undefined;
 
