@@ -1,12 +1,33 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { ErrorBoundary } from 'react-error-boundary';
 
 // Dark Reader に合わせたテーマを作る
-const createTheme = () => {
+const useDarkReaderTheme = () => {
     const style = getComputedStyle(document.documentElement);
-    const bgColor = style.getPropertyValue('--darkreader-neutral-background').trim();
-    const fgColor = style.getPropertyValue('--darkreader-neutral-text').trim();
+    const [bgColor, setBgColor] = useState(style.getPropertyValue('--darkreader-neutral-background').trim());
+    const [fgColor, setFgColor] = useState(style.getPropertyValue('--darkreader-neutral-text').trim());
+
+    useEffect(() => {
+        //darkreaderによるstyleの変更を監視する
+        const observer = new MutationObserver(records => {
+            for (const record of records) {
+                if (
+                    Array.from(record.addedNodes).some(node => node instanceof HTMLStyleElement && node.classList.contains('darkreader')) ||
+                    Array.from(record.removedNodes).some(node => node instanceof HTMLStyleElement && node.classList.contains('darkreader')) ||
+                    record.target.parentNode instanceof HTMLStyleElement && record.target.parentNode.classList.contains('darkreader')
+                ) {
+                    const style = getComputedStyle(document.documentElement);
+                    setBgColor(style.getPropertyValue('--darkreader-neutral-background').trim());
+                    setFgColor(style.getPropertyValue('--darkreader-neutral-text').trim());
+                    return;
+                }
+            }
+        });
+        observer.observe(document.head, { subtree: true, characterData: true, childList: true });
+        return () => observer.disconnect();
+    }, []);
 
     if (!bgColor || !fgColor) return createMuiTheme();
 
@@ -52,6 +73,19 @@ const createTheme = () => {
     }
 };
 
-export default function BWMTheme(props: { children: ReactElement; }): ReactElement {
-    return <ThemeProvider theme={createTheme()}>{props.children}</ThemeProvider>;
+
+export default function BWMTheme(props: { children: ReactNode; }): ReactElement {
+    return (
+        <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+        >
+            <ThemeProvider theme={useDarkReaderTheme()}>
+                {props.children}
+            </ThemeProvider>
+        </ErrorBoundary>
+    );
+}
+
+function ErrorFallback({ error }: { error: Error; }): ReactElement {
+    return <p>error: {error.message}</p>;
 }
