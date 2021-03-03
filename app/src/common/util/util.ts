@@ -37,3 +37,7 @@ export function sleep(ms: number): Promise<void> {
 export type Vendor = 'firefox' | 'chrome' | 'opera' | 'edge';
 declare const __VENDOR__: Vendor;
 export const VENDOR = __VENDOR__;
+
+export function range(start: number, endExclusive: number, step = 1): number[] {
+    return Array.from({ length: Math.ceil((endExclusive - start) / step) }, (_, k) => start + step * k);
+}
