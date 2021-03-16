@@ -8,3 +8,7 @@ export const MORE_VISIBLE_REMAINING_TIME_ENABLED = 'moreVisibleRemainingTime.ena
 export const DISABLE_RATE_LIMIT_ENABLED = 'disableRateLimit.enabled';
 export const COURSE_OVERVIEW_ENABLED = 'courseOverview.enabled';
 export const COURSE_OVERVIEW_TYPE = 'courseOverview.type';
+export const TIMETABLE_ENTRIES = 'timetable.entries';
+export const TIMETABLE_SELECTED_TERM = 'timetable.selectedTerm';
+export const HIDE_NAME_ENABLED = 'hideName.enabled';
+export const SYLLABUS_LINK_FIX_ENABLED = 'syllabusLinkFix.enabled';
