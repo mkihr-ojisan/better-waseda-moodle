@@ -2,6 +2,7 @@ import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { createMuiTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { ErrorBoundary } from 'react-error-boundary';
+import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 
 // Dark Reader に合わせたテーマを作る
 const useDarkReaderTheme = () => {
@@ -40,37 +41,45 @@ const useDarkReaderTheme = () => {
 
     const isDark = bgR + bgG + bgB < 500;
     const rgba = (r: number, g: number, b: number, a: number) => `rgba(${r},${g},${b},${a})`;
+    let palette: PaletteOptions;
     if (isDark) {
-        return createMuiTheme({
-            palette: {
-                type: 'dark',
-                text: {
-                    primary: rgba(fgR, fgG, fgB, 1),
-                    secondary: rgba(fgR, fgG, fgB, 0.7),
-                    disabled: rgba(fgR, fgG, fgB, 0.5),
-                },
-                background: {
-                    default: rgba(bgR, bgG, bgB, 1),
-                    paper: rgba(bgR * 1.5, bgG * 1.5, bgB * 1.5, 1),
-                },
+        palette = {
+            type: 'dark',
+            text: {
+                primary: rgba(fgR, fgG, fgB, 1),
+                secondary: rgba(fgR, fgG, fgB, 0.7),
+                disabled: rgba(fgR, fgG, fgB, 0.5),
             },
-        });
+            background: {
+                default: rgba(bgR, bgG, bgB, 1),
+                paper: rgba(bgR * 1.5, bgG * 1.5, bgB * 1.5, 1),
+            },
+        };
     } else {
-        return createMuiTheme({
-            palette: {
-                type: 'light',
-                text: {
-                    primary: rgba(fgR, fgG, fgB, 0.87),
-                    secondary: rgba(fgR, fgG, fgB, 0.54),
-                    disabled: rgba(fgR, fgG, fgB, 0.38),
-                },
-                background: {
-                    default: rgba(bgR, bgG, bgB, 1),
-                    paper: rgba(bgR, bgG, bgB, 1),
+        palette = {
+            type: 'light',
+            text: {
+                primary: rgba(fgR, fgG, fgB, 0.87),
+                secondary: rgba(fgR, fgG, fgB, 0.54),
+                disabled: rgba(fgR, fgG, fgB, 0.38),
+            },
+            background: {
+                default: rgba(bgR, bgG, bgB, 1),
+                paper: rgba(bgR, bgG, bgB, 1),
+            },
+        };
+    }
+
+    return createMuiTheme({
+        palette,
+        overrides: {
+            MuiButtonBase: {
+                root: {
+                    outline: '0 !important', // Moodleではbutton:focusにoutlineが設定されていてそっちが優先されてしまうので!importantで打ち消す
                 },
             },
-        });
-    }
+        },
+    });
 };
 
 
