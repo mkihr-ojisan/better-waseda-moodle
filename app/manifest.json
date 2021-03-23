@@ -14,11 +14,6 @@
       "src/background.js"
     ]
   },
-  "options_ui": {
-    "page": "src/options/options.html",
-    "chrome_style": true,
-    "browser_style": true
-  },
   "permissions": [
     "*://*.waseda.jp/*",
     "storage",
