@@ -1,10 +1,9 @@
 import { onConfigChange } from '../../common/config/config';
-import { HIDE_NAME_ENABLED } from '../../common/config/config-keys';
 
 let registeredContentScript: browser.contentScripts.RegisteredContentScript | null = null;
 
 export function initHideName(): void {
-    onConfigChange(HIDE_NAME_ENABLED, (_, newValue) => {
+    onConfigChange('hideName.enabled', (_, newValue) => {
         if (newValue)
             register();
         else

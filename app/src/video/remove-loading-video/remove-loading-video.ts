@@ -1,8 +1,7 @@
 import { onConfigChange } from '../../common/config/config';
-import { REMOVE_LOADING_VIDEO_ENABLED } from '../../common/config/config-keys';
 
 export function initRemoveLoadingVideo(): void {
-    onConfigChange(REMOVE_LOADING_VIDEO_ENABLED, (_, newValue) => {
+    onConfigChange('removeLoadingVideo.enabled', (_, newValue) => {
         if (newValue) {
             browser.webRequest.onBeforeRequest.addListener(redirectToEmptyVideo, { urls: ['*://*.waseda.jp/settings/viewer/uniplayer/intro.mp4'] }, ['blocking']);
         } else {

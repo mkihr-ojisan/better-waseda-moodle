@@ -1,10 +1,9 @@
 import { onConfigChange } from '../../common/config/config';
-import { MORE_VISIBLE_REMAINING_TIME_ENABLED } from '../../common/config/config-keys';
 
 let registeredContentScript: browser.contentScripts.RegisteredContentScript | null = null;
 
 export function initMoreVisibleRemainingTime(): void {
-    onConfigChange(MORE_VISIBLE_REMAINING_TIME_ENABLED, (_, newValue) => {
+    onConfigChange('moreVisibleRemainingTime.enabled', (_, newValue) => {
         if (newValue)
             register();
         else

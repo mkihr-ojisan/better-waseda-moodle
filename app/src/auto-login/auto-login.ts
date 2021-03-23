@@ -1,7 +1,6 @@
 import { messengerServer } from '../background';
 import { getConfig } from '../common/config/config';
 import { getConfigCache } from '../common/config/config-cache';
-import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../common/config/config-keys';
 import { login } from '../common/waseda/login';
 import { VENDOR } from '../common/util/util';
 
@@ -33,7 +32,7 @@ async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersR
     if (details.statusCode === 302 || details.statusCode === 303) {
         for (const header of details.responseHeaders ?? []) {
             if (header.name.toLowerCase() === 'location' && header.value === 'https://wsdmoodle.waseda.jp/login/index.php') {
-                if (!await getConfig(AUTO_LOGIN_ENABLED)) return {};
+                if (!await getConfig('autoLogin.enabled')) return {};
                 return {
                     redirectUrl: browser.runtime.getURL(`/src/auto-login/auto-login-page.html?redirectUrl=${encodeURIComponent(details.url)}`),
                 };
@@ -47,7 +46,7 @@ async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersR
 // これはFirefox以外でも動く
 function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeRequestDetails) {
     // asyncなlistenerはfirefox以外で使えないのでgetConfigCacheを使う
-    if (getConfigCache(AUTO_LOGIN_ENABLED) && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
+    if (getConfigCache('autoLogin.enabled') && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
         return {
             // アクセスしようとしていたページがわからないのでMoodleのトップページに飛ばしておく
             redirectUrl: browser.runtime.getURL(`/src/auto-login/auto-login-page.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`),
@@ -56,9 +55,9 @@ function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeReq
 }
 
 export async function doLogin(): Promise<boolean> {
-    if (await getConfig<boolean>(AUTO_LOGIN_ENABLED)) {
-        const userId = await getConfig<string>(AUTO_LOGIN_ID);
-        const password = await getConfig<string>(AUTO_LOGIN_PASSWORD);
+    if (await getConfig('autoLogin.enabled')) {
+        const userId = await getConfig('autoLogin.loginId');
+        const password = await getConfig('autoLogin.password');
         await login(userId, password);
         lastEnsureLogin = Date.now();
         return true;

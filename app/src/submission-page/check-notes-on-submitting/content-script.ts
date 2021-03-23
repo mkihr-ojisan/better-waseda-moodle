@@ -1,8 +1,7 @@
 import { getConfig } from '../../common/config/config';
-import { CHECK_NOTES_ON_SUBMITTING_ENABLED } from '../../common/config/config-keys';
 
 (async () => {
-    if (await getConfig<boolean>(CHECK_NOTES_ON_SUBMITTING_ENABLED)) {
+    if (await getConfig('checkNotesOnSubmitting.enabled')) {
         const checkbox = document.getElementById('id_submissionstatement');
         if (checkbox instanceof HTMLInputElement) {
             checkbox.checked = true;

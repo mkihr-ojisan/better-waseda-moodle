@@ -1,5 +1,4 @@
 import { getConfig, removeConfig, setConfig } from '../common/config/config';
-import { AUTO_LOGIN_ENABLED, AUTO_LOGIN_ID, AUTO_LOGIN_PASSWORD } from '../common/config/config-keys';
 
 const checkboxAutoLogin = document.createElement('input');
 const labelAutoLogin = document.createElement('label');
@@ -11,19 +10,19 @@ labelAutoLogin.textContent = browser.i18n.getMessage('autoLoginCheckboxLabel');
 document.getElementById('wrapper-password')?.insertAdjacentElement('afterend', checkboxAutoLogin);
 checkboxAutoLogin.insertAdjacentElement('afterend', labelAutoLogin);
 
-getConfig(AUTO_LOGIN_ENABLED).then(enabled => checkboxAutoLogin.checked = enabled === true);
+getConfig('autoLogin.enabled').then(enabled => checkboxAutoLogin.checked = enabled === true);
 
 document.getElementById('login')?.addEventListener('submit', () => {
-    setConfig(AUTO_LOGIN_ENABLED, checkboxAutoLogin.checked);
+    setConfig('autoLogin.enabled', checkboxAutoLogin.checked);
 
     if (checkboxAutoLogin.checked) {
         const elemLoginId = document.getElementById('j_username') as HTMLInputElement;
         const elemPassword = document.getElementById('j_password') as HTMLInputElement;
 
-        setConfig(AUTO_LOGIN_ID, elemLoginId.value);
-        setConfig(AUTO_LOGIN_PASSWORD, elemPassword.value);
+        setConfig('autoLogin.loginId', elemLoginId.value);
+        setConfig('autoLogin.password', elemPassword.value);
     } else {
-        removeConfig(AUTO_LOGIN_ID);
-        removeConfig(AUTO_LOGIN_PASSWORD);
+        removeConfig('autoLogin.loginId');
+        removeConfig('autoLogin.password');
     }
 });

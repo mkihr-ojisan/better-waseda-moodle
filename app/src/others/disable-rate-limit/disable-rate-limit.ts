@@ -1,8 +1,7 @@
 import { onConfigChange } from '../../common/config/config';
-import { DISABLE_RATE_LIMIT_ENABLED } from '../../common/config/config-keys';
 
 export function initDisableRateLimit(): void {
-    onConfigChange(DISABLE_RATE_LIMIT_ENABLED, (_, newValue) => {
+    onConfigChange('disableRateLimit.enabled', (_, newValue) => {
         if (newValue) {
             browser.webRequest.onBeforeRequest.addListener(
                 listener,

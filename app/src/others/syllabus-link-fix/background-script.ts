@@ -1,10 +1,9 @@
 import { onConfigChange } from '../../common/config/config';
-import { SYLLABUS_LINK_FIX_ENABLED } from '../../common/config/config-keys';
 
 let registeredContentScript: browser.contentScripts.RegisteredContentScript | null = null;
 
 export function initSyllabusLinkFix(): void {
-    onConfigChange(SYLLABUS_LINK_FIX_ENABLED, (_, newValue) => {
+    onConfigChange('syllabusLinkFix.enabled', (_, newValue) => {
         if (newValue)
             register();
         else
