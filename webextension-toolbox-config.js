@@ -37,6 +37,7 @@ module.exports = {
                         debug: dev,
                         directives: {
                             blink_only: vendor !== 'firefox',
+                            firefox_only: vendor === 'firefox',
                         },
                     },
                 },
