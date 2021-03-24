@@ -52,7 +52,7 @@ const useDarkReaderTheme = () => {
             },
             background: {
                 default: rgba(bgR, bgG, bgB, 1),
-                paper: rgba(bgR * 1.5, bgG * 1.5, bgB * 1.5, 1),
+                paper: rgba(bgR + 20, bgG + 20, bgB + 20, 1),
             },
         };
     } else {
