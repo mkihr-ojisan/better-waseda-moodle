@@ -1,4 +1,5 @@
 [
     "src/auto-login/auto-login-page.ts",
+    "src/dashboard/course-overview/content-script.tsx",
     "src/others/syllabus-link-fix/content-script.ts"
 ]

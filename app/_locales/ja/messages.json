@@ -97,5 +97,166 @@
   "optionsViewInBrowserDescription": {
     "message": "PDF、画像等をダウンロードせずに直接ブラウザで開けるようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "courseOverviewHide": {
+    "message": "非表示",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewUnhide": {
+    "message": "非表示を解除",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewOpenSyllabus": {
+    "message": "シラバスを開く",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewTimetableSettings": {
+    "message": "時間割の設定",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewHiddenCourses": {
+    "message": "非表示のコース",
+    "description": "コース概要の上部にあるボタン"
+  },
+  "courseOverviewTimetableNoEntry": {
+    "message": "時間割が設定されていません",
+    "description": "時間割が設定された科目が一つもないときに学期を選択するやつに表示するメッセージ"
+  },
+  "courseOverviewHiddenCoursesDialogTitle": {
+    "message": "非表示のコース",
+    "description": "非表示のコースダイアログのタイトル"
+  },
+  "coursesOverviewHiddenCoursesDialogEmpty": {
+    "message": "非表示のコースはありません",
+    "description": "非表示のコースがないときに非表示のコースダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogTitle": {
+    "message": "「$COURSE_NAME$」の時間割設定",
+    "description": "コース概要の時間割設定ダイアログのタイトル",
+    "placeholders": {
+      "COURSE_NAME": {
+        "content": "$1",
+        "example": "数学Ｂ２（微分積分）　基幹(2)"
+      }
+    }
+  },
+  "courseOverviewTimetableSettingsDialogDescription": {
+    "message": "一つも指定しない場合は時間割表の下に表示されます。",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogAddEntryButton": {
+    "message": "追加",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogYearHeader": {
+    "message": "年度",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogTermHeader": {
+    "message": "期間",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogDayHeader": {
+    "message": "曜日",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogPeriodFromHeader": {
+    "message": "開始時限",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogPeriodToHeader": {
+    "message": "終了時限",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogOK": {
+    "message": "設定",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsConflictWithAnotherRow": {
+    "message": "$1番目の項目と重複しています",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsConflictWithAnotherCourse": {
+    "message": "$1と重複しています",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsCannotSetDueToConflict": {
+    "message": "重複している項目があるため設定できません。",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "sundayShort": {
+    "message": "日"
+  },
+  "mondayShort": {
+    "message": "月"
+  },
+  "tuesdayShort": {
+    "message": "火"
+  },
+  "wednesdayShort": {
+    "message": "水"
+  },
+  "thursdayShort": {
+    "message": "木"
+  },
+  "fridayShort": {
+    "message": "金"
+  },
+  "saturdayShort": {
+    "message": "土"
+  },
+  "sunday": {
+    "message": "日曜日"
+  },
+  "monday": {
+    "message": "月曜日"
+  },
+  "tuesday": {
+    "message": "火曜日"
+  },
+  "wednesday": {
+    "message": "水曜日"
+  },
+  "thursday": {
+    "message": "木曜日"
+  },
+  "friday": {
+    "message": "金曜日"
+  },
+  "saturday": {
+    "message": "土曜日"
+  },
+  "springQuarter": {
+    "message": "春クォーター"
+  },
+  "summerQuarter": {
+    "message": "夏クォーター"
+  },
+  "fallQuarter": {
+    "message": "秋クォーター"
+  },
+  "winterQuarter": {
+    "message": "冬クォーター"
+  },
+  "springSemester": {
+    "message": "春学期"
+  },
+  "fallSemester": {
+    "message": "秋学期"
+  },
+  "fullYear": {
+    "message": "通年"
+  },
+  "year": {
+    "message": "$1年"
+  },
+  "period": {
+    "message": "$1時限"
+  },
+  "ok": {
+    "message": "OK"
+  },
+  "cancel": {
+    "message": "キャンセル"
   }
 }
