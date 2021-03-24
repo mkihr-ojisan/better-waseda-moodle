@@ -61,7 +61,7 @@ export async function onConfigChange<T extends ConfigKey>(key: T, listener: (old
     }
 }
 
-export function removeConfigChangeListener<T>(key: string, listener: (oldValue: T | undefined, newValue: T) => void): boolean {
+export function removeConfigChangeListener<T extends ConfigKey>(key: T, listener: (oldValue: ConfigValue<T> | undefined, newValue: ConfigValue<T>) => void): boolean {
     if (!listeners[key]) return false;
     const index = listeners[key].indexOf(listener);
     if (index === -1) return false;
