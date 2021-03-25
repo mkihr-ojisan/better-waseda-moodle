@@ -42,7 +42,12 @@ export const storage = browser.storage.local;
 const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined) => void)[]; } = {};
 
 export async function getConfig<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {
-    return (await storage.get(key))[key] ?? defaultValue[key];
+    const value = (await storage.get(key))[key];
+    if (value === undefined) {
+        return defaultValue[key];
+    } else {
+        return value;
+    }
 }
 export async function setConfig<T extends ConfigKey>(key: T, value: ConfigValue<T>): Promise<void> {
     await storage.set({ [key]: value });
