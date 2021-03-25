@@ -25,20 +25,20 @@ export default function Options(): ReactElement {
         },
     }), [prefersDarkMode]);
 
-    const [expanded, setExpanded] = React.useState<string | false>(false);
+    const [expanded, setExpanded] = React.useState<number | null>(null);
 
-    function handleChange(name: string) {
-        return (_: React.ChangeEvent<{}>, newExpanded: boolean) => setExpanded(newExpanded ? name : false);
+    function handleChange(i: number) {
+        return (_: React.ChangeEvent<{}>, newExpanded: boolean) => setExpanded(newExpanded ? i : null);
     }
 
     return (
         <ThemeProvider theme={theme}>
             {
-                sections.map(SectionComponent => (
+                sections.map((SectionComponent, i) => (
                     <SectionComponent
                         key={SectionComponent.name}
-                        expanded={expanded === SectionComponent.name}
-                        onChange={handleChange(SectionComponent.name)}
+                        expanded={expanded === i}
+                        onChange={handleChange(i)}
                     />
                 ))
             }
