@@ -6,7 +6,7 @@ import { YearTerm, yearTermToString } from '../../../../common/course';
 
 type Props = {
     terms: YearTerm[];
-    selectedIndex: number;
+    selectedIndex: number | null;
     onChange?: (selectedTerm: YearTerm, selectedIndex: number) => void;
 };
 

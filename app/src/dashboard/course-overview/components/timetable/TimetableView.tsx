@@ -31,7 +31,10 @@ export default function TimetableView(): ReactElement {
     }
 
     let selectedTermIndex;
-    if (selectedTerm !== null) {
+    if (terms.length === 0) {
+        if (selectedTerm !== null) setSelectedTerm(null);
+        selectedTermIndex = null;
+    } else if (selectedTerm !== null) {
         const index = terms.findIndex(t => yearTermEquals(selectedTerm, t));
         if (index === -1) {
             selectedTermIndex = 0;
