@@ -39,9 +39,6 @@
     "message": "自動ログインを有効にする",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
   },
-  "optionsEnableAutoLoginDescription": {
-    "message": "ログインが必要なときに自動でログイン処理を行います。ログインIDとパスワードを設定する必要があります。"
-  },
   "optionsLoginId": {
     "message": "ログインID",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
@@ -50,41 +47,49 @@
     "message": "パスワード",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
   },
-  "optionsSectionVideo": {
-    "message": "動画",
-    "description": "設定ページの「動画」セクションの見出し"
+  "optionsSectionCourseOverview": {
+    "message": "コース概要",
+    "description": "設定ページの「コース概要」セクションの見出し"
   },
-  "optionsRemoveLoadingVideo": {
-    "message": "動画コンテンツの読み込み中に再生される動画を削除する。",
-    "description": "設定ページの「動画」セクションに表示するメッセージ"
+  "optionsEnableCourseOverview": {
+    "message": "コース概要を独自のものに置き換える",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsRemoveLoadingVideoDescription": {
-    "message": "<a href=\"https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?\" target=\"_blank\">この動画</a>が再生されないようにします。",
-    "description": "設定ページの「動画」セクションに表示するメッセージ"
+  "optionsCourseOverviewTypeLabel": {
+    "message": "表示形式",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsSectionSubmissionPage": {
-    "message": "提出ページ",
-    "description": "設定ページの「提出ページ」セクションの見出し"
+  "optionsCourseOverviewTypeNormal": {
+    "message": "標準",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsCheckNotesOnSubmitting": {
-    "message": "「レポート・論文等の提出に関する注意」に自動でチェックを入れる",
-    "description": "設定ページの「提出ページ」セクションに表示するメッセージ"
+  "optionsCourseOverviewTypeTimetable": {
+    "message": "時間割表",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsCheckNotesOnSubmittingDescription": {
-    "message": "課題の提出時に毎回チェックを入れる必要があるチェックボックスに自動でチェックを入れます。",
-    "description": "設定ページの「提出ページ」セクションに表示するメッセージ"
+  "optionsClearCourseListCache": {
+    "message": "コース一覧のキャッシュを削除する",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsSectionQuiz": {
-    "message": "小テスト",
-    "description": "設定ページの「小テスト」セクションの見出し"
+  "optionsClearCourseListCacheMessage": {
+    "message": "コース一覧のキャッシュを削除しました",
+    "description": "コース一覧のキャッシュを削除したときに表示するスナックバーのメッセージ"
   },
-  "optionsMoreVisibleRemainingTime": {
-    "message": "残り時間を見やすくする",
-    "description": "「小テスト」セクションに表示するメッセージ"
+  "optionsClearTimetableEntries": {
+    "message": "時間割設定を削除する",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsMoreVisibleRemainingTimeDescription": {
-    "message": "長い小テストではスクロールしなければ見えなかった小テストの残り時間を、画面の右下に固定して常に見えるようにします。",
-    "description": "「小テスト」セクションに表示するメッセージ"
+  "optionsClearTimetableEntriesConfirmation": {
+    "message": "本当に時間割設定をすべて削除しますか？過年度の時間割情報は自動取得できません。",
+    "description": "時間割設定を削除するときに表示する確認メッセージ"
+  },
+  "optionsClearTimetableEntriesConfirmationOK": {
+    "message": "削除",
+    "description": "時間割設定を削除するときに表示する確認メッセージのボタン"
+  },
+  "optionsClearTimetableEntriesMessage": {
+    "message": "時間割設定を削除しました",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
   "optionsSectionOthers": {
     "message": "その他",
@@ -95,7 +100,31 @@
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsViewInBrowserDescription": {
-    "message": "PDF、画像等をダウンロードせずに直接ブラウザで開けるようにします。",
+    "message": "PDF、画像等を保存せずに直接ブラウザで開けるようにします。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsRemoveLoadingVideo": {
+    "message": "動画コンテンツの読み込み中に再生される動画を削除する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsRemoveLoadingVideoDescription": {
+    "message": "この動画が再生されないようにします。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckNotesOnSubmitting": {
+    "message": "課題提出ページの「レポート・論文等の提出に関する注意」に自動でチェックを入れる",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckNotesOnSubmittingDescription": {
+    "message": "課題の提出時に毎回チェックを入れる必要があるチェックボックスに自動でチェックを入れます。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsMoreVisibleRemainingTime": {
+    "message": "小テストの残り時間を見やすくする",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsMoreVisibleRemainingTimeDescription": {
+    "message": "長い小テストではスクロールしなければ見えなかった小テストの残り時間を、画面の右下に固定して常に見えるようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "courseOverviewHide": {

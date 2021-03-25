@@ -42,5 +42,8 @@
   "web_accessible_resources": [
     "src/auto-login/auto-login-page.html",
     "res/videos/dummy-video.mp4"
-  ]
+  ],
+  "options_ui": {
+    "page": "src/options-page/options.html"
+  }
 }
