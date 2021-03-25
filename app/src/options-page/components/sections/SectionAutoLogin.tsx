@@ -25,8 +25,6 @@ export default function SectionAutoLogin(props: SectionComponentProps): ReactEle
         };
     }
 
-    console.log(loginId);
-
     return (
         <Section titleMessageName="optionsSectionAutoLogin" {...props}>
             <FormGroup>
