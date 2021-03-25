@@ -153,3 +153,7 @@ export async function setHiddenFromCourseList(course: Course, isHidden: boolean)
         }
     }
 }
+
+export async function clearCourseListCache(): Promise<void> {
+    await idb.clear(cacheStore);
+}
