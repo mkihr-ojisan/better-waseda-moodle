@@ -238,7 +238,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
                     <Tooltip
                         title={
                             typeof props.conflict === 'number'
-                                ? browser.i18n.getMessage('courseOverviewTimetableSettingsConflictWithAnotherRow', props.conflict + 1)
+                                ? browser.i18n.getMessage('courseOverviewTimetableSettingsConflictWithAnotherRow', (props.conflict + 1).toString())
                                 : browser.i18n.getMessage('courseOverviewTimetableSettingsConflictWithAnotherCourse', props.conflict.name)
                         }
                         classes={{ tooltip: classes.errorTooltip }}
@@ -262,12 +262,12 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
                 <Select value={props.settingsEntry.dayPeriod.period.from} onChange={handlePeriodFromChange} autoWidth>
-                    {range(1, 8).map(period => <MenuItem key={period} value={period}>{browser.i18n.getMessage('period', period)}</MenuItem>)}
+                    {range(1, 8).map(period => <MenuItem key={period} value={period}>{browser.i18n.getMessage('period', period.toString())}</MenuItem>)}
                 </Select>
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
                 <Select value={props.settingsEntry.dayPeriod.period.to} onChange={handlePeriodToChange} autoWidth>
-                    {range(props.settingsEntry.dayPeriod.period.from, 8).map(period => <MenuItem key={period} value={period}>{browser.i18n.getMessage('period', period)}</MenuItem>)}
+                    {range(props.settingsEntry.dayPeriod.period.from, 8).map(period => <MenuItem key={period} value={period}>{browser.i18n.getMessage('period', period.toString())}</MenuItem>)}
                 </Select>
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>

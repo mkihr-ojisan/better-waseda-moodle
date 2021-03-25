@@ -50,19 +50,19 @@ export function termToString(term: Term): string {
 export function yearTermToString(yearTerm: YearTerm): string {
     switch (yearTerm.term) {
         case 'spring_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year) + ' ' + browser.i18n.getMessage('springQuarter');
+            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('springQuarter');
         case 'summer_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year) + ' ' + browser.i18n.getMessage('summerQuarter');
+            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('summerQuarter');
         case 'fall_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year) + ' ' + browser.i18n.getMessage('fallQuarter');
+            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('fallQuarter');
         case 'winter_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year) + ' ' + browser.i18n.getMessage('winterQuarter');
+            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('winterQuarter');
         case 'spring_semester':
-            return browser.i18n.getMessage('year', yearTerm.year) + ' ' + browser.i18n.getMessage('springSemester');
+            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('springSemester');
         case 'fall_semester':
-            return browser.i18n.getMessage('year', yearTerm.year) + ' ' + browser.i18n.getMessage('fallSemester');
+            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('fallSemester');
         case 'full_year':
-            return browser.i18n.getMessage('year', yearTerm.year);
+            return browser.i18n.getMessage('year', yearTerm.year.toString());
     }
 }
 
