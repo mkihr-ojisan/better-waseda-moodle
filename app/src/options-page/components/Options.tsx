@@ -36,7 +36,7 @@ export default function Options(): ReactElement {
             {
                 sections.map((SectionComponent, i) => (
                     <SectionComponent
-                        key={SectionComponent.name}
+                        key={i}
                         expanded={expanded === i}
                         onChange={handleChange(i)}
                     />
