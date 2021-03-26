@@ -15,8 +15,13 @@ export default function TimetableView(): ReactElement {
 
     // TimetableTermSelectorに表示するYearTerm
     const terms = useMemo(
-        () => uniqueYearTerms(timetableEntries.flatMap(entry => entry[1].map(data => data.term))),
-        [timetableEntries],
+        () => uniqueYearTerms(timetableEntries.flatMap(entry => {
+            if (courseList.find(c => c.id === entry[0])?.isHidden === false)
+                return entry[1].map(data => data.term);
+            else
+                return [];
+        })),
+        [courseList, timetableEntries],
     );
 
     // 時間割表の下に表示する
