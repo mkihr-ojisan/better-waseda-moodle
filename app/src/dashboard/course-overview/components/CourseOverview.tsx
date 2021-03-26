@@ -1,7 +1,7 @@
 import React, { createContext, ReactElement, useEffect, useMemo, useState } from 'react';
 import { onConfigChange, removeConfigChangeListener } from '../../../common/config/config';
 import { Course, CourseListItem } from '../../../common/course';
-import BWMTheme from '../../../common/react/BWMTheme';
+import BWMThemeDarkReader from '../../../common/react/theme/BWMThemeDarkReader';
 import CenteredCircularProgress from '../../../common/react/CenteredCircularProgress';
 import useConfig from '../../../common/react/useConfig';
 import { TimetableEntry } from '../../../common/timetable';
@@ -42,7 +42,7 @@ export default function CourseOverview(): ReactElement {
 
     if (contextValue && courseOverviewType) {
         return (
-            <BWMTheme>
+            <BWMThemeDarkReader>
                 <CourseOverviewContext.Provider value={contextValue}>
                     {(() => {
                         switch (courseOverviewType) {
@@ -53,13 +53,13 @@ export default function CourseOverview(): ReactElement {
                         }
                     })()}
                 </CourseOverviewContext.Provider>
-            </BWMTheme>
+            </BWMThemeDarkReader>
         );
     } else {
         return (
-            <BWMTheme>
+            <BWMThemeDarkReader>
                 <CenteredCircularProgress />
-            </BWMTheme>
+            </BWMThemeDarkReader>
         );
     }
 }

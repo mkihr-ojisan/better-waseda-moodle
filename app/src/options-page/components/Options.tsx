@@ -1,7 +1,5 @@
-import { createMuiTheme } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
-import React, { ReactElement, useMemo } from 'react';
-import { useMediaQuery } from '../../common/polyfills/useMediaQuery';
+import React, { ReactElement } from 'react';
+import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
 import SectionAutoLogin from './sections/SectionAutoLogin';
 import SectionDashboard from './sections/SectionCourseOverview';
 import SectionOthers from './sections/SectionOthers';
@@ -18,12 +16,7 @@ const sections: React.FunctionComponent<SectionComponentProps>[] = [
 ];
 
 export default function Options(): ReactElement {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    const theme = useMemo(() => createMuiTheme({
-        palette: {
-            type: prefersDarkMode ? 'dark' : 'light',
-        },
-    }), [prefersDarkMode]);
+
 
     const [expanded, setExpanded] = React.useState<number | null>(null);
 
@@ -32,7 +25,7 @@ export default function Options(): ReactElement {
     }
 
     return (
-        <ThemeProvider theme={theme}>
+        <BWMThemePrefersColorScheme>
             {
                 sections.map((SectionComponent, i) => (
                     <SectionComponent
@@ -42,6 +35,6 @@ export default function Options(): ReactElement {
                     />
                 ))
             }
-        </ThemeProvider>
+        </BWMThemePrefersColorScheme>
     );
 }
