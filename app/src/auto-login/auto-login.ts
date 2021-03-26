@@ -1,4 +1,3 @@
-import { messengerServer } from '../background';
 import { getConfig } from '../common/config/config';
 import { getConfigCache } from '../common/config/config-cache';
 import { login } from '../common/waseda/login';
@@ -21,9 +20,6 @@ export async function initAutoLogin(): Promise<void> {
             );
             break;
     }
-
-    messengerServer.addInstruction('doLogin', doLogin);
-    messengerServer.addInstruction('logout', logout);
 }
 
 // バグだかなんだか知らんがこれはFirefoxでしか動かない

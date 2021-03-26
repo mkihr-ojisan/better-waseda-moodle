@@ -1,4 +1,4 @@
-import { initAutoLogin } from './auto-login/auto-login';
+import { initAutoLogin, doLogin, logout } from './auto-login/auto-login';
 import { initConfigCache } from './common/config/config-cache';
 import { MessengerServer } from './common/util/messenger';
 import { initRemoveLoadingVideo } from './video/remove-loading-video/remove-loading-video';
@@ -13,10 +13,12 @@ import { initSyllabusLinkFix } from './others/syllabus-link-fix/background-scrip
 // #!blink_only
 import './common/polyfills/content-script-register';
 
-export const messengerServer = new MessengerServer();
+const messengerServer = new MessengerServer();
 messengerServer.instructions = {
     fetchCourseList,
     setHiddenFromCourseList,
+    doLogin,
+    logout,
 };
 
 (async () => {
