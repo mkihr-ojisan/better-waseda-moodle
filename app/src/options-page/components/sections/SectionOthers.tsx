@@ -42,7 +42,7 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
                 label={browser.i18n.getMessage('optionsRemoveLoadingVideo')}
             />
             <Description>
-                <a href="https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?">{browser.i18n.getMessage('optionsRemoveLoadingVideoDescription')}</a>
+                <a href="https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?" target='_blank'>{browser.i18n.getMessage('optionsRemoveLoadingVideoDescription')}</a>
             </Description>
 
             <FormControlLabel
