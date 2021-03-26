@@ -13,7 +13,7 @@ export function initSyllabusLinkFix(): void {
 
 async function register() {
     registeredContentScript = await browser.contentScripts.register({
-        matches: ['https://www.wsl.waseda.jp/syllabus/JAA101.php*'],
+        matches: ['https://www.wsl.waseda.jp/syllabus/JAA101.php*', 'https://www.wsl.waseda.jp/syllabus/index.php*'],
         js: [{ file: 'src/others/syllabus-link-fix/content-script.js' }],
         runAt: 'document_idle',
     });
