@@ -34,7 +34,7 @@ browser.contentScripts = {
 
         const registeredContentScript = {
             unregister: async () => {
-                listeners.forEach(browser.tabs.onUpdated.removeListener);
+                listeners.forEach(listener => browser.tabs.onUpdated.removeListener(listener));
             },
         };
         callback?.(registeredContentScript);
