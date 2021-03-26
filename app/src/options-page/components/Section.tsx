@@ -15,7 +15,7 @@ type Props = {
 
 export default function Section(props: Props): ReactElement {
     return (
-        <Accordion {...props}>
+        <Accordion expanded={props.expanded} onChange={props.onChange}>
             <AccordionSummary expandIcon={<ExpandMore />}>
                 <Typography variant="h6">
                     {browser.i18n.getMessage(props.titleMessageName)}
