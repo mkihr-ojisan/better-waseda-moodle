@@ -127,6 +127,30 @@
     "message": "長い小テストではスクロールしなければ見えなかった小テストの残り時間を、画面の右下に固定して常に見えるようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
+  "optionsDisableRateLimitEnabled": {
+    "message": "レート制限を解除する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsDisableRateLimitEnabledDescription": {
+    "message": "成績照会・科目登録専用メニューで「ただいま処理中です。OKボタンを押して、しばらく待ってから再度メニューをクリックしてください。」と表示されて10秒間待たされないようにします。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsHideNameEnabled": {
+    "message": "名前を隠す",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsHideNameEnabledDescription": {
+    "message": "Moodleのヘッダーとフッターに表示される名前を隠します。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsSyllabusLinkFixEnabled": {
+    "message": "シラバス検索結果のリンクを修正する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsSyllabusLinkFixEnabledDescription": {
+    "message": "新しいウィンドウで開き、右クリック禁止という前時代的な挙動を修正します。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
   "courseOverviewHide": {
     "message": "非表示",
     "description": "コース概要のメニューの項目"
