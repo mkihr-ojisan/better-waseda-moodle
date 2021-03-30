@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { MessengerClient } from '../../common/util/messenger';
 import CourseOverview from './components/CourseOverview';
-import { CourseListItem } from '../../common/course';
+import { CourseListItem } from '../../common/waseda/course/course';
 import { getConfig } from '../../common/config/config';
 
 export const messengerClient = new MessengerClient();

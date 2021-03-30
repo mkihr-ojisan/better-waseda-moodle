@@ -1,6 +1,6 @@
 import { CourseOverviewType } from '../../dashboard/course-overview/components/CourseOverview';
-import { YearTerm } from '../course';
-import { TimetableEntry } from '../timetable';
+import { YearTerm } from '../waseda/course/course';
+import { TimetableEntry } from '../waseda/course/timetable';
 
 export type ConfigKey = keyof Config;
 export type ConfigValue<T extends ConfigKey> = Config[T];

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React, { ReactElement, ReactNode, useContext, useMemo } from 'react';
-import { containsYearTerm, DayOfWeek, dayOfWeekToShortString, YearTerm } from '../../../../common/course';
+import { containsYearTerm, DayOfWeek, dayOfWeekToShortString, YearTerm } from '../../../../common/waseda/course/course';
 import useViewportHeight from '../../../../common/react/useViewportHeight';
 import { CourseOverviewContext, CourseOverviewContextProps } from '../CourseOverview';
 import TimetableCourseCard from './TimetableCourseCard';

@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import React, { ReactElement, useContext, useMemo, useState } from 'react';
-import { uniqueYearTerms, yearTermEquals } from '../../../../common/course';
+import { uniqueYearTerms, yearTermEquals } from '../../../../common/waseda/course/course';
 import useConfig from '../../../../common/react/useConfig';
 import CourseListView from '../CourseListView';
 import { CourseOverviewContext } from '../CourseOverview';

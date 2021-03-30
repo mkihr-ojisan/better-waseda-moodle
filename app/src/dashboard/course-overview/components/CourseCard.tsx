@@ -12,7 +12,7 @@ import MoreVert from '@material-ui/icons/MoreVert';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { ReactElement, useContext, useState } from 'react';
-import { CourseListItem } from '../../../common/course';
+import { CourseListItem } from '../../../common/waseda/course/course';
 import { CourseOverviewContext } from './CourseOverview';
 import TimetableSettingsDialog from './TimetableSettingsDialog';
 

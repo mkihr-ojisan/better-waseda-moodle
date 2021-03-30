@@ -1,4 +1,4 @@
-import { getConfig, setConfig } from './config/config';
+import { getConfig, setConfig } from '../../config/config';
 import { DayPeriod, YearTerm } from './course';
 
 export type TimetableEntry = [

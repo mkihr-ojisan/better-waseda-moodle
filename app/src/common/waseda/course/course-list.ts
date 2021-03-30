@@ -1,4 +1,4 @@
-import { Course, CourseListItem } from '../../course';
+import { Course, CourseListItem } from './course';
 import { postJson } from '../../util/util';
 import { fetchSessionKey } from '../session-key';
 import * as idb from 'idb-keyval';
