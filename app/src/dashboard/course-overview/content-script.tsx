@@ -12,6 +12,7 @@ export const messengerClient = new MessengerClient();
 
 export const courseList = messengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>;
 export const timetableEntries = getConfig('timetable.entries');
+export const courseData = getConfig('courseData');
 
 window.addEventListener('DOMContentLoaded', async () => {
     // 本来のコース概要を隠す

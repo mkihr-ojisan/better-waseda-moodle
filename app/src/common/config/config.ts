@@ -1,5 +1,6 @@
 import { CourseOverviewType } from '../../dashboard/course-overview/components/CourseOverview';
 import { YearTerm } from '../waseda/course/course';
+import { CourseData } from '../waseda/course/course-data';
 import { TimetableEntry } from '../waseda/course/timetable';
 
 export type ConfigKey = keyof Config;
@@ -19,6 +20,7 @@ export type Config = {
     'timetable.selectedTerm': YearTerm | null;
     'hideName.enabled': boolean;
     'syllabusLinkFix.enabled': boolean;
+    'courseData': Record<number, CourseData>;
 };
 
 export const defaultValue: Config = {
@@ -36,6 +38,7 @@ export const defaultValue: Config = {
     'timetable.selectedTerm': null,
     'hideName.enabled': false,
     'syllabusLinkFix.enabled': true,
+    'courseData': {},
 };
 
 export const storage = browser.storage.local;
