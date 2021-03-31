@@ -42,6 +42,8 @@ export default function CourseCard(props: Props): ReactElement {
     const [timetableSettingsDialogOpen, setTimetableSettingsDialogOpen] = useState(false);
     const context = useContext(CourseOverviewContext);
 
+    const courseName = context.courseData[props.course.id]?.overrideName ?? props.course.name;
+
     const handleOpenMenuButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -65,10 +67,10 @@ export default function CourseCard(props: Props): ReactElement {
         <Card className={classes.root}>
             <CardMedia
                 component="img"
-                alt={props.course.name}
+                alt={courseName}
                 height="112"
                 image={props.course.imageUrl}
-                title={props.course.name}
+                title={courseName}
             />
             <CardHeader
                 disableTypography={true}
@@ -77,7 +79,7 @@ export default function CourseCard(props: Props): ReactElement {
                 }}
                 title={
                     <Typography variant="body1">
-                        <a className={classes.title} href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}>{props.course.name}</a>
+                        <a className={classes.title} href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}>{courseName}</a>
                     </Typography>
                 }
                 action={
