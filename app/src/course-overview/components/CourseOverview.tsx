@@ -1,14 +1,14 @@
 import React, { createContext, ReactElement, useEffect, useMemo, useState } from 'react';
-import { onConfigChange, removeConfigChangeListener } from '../../../common/config/config';
-import { Course, CourseListItem } from '../../../common/waseda/course/course';
-import BWMThemeDarkReader from '../../../common/react/theme/BWMThemeDarkReader';
-import CenteredCircularProgress from '../../../common/react/CenteredCircularProgress';
-import useConfig from '../../../common/react/useConfig';
-import { TimetableEntry } from '../../../common/waseda/course/timetable';
+import { onConfigChange, removeConfigChangeListener } from '../../common/config/config';
+import { Course, CourseListItem } from '../../common/waseda/course/course';
+import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
+import CenteredCircularProgress from '../../common/react/CenteredCircularProgress';
+import useConfig from '../../common/react/useConfig';
+import { TimetableEntry } from '../../common/waseda/course/timetable';
 import { courseData, courseList, messengerClient, timetableEntries } from '../content-script';
 import NormalView from './normal/NormalView';
 import TimetableView from './timetable/TimetableView';
-import { CourseData } from '../../../common/waseda/course/course-data';
+import { CourseData } from '../../common/waseda/course/course-data';
 
 export type CourseOverviewType = 'normal' | 'timetable';
 

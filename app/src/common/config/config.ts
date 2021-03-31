@@ -1,4 +1,4 @@
-import { CourseOverviewType } from '../../dashboard/course-overview/components/CourseOverview';
+import { CourseOverviewType } from '../../course-overview/components/CourseOverview';
 import { YearTerm } from '../waseda/course/course';
 import { CourseData } from '../waseda/course/course-data';
 import { TimetableEntry } from '../waseda/course/timetable';

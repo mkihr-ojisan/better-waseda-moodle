@@ -1,6 +1,6 @@
 import CardMedia from '@material-ui/core/CardMedia';
 import React, { ReactElement, useContext } from 'react';
-import { CourseListItem } from '../../../common/waseda/course/course';
+import { CourseListItem } from '../../common/waseda/course/course';
 import { CourseOverviewContext } from './CourseOverview';
 
 type Props = {

@@ -2,8 +2,8 @@ import { onConfigChange } from '../../common/config/config';
 
 let registeredContentScript: browser.contentScripts.RegisteredContentScript | null = null;
 
-export function initCourseOverview(): void {
-    onConfigChange('courseOverview.enabled', (_, newValue) => {
+export function initMoreVisibleRemainingTime(): void {
+    onConfigChange('moreVisibleRemainingTime.enabled', (_, newValue) => {
         if (newValue)
             register();
         else
@@ -13,9 +13,8 @@ export function initCourseOverview(): void {
 
 async function register() {
     registeredContentScript = await browser.contentScripts.register({
-        matches: ['https://wsdmoodle.waseda.jp/my/*'],
-        js: [{ file: 'src/dashboard/course-overview/content-script.js' }],
-        runAt: 'document_start',
+        matches: ['https://wsdmoodle.waseda.jp/mod/quiz/attempt.php*'],
+        css: [{ file: 'src/others/more-visible-remaining-time/style.css' }],
     });
 }
 function unregister() {

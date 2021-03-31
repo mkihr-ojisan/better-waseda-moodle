@@ -2,7 +2,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import React, { ReactElement } from 'react';
-import { YearTerm, yearTermToString } from '../../../../common/waseda/course/course';
+import { YearTerm, yearTermToString } from '../../../common/waseda/course/course';
 
 type Props = {
     terms: YearTerm[];
