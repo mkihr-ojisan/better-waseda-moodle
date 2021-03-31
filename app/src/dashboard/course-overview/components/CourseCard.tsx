@@ -1,6 +1,5 @@
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Menu from '@material-ui/core/Menu';
@@ -13,6 +12,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { ReactElement, useContext, useState } from 'react';
 import { CourseListItem } from '../../../common/waseda/course/course';
+import CourseImage from './CourseImage';
 import { CourseOverviewContext } from './CourseOverview';
 import TimetableSettingsDialog from './TimetableSettingsDialog';
 
@@ -65,12 +65,11 @@ export default function CourseCard(props: Props): ReactElement {
 
     return (
         <Card className={classes.root}>
-            <CardMedia
-                component="img"
+            <CourseImage
                 alt={courseName}
                 height="112"
-                image={props.course.imageUrl}
                 title={courseName}
+                course={props.course}
             />
             <CardHeader
                 disableTypography={true}
