@@ -20,7 +20,7 @@ export type Config = {
     'timetable.selectedTerm': YearTerm | null;
     'hideName.enabled': boolean;
     'syllabusLinkFix.enabled': boolean;
-    'courseData': Record<number, CourseData>;
+    'courseData': Record<number, CourseData | undefined>;
 };
 
 export const defaultValue: Config = {

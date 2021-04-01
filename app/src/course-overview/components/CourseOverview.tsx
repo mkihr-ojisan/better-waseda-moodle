@@ -15,7 +15,7 @@ export type CourseOverviewType = 'normal' | 'timetable';
 export type CourseOverviewContextProps = {
     courseList: CourseListItem[];
     timetableEntries: TimetableEntry[];
-    courseData: Record<number, CourseData>;
+    courseData: Record<number, CourseData | undefined>;
     hideCourse: (course: Course) => void;
     unhideCourse: (course: Course) => void;
 };
@@ -130,7 +130,7 @@ function useCourseData(): Record<number, CourseData> | undefined {
             if (!isCancelled) setCourseDataValue(value);
         });
 
-        const listener = (_: Record<number, CourseData> | undefined, value: Record<number, CourseData>) => {
+        const listener = (_: Record<number, CourseData | undefined> | undefined, value: Record<number, CourseData | undefined>) => {
             setCourseDataValue(value);
         };
         onConfigChange('courseData', listener, false);
