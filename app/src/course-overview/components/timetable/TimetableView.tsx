@@ -10,24 +10,19 @@ import Timetable from './Timetable';
 import TimetableTermSelector from './TimetableTermSelector';
 
 export default function TimetableView(): ReactElement {
-    const { courseList, timetableEntries } = useContext(CourseOverviewContext);
+    const { courseList, courseData } = useContext(CourseOverviewContext);
     const [hiddenCoursesDialogOpen, setHiddenCoursesDialogOpen] = useState(false);
 
     // TimetableTermSelectorに表示するYearTerm
     const terms = useMemo(
-        () => uniqueYearTerms(timetableEntries.flatMap(entry => {
-            if (courseList.find(c => c.id === entry[0])?.isHidden === false)
-                return entry[1].map(data => data.term);
-            else
-                return [];
-        })),
-        [courseList, timetableEntries],
+        () => uniqueYearTerms(courseList.flatMap(course => courseData[course.id]?.timetableData?.map(entry => entry.yearTerm) ?? [])),
+        [courseData, courseList],
     );
 
     // 時間割表の下に表示する
     const coursesNotInTimetable = useMemo(
-        () => courseList.filter(course => timetableEntries.every(entry => entry[0] !== course.id)),
-        [courseList, timetableEntries],
+        () => courseList.filter(course => (courseData[course.id]?.timetableData?.length ?? 0) === 0),
+        [courseData, courseList],
     );
 
     const [selectedTerm, setSelectedTerm] = useConfig('timetable.selectedTerm');

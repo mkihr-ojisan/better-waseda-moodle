@@ -1,9 +1,5 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +9,6 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
 import React, { ReactElement, useState } from 'react';
-import { removeConfig } from '../../../common/config/config';
 import useConfig from '../../../common/react/useConfig';
 import { clearCourseListCache } from '../../../common/waseda/course/course-list';
 import { SectionComponentProps } from '../Options';
@@ -24,8 +19,6 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     const [type, setType] = useConfig('courseOverview.type');
 
     const [courseCacheClearedSnackbarOpen, setCourseCacheClearedSnackbarOpen] = useState(false);
-    const [removeTimetableEntriesConfirmationOpen, setRemoveTimetableEntriesConfirmationOpen] = useState(false);
-    const [timetableEntriesRemovedSnackbarOpen, setTimetableEntriesRemovedSnackbarOpen] = useState(false);
 
     if (enabled === undefined || type === undefined) return null;
 
@@ -43,13 +36,6 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     function handleClearCourseCache() {
         clearCourseListCache().then(() => {
             setCourseCacheClearedSnackbarOpen(true);
-        });
-    }
-    function handleClearTimetableEntries() {
-        setRemoveTimetableEntriesConfirmationOpen(false);
-
-        removeConfig('timetable.entries').then(() => {
-            setTimetableEntriesRemovedSnackbarOpen(true);
         });
     }
 
@@ -79,11 +65,6 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                             {browser.i18n.getMessage('optionsClearCourseListCache')}
                         </Button>
                     </Grid>
-                    <Grid item>
-                        <Button variant="outlined" onClick={() => setRemoveTimetableEntriesConfirmationOpen(true)}>
-                            {browser.i18n.getMessage('optionsClearTimetableEntries')}
-                        </Button>
-                    </Grid>
                 </Grid>
             </Box>
 
@@ -96,35 +77,6 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                     {browser.i18n.getMessage('optionsClearCourseListCacheMessage')}
                 </Alert>
             </Snackbar>
-
-            <Dialog
-                open={removeTimetableEntriesConfirmationOpen}
-                onClose={() => setRemoveTimetableEntriesConfirmationOpen(false)}
-            >
-                <DialogContent>
-                    <DialogContentText>
-                        {browser.i18n.getMessage('optionsClearTimetableEntriesConfirmation')}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button color="primary" onClick={() => setRemoveTimetableEntriesConfirmationOpen(false)}>
-                        {browser.i18n.getMessage('cancel')}
-                    </Button>
-                    <Button color="primary" onClick={handleClearTimetableEntries}>
-                        {browser.i18n.getMessage('optionsClearTimetableEntriesConfirmationOK')}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <Snackbar
-                open={timetableEntriesRemovedSnackbarOpen}
-                autoHideDuration={1500}
-                onClose={() => setTimetableEntriesRemovedSnackbarOpen(false)}
-            >
-                <Alert severity="success">
-                    {browser.i18n.getMessage('optionsClearTimetableEntriesMessage')}
-                </Alert>
-            </Snackbar>
-
         </Section>
     );
 }

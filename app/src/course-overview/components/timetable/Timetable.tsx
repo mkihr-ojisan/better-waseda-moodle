@@ -108,12 +108,11 @@ function useTimetableCells(context: CourseOverviewContextProps, selectedTerm: Ye
             let showSaturday = false;
             let show6thPeriod = false;
             let show7thPeriod = false;
-            for (const [id, timetableData] of context.timetableEntries) {
-                const course = context.courseList.find(c => c.id === id);
-                if (!course || course.isHidden) continue;
+            for (const course of context.courseList) {
+                if (course.isHidden) continue;
 
-                for (const { term, dayPeriod } of timetableData) {
-                    if (containsYearTerm(term, selectedTerm)) {
+                for (const { yearTerm, dayPeriod } of context.courseData[course.id]?.timetableData ?? []) {
+                    if (containsYearTerm(yearTerm, selectedTerm)) {
                         if (dayPeriod.day === 'saturday') {
                             showSaturday = true;
                         } else if (dayPeriod.day === 'sunday') {
@@ -127,6 +126,7 @@ function useTimetableCells(context: CourseOverviewContextProps, selectedTerm: Ye
                     }
                 }
             }
+
             const timetableRowCount = show6thPeriod ? (show7thPeriod ? 7 : 6) : 5;
             const timetableRowHeight = (rowspan: number) => {
                 return (Math.max((viewportHeight - 250) / timetableRowCount, 80) * rowspan + (rowspan - 1)) + 'px';
@@ -147,12 +147,11 @@ function useTimetableCells(context: CourseOverviewContextProps, selectedTerm: Ye
                 }
             }
 
-            for (const [id, timetableData] of context.timetableEntries) {
-                const course = context.courseList.find(c => c.id === id);
-                if (!course || course.isHidden) continue;
+            for (const course of context.courseList) {
+                if (course.isHidden) continue;
 
-                for (const { term, dayPeriod } of timetableData) {
-                    if (containsYearTerm(term, selectedTerm)) {
+                for (const { yearTerm, dayPeriod } of context.courseData[course.id]?.timetableData ?? []) {
+                    if (containsYearTerm(yearTerm, selectedTerm)) {
                         const length = dayPeriod.period.to - dayPeriod.period.from + 1;
                         timetableCells[dayPeriod.day][dayPeriod.period.from - 1] = {
                             node: (
@@ -182,7 +181,7 @@ function useTimetableCells(context: CourseOverviewContextProps, selectedTerm: Ye
                 show7thPeriod,
             };
         },
-        [context.courseList, context.timetableEntries, selectedTerm, viewportHeight],
+        [context.courseList, context.courseData, selectedTerm, viewportHeight],
     );
 }
 

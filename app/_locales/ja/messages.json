@@ -75,22 +75,6 @@
     "message": "コース一覧のキャッシュを削除しました",
     "description": "コース一覧のキャッシュを削除したときに表示するスナックバーのメッセージ"
   },
-  "optionsClearTimetableEntries": {
-    "message": "時間割設定を削除する",
-    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
-  },
-  "optionsClearTimetableEntriesConfirmation": {
-    "message": "本当に時間割設定をすべて削除しますか？過年度の時間割情報は自動取得できません。",
-    "description": "時間割設定を削除するときに表示する確認メッセージ"
-  },
-  "optionsClearTimetableEntriesConfirmationOK": {
-    "message": "削除",
-    "description": "時間割設定を削除するときに表示する確認メッセージのボタン"
-  },
-  "optionsClearTimetableEntriesMessage": {
-    "message": "時間割設定を削除しました",
-    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
-  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"

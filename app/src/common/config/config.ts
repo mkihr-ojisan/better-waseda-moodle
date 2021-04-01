@@ -1,6 +1,5 @@
 import { CourseOverviewType } from '../../course-overview/components/CourseOverview';
 import { YearTerm } from '../waseda/course/course';
-import { TimetableEntry } from '../waseda/course/timetable';
 import { CourseDataEntry } from '../waseda/course/course-data';
 
 export type ConfigKey = keyof Config;
@@ -16,7 +15,6 @@ export type Config = {
     'disableRateLimit.enabled': boolean;
     'courseOverview.enabled': boolean;
     'courseOverview.type': CourseOverviewType;
-    'timetable.entries': TimetableEntry[];
     'timetable.selectedTerm': YearTerm | null;
     'hideName.enabled': boolean;
     'syllabusLinkFix.enabled': boolean;
@@ -34,7 +32,6 @@ export const defaultValue: Config = {
     'disableRateLimit.enabled': true,
     'courseOverview.enabled': true,
     'courseOverview.type': 'normal',
-    'timetable.entries': [],
     'timetable.selectedTerm': null,
     'hideName.enabled': false,
     'syllabusLinkFix.enabled': true,

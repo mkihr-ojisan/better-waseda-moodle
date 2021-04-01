@@ -24,9 +24,9 @@ import Delete from '@material-ui/icons/Delete';
 import Error from '@material-ui/icons/Error';
 import React, { ReactElement, useContext, useMemo, useState } from 'react';
 import { containsYearTerm, CourseListItem, DayOfWeek, dayOfWeekToString, DayPeriod, Term, termToString, YearTerm } from '../../common/waseda/course/course';
-import { registerTimetableEntry, TimetableEntry } from '../../common/waseda/course/timetable';
 import { range } from '../../common/util/util';
 import { CourseOverviewContext } from './CourseOverview';
+import { CourseDataEntry, registerCourseData } from '../../common/waseda/course/course-data';
 
 type Props = {
     open: boolean;
@@ -34,7 +34,7 @@ type Props = {
     onClose: () => void;
 };
 type TimetableSettingsEntry = {
-    term: YearTerm;
+    yearTerm: YearTerm;
     dayPeriod: DayPeriod;
 };
 type TimetableConflict = number /*〜番目の項目と競合している*/ | CourseListItem /*コース〜と競合している*/ | null /*競合していない*/;
@@ -61,10 +61,10 @@ export default function TimetableSettingsDialog(props: Props): ReactElement {
 
 function TimetableSettingsDialogContent(props: Props): ReactElement {
     const context = useContext(CourseOverviewContext);
-    const [settingsEntries, setSettingsEntries] = useState<TimetableSettingsEntry[]>(context.timetableEntries.find(e => e[0] === props.course.id)?.[1] ?? []);
+    const [settingsEntries, setSettingsEntries] = useState<TimetableSettingsEntry[]>(context.courseData[props.course.id]?.timetableData ?? []);
     const conflicts = useMemo(
-        () => findConflicts(context.timetableEntries, settingsEntries, context.courseList, props.course),
-        [context.timetableEntries, settingsEntries, context.courseList, props.course],
+        () => findConflicts(context.courseData, settingsEntries, context.courseList, props.course),
+        [context.courseData, settingsEntries, context.courseList, props.course],
     );
     const [showAlertConflict, setShowAlertConflict] = useState(false);
 
@@ -78,7 +78,7 @@ function TimetableSettingsDialogContent(props: Props): ReactElement {
     function handleAddEntry() {
         const newEntries = [...settingsEntries];
         newEntries.push({
-            term: {
+            yearTerm: {
                 year: new Date().getFullYear(),
                 term: 'full_year',
             },
@@ -106,7 +106,7 @@ function TimetableSettingsDialogContent(props: Props): ReactElement {
             return;
         }
 
-        registerTimetableEntry([props.course.id, settingsEntries]);
+        registerCourseData(props.course.id, 'timetableData', settingsEntries);
         props.onClose();
     }
 
@@ -180,17 +180,17 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
 
     function handleYearChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         props.onChange({
-            term: {
+            yearTerm: {
                 year: parseInt(event.target.value),
-                term: props.settingsEntry.term.term,
+                term: props.settingsEntry.yearTerm.term,
             },
             dayPeriod: props.settingsEntry.dayPeriod,
         });
     }
     function handleTermChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) {
         props.onChange({
-            term: {
-                year: props.settingsEntry.term.year,
+            yearTerm: {
+                year: props.settingsEntry.yearTerm.year,
                 term: event.target.value as Term,
             },
             dayPeriod: props.settingsEntry.dayPeriod,
@@ -198,7 +198,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
     }
     function handleDayChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) {
         props.onChange({
-            term: props.settingsEntry.term,
+            yearTerm: props.settingsEntry.yearTerm,
             dayPeriod: {
                 day: event.target.value as DayOfWeek,
                 period: props.settingsEntry.dayPeriod.period,
@@ -207,7 +207,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
     }
     function handlePeriodFromChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) {
         props.onChange({
-            term: props.settingsEntry.term,
+            yearTerm: props.settingsEntry.yearTerm,
             dayPeriod: {
                 day: props.settingsEntry.dayPeriod.day,
                 period: {
@@ -219,7 +219,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
     }
     function handlePeriodToChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown; }>) {
         props.onChange({
-            term: props.settingsEntry.term,
+            yearTerm: props.settingsEntry.yearTerm,
             dayPeriod: {
                 day: props.settingsEntry.dayPeriod.day,
                 period: {
@@ -248,10 +248,10 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
                 }
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
-                <Input type="number" value={props.settingsEntry.term.year} onChange={handleYearChange} classes={{ root: classes.inputYear }} />
+                <Input type="number" value={props.settingsEntry.yearTerm.year} onChange={handleYearChange} classes={{ root: classes.inputYear }} />
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
-                <Select value={props.settingsEntry.term.term} onChange={handleTermChange} autoWidth>
+                <Select value={props.settingsEntry.yearTerm.term} onChange={handleTermChange} autoWidth>
                     {['full_year', 'spring_semester', 'fall_semester', 'spring_quarter', 'summer_quarter', 'fall_quarter', 'winter_quarter'].map(term => <MenuItem key={term} value={term}>{termToString(term as Term)}</MenuItem>)}
                 </Select>
             </TableCell>
@@ -279,18 +279,18 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
     );
 }
 
-function findConflicts(timetable: TimetableEntry[], settingsEntries: TimetableSettingsEntry[], courseList: CourseListItem[], course: CourseListItem): TimetableConflict[] {
+function findConflicts(courseData: Record<number, CourseDataEntry | undefined>, settingsEntries: TimetableSettingsEntry[], courseList: CourseListItem[], course: CourseListItem): TimetableConflict[] {
     return settingsEntries.map((settingsEntry, i) => {
-        for (const timetableEntry of timetable) {
-            if (timetableEntry[0] === course.id) continue;
-            for (const { term, dayPeriod } of timetableEntry[1]) {
+        for (const [id, courseDataEntry] of Object.entries(courseData)) {
+            if (id === course.id.toString()) continue;
+            for (const { yearTerm, dayPeriod } of courseDataEntry?.timetableData ?? []) {
                 if (
-                    (containsYearTerm(term, settingsEntry.term) || containsYearTerm(settingsEntry.term, term)) &&
+                    (containsYearTerm(yearTerm, settingsEntry.yearTerm) || containsYearTerm(settingsEntry.yearTerm, yearTerm)) &&
                     dayPeriod.day === settingsEntry.dayPeriod.day &&
                     dayPeriod.period.from <= settingsEntry.dayPeriod.period.to &&
                     settingsEntry.dayPeriod.period.from <= dayPeriod.period.to
                 ) {
-                    const conflictWith = courseList.find(c => c.id === timetableEntry[0]);
+                    const conflictWith = courseList.find(c => c.id.toString() === id);
                     if (conflictWith)
                         return conflictWith;
                 }
@@ -299,7 +299,7 @@ function findConflicts(timetable: TimetableEntry[], settingsEntries: TimetableSe
 
         for (let j = 0; j < i; j++) {
             if (
-                (containsYearTerm(settingsEntries[j].term, settingsEntry.term) || containsYearTerm(settingsEntry.term, settingsEntries[j].term)) &&
+                (containsYearTerm(settingsEntries[j].yearTerm, settingsEntry.yearTerm) || containsYearTerm(settingsEntry.yearTerm, settingsEntries[j].yearTerm)) &&
                 settingsEntries[j].dayPeriod.day === settingsEntry.dayPeriod.day &&
                 settingsEntries[j].dayPeriod.period.from <= settingsEntry.dayPeriod.period.to &&
                 settingsEntry.dayPeriod.period.from <= settingsEntries[j].dayPeriod.period.to
