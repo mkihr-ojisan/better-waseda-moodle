@@ -151,6 +151,10 @@
     "message": "時間割の設定",
     "description": "コース概要のメニューの項目"
   },
+  "courseOverviewChangeName": {
+    "message": "名前の変更",
+    "description": "コース概要のメニューの項目"
+  },
   "courseOverviewHiddenCourses": {
     "message": "非表示のコース",
     "description": "コース概要の上部にあるボタン"
@@ -220,6 +224,18 @@
   "courseOverviewTimetableSettingsCannotSetDueToConflict": {
     "message": "重複している項目があるため設定できません。",
     "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewChangeNameDialogTitle": {
+    "message": "名前の変更",
+    "description": "コース概要の名前の変更ダイアログのタイトル"
+  },
+  "courseOverviewChangeNamesDialogOK": {
+    "message": "設定",
+    "description": "コース概要の名前の変更ダイアログに表示するメッセージ"
+  },
+  "courseOverviewChangeNamesDialogSetToDefault": {
+    "message": "デフォルトに戻す",
+    "description": "コース概要の名前の変更ダイアログに表示するメッセージ"
   },
   "sundayShort": {
     "message": "日"

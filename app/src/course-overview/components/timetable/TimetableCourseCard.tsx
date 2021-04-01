@@ -16,6 +16,8 @@ import { CourseListItem } from '../../../common/waseda/course/course';
 import { useMediaQuery } from '../../../common/polyfills/useMediaQuery';
 import { CourseOverviewContext } from '../CourseOverview';
 import TimetableSettingsDialog from '../dialog/TimetableSettingsDialog';
+import ChangeNameDialog from '../dialog/ChangeNameDialog';
+import Edit from '@material-ui/icons/Edit';
 
 type Props = {
     course: CourseListItem;
@@ -65,6 +67,7 @@ export default function CourseCard(props: Props): ReactElement {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
     const [timetableSettingsDialogOpen, setTimetableSettingsDialogOpen] = useState(false);
+    const [changeNameDialogOpen, setChangeNameDialogOpen] = useState(false);
     const context = useContext(CourseOverviewContext);
 
     const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
@@ -86,6 +89,10 @@ export default function CourseCard(props: Props): ReactElement {
     };
     const handleTimetableSettings = () => {
         setTimetableSettingsDialogOpen(true);
+        closeMenu();
+    };
+    const handleChangeName = () => {
+        setChangeNameDialogOpen(true);
         closeMenu();
     };
     const handleContextMenu: React.MouseEventHandler = event => {
@@ -155,8 +162,15 @@ export default function CourseCard(props: Props): ReactElement {
                     </ListItemIcon>
                     {browser.i18n.getMessage('courseOverviewTimetableSettings')}
                 </MenuItem>
+                <MenuItem onClick={handleChangeName}>
+                    <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
+                        <Edit />
+                    </ListItemIcon>
+                    {browser.i18n.getMessage('courseOverviewChangeName')}
+                </MenuItem>
             </Menu>
             <TimetableSettingsDialog course={props.course} open={timetableSettingsDialogOpen} onClose={() => setTimetableSettingsDialogOpen(false)} />
+            <ChangeNameDialog course={props.course} open={changeNameDialogOpen} onClose={() => setChangeNameDialogOpen(false)} />
         </Card>
     );
 }

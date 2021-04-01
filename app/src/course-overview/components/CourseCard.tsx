@@ -9,11 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Visibility from '@material-ui/icons/Visibility';
+import Edit from '@material-ui/icons/Edit';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { ReactElement, useContext, useState } from 'react';
 import { CourseListItem } from '../../common/waseda/course/course';
 import CourseImage from './CourseImage';
 import { CourseOverviewContext } from './CourseOverview';
+import ChangeNameDialog from './dialog/ChangeNameDialog';
 import TimetableSettingsDialog from './dialog/TimetableSettingsDialog';
 
 type Props = {
@@ -40,6 +42,7 @@ export default function CourseCard(props: Props): ReactElement {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [timetableSettingsDialogOpen, setTimetableSettingsDialogOpen] = useState(false);
+    const [changeNameDialogOpen, setChangeNameDialogOpen] = useState(false);
     const context = useContext(CourseOverviewContext);
 
     const courseName = context.courseData[props.course.id]?.overrideName ?? props.course.name;
@@ -60,6 +63,10 @@ export default function CourseCard(props: Props): ReactElement {
     };
     const handleTimetableSettings = () => {
         setTimetableSettingsDialogOpen(true);
+        closeMenu();
+    };
+    const handleChangeName = () => {
+        setChangeNameDialogOpen(true);
         closeMenu();
     };
 
@@ -114,8 +121,15 @@ export default function CourseCard(props: Props): ReactElement {
                     </ListItemIcon>
                     {browser.i18n.getMessage('courseOverviewTimetableSettings')}
                 </MenuItem>
+                <MenuItem onClick={handleChangeName}>
+                    <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
+                        <Edit />
+                    </ListItemIcon>
+                    {browser.i18n.getMessage('courseOverviewChangeName')}
+                </MenuItem>
             </Menu>
             <TimetableSettingsDialog course={props.course} open={timetableSettingsDialogOpen} onClose={() => setTimetableSettingsDialogOpen(false)} />
+            <ChangeNameDialog course={props.course} open={changeNameDialogOpen} onClose={() => setChangeNameDialogOpen(false)} />
         </Card>
     );
 }
