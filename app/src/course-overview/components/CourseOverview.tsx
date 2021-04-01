@@ -8,14 +8,14 @@ import { TimetableEntry } from '../../common/waseda/course/timetable';
 import { courseData, courseList, messengerClient, timetableEntries } from '../content-script';
 import NormalView from './normal/NormalView';
 import TimetableView from './timetable/TimetableView';
-import { CourseData } from '../../common/waseda/course/course-data';
+import { CourseDataEntry } from '../../common/waseda/course/course-data';
 
 export type CourseOverviewType = 'normal' | 'timetable';
 
 export type CourseOverviewContextProps = {
     courseList: CourseListItem[];
     timetableEntries: TimetableEntry[];
-    courseData: Record<number, CourseData | undefined>;
+    courseData: Record<number, CourseDataEntry | undefined>;
     hideCourse: (course: Course) => void;
     unhideCourse: (course: Course) => void;
 };
@@ -121,8 +121,8 @@ function useTimetableEntries(): TimetableEntry[] | undefined {
     return timetableEntriesValue;
 }
 
-function useCourseData(): Record<number, CourseData> | undefined {
-    const [courseDataValue, setCourseDataValue] = useState<Record<number, CourseData> | undefined>(undefined);
+function useCourseData(): Record<number, CourseDataEntry | undefined> | undefined {
+    const [courseDataValue, setCourseDataValue] = useState<Record<number, CourseDataEntry | undefined> | undefined>(undefined);
     useEffect(() => {
         let isCancelled = false;
 
@@ -130,7 +130,7 @@ function useCourseData(): Record<number, CourseData> | undefined {
             if (!isCancelled) setCourseDataValue(value);
         });
 
-        const listener = (_: Record<number, CourseData | undefined> | undefined, value: Record<number, CourseData | undefined>) => {
+        const listener = (_: Record<number, CourseDataEntry | undefined> | undefined, value: Record<number, CourseDataEntry | undefined>) => {
             setCourseDataValue(value);
         };
         onConfigChange('courseData', listener, false);

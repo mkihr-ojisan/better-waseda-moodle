@@ -1,7 +1,7 @@
 import { CourseOverviewType } from '../../course-overview/components/CourseOverview';
 import { YearTerm } from '../waseda/course/course';
-import { CourseData } from '../waseda/course/course-data';
 import { TimetableEntry } from '../waseda/course/timetable';
+import { CourseDataEntry } from '../waseda/course/course-data';
 
 export type ConfigKey = keyof Config;
 export type ConfigValue<T extends ConfigKey> = Config[T];
@@ -20,7 +20,7 @@ export type Config = {
     'timetable.selectedTerm': YearTerm | null;
     'hideName.enabled': boolean;
     'syllabusLinkFix.enabled': boolean;
-    'courseData': Record<number, CourseData | undefined>;
+    'courseData': Record<number, CourseDataEntry | undefined>;
 };
 
 export const defaultValue: Config = {

@@ -1,4 +1,4 @@
-export type CourseData = {
+export type CourseDataEntry = {
     overrideName?: string;
     overrideImage?: CourseImage;
 };
