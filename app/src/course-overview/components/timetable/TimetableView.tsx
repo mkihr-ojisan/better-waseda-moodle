@@ -5,7 +5,7 @@ import { uniqueYearTerms, yearTermEquals } from '../../../common/waseda/course/c
 import useConfig from '../../../common/react/useConfig';
 import CourseListView from '../CourseListView';
 import { CourseOverviewContext } from '../CourseOverview';
-import HiddenCoursesDialog from '../HiddenCoursesDialog';
+import HiddenCoursesDialog from '../dialog/HiddenCoursesDialog';
 import Timetable from './Timetable';
 import TimetableTermSelector from './TimetableTermSelector';
 

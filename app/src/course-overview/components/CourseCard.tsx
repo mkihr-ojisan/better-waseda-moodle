@@ -14,7 +14,7 @@ import React, { ReactElement, useContext, useState } from 'react';
 import { CourseListItem } from '../../common/waseda/course/course';
 import CourseImage from './CourseImage';
 import { CourseOverviewContext } from './CourseOverview';
-import TimetableSettingsDialog from './TimetableSettingsDialog';
+import TimetableSettingsDialog from './dialog/TimetableSettingsDialog';
 
 type Props = {
     course: CourseListItem;

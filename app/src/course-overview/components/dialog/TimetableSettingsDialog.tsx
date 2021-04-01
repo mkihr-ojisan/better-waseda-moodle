@@ -23,10 +23,10 @@ import Add from '@material-ui/icons/Add';
 import Delete from '@material-ui/icons/Delete';
 import Error from '@material-ui/icons/Error';
 import React, { ReactElement, useContext, useMemo, useState } from 'react';
-import { containsYearTerm, CourseListItem, DayOfWeek, dayOfWeekToString, DayPeriod, Term, termToString, YearTerm } from '../../common/waseda/course/course';
-import { range } from '../../common/util/util';
-import { CourseOverviewContext } from './CourseOverview';
-import { CourseDataEntry, registerCourseData } from '../../common/waseda/course/course-data';
+import { containsYearTerm, CourseListItem, DayOfWeek, dayOfWeekToString, DayPeriod, Term, termToString, YearTerm } from '../../../common/waseda/course/course';
+import { range } from '../../../common/util/util';
+import { CourseOverviewContext } from './../CourseOverview';
+import { CourseDataEntry, registerCourseData } from '../../../common/waseda/course/course-data';
 
 type Props = {
     open: boolean;

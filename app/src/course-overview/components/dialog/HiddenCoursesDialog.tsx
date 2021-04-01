@@ -6,9 +6,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import React, { ReactElement, useContext } from 'react';
-import { useMediaQuery } from '../../common/polyfills/useMediaQuery';
-import CourseListView from './CourseListView';
-import { CourseOverviewContext } from './CourseOverview';
+import { useMediaQuery } from '../../../common/polyfills/useMediaQuery';
+import CourseListView from '../CourseListView';
+import { CourseOverviewContext } from '../CourseOverview';
 
 type Props = {
     open: boolean;

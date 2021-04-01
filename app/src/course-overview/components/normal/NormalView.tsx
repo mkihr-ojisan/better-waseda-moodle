@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import React, { ReactElement, useContext, useState } from 'react';
 import CourseListView from '../CourseListView';
 import { CourseOverviewContext } from '../CourseOverview';
-import HiddenCoursesDialog from '../HiddenCoursesDialog';
+import HiddenCoursesDialog from '../dialog/HiddenCoursesDialog';
 
 export default function NormalView(): ReactElement {
     const context = useContext(CourseOverviewContext);
