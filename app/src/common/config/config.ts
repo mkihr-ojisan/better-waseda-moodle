@@ -31,7 +31,7 @@ export const defaultValue: Config = {
     'moreVisibleRemainingTime.enabled': true,
     'disableRateLimit.enabled': true,
     'courseOverview.enabled': true,
-    'courseOverview.type': 'normal',
+    'courseOverview.type': 'timetable',
     'timetable.selectedTerm': null,
     'hideName.enabled': false,
     'syllabusLinkFix.enabled': true,
