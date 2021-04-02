@@ -52,7 +52,7 @@
     "description": "設定ページの「コース概要」セクションの見出し"
   },
   "optionsEnableCourseOverview": {
-    "message": "コース概要を独自のものに置き換える",
+    "message": "コース概要を置き換える",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
   "optionsCourseOverviewTypeLabel": {
