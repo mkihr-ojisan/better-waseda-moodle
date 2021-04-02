@@ -2,7 +2,7 @@ import { doLogin } from '../../../auto-login/auto-login';
 import { DayOfWeek, DayPeriod, Term } from './course';
 import { fetchHtml, postForm } from '../../util/util';
 
-type CourseRegistrationInfo = {
+export type CourseRegistrationInfo = {
     termDayPeriods: {       //学期・曜日・時限
         term: Term;
         dayPeriod: DayPeriod;
