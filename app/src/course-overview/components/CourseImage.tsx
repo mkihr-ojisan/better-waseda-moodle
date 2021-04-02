@@ -8,6 +8,7 @@ type Props = {
     title: string;
     alt: string;
     height: string;
+    classes?: { cardMediaRoot?: string; };
 };
 
 
@@ -27,6 +28,7 @@ export default function CourseImage(props: Props): ReactElement {
                         height={props.height}
                         component="img"
                         image={overrideCourseImage.url}
+                        classes={{ root: props.classes?.cardMediaRoot }}
                     />
                 );
             case 'solid_color':
@@ -36,6 +38,7 @@ export default function CourseImage(props: Props): ReactElement {
                         title={props.title}
                         style={{ height: props.height + 'px', backgroundColor }}
                         component="div"
+                        classes={{ root: props.classes?.cardMediaRoot }}
                     />
                 );
         }
@@ -47,6 +50,7 @@ export default function CourseImage(props: Props): ReactElement {
                 height={props.height}
                 component="img"
                 image={props.course.imageUrl}
+                classes={{ root: props.classes?.cardMediaRoot }}
             />
         );
     }

@@ -1,6 +1,5 @@
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Menu from '@material-ui/core/Menu';
@@ -18,6 +17,7 @@ import { CourseOverviewContext } from '../CourseOverview';
 import TimetableSettingsDialog from '../dialog/TimetableSettingsDialog';
 import ChangeNameDialog from '../dialog/ChangeNameDialog';
 import Edit from '@material-ui/icons/Edit';
+import CourseImage from '../CourseImage';
 
 type Props = {
     course: CourseListItem;
@@ -72,6 +72,8 @@ export default function CourseCard(props: Props): ReactElement {
 
     const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
 
+    const courseName = context.courseData[props.course.id]?.overrideName ?? props.course.name;
+
     const handleOpenMenuButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
         setMenuOpen(true);
@@ -108,13 +110,12 @@ export default function CourseCard(props: Props): ReactElement {
             className={classes.root}
             onContextMenu={isSmallScreen ? handleContextMenu : undefined}
         >
-            <CardMedia
-                component="img"
-                alt={props.course.name}
+            <CourseImage
+                alt={courseName}
                 height="8"
-                image={props.course.imageUrl}
-                title={props.course.name}
-                classes={{ root: classes.cardMediaRoot }}
+                title={courseName}
+                course={props.course}
+                classes={{ cardMediaRoot: classes.cardMediaRoot }}
             />
             <CardHeader
                 disableTypography={true}
@@ -124,7 +125,7 @@ export default function CourseCard(props: Props): ReactElement {
                 }}
                 title={
                     <Typography variant="body1" classes={{ root: classes.cardHeaderTypographyRoot }}>
-                        <a className={classes.title} href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}>{props.course.name}</a>
+                        <a className={classes.title} href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}>{courseName}</a>
                     </Typography>
                 }
                 action={
