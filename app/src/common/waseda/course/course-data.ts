@@ -5,6 +5,7 @@ export type CourseDataEntry = {
     overrideName?: string;
     overrideImage?: CourseImage;
     timetableData?: TimetableEntry[];
+    syllabusUrl?: string;
 };
 
 export type CourseImage = CourseImageUrl | CourseImageSolidColor;
