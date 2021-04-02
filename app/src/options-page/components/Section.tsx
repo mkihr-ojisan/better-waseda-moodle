@@ -1,8 +1,6 @@
-import Accordion from '@material-ui/core/Accordion';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
+import { makeStyles } from '@material-ui/core';
+import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import React, { ReactElement, ReactNode } from 'react';
 
 type Props = {
@@ -12,18 +10,24 @@ type Props = {
     titleMessageName: string;
 };
 
+const useStyles = makeStyles(theme => ({
+    sectionContentRoot: {
+        marginBlockStart: theme.spacing(2),
+        marginBlockEnd: theme.spacing(4),
+    },
+}));
 
 export default function Section(props: Props): ReactElement {
+    const classes = useStyles();
+
     return (
-        <Accordion expanded={props.expanded} onChange={props.onChange}>
-            <AccordionSummary expandIcon={<ExpandMore />}>
-                <Typography variant="h6">
-                    {browser.i18n.getMessage(props.titleMessageName)}
-                </Typography>
-            </AccordionSummary>
-            <AccordionDetails style={{ display: 'block' }}>
+        <Container>
+            <Typography variant="h6" color="textPrimary">
+                {browser.i18n.getMessage(props.titleMessageName)}
+            </Typography>
+            <Typography component="div" classes={{ root: classes.sectionContentRoot }} color="textPrimary">
                 {props.children}
-            </AccordionDetails>
-        </Accordion>
+            </Typography>
+        </Container>
     );
 }
