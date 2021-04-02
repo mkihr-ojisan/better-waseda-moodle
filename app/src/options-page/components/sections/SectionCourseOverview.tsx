@@ -4,7 +4,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-import Snackbar from '@material-ui/core/Snackbar';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
@@ -68,15 +67,13 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                 </Grid>
             </Box>
 
-            <Snackbar
-                open={courseCacheClearedSnackbarOpen}
-                autoHideDuration={1500}
-                onClose={() => setCourseCacheClearedSnackbarOpen(false)}
-            >
+            {
+                courseCacheClearedSnackbarOpen &&
                 <Alert severity="success">
                     {browser.i18n.getMessage('optionsClearCourseListCacheMessage')}
                 </Alert>
-            </Snackbar>
+            }
+
         </Section>
     );
 }
