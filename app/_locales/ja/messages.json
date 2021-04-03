@@ -327,5 +327,20 @@
   },
   "cancel": {
     "message": "キャンセル"
+  },
+  "internalError": {
+    "message": "内部エラー"
+  },
+  "loginRequiredError": {
+    "message": "この操作にはログインが必要です。ログインするか、自動ログインを有効にしてください。"
+  },
+  "invalidResponseError": {
+    "message": "無効なデータを受信しました。"
+  },
+  "userIdOrPasswordNotSetError": {
+    "message": "ユーザーIDまだはパスワードが設定されていません。"
+  },
+  "underMaintenanceError": {
+    "message": "メンテナンス中です。"
   }
 }

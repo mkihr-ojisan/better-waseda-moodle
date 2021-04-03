@@ -1,6 +1,7 @@
 import { doLogin } from '../../../auto-login/auto-login';
 import { DayOfWeek, DayPeriod, Term } from './course';
 import { fetchHtml, postForm } from '../../util/util';
+import { InvalidResponseError, LoginRequiredError, UnderMaintenanceError } from '../../error';
 
 export type CourseRegistrationInfo = {
     termDayPeriods: {       //学期・曜日・時限
@@ -28,7 +29,7 @@ export async function fetchCourseRegistrationInfo(): Promise<CourseRegistrationI
     let page1 = await fetchHtml('https://coursereg.waseda.jp/portal/simpleportal.php?HID_P14=JA');
     if (page1.title === 'Authentication Platform Service in Waseda University') {
         //ログインページにリダイレクトされたら、自動ログイン
-        if (!await doLogin()) throw Error('login required');
+        if (!await doLogin()) throw new LoginRequiredError();
         page1 = await fetchHtml('https://coursereg.waseda.jp/portal/simpleportal.php?HID_P14=JA');
     }
 
@@ -55,7 +56,7 @@ export async function fetchCourseRegistrationInfo(): Promise<CourseRegistrationI
     const page2 = new DOMParser().parseFromString(await (await postForm('https://coursereg.waseda.jp/portal/simpleportal.php', formData)).text(), 'text/html');
 
     const nextUrl = page2.querySelector('form')?.getAttribute('action');
-    if (!nextUrl) throw Error('cannot find form');
+    if (!nextUrl) throw new InvalidResponseError('cannot find form');
 
     const formData2: Record<string, string> = Object.fromEntries(Array.from(page2.getElementsByTagName('input')).map(input => [input.name, input.value]));
 
@@ -63,7 +64,7 @@ export async function fetchCourseRegistrationInfo(): Promise<CourseRegistrationI
     const page3 = new DOMParser().parseFromString(await (await postForm(nextUrl, formData2)).text(), 'text/html');
 
     if (page3.body.innerHTML.indexOf('ただいまメンテナンス中です。') >= 0) {
-        throw Error('under maintenance');
+        throw new UnderMaintenanceError();
     }
 
     const terms: Record<string, Term> = {

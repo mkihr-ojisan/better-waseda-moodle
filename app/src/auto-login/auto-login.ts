@@ -2,6 +2,7 @@ import { getConfig } from '../common/config/config';
 import { getConfigCache } from '../common/config/config-cache';
 import { login } from '../common/waseda/login';
 import { VENDOR } from '../common/util/util';
+import { LoginRequiredError } from '../common/error';
 
 export async function initAutoLogin(): Promise<void> {
     switch (VENDOR) {
@@ -98,7 +99,7 @@ export async function ensureLogin(): Promise<boolean> {
                 lastEnsureLogin = Date.now();
                 return true;
             } else {
-                throw Error('auto login is disabled');
+                throw new LoginRequiredError();
             }
         } else {
             lastEnsureLogin = Date.now();

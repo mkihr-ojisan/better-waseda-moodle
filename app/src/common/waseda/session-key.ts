@@ -1,4 +1,5 @@
 import { ensureLogin } from '../../auto-login/auto-login';
+import { InvalidResponseError } from '../error';
 import { fetchHtml } from '../util/util';
 
 let cache: {
@@ -15,7 +16,7 @@ export async function fetchSessionKey(force?: boolean): Promise<string> {
 
         const moodleTop = await fetchHtml('https://wsdmoodle.waseda.jp/my/');
         const sessionKey = moodleTop.querySelector('a[href^="https://wsdmoodle.waseda.jp/login/logout.php?sesskey="]')?.getAttribute('href')?.split('=')[1];
-        if (!sessionKey) throw Error('cannot find session key');
+        if (!sessionKey) throw new InvalidResponseError('cannot find session key');
 
         cache = {
             sessionKey,

@@ -3,6 +3,7 @@ import { postJson } from '../../util/util';
 import { fetchSessionKey } from '../session-key';
 import * as idb from 'idb-keyval';
 import parseEntities from 'parse-entities';
+import { InvalidResponseError } from '../../error';
 
 const cacheStore = idb.createStore('courseListCache', 'courseListCache');
 
@@ -56,10 +57,10 @@ async function doFetchCourseList(): Promise<CourseListItem[]> {
                     await fetchSessionKey(true);
                     return await doFetchCourseList();
                 }
-                throw Error(response[0].exception?.message);
+                throw new InvalidResponseError(response[0].exception?.message);
             }
             if (!responseItem.data)
-                throw Error('data is null');
+                throw new InvalidResponseError('data is null');
 
             for (const course of responseItem.data.courses) {
                 courseList.push({
@@ -75,7 +76,7 @@ async function doFetchCourseList(): Promise<CourseListItem[]> {
             }
         }
     } catch (ex) {
-        throw Error(`received invalid response: ${ex.message}`);
+        throw new InvalidResponseError(ex.message);
     }
 
     idb.set('cache', courseList, cacheStore);
@@ -141,7 +142,7 @@ export async function setHiddenFromCourseList(course: Course, isHidden: boolean)
             await fetchSessionKey(true);
             return await setHiddenFromCourseList(course, isHidden);
         }
-        throw Error(response[0]?.exception?.message ?? 'invalid response');
+        throw new InvalidResponseError(response[0]?.exception?.message ?? 'invalid response');
     }
 
     const cache: CourseListItem[] | undefined = await idb.get('cache', cacheStore);
