@@ -1,15 +1,22 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import Alert from '@material-ui/lab/Alert';
 import React, { ReactElement, useState } from 'react';
+import AutoCloseAlert from '../../../common/react/AutoCloseAlert';
 import useConfig from '../../../common/react/useConfig';
-import { clearCourseListCache } from '../../../common/waseda/course/course-list';
+import { registerCourseData } from '../../../common/waseda/course/course-data';
+import { clearCourseListCache, fetchCourseList } from '../../../common/waseda/course/course-list';
+import { fetchCourseRegistrationInfo } from '../../../common/waseda/course/course-registration';
 import { SectionComponentProps } from '../Options';
 import Section from '../Section';
 
@@ -18,6 +25,9 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     const [type, setType] = useConfig('courseOverview.type');
 
     const [courseCacheClearedSnackbarOpen, setCourseCacheClearedSnackbarOpen] = useState(false);
+    const [fetchTimetableDataAndSyllabusUrlMessageOpen, setFetchTimetableDataAndSyllabusUrlMessageOpen] = useState(false);
+    const [fetchTimetableDataAndSyllabusUrlDoneMessageOpen, setFetchTimetableDataAndSyllabusUrlDoneMessageOpen] = useState(false);
+    const [isFetchingTimetableDataAndSyllabusUrl, setIsFetchingTimetableDataAndSyllabusUrl] = useState(false);
 
     if (enabled === undefined || type === undefined) return null;
 
@@ -35,6 +45,14 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     function handleClearCourseCache() {
         clearCourseListCache().then(() => {
             setCourseCacheClearedSnackbarOpen(true);
+        });
+    }
+    function handleFetchTimetableDataAndSyllabusUrl() {
+        setIsFetchingTimetableDataAndSyllabusUrl(true);
+        fetchTimetableDataAndSyllabusUrl().then(() => {
+            setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(true);
+            setIsFetchingTimetableDataAndSyllabusUrl(false);
+            setFetchTimetableDataAndSyllabusUrlMessageOpen(false);
         });
     }
 
@@ -64,16 +82,49 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                             {browser.i18n.getMessage('optionsClearCourseListCache')}
                         </Button>
                     </Grid>
+                    <Grid item>
+                        <Button variant="outlined" onClick={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(true)}>
+                            {browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrl')}
+                        </Button>
+                    </Grid>
                 </Grid>
             </Box>
 
-            {
-                courseCacheClearedSnackbarOpen &&
-                <Alert severity="success">
-                    {browser.i18n.getMessage('optionsClearCourseListCacheMessage')}
-                </Alert>
-            }
+            <AutoCloseAlert severity="success" open={courseCacheClearedSnackbarOpen} onClose={() => setCourseCacheClearedSnackbarOpen(false)}>
+                {browser.i18n.getMessage('optionsClearCourseListCacheMessage')}
+            </AutoCloseAlert>
 
+            <Dialog open={fetchTimetableDataAndSyllabusUrlMessageOpen} onClose={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}>
+                <DialogContent>
+                    <DialogContentText>{browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlMessage')}</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    {isFetchingTimetableDataAndSyllabusUrl && <CircularProgress />}
+                    <Button color="primary" disabled={isFetchingTimetableDataAndSyllabusUrl} onClick={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}>
+                        {browser.i18n.getMessage('cancel')}
+                    </Button>
+                    <Button color="primary" disabled={isFetchingTimetableDataAndSyllabusUrl} onClick={handleFetchTimetableDataAndSyllabusUrl}>
+                        {browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlMessageOK')}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <AutoCloseAlert severity="success" open={fetchTimetableDataAndSyllabusUrlDoneMessageOpen} onClose={() => setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(false)}>
+                {browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlDoneMessage')}
+            </AutoCloseAlert>
         </Section>
     );
+}
+
+async function fetchTimetableDataAndSyllabusUrl(): Promise<void> {
+    const [list, infos] = await Promise.all([fetchCourseList(), fetchCourseRegistrationInfo()]);
+
+    console.log({ list, infos });
+
+    for (const course of list) {
+        const info = infos.find(i => i.name === course.name && i.status === '決定');
+        if (!info) continue;
+
+        await registerCourseData(course.id, 'timetableData', info.termDayPeriods.map(v => ({ yearTerm: { year: parseInt(course.category), term: v.term }, dayPeriod: v.dayPeriod })));
+        await registerCourseData(course.id, 'syllabusUrl', info.syllabusUrl);
+    }
 }

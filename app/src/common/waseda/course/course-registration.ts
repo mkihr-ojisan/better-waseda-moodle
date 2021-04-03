@@ -62,6 +62,10 @@ export async function fetchCourseRegistrationInfo(): Promise<CourseRegistrationI
     //履修申請ページ
     const page3 = new DOMParser().parseFromString(await (await postForm(nextUrl, formData2)).text(), 'text/html');
 
+    if (page3.body.innerHTML.indexOf('ただいまメンテナンス中です。') >= 0) {
+        throw Error('under maintenance');
+    }
+
     const terms: Record<string, Term> = {
         '通年': 'full_year',
         '春学期': 'spring_semester',

@@ -75,6 +75,22 @@
     "message": "コース一覧のキャッシュを削除しました",
     "description": "コース一覧のキャッシュを削除したときに表示するスナックバーのメッセージ"
   },
+  "optionsFetchTimetableDataAndSyllabusUrl": {
+    "message": "時間割とシラバスのURLを取得する",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
+  "optionsFetchTimetableDataAndSyllabusUrlMessage": {
+    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。既存の設定は上書きされます。",
+    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+  },
+  "optionsFetchTimetableDataAndSyllabusUrlMessageOK": {
+    "message": "続行",
+    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+  },
+  "optionsFetchTimetableDataAndSyllabusUrlDoneMessage": {
+    "message": "時間割とシラバスのURLを取得しました",
+    "description": "時間割とシラバスのURLの取得に成功したときに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"
