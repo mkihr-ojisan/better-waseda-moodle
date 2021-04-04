@@ -265,6 +265,14 @@
     "message": "設定",
     "description": "コース概要の設定ダイアログに表示するメッセージ"
   },
+  "courseOverviewSyllabusUrlNotSetDialogMessage": {
+    "message": "シラバスを開くにはURLを設定してください。",
+    "description": "コース概要のメニューからシラバスを開こうとしたがURLが設定されていないときに表示されるダイアログのメッセージ"
+  },
+  "courseOverviewSyllabusUrlNotSetDialogOpenSettings": {
+    "message": "設定を開く",
+    "description": "コース概要のメニューからシラバスを開こうとしたがURLが設定されていないときに表示されるダイアログメッセージ"
+  },
   "sundayShort": {
     "message": "日"
   },

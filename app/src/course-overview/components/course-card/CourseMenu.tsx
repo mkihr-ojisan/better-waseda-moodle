@@ -8,6 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 import { PopoverPosition, PopoverReference } from '@material-ui/core/Popover';
 import SettingsMenuItem from './menu-item/SettingsMenuItem';
+import OpenSyllabusMenuItem from './menu-item/OpenSyllabusMenuItem';
 
 type Props = {
     course: CourseListItem;
@@ -37,6 +38,8 @@ export default function CourseMenu(props: Props): ReactElement {
             anchorPosition={props.anchorPosition}
             anchorReference={props.anchorReference}
         >
+            <OpenSyllabusMenuItem course={props.course} onCloseMenu={props.onClose} />
+            <Divider classes={{ root: classes.menuDivider }} />
             {
                 props.course.isHidden
                     ? <UnhideCourseMenuItem course={props.course} onCloseMenu={props.onClose} />
