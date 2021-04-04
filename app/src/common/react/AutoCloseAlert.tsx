@@ -1,6 +1,7 @@
 import Collapse from '@material-ui/core/Collapse';
 import Alert, { Color } from '@material-ui/lab/Alert';
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
+import useTimer from './useTimer';
 
 type Props = {
     severity: Color;
@@ -11,19 +12,13 @@ type Props = {
 };
 
 export default function AutoCloseAlert(props: Props): ReactElement | null {
-    const [onCloseFunc] = useState(() => props.onClose);
-    const [timeout] = useState(props.timeout ?? 3000);
+    const [hover, setHover] = useState(false);
 
-    useEffect(() => {
-        if (props.open) {
-            const timeoutId = setTimeout(onCloseFunc, timeout);
-            return () => clearTimeout(timeoutId);
-        }
-    }, [onCloseFunc, props.open, timeout]);
+    useTimer(props.open && !hover, 3000, () => props.onClose());
 
     return (
         <Collapse in={props.open}>
-            <Alert severity={props.severity}>
+            <Alert severity={props.severity} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 {props.children}
             </Alert>
         </Collapse>
