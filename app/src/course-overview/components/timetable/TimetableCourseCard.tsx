@@ -1,23 +1,15 @@
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import CalendarToday from '@material-ui/icons/CalendarToday';
 import MoreVert from '@material-ui/icons/MoreVert';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { ReactElement, useContext, useState } from 'react';
 import { CourseListItem } from '../../../common/waseda/course/course';
 import { useMediaQuery } from '../../../common/polyfills/useMediaQuery';
 import { CourseOverviewContext } from '../CourseOverview';
-import TimetableSettingsDialog from '../dialog/TimetableSettingsDialog';
-import ChangeNameDialog from '../dialog/ChangeNameDialog';
-import Edit from '@material-ui/icons/Edit';
 import CourseImage from '../course-card/CourseImage';
+import CourseMenu from '../course-card/CourseMenu';
 
 type Props = {
     course: CourseListItem;
@@ -66,8 +58,6 @@ export default function CourseCard(props: Props): ReactElement {
     const [menuOpen, setMenuOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
-    const [timetableSettingsDialogOpen, setTimetableSettingsDialogOpen] = useState(false);
-    const [changeNameDialogOpen, setChangeNameDialogOpen] = useState(false);
     const context = useContext(CourseOverviewContext);
 
     const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
@@ -80,22 +70,6 @@ export default function CourseCard(props: Props): ReactElement {
     };
     const closeMenu = () => {
         setMenuOpen(false);
-    };
-    const handleHideCourse = () => {
-        context.hideCourse(props.course);
-        closeMenu();
-    };
-    const handleUnhideCourse = () => {
-        context.unhideCourse(props.course);
-        closeMenu();
-    };
-    const handleTimetableSettings = () => {
-        setTimetableSettingsDialogOpen(true);
-        closeMenu();
-    };
-    const handleChangeName = () => {
-        setChangeNameDialogOpen(true);
-        closeMenu();
     };
     const handleContextMenu: React.MouseEventHandler = event => {
         if (!menuOpen) {
@@ -134,44 +108,14 @@ export default function CourseCard(props: Props): ReactElement {
                     </IconButton>
                 }
             />
-            <Menu
+            <CourseMenu
+                course={props.course}
                 anchorEl={isSmallScreen ? undefined : anchorEl}
                 anchorPosition={isSmallScreen ? anchorPosition : undefined}
                 anchorReference={isSmallScreen ? 'anchorPosition' : 'anchorEl'}
-                keepMounted
                 open={menuOpen}
                 onClose={closeMenu}
-            >
-                {
-                    props.course.isHidden ?
-                        <MenuItem onClick={handleUnhideCourse}>
-                            <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
-                                <Visibility />
-                            </ListItemIcon>
-                            {browser.i18n.getMessage('courseOverviewUnhide')}
-                        </MenuItem> :
-                        <MenuItem onClick={handleHideCourse}>
-                            <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
-                                <VisibilityOff />
-                            </ListItemIcon>
-                            {browser.i18n.getMessage('courseOverviewHide')}
-                        </MenuItem>
-                }
-                <MenuItem onClick={handleTimetableSettings}>
-                    <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
-                        <CalendarToday />
-                    </ListItemIcon>
-                    {browser.i18n.getMessage('courseOverviewTimetableSettings')}
-                </MenuItem>
-                <MenuItem onClick={handleChangeName}>
-                    <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
-                        <Edit />
-                    </ListItemIcon>
-                    {browser.i18n.getMessage('courseOverviewChangeName')}
-                </MenuItem>
-            </Menu>
-            <TimetableSettingsDialog course={props.course} open={timetableSettingsDialogOpen} onClose={() => setTimetableSettingsDialogOpen(false)} />
-            <ChangeNameDialog course={props.course} open={changeNameDialogOpen} onClose={() => setChangeNameDialogOpen(false)} />
+            />
         </Card>
     );
 }
