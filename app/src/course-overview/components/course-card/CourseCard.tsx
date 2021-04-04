@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
     cardHeaderAction: {
         marginTop: -4,
     },
+    cardHeaderRoot: {
+        alignItems: 'flex-start',
+    },
 }));
 
 
@@ -57,6 +60,7 @@ export default function CourseCard(props: Props): ReactElement {
                 disableTypography={true}
                 classes={{
                     action: classes.cardHeaderAction,
+                    root: classes.cardHeaderRoot,
                 }}
                 title={
                     <Typography variant="body1">

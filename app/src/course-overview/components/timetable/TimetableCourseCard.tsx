@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
         objectPosition: 'center top',
     },
     cardHeaderRoot: {
+        alignItems: 'flex-start',
         [theme.breakpoints.between('sm', 'lg')]: {
             padding: theme.spacing(1),
         },
