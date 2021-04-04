@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import Grid, { GridSize } from '@material-ui/core/Grid';
 import React, { ReactElement } from 'react';
 import { CourseListItem } from '../../common/waseda/course/course';
-import CourseCard from './CourseCard';
+import CourseCard from './course-card/CourseCard';
 
 type Props = {
     courses: CourseListItem[];

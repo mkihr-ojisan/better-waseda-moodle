@@ -17,7 +17,7 @@ import { CourseOverviewContext } from '../CourseOverview';
 import TimetableSettingsDialog from '../dialog/TimetableSettingsDialog';
 import ChangeNameDialog from '../dialog/ChangeNameDialog';
 import Edit from '@material-ui/icons/Edit';
-import CourseImage from '../CourseImage';
+import CourseImage from '../course-card/CourseImage';
 
 type Props = {
     course: CourseListItem;

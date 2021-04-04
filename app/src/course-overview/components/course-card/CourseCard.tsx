@@ -12,11 +12,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import Edit from '@material-ui/icons/Edit';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { ReactElement, useContext, useState } from 'react';
-import { CourseListItem } from '../../common/waseda/course/course';
+import { CourseListItem } from '../../../common/waseda/course/course';
 import CourseImage from './CourseImage';
-import { CourseOverviewContext } from './CourseOverview';
-import ChangeNameDialog from './dialog/ChangeNameDialog';
-import TimetableSettingsDialog from './dialog/TimetableSettingsDialog';
+import { CourseOverviewContext } from '../CourseOverview';
+import ChangeNameDialog from '../dialog/ChangeNameDialog';
+import TimetableSettingsDialog from '../dialog/TimetableSettingsDialog';
 
 type Props = {
     course: CourseListItem;
