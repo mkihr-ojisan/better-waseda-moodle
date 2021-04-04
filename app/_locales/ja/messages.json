@@ -80,7 +80,7 @@
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
   "optionsFetchTimetableDataAndSyllabusUrlMessage": {
-    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。既存の設定は上書きされます。",
+    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。既存の設定は上書きされます。履修登録ページがメンテナンス中の場合は取得できません。また、Moodleのコース名と科目名が一致していないなど特殊な科目の情報は取得できないことがあります。",
     "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
   },
   "optionsFetchTimetableDataAndSyllabusUrlMessageOK": {
