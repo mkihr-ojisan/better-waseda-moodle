@@ -171,6 +171,10 @@
     "message": "名前の変更",
     "description": "コース概要のメニューの項目"
   },
+  "courseOverviewSettings": {
+    "message": "設定",
+    "description": "コース概要のメニューの項目"
+  },
   "courseOverviewHiddenCourses": {
     "message": "非表示のコース",
     "description": "コース概要の上部にあるボタン"
@@ -241,17 +245,25 @@
     "message": "重複している項目があるため設定できません。",
     "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
   },
-  "courseOverviewChangeNameDialogTitle": {
-    "message": "名前の変更",
-    "description": "コース概要の名前の変更ダイアログのタイトル"
+  "courseOverviewSettingsDialogTitle": {
+    "message": "「$1」の設定",
+    "description": "コース概要の設定ダイアログのタイトル"
   },
-  "courseOverviewChangeNamesDialogOK": {
-    "message": "設定",
-    "description": "コース概要の名前の変更ダイアログに表示するメッセージ"
+  "courseOverviewSettingsDialogName": {
+    "message": "名前",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
   },
-  "courseOverviewChangeNamesDialogSetToDefault": {
+  "courseOverviewSettingsDialogSetNameToDefault": {
     "message": "デフォルトに戻す",
-    "description": "コース概要の名前の変更ダイアログに表示するメッセージ"
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSettingsDialogSyllabusUrl": {
+    "message": "シラバスのURL",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSettingsDialogOK": {
+    "message": "設定",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
   },
   "sundayShort": {
     "message": "日"
