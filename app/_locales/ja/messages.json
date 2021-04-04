@@ -261,6 +261,10 @@
     "message": "シラバスのURL",
     "description": "コース概要の設定ダイアログに表示するメッセージ"
   },
+  "courseOverviewSettingsDialogNote": {
+    "message": "メモ",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
   "courseOverviewSettingsDialogOK": {
     "message": "設定",
     "description": "コース概要の設定ダイアログに表示するメッセージ"

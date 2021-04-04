@@ -9,6 +9,9 @@ import { CourseListItem } from '../../../common/waseda/course/course';
 import CourseImage from './CourseImage';
 import { CourseOverviewContext } from '../CourseOverview';
 import CourseMenu from './CourseMenu';
+import NoteIcon from '@material-ui/icons/Note';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 
 type Props = {
     course: CourseListItem;
@@ -32,7 +35,8 @@ export default function CourseCard(props: Props): ReactElement {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const context = useContext(CourseOverviewContext);
 
-    const courseName = context.courseData[props.course.id]?.overrideName ?? props.course.name;
+    const courseData = context.courseData[props.course.id];
+    const courseName = courseData?.overrideName ?? props.course.name;
 
     const handleOpenMenuButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -60,9 +64,26 @@ export default function CourseCard(props: Props): ReactElement {
                     </Typography>
                 }
                 action={
-                    <IconButton edge={false} size="small" onClick={handleOpenMenuButtonClick}>
-                        <MoreVert />
-                    </IconButton>
+                    <Grid container direction="column">
+                        <Grid item>
+                            <IconButton edge={false} size="small" onClick={handleOpenMenuButtonClick}>
+                                <MoreVert />
+                            </IconButton>
+                        </Grid>
+                        {
+                            courseData?.note ?
+                                <Grid item>
+                                    <Tooltip title={
+                                        <Typography variant="body1">{courseData?.note}</Typography>
+                                    }>
+                                        <IconButton edge={false} size="small">
+                                            <NoteIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid> :
+                                null
+                        }
+                    </Grid>
                 }
             />
 

@@ -29,6 +29,7 @@ function CourseSettingsDialogContent(props: Props) {
     const courseData = context.courseData[props.course.id];
     const [name, setName] = useState(courseData?.overrideName ?? props.course.name);
     const [syllabusUrl, setSyllabusUrl] = useState(courseData?.syllabusUrl ?? '');
+    const [note, setNote] = useState(courseData?.note ?? '');
 
     function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
         setName(event.target.value);
@@ -39,6 +40,9 @@ function CourseSettingsDialogContent(props: Props) {
     function handleSyllabusUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
         setSyllabusUrl(event.target.value);
     }
+    function handleNoteChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setNote(event.target.value);
+    }
 
     function handleCancel() {
         props.onClose();
@@ -46,6 +50,7 @@ function CourseSettingsDialogContent(props: Props) {
     async function handleOK() {
         await registerCourseData(props.course.id, 'overrideName', name === props.course.name ? undefined : name);
         await registerCourseData(props.course.id, 'syllabusUrl', syllabusUrl === '' ? undefined : syllabusUrl);
+        await registerCourseData(props.course.id, 'note', note === '' ? undefined : note);
         props.onClose();
     }
 
@@ -53,31 +58,47 @@ function CourseSettingsDialogContent(props: Props) {
         <>
             <DialogTitle>{browser.i18n.getMessage('courseOverviewSettingsDialogTitle', props.course.name)}</DialogTitle>
             <DialogContent>
-                <Grid container alignItems="flex-end" spacing={1}>
-                    <Grid item xs>
+                <Grid container direction="column" spacing={1}>
+                    <Grid item>
+                        <Grid container alignItems="flex-end" spacing={1}>
+                            <Grid item xs>
+                                <TextField
+                                    value={name}
+                                    onChange={handleNameChange}
+                                    fullWidth
+                                    label={browser.i18n.getMessage('courseOverviewSettingsDialogName')}
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Button
+                                    variant="outlined"
+                                    onClick={handleSetNameToDefault}
+                                >
+                                    {browser.i18n.getMessage('courseOverviewSettingsDialogSetNameToDefault')}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item>
                         <TextField
-                            value={name}
-                            onChange={handleNameChange}
+                            value={syllabusUrl}
+                            onChange={handleSyllabusUrlChange}
                             fullWidth
-                            label={browser.i18n.getMessage('courseOverviewSettingsDialogName')}
+                            label={browser.i18n.getMessage('courseOverviewSettingsDialogSyllabusUrl')}
                         />
                     </Grid>
                     <Grid item>
-                        <Button
+                        <TextField
                             variant="outlined"
-                            onClick={handleSetNameToDefault}
-                        >
-                            {browser.i18n.getMessage('courseOverviewSettingsDialogSetNameToDefault')}
-                        </Button>
+                            value={note}
+                            onChange={handleNoteChange}
+                            fullWidth
+                            multiline
+                            rows={4}
+                            label={browser.i18n.getMessage('courseOverviewSettingsDialogNote')}
+                        />
                     </Grid>
                 </Grid>
-
-                <TextField
-                    value={syllabusUrl}
-                    onChange={handleSyllabusUrlChange}
-                    fullWidth
-                    label={browser.i18n.getMessage('courseOverviewSettingsDialogSyllabusUrl')}
-                />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleCancel} color="primary">
