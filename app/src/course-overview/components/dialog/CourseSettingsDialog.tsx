@@ -18,7 +18,7 @@ type Props = {
 
 export default function CourseSettingsDialog(props: Props): ReactElement {
     return (
-        <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="sm">
+        <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="sm" disableBackdropClick>
             {props.open && <CourseSettingsDialogContent {...props} />}
         </Dialog>
     );
