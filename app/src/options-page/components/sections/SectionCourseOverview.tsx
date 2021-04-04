@@ -27,6 +27,7 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     const [courseCacheClearedSnackbarOpen, setCourseCacheClearedSnackbarOpen] = useState(false);
     const [fetchTimetableDataAndSyllabusUrlMessageOpen, setFetchTimetableDataAndSyllabusUrlMessageOpen] = useState(false);
     const [fetchTimetableDataAndSyllabusUrlDoneMessageOpen, setFetchTimetableDataAndSyllabusUrlDoneMessageOpen] = useState(false);
+    const [fetchTimetableDataAndSyllabusUrlError, setFetchTimetableDataAndSyllabusError] = useState<Error | null>(null);
     const [isFetchingTimetableDataAndSyllabusUrl, setIsFetchingTimetableDataAndSyllabusUrl] = useState(false);
 
     if (enabled === undefined || type === undefined) return null;
@@ -50,6 +51,10 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     function handleFetchTimetableDataAndSyllabusUrl() {
         setIsFetchingTimetableDataAndSyllabusUrl(true);
         fetchTimetableDataAndSyllabusUrl().then(() => {
+            setFetchTimetableDataAndSyllabusError(null);
+        }).catch(error => {
+            setFetchTimetableDataAndSyllabusError(error);
+        }).finally(() => {
             setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(true);
             setIsFetchingTimetableDataAndSyllabusUrl(false);
             setFetchTimetableDataAndSyllabusUrlMessageOpen(false);
@@ -108,8 +113,8 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                     </Button>
                 </DialogActions>
             </Dialog>
-            <AutoCloseAlert severity="success" open={fetchTimetableDataAndSyllabusUrlDoneMessageOpen} onClose={() => setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(false)}>
-                {browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlDoneMessage')}
+            <AutoCloseAlert severity={fetchTimetableDataAndSyllabusUrlError ? 'error' : 'success'} open={fetchTimetableDataAndSyllabusUrlDoneMessageOpen} onClose={() => setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(false)}>
+                {fetchTimetableDataAndSyllabusUrlError?.message ?? browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlDoneMessage')}
             </AutoCloseAlert>
         </Section>
     );
