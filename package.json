@@ -1,22 +1,38 @@
 {
-  "name": "Better-Waseda-Moodle",
-  "version": "0.1.0",
-  "description": "Make Waseda Moodle better.",
+  "name": "better-waseda-moodle",
+  "version": "0.0.1",
+  "description": "A browser extension that makes Waseda Moodle a little better",
   "scripts": {
     "dev": "webextension-toolbox dev",
     "build": "webextension-toolbox build"
   },
   "devDependencies": {
     "@types/firefox-webext-browser": "^82.0.0",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.19.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "react-devtools": "^4.10.1",
     "terser-webpack-plugin": "^1.4.5",
     "typescript": "^4.1.3",
-    "webextension-toolbox": "latest"
+    "webextension-toolbox": "latest",
+    "webpack-preprocessor-loader": "^1.1.3"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "config": "^3.3.3",
+    "fast-deep-equal": "^3.1.3",
+    "idb-keyval": "^5.0.2",
+    "match-pattern": "^0.0.2",
+    "parse-entities": "^2.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-error-boundary": "^3.1.0",
+    "react-hooks-async": "^3.10.1",
     "ts-loader": "^8.0.14",
     "webpack-webextension-plugin": "^0.1.1"
   }

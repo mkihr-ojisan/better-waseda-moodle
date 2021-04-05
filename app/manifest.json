@@ -2,22 +2,16 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "manifest_version": 2,
   "default_locale": "ja",
   "icons": {
-    "16": "res/images/icon-16.png",
-    "128": "res/images/icon-128.png"
+    "256": "res/images/icon-256.png"
   },
   "background": {
     "scripts": [
       "src/background.js"
     ]
-  },
-  "options_ui": {
-    "page": "src/options/options.html",
-    "chrome_style": true,
-    "browser_style": true
   },
   "permissions": [
     "*://*.waseda.jp/*",
@@ -32,7 +26,7 @@
         "https://iaidp.ia.waseda.jp/idp/profile/SAML2/Redirect/SSO?*"
       ],
       "js": [
-        "src/autoLogin/myWasedaLoginPage.js"
+        "src/auto-login/my-waseda-login-page.js"
       ]
     },
     {
@@ -40,15 +34,18 @@
         "https://wsdmoodle.waseda.jp/mod/assign/view.php?*"
       ],
       "js": [
-        "src/submissionPage/checkNotesOnSubmitting/contentScript.js"
+        "src/others/check-notes-on-submitting/content-script.js"
       ]
     }
   ],
   "web_accessible_resources": [
-    "src/autoLogin/autoLoginPage.html",
-    "res/videos/dummyVideo.mp4"
+    "src/auto-login/auto-login-page.html",
+    "res/videos/dummy-video.mp4"
   ],
-  "browser_specific_settings": {
+  "options_ui": {
+    "page": "src/options-page/options.html"
+  },
+  "__firefox__browser_specific_settings": {
     "gecko": {
       "id": "better-waseda-moodle@mkihr-ojisan.com",
       "strict_min_version": "59.0"

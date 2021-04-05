@@ -1,11 +1,25 @@
-import { initAutoLogin } from './autoLogin/autoLogin';
-import { initConfigCache } from './config/configCache';
-import { MessengerServer } from './util/messenger';
-import { initRemoveLoadingVideo } from './video/removeLoadingVideo/removeLoadingVideo';
-import { initViewInBrowser } from './others/viewInBrowser/viewInBrowser';
-import { initMoreVisibleRemainingTime } from './quiz/moreVisibleRemainingTime/moreVisibleRemainingTime';
+import { initAutoLogin, doLogin, logout } from './auto-login/auto-login';
+import { initConfigCache } from './common/config/config-cache';
+import { MessengerServer } from './common/util/messenger';
+import { initRemoveLoadingVideo } from './others/remove-loading-video/remove-loading-video';
+import { initViewInBrowser } from './others/view-in-browser/view-in-browser';
+import { initMoreVisibleRemainingTime } from './others/more-visible-remaining-time/more-visible-remaining-time';
+import { initCourseOverview } from './course-overview/background-script';
+import { fetchCourseList, setHiddenFromCourseList } from './common/waseda/course/course-list';
+import { initDisableRateLimit } from './others/disable-rate-limit/disable-rate-limit';
+import { initHideName } from './others/hide-name/background-script';
+import { initSyllabusLinkFix } from './others/syllabus-link-fix/background-script';
 
-export const messengerServer = new MessengerServer();
+// #!blink_only
+import './common/polyfills/content-script-register';
+
+const messengerServer = new MessengerServer();
+messengerServer.instructions = {
+    fetchCourseList,
+    setHiddenFromCourseList,
+    doLogin,
+    logout,
+};
 
 (async () => {
     await initConfigCache();
@@ -13,4 +27,8 @@ export const messengerServer = new MessengerServer();
     initRemoveLoadingVideo();
     initViewInBrowser();
     initMoreVisibleRemainingTime();
+    initCourseOverview();
+    initDisableRateLimit();
+    initHideName();
+    initSyllabusLinkFix();
 })();

@@ -39,9 +39,6 @@
     "message": "自動ログインを有効にする",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
   },
-  "optionsEnableAutoLoginDescription": {
-    "message": "ログインが必要なときに自動でログイン処理を行います。ログインIDとパスワードを設定する必要があります。"
-  },
   "optionsLoginId": {
     "message": "ログインID",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
@@ -50,41 +47,49 @@
     "message": "パスワード",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
   },
-  "optionsSectionVideo": {
-    "message": "動画",
-    "description": "設定ページの「動画」セクションの見出し"
+  "optionsSectionCourseOverview": {
+    "message": "コース概要",
+    "description": "設定ページの「コース概要」セクションの見出し"
   },
-  "optionsRemoveLoadingVideo": {
-    "message": "動画コンテンツの読み込み中に再生される動画を削除する。",
-    "description": "設定ページの「動画」セクションに表示するメッセージ"
+  "optionsEnableCourseOverview": {
+    "message": "コース概要を置き換える",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsRemoveLoadingVideoDescription": {
-    "message": "<a href=\"https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?\" target=\"_blank\">この動画</a>が再生されないようにします。",
-    "description": "設定ページの「動画」セクションに表示するメッセージ"
+  "optionsCourseOverviewTypeLabel": {
+    "message": "表示形式",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsSectionSubmissionPage": {
-    "message": "提出ページ",
-    "description": "設定ページの「提出ページ」セクションの見出し"
+  "optionsCourseOverviewTypeNormal": {
+    "message": "標準",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsCheckNotesOnSubmitting": {
-    "message": "「レポート・論文等の提出に関する注意」に自動でチェックを入れる",
-    "description": "設定ページの「提出ページ」セクションに表示するメッセージ"
+  "optionsCourseOverviewTypeTimetable": {
+    "message": "時間割表",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsCheckNotesOnSubmittingDescription": {
-    "message": "課題の提出時に毎回チェックを入れる必要があるチェックボックスに自動でチェックを入れます。",
-    "description": "設定ページの「提出ページ」セクションに表示するメッセージ"
+  "optionsClearCourseListCache": {
+    "message": "コース一覧のキャッシュを削除する",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsSectionQuiz": {
-    "message": "小テスト",
-    "description": "設定ページの「小テスト」セクションの見出し"
+  "optionsClearCourseListCacheMessage": {
+    "message": "コース一覧のキャッシュを削除しました",
+    "description": "コース一覧のキャッシュを削除したときに表示するスナックバーのメッセージ"
   },
-  "optionsMoreVisibleRemainingTime": {
-    "message": "残り時間を見やすくする",
-    "description": "「小テスト」セクションに表示するメッセージ"
+  "optionsFetchTimetableDataAndSyllabusUrl": {
+    "message": "時間割とシラバスのURLを取得する",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsMoreVisibleRemainingTimeDescription": {
-    "message": "長い小テストではスクロールしなければ見えなかった小テストの残り時間を、画面の右下に固定して常に見えるようにします。",
-    "description": "「小テスト」セクションに表示するメッセージ"
+  "optionsFetchTimetableDataAndSyllabusUrlMessage": {
+    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。既存の設定は上書きされます。履修登録ページがメンテナンス中の場合は取得できません。また、Moodleのコース名と科目名が一致していないなど特殊な科目の情報は取得できないことがあります。",
+    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+  },
+  "optionsFetchTimetableDataAndSyllabusUrlMessageOK": {
+    "message": "続行",
+    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+  },
+  "optionsFetchTimetableDataAndSyllabusUrlDoneMessage": {
+    "message": "時間割とシラバスのURLを取得しました",
+    "description": "時間割とシラバスのURLの取得に成功したときに表示するメッセージ"
   },
   "optionsSectionOthers": {
     "message": "その他",
@@ -95,7 +100,271 @@
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsViewInBrowserDescription": {
-    "message": "PDF、画像等をダウンロードせずに直接ブラウザで開けるようにします。",
+    "message": "PDF、画像等を保存せずに直接ブラウザで開けるようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsRemoveLoadingVideo": {
+    "message": "動画コンテンツの読み込み中に再生される動画を削除する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsRemoveLoadingVideoDescription": {
+    "message": "この動画が再生されないようにします。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckNotesOnSubmitting": {
+    "message": "課題提出ページの「レポート・論文等の提出に関する注意」に自動でチェックを入れる",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckNotesOnSubmittingDescription": {
+    "message": "課題の提出時に毎回チェックを入れる必要があるチェックボックスに自動でチェックを入れます。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsMoreVisibleRemainingTime": {
+    "message": "小テストの残り時間を見やすくする",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsMoreVisibleRemainingTimeDescription": {
+    "message": "長い小テストではスクロールしなければ見えなかった小テストの残り時間を、画面の右下に固定して常に見えるようにします。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsDisableRateLimitEnabled": {
+    "message": "レート制限を解除する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsDisableRateLimitEnabledDescription": {
+    "message": "成績照会・科目登録専用メニューで「ただいま処理中です。OKボタンを押して、しばらく待ってから再度メニューをクリックしてください。」と表示されて10秒間待たされないようにします。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsHideNameEnabled": {
+    "message": "名前を隠す",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsHideNameEnabledDescription": {
+    "message": "Moodleのヘッダーとフッターに表示される名前を隠します。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsSyllabusLinkFixEnabled": {
+    "message": "シラバス検索結果のリンクを修正する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsSyllabusLinkFixEnabledDescription": {
+    "message": "新しいウィンドウで開き、右クリック禁止という前時代的な挙動を修正します。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "courseOverviewHide": {
+    "message": "非表示",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewUnhide": {
+    "message": "非表示を解除",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewOpenSyllabus": {
+    "message": "シラバスを開く",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewTimetableSettings": {
+    "message": "時間割の設定",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewChangeName": {
+    "message": "名前の変更",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewSettings": {
+    "message": "設定",
+    "description": "コース概要のメニューの項目"
+  },
+  "courseOverviewHiddenCourses": {
+    "message": "非表示のコース",
+    "description": "コース概要の上部にあるボタン"
+  },
+  "courseOverviewTimetableNoEntry": {
+    "message": "時間割が設定されていません",
+    "description": "時間割が設定された科目が一つもないときに学期を選択するやつに表示するメッセージ"
+  },
+  "courseOverviewHiddenCoursesDialogTitle": {
+    "message": "非表示のコース",
+    "description": "非表示のコースダイアログのタイトル"
+  },
+  "coursesOverviewHiddenCoursesDialogEmpty": {
+    "message": "非表示のコースはありません",
+    "description": "非表示のコースがないときに非表示のコースダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogTitle": {
+    "message": "「$COURSE_NAME$」の時間割設定",
+    "description": "コース概要の時間割設定ダイアログのタイトル",
+    "placeholders": {
+      "COURSE_NAME": {
+        "content": "$1",
+        "example": "数学Ｂ２（微分積分）　基幹(2)"
+      }
+    }
+  },
+  "courseOverviewTimetableSettingsDialogDescription": {
+    "message": "一つも指定しない場合は時間割表の下に表示されます。拡張機能の設定ページで履修登録ページから時間割情報を自動取得することもできます。",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogAddEntryButton": {
+    "message": "追加",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogYearHeader": {
+    "message": "年度",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogTermHeader": {
+    "message": "期間",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogDayHeader": {
+    "message": "曜日",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogPeriodFromHeader": {
+    "message": "開始時限",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogPeriodToHeader": {
+    "message": "終了時限",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsDialogOK": {
+    "message": "設定",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsConflictWithAnotherRow": {
+    "message": "$1番目の項目と重複しています",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsConflictWithAnotherCourse": {
+    "message": "$1と重複しています",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewTimetableSettingsCannotSetDueToConflict": {
+    "message": "重複している項目があるため設定できません。",
+    "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSettingsDialogTitle": {
+    "message": "「$1」の設定",
+    "description": "コース概要の設定ダイアログのタイトル"
+  },
+  "courseOverviewSettingsDialogName": {
+    "message": "名前",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSettingsDialogSetNameToDefault": {
+    "message": "デフォルトに戻す",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSettingsDialogSyllabusUrl": {
+    "message": "シラバスのURL",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSettingsDialogNote": {
+    "message": "メモ",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSettingsDialogOK": {
+    "message": "設定",
+    "description": "コース概要の設定ダイアログに表示するメッセージ"
+  },
+  "courseOverviewSyllabusUrlNotSetDialogMessage": {
+    "message": "シラバスを開くにはURLを設定してください。",
+    "description": "コース概要のメニューからシラバスを開こうとしたがURLが設定されていないときに表示されるダイアログのメッセージ"
+  },
+  "courseOverviewSyllabusUrlNotSetDialogOpenSettings": {
+    "message": "設定を開く",
+    "description": "コース概要のメニューからシラバスを開こうとしたがURLが設定されていないときに表示されるダイアログメッセージ"
+  },
+  "sundayShort": {
+    "message": "日"
+  },
+  "mondayShort": {
+    "message": "月"
+  },
+  "tuesdayShort": {
+    "message": "火"
+  },
+  "wednesdayShort": {
+    "message": "水"
+  },
+  "thursdayShort": {
+    "message": "木"
+  },
+  "fridayShort": {
+    "message": "金"
+  },
+  "saturdayShort": {
+    "message": "土"
+  },
+  "sunday": {
+    "message": "日曜日"
+  },
+  "monday": {
+    "message": "月曜日"
+  },
+  "tuesday": {
+    "message": "火曜日"
+  },
+  "wednesday": {
+    "message": "水曜日"
+  },
+  "thursday": {
+    "message": "木曜日"
+  },
+  "friday": {
+    "message": "金曜日"
+  },
+  "saturday": {
+    "message": "土曜日"
+  },
+  "springQuarter": {
+    "message": "春クォーター"
+  },
+  "summerQuarter": {
+    "message": "夏クォーター"
+  },
+  "fallQuarter": {
+    "message": "秋クォーター"
+  },
+  "winterQuarter": {
+    "message": "冬クォーター"
+  },
+  "springSemester": {
+    "message": "春学期"
+  },
+  "fallSemester": {
+    "message": "秋学期"
+  },
+  "fullYear": {
+    "message": "通年"
+  },
+  "year": {
+    "message": "$1年"
+  },
+  "period": {
+    "message": "$1時限"
+  },
+  "ok": {
+    "message": "OK"
+  },
+  "cancel": {
+    "message": "キャンセル"
+  },
+  "internalError": {
+    "message": "内部エラー"
+  },
+  "loginRequiredError": {
+    "message": "この操作にはログインが必要です。ログインするか、自動ログインを有効にしてください。"
+  },
+  "invalidResponseError": {
+    "message": "無効なデータを受信しました。"
+  },
+  "userIdOrPasswordNotSetError": {
+    "message": "ユーザーIDまだはパスワードが設定されていません。"
+  },
+  "underMaintenanceError": {
+    "message": "メンテナンス中です。"
   }
 }

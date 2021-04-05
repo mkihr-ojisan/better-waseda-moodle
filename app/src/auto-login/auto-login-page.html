@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/res/images/icon-256.png">
+    <title></title>
+</head>
+
+<body>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            body {
+                background: rgb(42, 42, 46);
+                color: white;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background: white;
+                color: #555;
+            }
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        img.icon {
+            margin-bottom: 1em;
+        }
+
+        body.error>span.message {
+            color: red;
+        }
+
+        button.gotoFallbackPage {
+            visibility: hidden;
+        }
+    </style>
+
+    <img class="icon" src="/res/images/icon-256.png" alt="Better Waseda Moodle" width="128" />
+    <span class="message" id="message"></span>
+    <button class="gotoFallbackPage" id="gotoFallbackPage"></button>
+
+    <script src="./auto-login-page.js"></script>
+</body>
+
+</html>

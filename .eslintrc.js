@@ -6,35 +6,37 @@ module.exports = {
     },
     'extends': [
         'eslint:recommended',
-        'plugin:@typescript-eslint/recommended'
+        'plugin:@typescript-eslint/recommended',
+        'plugin:react-hooks/recommended',
     ],
     'parser': '@typescript-eslint/parser',
     'parserOptions': {
         'ecmaVersion': 12,
-        'sourceType': 'module'
+        'sourceType': 'module',
     },
     'plugins': [
-        '@typescript-eslint'
+        '@typescript-eslint',
     ],
     'rules': {
         'indent': [
             'error',
             4, 
-            {'SwitchCase': 1}
+            {'SwitchCase': 1},
         ],
         'linebreak-style': [
             'error',
-            'unix'
+            'unix',
         ],
         'quotes': [
             'error',
-            'single'
+            'single',
         ],
         'semi': [
             'error',
-            'always'
+            'always',
         ],
         '@typescript-eslint/ban-types': 0,
-        '@typescript-eslint/no-explicit-any': 0
-    }
+        '@typescript-eslint/no-explicit-any': 0,
+        'comma-dangle': ['error', 'always-multiline'],
+    },
 };

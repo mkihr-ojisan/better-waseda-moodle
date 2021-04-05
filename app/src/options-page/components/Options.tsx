@@ -1,0 +1,40 @@
+import React, { ReactElement } from 'react';
+import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
+import SectionAutoLogin from './sections/SectionAutoLogin';
+import SectionDashboard from './sections/SectionCourseOverview';
+import SectionOthers from './sections/SectionOthers';
+
+export type SectionComponentProps = {
+    expanded: boolean;
+    onChange: (_: React.ChangeEvent<{}>, newExpanded: boolean) => void;
+};
+
+const sections: React.FunctionComponent<SectionComponentProps>[] = [
+    SectionAutoLogin,
+    SectionDashboard,
+    SectionOthers,
+];
+
+export default function Options(): ReactElement {
+
+
+    const [expanded, setExpanded] = React.useState<number | null>(null);
+
+    function handleChange(i: number) {
+        return (_: React.ChangeEvent<{}>, newExpanded: boolean) => setExpanded(newExpanded ? i : null);
+    }
+
+    return (
+        <BWMThemePrefersColorScheme>
+            {
+                sections.map((SectionComponent, i) => (
+                    <SectionComponent
+                        key={i}
+                        expanded={expanded === i}
+                        onChange={handleChange(i)}
+                    />
+                ))
+            }
+        </BWMThemePrefersColorScheme>
+    );
+}

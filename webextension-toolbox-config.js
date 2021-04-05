@@ -8,6 +8,7 @@ const webpack = require('webpack');
 module.exports = {
     webpack: (config, { dev, vendor }) => {
         config.resolve.extensions.push('.ts');
+        config.resolve.extensions.push('.tsx');
 
         if (dev) {
             config.devtool = 'inline-source-map';
@@ -19,8 +20,8 @@ module.exports = {
                         format: {
                             comments: false,
                         },
-                    }
-                })]
+                    },
+                })],
             };
         }
 
@@ -28,11 +29,25 @@ module.exports = {
 
         config.module.rules.push({
             test: /\.tsx?$/,
-            loader: 'ts-loader'
+            loaders: [
+                'ts-loader',
+                {
+                    loader: require.resolve('webpack-preprocessor-loader'),
+                    options: {            
+                        debug: dev,
+                        directives: {
+                            blink_only: vendor !== 'firefox',
+                            firefox_only: vendor === 'firefox',
+                        },
+                    },
+                },
+            ],
+            exclude: [/node_modules/],
         });
+       
 
         config.plugins.push(new webpack.DefinePlugin({
-            __VENDOR__: JSON.stringify(vendor)
+            __VENDOR__: JSON.stringify(vendor),
         }));
 
         config.plugins.find(p => p instanceof WebextensionPlugin).autoreload = false;
@@ -40,13 +55,13 @@ module.exports = {
         // Important: return the modified config
         return config;
     },
-    copyIgnore: [ '**/*.js', '**/*.json', '**/*.ts', '**/*.tsx' ]
+    copyIgnore: [ '**/*.js', '**/*.json', '**/*.ts', '**/*.tsx' ],
 };
 
 function generateWebpackEntry() {
     const entryPoints = getEntryPoints();
     
-    const regex = new RegExp(`^${resolve('app')}/(.*).ts$`);
+    const regex = new RegExp(`^${resolve('app')}/(.*).tsx?$`);
 
     return Object.fromEntries(entryPoints.map(entryPoint => {
         console.assert(regex.test(entryPoint));
