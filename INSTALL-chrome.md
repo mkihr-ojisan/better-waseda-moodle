@@ -6,6 +6,7 @@
 
 
 2. Chromeを起動し、拡張機能ページを開きます。
+
 ![手順2](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/main/readme-images/install-chrome/2.png)
 
 
