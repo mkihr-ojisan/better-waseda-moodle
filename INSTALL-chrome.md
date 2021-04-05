@@ -34,5 +34,7 @@
 
 ![手順7](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/main/readme-images/install-chrome/7.png)
 
+
 Q. なんでこんなクソめんどくさいの？
+
 A. Chrome ウェブストアで公開するにはGoogleの人に審査してもらう必要があるが、当然この拡張機能は早稲田生しか使えないので審査してもらえないからです。
