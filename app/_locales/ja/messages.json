@@ -202,7 +202,7 @@
     }
   },
   "courseOverviewTimetableSettingsDialogDescription": {
-    "message": "一つも指定しない場合は時間割表の下に表示されます。",
+    "message": "一つも指定しない場合は時間割表の下に表示されます。拡張機能の設定ページで履修登録ページから時間割情報を自動取得することもできます。",
     "description": "コース概要の時間割設定ダイアログに表示するメッセージ"
   },
   "courseOverviewTimetableSettingsDialogAddEntryButton": {
