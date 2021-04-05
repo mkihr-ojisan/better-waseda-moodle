@@ -17,9 +17,9 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 - シラバス検索結果のリンクを修正する
 
 ## スクリーンショット
-![自動ログイン](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/auto-login.png)
-![コース概要](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview.png)
-![コース概要のメニュー](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview-menu.png)
+![自動ログイン](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/auto-login.png "自動ログイン")
+![コース概要](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview.png "コース概要")
+![コース概要のメニュー](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview-menu.png "コース概要のメニュー")
 
 ## ビルド
 ```console
