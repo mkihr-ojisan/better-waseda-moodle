@@ -123,8 +123,6 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
 async function fetchTimetableDataAndSyllabusUrl(): Promise<void> {
     const [list, infos] = await Promise.all([fetchCourseList(), fetchCourseRegistrationInfo()]);
 
-    console.log({ list, infos });
-
     for (const course of list) {
         const info = infos.find(i => i.name === course.name && i.status === '決定');
         if (!info) continue;
