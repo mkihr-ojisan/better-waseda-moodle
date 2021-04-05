@@ -21,6 +21,11 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 ![コース概要](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview.png "コース概要")
 ![コース概要のメニュー](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview-menu.png "コース概要のメニュー")
 
+## インストール方法
+
+- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.2.0/better-waseda-moodle-v0.2.0-firefox.xpi)
+- [Chrome](https://github.com/mkihr-ojisan/better-waseda-moodle/blob/main/INSTALL-chrome.md)
+
 ## ビルド
 ```console
 $ git clone https://github.com/mkihr-ojisan/better-waseda-moodle
