@@ -54,6 +54,15 @@ export default function Timetable(props: Props): ReactElement {
     } = useTimetableCells(context, props.selectedTerm);
 
     const weekdays: DayOfWeek[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+    const time = [
+        '9:00 - 10:30',
+        '10:40 - 12:10',
+        '13:00 - 14:30',
+        '14:45 - 16:15',
+        '16:30 - 18:00',
+        '18:15 - 19:45',
+        '19:55 - 21:25',
+    ];
 
     return (
         <table className={classes.table}>
@@ -69,7 +78,7 @@ export default function Timetable(props: Props): ReactElement {
                 {
                     [0, 1, 2, 3, 4].map(period => (
                         <tr key={period}>
-                            <th>{period + 1}</th>
+                            <th title={time[period]}>{period + 1}</th>
                             {weekdays.map(day => timetableCells[day][period].node)}
                             {showSaturday && timetableCells['saturday'][period].node}
                             {showSunday && timetableCells['sunday'][period].node}
@@ -79,7 +88,7 @@ export default function Timetable(props: Props): ReactElement {
                 {
                     show6thPeriod &&
                     <tr>
-                        <th>{6}</th>
+                        <th title={time[5]}>{6}</th>
                         {weekdays.map(day => timetableCells[day][5].node)}
                         {showSaturday && timetableCells['saturday'][5].node}
                         {showSunday && timetableCells['sunday'][5].node}
@@ -88,7 +97,7 @@ export default function Timetable(props: Props): ReactElement {
                 {
                     show7thPeriod &&
                     <tr>
-                        <th>{7}</th>
+                        <th title={time[6]}>{7}</th>
                         {weekdays.map(day => timetableCells[day][6].node)}
                         {showSaturday && timetableCells['saturday'][6].node}
                         {showSunday && timetableCells['sunday'][6].node}
