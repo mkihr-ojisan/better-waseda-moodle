@@ -151,6 +151,18 @@
     "message": "新しいウィンドウで開き、右クリック禁止という前時代的な挙動を修正します。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
+  "optionsBackupConfig": {
+    "message": "設定のバックアップ",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsRestoreConfig": {
+    "message": "設定の復元",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsRestoreConfigSuccess": {
+    "message": "設定を復元しました",
+    "description": "設定の復元に成功したときに表示するメッセージ"
+  },
   "courseOverviewHide": {
     "message": "非表示",
     "description": "コース概要のメニューの項目"
@@ -366,5 +378,8 @@
   },
   "underMaintenanceError": {
     "message": "メンテナンス中です。"
+  },
+  "otherError": {
+    "message": "エラーが発生しました: $1"
   }
 }
