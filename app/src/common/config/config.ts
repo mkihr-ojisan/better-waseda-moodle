@@ -38,7 +38,7 @@ export const defaultValue: Config = {
     'courseData': {},
 };
 
-export const storage = browser.storage.local;
+export const storage = browser.storage.sync;
 const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined) => void)[]; } = {};
 
 export async function getConfig<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {
