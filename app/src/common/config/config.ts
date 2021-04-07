@@ -1,6 +1,7 @@
 import { CourseOverviewType } from '../../course-overview/components/CourseOverview';
 import { YearTerm } from '../waseda/course/course';
 import { CourseDataEntry } from '../waseda/course/course-data';
+import equal from 'fast-deep-equal';
 
 export type ConfigKey = keyof Config;
 export type ConfigValue<T extends ConfigKey> = Config[T];
@@ -76,6 +77,7 @@ export function removeConfigChangeListener<T extends ConfigKey>(key: T, listener
 
 function storageChangeListener(changes: Record<string, browser.storage.StorageChange>): void {
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-        listeners[key]?.forEach(listener => listener(oldValue, newValue ?? defaultValue[key as ConfigKey]));
+        if (!equal(oldValue, newValue))
+            listeners[key]?.forEach(listener => listener(oldValue, newValue ?? defaultValue[key as ConfigKey]));
     }
 }

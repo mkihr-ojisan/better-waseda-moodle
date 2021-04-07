@@ -1,6 +1,6 @@
 import { onConfigChange } from '../../common/config/config';
 
-let registeredContentScript: browser.contentScripts.RegisteredContentScript | null = null;
+let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
 
 export function initHideName(): void {
     onConfigChange('hideName.enabled', (_, newValue) => {
@@ -12,12 +12,12 @@ export function initHideName(): void {
 }
 
 async function register() {
-    registeredContentScript = await browser.contentScripts.register({
+    registeredContentScript = browser.contentScripts.register({
         matches: ['https://wsdmoodle.waseda.jp/*'],
         css: [{ file: 'src/others/hide-name/style.css' }],
         runAt: 'document_start',
     });
 }
-function unregister() {
-    registeredContentScript?.unregister();
+async function unregister() {
+    (await registeredContentScript)?.unregister();
 }
