@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
 
-export type TodoListItem = {
+export type TodoListItem<T = undefined> = {
     category: string;
     timestamp: Date;
-    Icon: FunctionComponent<TodoListItemIconProps>;
+    Icon: FunctionComponent<TodoListItemIconProps<T>>;
     title: string;
     content: string;
     actions: TodoListItemAction[];
-    SelectRemoveOptionDialog: FunctionComponent<SelectRemoveOptionDialogProps>;
+    SelectRemoveOptionDialog: FunctionComponent<SelectRemoveOptionDialogProps<T>>;
+    data: T;
 };
 
 export type TodoListItemAction = {
@@ -15,14 +16,14 @@ export type TodoListItemAction = {
     onClick: () => void;
 };
 
-export type SelectRemoveOptionDialogProps = {
+export type SelectRemoveOptionDialogProps<T> = {
     open: boolean;
     onClose: () => void;
-    item: TodoListItem;
+    item: TodoListItem<T>;
 };
-export type TodoListItemIconProps = {
+export type TodoListItemIconProps<T> = {
     size: number;
-    item: TodoListItem;
+    item: TodoListItem<T>;
 };
 
 const todoListProviders: (() => Promise<TodoListItem[]>)[] = [];
