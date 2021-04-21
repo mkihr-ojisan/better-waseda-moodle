@@ -1,9 +1,9 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent } from 'react';
 
 export type TodoListItem = {
     category: string;
     timestamp: Date;
-    icon: ReactNode;
+    Icon: FunctionComponent<TodoListItemIconProps>;
     title: string;
     content: string;
     actions: TodoListItemAction[];
@@ -18,6 +18,10 @@ export type TodoListItemAction = {
 export type SelectRemoveOptionDialogProps = {
     open: boolean;
     onClose: () => void;
+    item: TodoListItem;
+};
+export type TodoListItemIconProps = {
+    size: number;
     item: TodoListItem;
 };
 
