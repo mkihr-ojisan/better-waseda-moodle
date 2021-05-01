@@ -22,8 +22,6 @@ messengerServer.instructions = {
 };
 
 (async () => {
-    await migrateConfigStorage();
-
     await initConfigCache();
     initAutoLogin();
     initRemoveLoadingVideo();
@@ -34,12 +32,3 @@ messengerServer.instructions = {
     initHideName();
     initSyllabusLinkFix();
 })();
-
-async function migrateConfigStorage() {
-    const localConfig = await browser.storage.local.get();
-    if (Object.keys(localConfig).length > 0 && Object.keys(await browser.storage.sync.get()).length === 0) {
-        await browser.storage.sync.set(localConfig);
-        await browser.storage.local.clear();
-        browser.runtime.reload();
-    }
-}
