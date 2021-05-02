@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 import React, { ReactElement, useState } from 'react';
 import { getStorage } from '../../../../common/config/config';
+import { CONFIG_SYNC_ENABLED_CONFIG_KEY, isConfigSyncEnabled } from '../../../../common/config/sync';
 import AutoCloseAlert from '../../../../common/react/AutoCloseAlert';
 
 export default function OptionRestoreConfig(): ReactElement {
@@ -25,9 +26,12 @@ export default function OptionRestoreConfig(): ReactElement {
                 return;
             }
 
+            const configSyncEnabled = await isConfigSyncEnabled();
             const storage = await getStorage();
             await storage.clear();
             await storage.set(config);
+            browser.storage.local.set({ [CONFIG_SYNC_ENABLED_CONFIG_KEY]: configSyncEnabled });
+
             setConfigRestoredMessageOpen(true);
             setConfigRestoreError(null);
         };
