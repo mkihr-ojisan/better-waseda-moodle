@@ -43,3 +43,11 @@ export async function checkConflictWhenEnablingConfigSync(): Promise<boolean> {
         return true;
     }
 }
+
+export async function enableConfigSyncIfFirstRun(): Promise<void> {
+    const [local, sync] = await Promise.all([browser.storage.local.get(), browser.storage.sync.get()]);
+    if (Object.keys(local).length === 0 && Object.keys(sync).length === 0) {
+        // storage.localもstorage.syncも空だったら初めて拡張機能が実行されたとみなす
+        await enableConfigSync('discard_local');
+    }
+}
