@@ -1,6 +1,6 @@
 import equal from 'fast-deep-equal';
 
-const CONFIG_SYNC_ENABLED_CONFIG_KEY = 'config.sync.enabled';
+export const CONFIG_SYNC_ENABLED_CONFIG_KEY = 'config.sync.enabled';
 
 export async function isConfigSyncEnabled(): Promise<boolean> {
     return (await browser.storage.local.get(CONFIG_SYNC_ENABLED_CONFIG_KEY))[CONFIG_SYNC_ENABLED_CONFIG_KEY] ?? false;
