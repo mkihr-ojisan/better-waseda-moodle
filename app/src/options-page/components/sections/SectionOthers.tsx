@@ -3,7 +3,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
 import React, { ReactElement, useState } from 'react';
-import { storage } from '../../../common/config/config';
+import { getStorage } from '../../../common/config/config';
 import AutoCloseAlert from '../../../common/react/AutoCloseAlert';
 import useConfig from '../../../common/react/useConfig';
 import Description from '../Description';
@@ -37,7 +37,7 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
     }
 
     async function handleBackupConfig() {
-        const config = await storage.get();
+        const config = await (await getStorage()).get();
         const a = document.createElement('a');
         a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(config, undefined, 2));
         a.download = 'better-waseda-moodle-' + formatDate(new Date()) + '.json';
@@ -62,6 +62,7 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
                 return;
             }
 
+            const storage = await getStorage();
             await storage.clear();
             await storage.set(config);
             setConfigRestoredMessageOpen(true);

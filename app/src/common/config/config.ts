@@ -2,6 +2,7 @@ import { CourseOverviewType } from '../../course-overview/components/CourseOverv
 import { YearTerm } from '../waseda/course/course';
 import { CourseDataEntry } from '../waseda/course/course-data';
 import equal from 'fast-deep-equal';
+import { isConfigSyncEnabled } from './sync';
 
 export type ConfigKey = keyof Config;
 export type ConfigValue<T extends ConfigKey> = Config[T];
@@ -39,11 +40,21 @@ export const defaultValue: Config = {
     'courseData': {},
 };
 
-export const storage = browser.storage.local;
 const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined) => void)[]; } = {};
 
+let _storage: browser.storage.StorageArea | undefined;
+export async function getStorage(): Promise<browser.storage.StorageArea> {
+    if (_storage) {
+        return _storage;
+    } else if (await isConfigSyncEnabled()) {
+        return _storage = browser.storage.sync;
+    } else {
+        return _storage = browser.storage.local;
+    }
+}
+
 export async function getConfig<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {
-    const value = (await storage.get(key))[key];
+    const value = (await (await getStorage()).get(key))[key];
     if (value === undefined) {
         return defaultValue[key];
     } else {
@@ -51,10 +62,10 @@ export async function getConfig<T extends ConfigKey>(key: T): Promise<ConfigValu
     }
 }
 export async function setConfig<T extends ConfigKey>(key: T, value: ConfigValue<T>): Promise<void> {
-    await storage.set({ [key]: value });
+    await (await getStorage()).set({ [key]: value });
 }
 export async function removeConfig<T extends ConfigKey>(key: T): Promise<void> {
-    await storage.remove([key]);
+    await (await getStorage()).remove([key]);
 }
 
 export async function onConfigChange<T extends ConfigKey>(key: T, listener: (oldValue: ConfigValue<T> | undefined, newValue: ConfigValue<T>) => void, initCall: boolean): Promise<void> {
