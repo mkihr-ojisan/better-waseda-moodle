@@ -10,6 +10,8 @@ export async function enableConfigSync(mode: 'discard_local' | 'force_upload'): 
     if (await isConfigSyncEnabled()) return;
 
     if (mode === 'force_upload') {
+        await browser.storage.sync.clear();
+
         const config = await browser.storage.local.get();
         delete config[CONFIG_SYNC_ENABLED_CONFIG_KEY];
         await browser.storage.sync.set(config);
