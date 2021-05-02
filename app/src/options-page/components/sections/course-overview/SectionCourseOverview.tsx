@@ -12,13 +12,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import React, { ReactElement, useState } from 'react';
-import AutoCloseAlert from '../../../common/react/AutoCloseAlert';
-import useConfig from '../../../common/react/useConfig';
-import { registerCourseData } from '../../../common/waseda/course/course-data';
-import { clearCourseListCache, fetchCourseList } from '../../../common/waseda/course/course-list';
-import { fetchCourseRegistrationInfo } from '../../../common/waseda/course/course-registration';
-import { SectionComponentProps } from '../Options';
-import Section from '../Section';
+import AutoCloseAlert from '../../../../common/react/AutoCloseAlert';
+import useConfig from '../../../../common/react/useConfig';
+import { registerCourseData } from '../../../../common/waseda/course/course-data';
+import { clearCourseListCache, fetchCourseList } from '../../../../common/waseda/course/course-list';
+import { fetchCourseRegistrationInfo } from '../../../../common/waseda/course/course-registration';
+import { SectionComponentProps } from '../../Options';
+import Section from '../../Section';
+import OptionShowPeriodTime from './OptionShowPeriodTime';
 
 export default function SectionCourseOverview(props: SectionComponentProps): ReactElement | null {
     const [enabled, setEnabled] = useConfig('courseOverview.enabled');
@@ -78,6 +79,7 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                     <MenuItem value="normal">{browser.i18n.getMessage('optionsCourseOverviewTypeNormal')}</MenuItem>
                     <MenuItem value="timetable">{browser.i18n.getMessage('optionsCourseOverviewTypeTimetable')}</MenuItem>
                 </TextField>
+                <OptionShowPeriodTime />
             </FormGroup>
 
             <Box my={1}>

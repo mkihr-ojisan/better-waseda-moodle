@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
 import SectionGeneral from './sections/general/SectionGeneral';
 import SectionAutoLogin from './sections/SectionAutoLogin';
-import SectionDashboard from './sections/SectionCourseOverview';
+import SectionDashboard from './sections/course-overview/SectionCourseOverview';
 import SectionOthers from './sections/SectionOthers';
 
 export type SectionComponentProps = {

@@ -107,6 +107,10 @@
     "message": "時間割表",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
+  "optionsCourseOverviewTimetableShowPeriodTime": {
+    "message": "授業の開始時間と終了時間を時間割表に表示する",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
   "optionsClearCourseListCache": {
     "message": "コース一覧のキャッシュを削除する",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"

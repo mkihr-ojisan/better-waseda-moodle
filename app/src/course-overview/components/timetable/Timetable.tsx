@@ -4,9 +4,12 @@ import { containsYearTerm, DayOfWeek, dayOfWeekToShortString, YearTerm } from '.
 import useViewportHeight from '../../../common/react/useViewportHeight';
 import { CourseOverviewContext, CourseOverviewContextProps } from '../CourseOverview';
 import TimetableCourseCard from './TimetableCourseCard';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 type Props = {
     selectedTerm: YearTerm;
+    showPeriodTime: boolean;
 };
 
 const useStyles = makeStyles(theme => ({
@@ -40,6 +43,18 @@ const useStyles = makeStyles(theme => ({
             textAlign: 'center',
         },
     },
+    tableWithPeriodTime: {
+        '& th:first-child': {
+            width: '3em',
+            position: 'relative',
+        },
+        '& th:first-child > div': {
+            height: '100%',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+        },
+    },
 }));
 
 export default function Timetable(props: Props): ReactElement {
@@ -55,17 +70,18 @@ export default function Timetable(props: Props): ReactElement {
 
     const weekdays: DayOfWeek[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     const time = [
-        '9:00 - 10:30',
-        '10:40 - 12:10',
-        '13:00 - 14:30',
-        '14:45 - 16:15',
-        '16:30 - 18:00',
-        '18:15 - 19:45',
-        '19:55 - 21:25',
+        ['9:00', '10:30'],
+        ['10:40', '12:10'],
+        ['13:00', '14:30'],
+        ['14:45', '16:15'],
+        ['16:30', '18:00'],
+        ['18:15', '19:45'],
+        ['19:55', '21:25'],
     ];
 
+    // この辺そもそも下手くそな書き方な上に機能を後から付け足していってかなり汚くなっているのでいつか書き直さねばならない
     return (
-        <table className={classes.table}>
+        <table className={classes.table + (props.showPeriodTime ? ` ${classes.tableWithPeriodTime}` : '')}>
             <thead>
                 <tr>
                     <th></th>
@@ -78,7 +94,31 @@ export default function Timetable(props: Props): ReactElement {
                 {
                     [0, 1, 2, 3, 4].map(period => (
                         <tr key={period}>
-                            <th title={time[period]}>{period + 1}</th>
+                            <th title={props.showPeriodTime ? undefined : time[period].join(' - ')}>
+                                <Grid container direction="column" justify="space-between">
+                                    {
+                                        props.showPeriodTime ?
+                                            <Grid item>
+                                                <Typography variant="caption">
+                                                    {time[period][0]}
+                                                </Typography>
+                                            </Grid> :
+                                            null
+                                    }
+                                    <Grid item>
+                                        {period + 1}
+                                    </Grid>
+                                    {
+                                        props.showPeriodTime ?
+                                            <Grid item>
+                                                <Typography variant="caption">
+                                                    {time[period][1]}
+                                                </Typography>
+                                            </Grid> :
+                                            null
+                                    }
+                                </Grid>
+                            </th>
                             {weekdays.map(day => timetableCells[day][period].node)}
                             {showSaturday && timetableCells['saturday'][period].node}
                             {showSunday && timetableCells['sunday'][period].node}
@@ -88,7 +128,31 @@ export default function Timetable(props: Props): ReactElement {
                 {
                     show6thPeriod &&
                     <tr>
-                        <th title={time[5]}>{6}</th>
+                        <th title={props.showPeriodTime ? undefined : time[5].join(' - ')}>
+                            <Grid container direction="column" justify="space-between">
+                                {
+                                    props.showPeriodTime ?
+                                        <Grid item>
+                                            <Typography variant="caption">
+                                                {time[5][0]}
+                                            </Typography>
+                                        </Grid> :
+                                        null
+                                }
+                                <Grid item>
+                                    {6}
+                                </Grid>
+                                {
+                                    props.showPeriodTime ?
+                                        <Grid item>
+                                            <Typography variant="caption">
+                                                {time[5][1]}
+                                            </Typography>
+                                        </Grid> :
+                                        null
+                                }
+                            </Grid>
+                        </th>
                         {weekdays.map(day => timetableCells[day][5].node)}
                         {showSaturday && timetableCells['saturday'][5].node}
                         {showSunday && timetableCells['sunday'][5].node}
@@ -97,7 +161,31 @@ export default function Timetable(props: Props): ReactElement {
                 {
                     show7thPeriod &&
                     <tr>
-                        <th title={time[6]}>{7}</th>
+                        <th title={props.showPeriodTime ? undefined : time[6].join(' - ')}>
+                            <Grid container direction="column" justify="space-between">
+                                {
+                                    props.showPeriodTime ?
+                                        <Grid item>
+                                            <Typography variant="caption">
+                                                {time[6][0]}
+                                            </Typography>
+                                        </Grid> :
+                                        null
+                                }
+                                <Grid item>
+                                    {7}
+                                </Grid>
+                                {
+                                    props.showPeriodTime ?
+                                        <Grid item>
+                                            <Typography variant="caption">
+                                                {time[6][1]}
+                                            </Typography>
+                                        </Grid> :
+                                        null
+                                }
+                            </Grid>
+                        </th>
                         {weekdays.map(day => timetableCells[day][6].node)}
                         {showSaturday && timetableCells['saturday'][6].node}
                         {showSunday && timetableCells['sunday'][6].node}

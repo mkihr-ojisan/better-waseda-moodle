@@ -18,6 +18,7 @@ export type Config = {
     'courseOverview.enabled': boolean;
     'courseOverview.type': CourseOverviewType;
     'timetable.selectedTerm': YearTerm | null;
+    'timetable.showPeriodTime': boolean;
     'hideName.enabled': boolean;
     'syllabusLinkFix.enabled': boolean;
     'courseData': Record<number, CourseDataEntry | undefined>;
@@ -35,6 +36,7 @@ export const defaultValue: Config = {
     'courseOverview.enabled': true,
     'courseOverview.type': 'timetable',
     'timetable.selectedTerm': null,
+    'timetable.showPeriodTime': false,
     'hideName.enabled': false,
     'syllabusLinkFix.enabled': true,
     'courseData': {},

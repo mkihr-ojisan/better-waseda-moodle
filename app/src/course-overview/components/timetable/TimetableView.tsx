@@ -26,7 +26,8 @@ export default function TimetableView(): ReactElement {
     );
 
     const [selectedTerm, setSelectedTerm] = useConfig('timetable.selectedTerm');
-    if (selectedTerm === undefined) {
+    const [showPeriodTime] = useConfig('timetable.showPeriodTime');
+    if (selectedTerm === undefined || showPeriodTime === undefined) {
         return <></>;
     }
 
@@ -71,7 +72,7 @@ export default function TimetableView(): ReactElement {
 
             {
                 selectedTerm &&
-                <Timetable selectedTerm={selectedTerm} />
+                <Timetable selectedTerm={selectedTerm} showPeriodTime={showPeriodTime} />
             }
 
             <CourseListView courses={coursesNotInTimetable.filter(c => !c.isHidden)} />
