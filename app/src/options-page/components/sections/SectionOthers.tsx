@@ -1,10 +1,6 @@
-import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
-import React, { ReactElement, useState } from 'react';
-import { getStorage } from '../../../common/config/config';
-import AutoCloseAlert from '../../../common/react/AutoCloseAlert';
+import React, { ReactElement } from 'react';
 import useConfig from '../../../common/react/useConfig';
 import Description from '../Description';
 import { SectionComponentProps } from '../Options';
@@ -19,9 +15,6 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
     const [hideNameEnabled, setHideNameEnabled] = useConfig('hideName.enabled');
     const [syllabusLinkFixEnabled, setSyllabusLinkFixEnabled] = useConfig('syllabusLinkFix.enabled');
 
-    const [configRestoredMessageOpen, setConfigRestoredMessageOpen] = useState(false);
-    const [configRestoreError, setConfigRestoreError] = useState<string | null>(null);
-
     if (viewInBrowserEnabled === undefined
         || removeLoadingVideoEnabled === undefined
         || checkNotesOnSubmitting === undefined
@@ -33,40 +26,6 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
     function handleSwitchChange(setStateFunc: (value: boolean) => void) {
         return (event: React.ChangeEvent<HTMLInputElement>) => {
             setStateFunc(event.target.checked);
-        };
-    }
-
-    async function handleBackupConfig() {
-        const config = await (await getStorage()).get();
-        const a = document.createElement('a');
-        a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(config, undefined, 2));
-        a.download = 'better-waseda-moodle-' + formatDate(new Date()) + '.json';
-        a.click();
-    }
-
-    function handleRestoreConfig() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.click();
-
-        input.onchange = async () => {
-            const file = input.files?.[0];
-            if (!file) return;
-
-            let config;
-            try {
-                config = JSON.parse(await file.text());
-            } catch (ex) {
-                setConfigRestoredMessageOpen(true);
-                setConfigRestoreError(browser.i18n.getMessage('otherError', ex.message));
-                return;
-            }
-
-            const storage = await getStorage();
-            await storage.clear();
-            await storage.set(config);
-            setConfigRestoredMessageOpen(true);
-            setConfigRestoreError(null);
         };
     }
 
@@ -115,30 +74,6 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
                 label={browser.i18n.getMessage('optionsSyllabusLinkFixEnabled')}
             />
             <Description messageName="optionsSyllabusLinkFixEnabledDescription" />
-
-            <Grid container spacing={1}>
-                <Grid item>
-                    <Button variant="outlined" onClick={handleBackupConfig}>
-                        {browser.i18n.getMessage('optionsBackupConfig')}
-                    </Button>
-                </Grid>
-                <Grid item>
-                    <Button variant="outlined" onClick={handleRestoreConfig}>
-                        {browser.i18n.getMessage('optionsRestoreConfig')}
-                    </Button>
-                </Grid>
-            </Grid>
-            <AutoCloseAlert
-                open={configRestoredMessageOpen}
-                onClose={() => setConfigRestoredMessageOpen(false)}
-                severity={configRestoreError ? 'error' : 'success'}
-            >
-                {configRestoreError ?? browser.i18n.getMessage('optionsRestoreConfigSuccess')}
-            </AutoCloseAlert>
         </Section>
     );
-}
-
-function formatDate(date: Date) {
-    return date.getFullYear() + (date.getMonth() + 1).toString().padStart(2, '0') + date.getDate().toString().padStart(2, '0');
 }
