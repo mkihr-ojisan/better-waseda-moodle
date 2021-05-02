@@ -28,7 +28,7 @@ export default function OptionConfigSync(): ReactElement | null {
         if (await checkConflictWhenEnablingConfigSync()) {
             setSyncEnableModeSelectionDialogOpen(true);
         } else {
-            enableConfigSync('discard_local');
+            await enableConfigSync('discard_local');
 
             // FirefoxはenableConfigSync内で呼ばれるbrowser.runtime.reloadで設定ページも再読込みされるが、Chromeではされないしlocation.reloadも効かないので
             window.close();
