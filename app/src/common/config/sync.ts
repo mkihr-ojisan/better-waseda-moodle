@@ -34,6 +34,7 @@ export async function disableConfigSync(): Promise<void> {
 
 export async function checkConflictWhenEnablingConfigSync(): Promise<boolean> {
     const [local, sync] = await Promise.all([browser.storage.local.get(), browser.storage.sync.get()]);
+    delete local[CONFIG_SYNC_ENABLED_CONFIG_KEY];
     if (Object.keys(sync).length === 0) {
         return false;
     } else if (equal(local, sync)) {
