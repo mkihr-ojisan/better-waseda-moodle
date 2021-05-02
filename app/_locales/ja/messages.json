@@ -31,6 +31,34 @@
     "message": "通常のログインページに移動する",
     "description": "自動ログインに失敗したときに、MyWasedaのログインページに移動するボタンに表示する文字列"
   },
+  "optionsSectionGeneral": {
+    "message": "一般",
+    "description": "設定ページの「一般」セクションの見出し"
+  },
+  "optionsSyncConfig": {
+    "message": "設定の同期",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsSyncConfigDescription": {
+    "message": "ブラウザの同期機能を使用して、同じFirefoxアカウントやGoogleアカウントにログインしているブラウザ間でBetter Waseda Moodleの設定を同期します。この設定を変更すると拡張機能が再読み込みされます。",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsSyncEnableModeSelectionDialogMessage": {
+    "message": "他の端末で同期がオンになっています。どちらの設定を使用するか選んでください。",
+    "description": "同期を有効にするときに表示されるダイアログのメッセージ"
+  },
+  "optionsSyncEnableModeSelectionDialogDiscardLocal": {
+    "message": "この端末の設定を削除し、他の端末の設定を使用する",
+    "description": "同期を有効にするときに表示されるダイアログのメッセージ"
+  },
+  "optionsSyncEnableModeSelectionDialogForceUpload": {
+    "message": "他の端末でもこの端末の設定を使用する",
+    "description": "同期を有効にするときに表示されるダイアログのメッセージ"
+  },
+  "optionsSyncEnableModeSelectionDialogOK": {
+    "message": "続行",
+    "description": "同期を有効にするときに表示されるダイアログのメッセージ"
+  },
   "optionsSectionAutoLogin": {
     "message": "自動ログイン",
     "description": "設定ページの「自動ログイン」セクションの見出し"
