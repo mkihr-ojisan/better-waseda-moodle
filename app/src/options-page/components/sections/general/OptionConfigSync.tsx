@@ -109,10 +109,10 @@ function SyncEnableModeSelectionDialog(props: SyncEnableModeSelectionDialogProps
                 </RadioGroup>
             </DialogContent>
             <DialogActions>
-                <Button onClick={props.onClose}>
+                <Button onClick={props.onClose} color="primary" >
                     {browser.i18n.getMessage('cancel')}
                 </Button>
-                <Button onClick={handleOK}>
+                <Button onClick={handleOK} color="primary" >
                     {browser.i18n.getMessage('optionsSyncEnableModeSelectionDialogOK')}
                 </Button>
             </DialogActions>
