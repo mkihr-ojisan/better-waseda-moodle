@@ -24,7 +24,7 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 
 ## インストール
 
-- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.2.0/better-waseda-moodle-v0.2.0-firefox.xpi)
+- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.3.0/better-waseda-moodle-v0.3.0-firefox.xpi)
 - [Chrome](https://chrome.google.com/webstore/detail/better-waseda-moodle/omijfabnmlifcmmghegpbmoieibfbmmj)
 
 ## ビルド
