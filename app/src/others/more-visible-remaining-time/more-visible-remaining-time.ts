@@ -1,6 +1,6 @@
 import { onConfigChange } from '../../common/config/config';
 
-let registeredContentScript: browser.contentScripts.RegisteredContentScript | null = null;
+let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
 
 export function initMoreVisibleRemainingTime(): void {
     onConfigChange('moreVisibleRemainingTime.enabled', (_, newValue) => {
@@ -12,11 +12,11 @@ export function initMoreVisibleRemainingTime(): void {
 }
 
 async function register() {
-    registeredContentScript = await browser.contentScripts.register({
+    registeredContentScript = browser.contentScripts.register({
         matches: ['https://wsdmoodle.waseda.jp/mod/quiz/attempt.php*'],
         css: [{ file: 'src/others/more-visible-remaining-time/style.css' }],
     });
 }
-function unregister() {
-    registeredContentScript?.unregister();
+async function unregister() {
+    (await registeredContentScript)?.unregister();
 }

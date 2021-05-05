@@ -15,6 +15,7 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 - 課題提出ページの「レポート・論文等の提出に関する注意」に自動でチェックを入れる
 - 小テストの残り時間を見やすくする
 - シラバス検索結果のリンクを修正する
+- 設定の同期
 
 ## スクリーンショット
 ![自動ログイン](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/auto-login.png "自動ログイン")

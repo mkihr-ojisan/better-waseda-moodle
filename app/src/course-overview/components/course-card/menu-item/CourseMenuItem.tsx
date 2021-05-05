@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import MenuItem from '@material-ui/core/MenuItem';
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement, ReactNode, Ref } from 'react';
 
 type Props = {
     icon: ReactNode;
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function CourseMenuItem(props: Props): ReactElement {
+export default React.forwardRef(function CourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
     const classes = useStyles();
 
     function handleClick() {
@@ -25,11 +25,11 @@ export default function CourseMenuItem(props: Props): ReactElement {
     }
 
     return (
-        <MenuItem onClick={handleClick}>
+        <MenuItem onClick={handleClick} innerRef={ref}>
             <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
                 {props.icon}
             </ListItemIcon>
             {props.children}
         </MenuItem>
     );
-}
+});

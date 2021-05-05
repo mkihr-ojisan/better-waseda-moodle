@@ -1,5 +1,5 @@
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext, Ref } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import { CourseOverviewContext } from '../../CourseOverview';
 import CourseMenuItem from './CourseMenuItem';
@@ -9,7 +9,7 @@ type Props = {
     onCloseMenu: () => void;
 };
 
-export default function HideCourseMenuItem(props: Props): ReactElement {
+export default React.forwardRef(function HideCourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
     const context = useContext(CourseOverviewContext);
 
     function handleClick() {
@@ -17,8 +17,8 @@ export default function HideCourseMenuItem(props: Props): ReactElement {
     }
 
     return (
-        <CourseMenuItem icon={<VisibilityOff />} onClick={handleClick} onCloseMenu={props.onCloseMenu}>
+        <CourseMenuItem icon={<VisibilityOff />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
             {browser.i18n.getMessage('courseOverviewHide')}
         </CourseMenuItem>
     );
-}
+});

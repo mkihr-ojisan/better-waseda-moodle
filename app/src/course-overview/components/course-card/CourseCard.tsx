@@ -30,6 +30,9 @@ const useStyles = makeStyles(theme => ({
     cardHeaderRoot: {
         alignItems: 'flex-start',
     },
+    noteTooltip: {
+        whiteSpace: 'break-spaces',
+    },
 }));
 
 
@@ -77,7 +80,7 @@ export default function CourseCard(props: Props): ReactElement {
                         {
                             courseData?.note ?
                                 <Grid item>
-                                    <Tooltip title={
+                                    <Tooltip classes={{ tooltip: classes.noteTooltip }} title={
                                         <Typography variant="body1">{courseData?.note}</Typography>
                                     }>
                                         <IconButton edge={false} size="small">

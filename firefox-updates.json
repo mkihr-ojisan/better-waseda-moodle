@@ -1,0 +1,26 @@
+{
+    "addons": {
+        "better-waseda-moodle@mkihr-ojisan.com": {
+            "updates": [
+                {
+                    "version": "0.2.0",
+                    "update_link": "https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.2.0/better-waseda-moodle-v0.2.0-firefox.xpi",
+                    "browser_specific_settings": {
+                        "gecko": {
+                            "strict_min_version": "59.0"
+                        }
+                    }
+                },
+                {
+                    "version": "0.3.0",
+                    "update_link": "https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.3.0/better-waseda-moodle-v0.3.0-firefox.xpi",
+                    "browser_specific_settings": {
+                        "gecko": {
+                            "strict_min_version": "59.0"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

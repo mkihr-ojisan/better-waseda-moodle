@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { ReactElement, useContext, useState, Ref } from 'react';
 import CourseMenuItem from './CourseMenuItem';
 import LaunchIcon from '@material-ui/icons/Launch';
 import CourseSettingsDialog from '../../dialog/CourseSettingsDialog';
@@ -15,7 +15,7 @@ type Props = {
     onCloseMenu: () => void;
 };
 
-export default function OpenSyllabusMenuItem(props: Props): ReactElement {
+export default React.forwardRef(function OpenSyllabusMenuItem(props: Props, ref: Ref<any>): ReactElement {
     const context = useContext(CourseOverviewContext);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
@@ -39,7 +39,7 @@ export default function OpenSyllabusMenuItem(props: Props): ReactElement {
 
     return (
         <>
-            <CourseMenuItem icon={<LaunchIcon />} onClick={handleClick} onCloseMenu={props.onCloseMenu}>
+            <CourseMenuItem icon={<LaunchIcon />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
                 {browser.i18n.getMessage('courseOverviewOpenSyllabus')}
             </CourseMenuItem>
             <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
@@ -60,4 +60,4 @@ export default function OpenSyllabusMenuItem(props: Props): ReactElement {
             <CourseSettingsDialog course={props.course} open={settingsOpen} onClose={() => setSettingsOpen(false)} />
         </>
     );
-}
+});

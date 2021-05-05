@@ -9,6 +9,7 @@ import { fetchCourseList, setHiddenFromCourseList } from './common/waseda/course
 import { initDisableRateLimit } from './others/disable-rate-limit/disable-rate-limit';
 import { initHideName } from './others/hide-name/background-script';
 import { initSyllabusLinkFix } from './others/syllabus-link-fix/background-script';
+import { enableConfigSyncIfFirstRun } from './common/config/sync';
 
 // #!blink_only
 import './common/polyfills/content-script-register';
@@ -22,6 +23,8 @@ messengerServer.instructions = {
 };
 
 (async () => {
+    await enableConfigSyncIfFirstRun();
+
     await initConfigCache();
     initAutoLogin();
     initRemoveLoadingVideo();
