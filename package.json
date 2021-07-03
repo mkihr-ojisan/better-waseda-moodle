@@ -17,7 +17,7 @@
     "react-devtools": "^4.13.5",
     "terser-webpack-plugin": "^1.4.5",
     "typescript": "^4.3.5",
-    "webextension-toolbox": "latest",
+    "webextension-toolbox": "^3.0.0",
     "webpack-preprocessor-loader": "^1.1.4"
   },
   "dependencies": {
