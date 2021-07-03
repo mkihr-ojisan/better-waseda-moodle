@@ -135,6 +135,22 @@
     "message": "時間割とシラバスのURLを取得しました",
     "description": "時間割とシラバスのURLの取得に成功したときに表示するメッセージ"
   },
+  "optionsSectionQuiz": {
+    "message": "小テスト",
+    "description": "設定ページの「小テスト」セクションの見出し"
+  },
+  "optionsQuizRemindUnansweredQuestions": {
+    "message": "未解答の問題があるときにメッセージを表示する",
+    "description": "設定ページの「小テスト」セクションに表示するメッセージ"
+  },
+  "optionsQuizRemindUnansweredQuestionsDescription": {
+    "message": "解答していない問題がある状態で次のページに移動しようとしたときに警告を表示します。",
+    "description": "設定ページの「小テスト」セクションに表示するメッセージ"
+  },
+  "optionsQuizRemindUnansweredQuestionsSequentialQuizOnly": {
+    "message": "前のページに戻れない小テストのみ",
+    "description": "設定ページの「小テスト」セクションに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"
@@ -320,6 +336,18 @@
   "courseOverviewSyllabusUrlNotSetDialogOpenSettings": {
     "message": "設定を開く",
     "description": "コース概要のメニューからシラバスを開こうとしたがURLが設定されていないときに表示されるダイアログメッセージ"
+  },
+  "quizRemindUnansweredQuestionsDialogMessage": {
+    "message": "以下の問題が未解答のようです。このまま進みますか？",
+    "description": "未回答の問題があるときに表示するメッセージ"
+  },
+  "quizRemindUnansweredQuestionsDialogContinue": {
+    "message": "このまま進む",
+    "description": "未回答の問題があるときに表示するメッセージ"
+  },
+  "quizRemindUnansweredQuestionsDialogBack": {
+    "message": "解答に戻る",
+    "description": "未回答の問題があるときに表示するメッセージ"
   },
   "sundayShort": {
     "message": "日"

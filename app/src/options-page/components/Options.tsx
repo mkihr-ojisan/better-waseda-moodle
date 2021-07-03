@@ -4,6 +4,7 @@ import SectionGeneral from './sections/general/SectionGeneral';
 import SectionAutoLogin from './sections/SectionAutoLogin';
 import SectionDashboard from './sections/course-overview/SectionCourseOverview';
 import SectionOthers from './sections/SectionOthers';
+import SectionQuiz from './sections/quiz/SectionQuiz';
 
 export type SectionComponentProps = {
     expanded: boolean;
@@ -14,6 +15,7 @@ const sections: React.FunctionComponent<SectionComponentProps>[] = [
     SectionGeneral,
     SectionAutoLogin,
     SectionDashboard,
+    SectionQuiz,
     SectionOthers,
 ];
 
