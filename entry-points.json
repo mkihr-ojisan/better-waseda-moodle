@@ -2,5 +2,6 @@
     "src/auto-login/auto-login-page.ts",
     "src/course-overview/content-script.tsx",
     "src/others/syllabus-link-fix/content-script.ts",
-    "src/options-page/options.tsx"
+    "src/options-page/options.tsx",
+    "src/quiz/remind-unanswered-questions/content-script.tsx"
 ]

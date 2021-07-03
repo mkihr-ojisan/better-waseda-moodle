@@ -22,6 +22,8 @@ export type Config = {
     'hideName.enabled': boolean;
     'syllabusLinkFix.enabled': boolean;
     'courseData': Record<number, CourseDataEntry | undefined>;
+    'quiz.remindUnansweredQuestions.enabled': boolean;
+    'quiz.remindUnansweredQuestions.sequentialQuizOnly': boolean;
 };
 
 export const defaultValue: Config = {
@@ -40,6 +42,8 @@ export const defaultValue: Config = {
     'hideName.enabled': false,
     'syllabusLinkFix.enabled': true,
     'courseData': {},
+    'quiz.remindUnansweredQuestions.enabled': true,
+    'quiz.remindUnansweredQuestions.sequentialQuizOnly': true,
 };
 
 const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined) => void)[]; } = {};

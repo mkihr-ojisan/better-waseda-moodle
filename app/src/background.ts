@@ -13,6 +13,7 @@ import { enableConfigSyncIfFirstRun } from './common/config/sync';
 
 // #!blink_only
 import './common/polyfills/content-script-register';
+import { initRemindUnansweredQuestions } from './quiz/remind-unanswered-questions/background-script';
 
 const messengerServer = new MessengerServer();
 messengerServer.instructions = {
@@ -34,4 +35,5 @@ messengerServer.instructions = {
     initDisableRateLimit();
     initHideName();
     initSyllabusLinkFix();
+    initRemindUnansweredQuestions();
 })();
