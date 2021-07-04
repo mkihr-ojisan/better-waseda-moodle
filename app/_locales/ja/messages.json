@@ -207,6 +207,10 @@
     "message": "シラバスを開く",
     "description": "コース概要のメニューの項目"
   },
+  "courseOverviewAssignmentList": {
+    "message": "課題一覧",
+    "description": "コース概要のメニューの項目"
+  },
   "courseOverviewTimetableSettings": {
     "message": "時間割の設定",
     "description": "コース概要のメニューの項目"
@@ -234,6 +238,18 @@
   "coursesOverviewHiddenCoursesDialogEmpty": {
     "message": "非表示のコースはありません",
     "description": "非表示のコースがないときに非表示のコースダイアログに表示するメッセージ"
+  },
+  "courseOverviewAssignmentDialogTitle": {
+    "message": "「$1」の課題一覧",
+    "description": "コース概要の課題一覧ダイアログのタイトル"
+  },
+  "courseOverviewAssignmentDialogAssignmentStatus": {
+    "message": "提出ステータス",
+    "description": "コース概要の課題一覧ダイアログに表示するメッセージ"
+  },
+  "courseOverviewAssignmentDialogGradingStatus": {
+    "message": "評定ステータス",
+    "description": "コース概要の課題一覧ダイアログに表示するメッセージ"
   },
   "courseOverviewTimetableSettingsDialogTitle": {
     "message": "「$COURSE_NAME$」の時間割設定",
