@@ -8,6 +8,9 @@ export type CourseModuleAssignContent = {
         submissionStatus?: string;
         gradingStatus?: string;
     };
+    feedback: {
+        grade?: string;
+    };
 };
 
 export async function fetchCourseModuleAssignContent(module: CourseModule<'assign'>): Promise<CourseModuleAssignContent> {
@@ -16,13 +19,15 @@ export async function fetchCourseModuleAssignContent(module: CourseModule<'assig
     const modulePage = await fetchHtml(`https://wsdmoodle.waseda.jp/mod/assign/view.php?id=${module.id}`);
 
     const submissionSummary = getSubmissionSummary(modulePage);
+    const feedback = getFeedback(modulePage);
 
     return {
         submissionSummary,
+        feedback,
     };
 }
 
-const labels: [keyof Required<CourseModuleAssignContent>['submissionSummary'], Set<string>][] = [
+const submissionSummaryLabels: [keyof Required<CourseModuleAssignContent>['submissionSummary'], Set<string>][] = [
     ['submissionStatus', new Set([
         '提出ステータス',
         'Submission status',
@@ -61,10 +66,44 @@ function getSubmissionSummary(doc: HTMLDocument): CourseModuleAssignContent['sub
         const td = tr.getElementsByTagName('td')[0]?.innerText?.trim();
         if (!th || !td) continue;
 
-        const i = labels.findIndex(l => l[1].has(th));
+        const i = submissionSummaryLabels.findIndex(l => l[1].has(th));
         if (i >= 0)
-            summary[labels[i][0]] = td;
+            summary[submissionSummaryLabels[i][0]] = td;
     }
 
     return summary;
+}
+
+const feedbackLabels: [keyof CourseModuleAssignContent['feedback'], Set<string>][] = [
+    ['grade', new Set([
+        '評点',
+        'Grade',
+        'Bewertung',
+        'Calificación',
+        'Note',
+        'Valutazione',
+        'Cijfer',
+        '成績',
+        '成绩',
+        'Оценка',
+        '성적',
+    ])],
+];
+function getFeedback(doc: HTMLDocument): CourseModuleAssignContent['feedback'] {
+    const feedbackTable = doc.getElementsByClassName('feedbacktable')[0];
+    if (!feedbackTable) return {};
+
+    const feedback: CourseModuleAssignContent['feedback'] = {};
+
+    for (const tr of Array.from(feedbackTable.getElementsByTagName('tr'))) {
+        const th = tr.getElementsByTagName('th')[0]?.innerText?.trim();
+        const td = tr.getElementsByTagName('td')[0]?.innerText?.trim();
+        if (!th || !td) continue;
+
+        const i = feedbackLabels.findIndex(l => l[1].has(th));
+        if (i >= 0)
+            feedback[feedbackLabels[i][0]] = td;
+    }
+
+    return feedback;
 }

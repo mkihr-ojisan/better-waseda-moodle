@@ -30,6 +30,9 @@ export default function Assignment(props: Props): ReactElement | null {
             <TableCell>
                 {assignment ? assignment.submissionSummary.gradingStatus : null}
             </TableCell>
+            <TableCell>
+                {assignment ? assignment.feedback.grade : null}
+            </TableCell>
         </TableRow>
     );
 }

@@ -78,8 +78,9 @@ function AssignmentListDialogContent(props: Props & { limit: pLimit.Limit; }): R
                             <TableHead>
                                 <TableRow>
                                     <TableCell width="50%"></TableCell>
-                                    <TableCell width="25%">{browser.i18n.getMessage('courseOverviewAssignmentDialogAssignmentStatus')}</TableCell>
-                                    <TableCell width="25%">{browser.i18n.getMessage('courseOverviewAssignmentDialogGradingStatus')}</TableCell>
+                                    <TableCell width="20%">{browser.i18n.getMessage('courseOverviewAssignmentDialogAssignmentStatus')}</TableCell>
+                                    <TableCell width="15%">{browser.i18n.getMessage('courseOverviewAssignmentDialogGradingStatus')}</TableCell>
+                                    <TableCell width="15%">{browser.i18n.getMessage('courseOverviewAssignmentDialogGrade')}</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>

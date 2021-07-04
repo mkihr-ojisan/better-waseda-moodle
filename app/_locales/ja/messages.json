@@ -251,6 +251,10 @@
     "message": "評定ステータス",
     "description": "コース概要の課題一覧ダイアログに表示するメッセージ"
   },
+  "courseOverviewAssignmentDialogGrade": {
+    "message": "評点",
+    "description": "コース概要の課題一覧ダイアログに表示するメッセージ"
+  },
   "courseOverviewTimetableSettingsDialogTitle": {
     "message": "「$COURSE_NAME$」の時間割設定",
     "description": "コース概要の時間割設定ダイアログのタイトル",
