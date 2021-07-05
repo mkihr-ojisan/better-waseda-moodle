@@ -7,6 +7,8 @@ import Description from '../../Description';
 export default function OptionMoreVisibleRemainingTime(): ReactElement | null {
     const [value, setValue] = useConfig('moreVisibleRemainingTime.enabled');
 
+    if (value === undefined) return null;
+
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setValue(event.target.checked);
     }
