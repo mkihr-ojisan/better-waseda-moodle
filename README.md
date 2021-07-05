@@ -4,6 +4,12 @@
 
 Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 
+## インストール
+
+- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.4.0/better-waseda-moodle-v0.4.0-firefox.xpi)
+- [Chrome](https://chrome.google.com/webstore/detail/better-waseda-moodle/omijfabnmlifcmmghegpbmoieibfbmmj)
+
+
 ## 機能
 - 自動ログイン
 - [この動画](https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?)を削除
@@ -19,15 +25,12 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 - シラバス検索結果のリンクを修正する
 - 設定の同期
 
+
 ## スクリーンショット
 ![自動ログイン](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/auto-login.png "自動ログイン")
 ![コース概要](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview.png "コース概要")
 ![コース概要のメニュー](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/readme-images/course-overview-menu.png "コース概要のメニュー")
 
-## インストール
-
-- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.4.0/better-waseda-moodle-v0.4.0-firefox.xpi)
-- [Chrome](https://chrome.google.com/webstore/detail/better-waseda-moodle/omijfabnmlifcmmghegpbmoieibfbmmj)
 
 ## ビルド
 ```console
