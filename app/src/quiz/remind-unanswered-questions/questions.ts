@@ -4,7 +4,7 @@ export type Question = {
     elem: Element;
     name: string | undefined;
 };
-export type QuestionType = 'calculated' | 'calculatedmulti' | 'calculatedsimple' | 'ddimageortext' | 'ddmarker' | 'ddwtos' | 'description' | 'essay' | 'gapselect' | 'match' | 'missingtype' | 'multianswer' | 'multichoice' | 'numerical' | 'random' | 'randomsamatch' | 'shortanswer' | 'tests' | 'truefalse' | 'unknown';
+export type QuestionType = 'calculated' | 'calculatedmulti' | 'calculatedsimple' | 'ddimageortext' | 'ddmarker' | 'ddwtos' | 'description' | 'essay' | 'gapselect' | 'match' | 'missingtype' | 'multianswer' | 'multichoice' | 'numerical' | 'random' | 'randomsamatch' | 'shortanswer' | 'tests' | 'truefalse' | 'multichoiceset' | 'unknown';
 
 export function getQuestions(): Question[] {
     const questionElems = document.querySelectorAll('div[id^="question-"]');
@@ -21,7 +21,7 @@ export function getQuestions(): Question[] {
 }
 
 function getQuestionType(elem: Element): QuestionType {
-    const types: QuestionType[] = ['calculated', 'calculatedmulti', 'calculatedsimple', 'ddimageortext', 'ddmarker', 'ddwtos', 'description', 'essay', 'gapselect', 'match', 'missingtype', 'multianswer', 'multichoice', 'numerical', 'random', 'randomsamatch', 'shortanswer', 'tests', 'truefalse'];
+    const types: QuestionType[] = ['calculated', 'calculatedmulti', 'calculatedsimple', 'ddimageortext', 'ddmarker', 'ddwtos', 'description', 'essay', 'gapselect', 'match', 'missingtype', 'multianswer', 'multichoice', 'numerical', 'random', 'randomsamatch', 'shortanswer', 'tests', 'truefalse', 'multichoiceset'];
     return types.find(type => elem.classList.contains(type)) ?? 'unknown';
 }
 
@@ -38,6 +38,7 @@ function checkIfAnswered(elem: Element, type: QuestionType): boolean {
             return Array.from(elem.querySelectorAll('input[type=text]')).every(e => (e as HTMLInputElement).value !== '');
         case 'calculatedmulti':
         case 'multichoice':
+        case 'multichoiceset':
             return Array.from(elem.querySelectorAll('input[type=radio]')).some(e => (e as HTMLInputElement).value !== '-1' && (e as HTMLInputElement).checked) ||
                 Array.from(elem.querySelectorAll('input[type=checkbox]')).some(e => (e as HTMLInputElement).checked);
         case 'ddmarker':
