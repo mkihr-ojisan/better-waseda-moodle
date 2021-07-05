@@ -1,38 +1,36 @@
-import { getConfig } from '../common/config/config';
-import { getConfigCache } from '../common/config/config-cache';
+import { getConfig, onConfigChange } from '../common/config/config';
 import { login } from '../common/waseda/login';
-import { VENDOR } from '../common/util/util';
 import { LoginRequiredError } from '../common/error';
 
 export async function initAutoLogin(): Promise<void> {
-    switch (VENDOR) {
-        case 'firefox':
+    onConfigChange('autoLogin.enabled', (_, newValue) => {
+        if (newValue) {
             browser.webRequest.onHeadersReceived.addListener(
-                webRequestListenerFirefox,
+                onHeaderReceivedListener,
                 { urls: ['https://wsdmoodle.waseda.jp/*'] },
                 ['blocking', 'responseHeaders'],
             );
-            break;
-        default:
             browser.webRequest.onBeforeRequest.addListener(
-                webRequestListenerOtherBrowser,
-                { urls: ['https://wsdmoodle.waseda.jp/*'] },
+                onBeforeRequestListener,
+                { urls: ['https://wsdmoodle.waseda.jp/login/index.php'] },
                 ['blocking'],
             );
-            break;
-    }
+        } else {
+            browser.webRequest.onHeadersReceived.removeListener(onHeaderReceivedListener);
+            browser.webRequest.onBeforeRequest.removeListener(onBeforeRequestListener);
+        }
+
+    }, true);
 }
 
-// バグだかなんだか知らんがこれはFirefoxでしか動かない
-async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersReceivedDetails) {
-    // ログインページにリダイレクトされたときにリダイレクト先を/src/auto-login/auto-login-page.htmlに変更する
+const requestedUrls = new Map<string, string>();
+
+// ログインページにリダイレクトするようなレスポンスを見つけ、リクエストしていたURLを記憶する
+function onHeaderReceivedListener(details: browser.webRequest._OnHeadersReceivedDetails) {
     if (details.statusCode === 302 || details.statusCode === 303) {
         for (const header of details.responseHeaders ?? []) {
             if (header.name.toLowerCase() === 'location' && header.value === 'https://wsdmoodle.waseda.jp/login/index.php') {
-                if (!await getConfig('autoLogin.enabled')) return {};
-                return {
-                    redirectUrl: browser.runtime.getURL(`/src/auto-login/auto-login-page.html?redirectUrl=${encodeURIComponent(details.url)}`),
-                };
+                requestedUrls.set(details.requestId, details.url);
             }
         }
     }
@@ -40,15 +38,14 @@ async function webRequestListenerFirefox(details: browser.webRequest._OnHeadersR
     return {};
 }
 
-// これはFirefox以外でも動く
-function webRequestListenerOtherBrowser(details: browser.webRequest._OnBeforeRequestDetails) {
-    // asyncなlistenerはfirefox以外で使えないのでgetConfigCacheを使う
-    if (getConfigCache('autoLogin.enabled') && details.url === 'https://wsdmoodle.waseda.jp/login/index.php') {
-        return {
-            // アクセスしようとしていたページがわからないのでMoodleのトップページに飛ばしておく
-            redirectUrl: browser.runtime.getURL(`/src/auto-login/auto-login-page.html?redirectUrl=${encodeURIComponent('https://wsdmoodle.waseda.jp/my/')}`),
-        };
-    }
+// ログインページへのリクエストをブロックして、代わりにauto-login-page.htmlに遷移させる
+function onBeforeRequestListener(details: browser.webRequest._OnBeforeRequestDetails) {
+    const redirectUrl = requestedUrls.get(details.requestId) ?? 'https://wsdmoodle.waseda.jp/my/';
+    requestedUrls.delete(details.requestId);
+
+    return {
+        redirectUrl: browser.runtime.getURL(`/src/auto-login/auto-login-page.html?redirectUrl=${encodeURIComponent(redirectUrl)}`),
+    };
 }
 
 export async function doLogin(): Promise<boolean> {

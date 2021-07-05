@@ -10,7 +10,6 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
     const [viewInBrowserEnabled, setViewInBrowserEnabled] = useConfig('viewInBrowser.enabled');
     const [removeLoadingVideoEnabled, setRemoveLoadingVideoEnabled] = useConfig('removeLoadingVideo.enabled');
     const [checkNotesOnSubmitting, setCheckNotesOnSubmitting] = useConfig('checkNotesOnSubmitting.enabled');
-    const [moreVisibleRemainingTime, setMoreVisibleRemainingTime] = useConfig('moreVisibleRemainingTime.enabled');
     const [disableRateLimitEnabled, setDisableRateLimitEnabled] = useConfig('disableRateLimit.enabled');
     const [hideNameEnabled, setHideNameEnabled] = useConfig('hideName.enabled');
     const [syllabusLinkFixEnabled, setSyllabusLinkFixEnabled] = useConfig('syllabusLinkFix.enabled');
@@ -18,7 +17,6 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
     if (viewInBrowserEnabled === undefined
         || removeLoadingVideoEnabled === undefined
         || checkNotesOnSubmitting === undefined
-        || moreVisibleRemainingTime === undefined
         || disableRateLimitEnabled === undefined
         || hideNameEnabled === undefined
         || syllabusLinkFixEnabled === undefined) return null;
@@ -50,12 +48,6 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
                 label={browser.i18n.getMessage('optionsCheckNotesOnSubmitting')}
             />
             <Description messageName="optionsCheckNotesOnSubmittingDescription" />
-
-            <FormControlLabel
-                control={<Switch checked={moreVisibleRemainingTime} onChange={handleSwitchChange(setMoreVisibleRemainingTime)} />}
-                label={browser.i18n.getMessage('optionsMoreVisibleRemainingTime')}
-            />
-            <Description messageName="optionsMoreVisibleRemainingTimeDescription" />
 
             <FormControlLabel
                 control={<Switch checked={disableRateLimitEnabled} onChange={handleSwitchChange(setDisableRateLimitEnabled)} />}

@@ -135,6 +135,22 @@
     "message": "時間割とシラバスのURLを取得しました",
     "description": "時間割とシラバスのURLの取得に成功したときに表示するメッセージ"
   },
+  "optionsSectionQuiz": {
+    "message": "小テスト",
+    "description": "設定ページの「小テスト」セクションの見出し"
+  },
+  "optionsQuizRemindUnansweredQuestions": {
+    "message": "未解答の問題があるときにメッセージを表示する",
+    "description": "設定ページの「小テスト」セクションに表示するメッセージ"
+  },
+  "optionsQuizRemindUnansweredQuestionsDescription": {
+    "message": "解答していない問題がある状態で次のページに移動しようとしたときに警告を表示します。",
+    "description": "設定ページの「小テスト」セクションに表示するメッセージ"
+  },
+  "optionsQuizRemindUnansweredQuestionsSequentialQuizOnly": {
+    "message": "前のページに戻れない小テストのみ",
+    "description": "設定ページの「小テスト」セクションに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"
@@ -207,6 +223,10 @@
     "message": "シラバスを開く",
     "description": "コース概要のメニューの項目"
   },
+  "courseOverviewAssignmentList": {
+    "message": "課題一覧",
+    "description": "コース概要のメニューの項目"
+  },
   "courseOverviewTimetableSettings": {
     "message": "時間割の設定",
     "description": "コース概要のメニューの項目"
@@ -234,6 +254,22 @@
   "coursesOverviewHiddenCoursesDialogEmpty": {
     "message": "非表示のコースはありません",
     "description": "非表示のコースがないときに非表示のコースダイアログに表示するメッセージ"
+  },
+  "courseOverviewAssignmentDialogTitle": {
+    "message": "「$1」の課題一覧",
+    "description": "コース概要の課題一覧ダイアログのタイトル"
+  },
+  "courseOverviewAssignmentDialogAssignmentStatus": {
+    "message": "提出ステータス",
+    "description": "コース概要の課題一覧ダイアログに表示するメッセージ"
+  },
+  "courseOverviewAssignmentDialogGradingStatus": {
+    "message": "評定ステータス",
+    "description": "コース概要の課題一覧ダイアログに表示するメッセージ"
+  },
+  "courseOverviewAssignmentDialogGrade": {
+    "message": "評点",
+    "description": "コース概要の課題一覧ダイアログに表示するメッセージ"
   },
   "courseOverviewTimetableSettingsDialogTitle": {
     "message": "「$COURSE_NAME$」の時間割設定",
@@ -320,6 +356,18 @@
   "courseOverviewSyllabusUrlNotSetDialogOpenSettings": {
     "message": "設定を開く",
     "description": "コース概要のメニューからシラバスを開こうとしたがURLが設定されていないときに表示されるダイアログメッセージ"
+  },
+  "quizRemindUnansweredQuestionsDialogMessage": {
+    "message": "以下の問題が未解答のようです。このまま進みますか？",
+    "description": "未回答の問題があるときに表示するメッセージ"
+  },
+  "quizRemindUnansweredQuestionsDialogContinue": {
+    "message": "このまま進む",
+    "description": "未回答の問題があるときに表示するメッセージ"
+  },
+  "quizRemindUnansweredQuestionsDialogBack": {
+    "message": "解答に戻る",
+    "description": "未回答の問題があるときに表示するメッセージ"
   },
   "sundayShort": {
     "message": "日"
