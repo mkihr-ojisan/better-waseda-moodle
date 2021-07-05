@@ -11,9 +11,11 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
     - 表示を高速化
     - 時間割表
     - シラバスを開く
+    - 課題一覧
 - PDF、画像ファイル等をブラウザで直接開けるようにする
 - 課題提出ページの「レポート・論文等の提出に関する注意」に自動でチェックを入れる
 - 小テストの残り時間を見やすくする
+- 小テストで未回答の問題があるときに警告
 - シラバス検索結果のリンクを修正する
 - 設定の同期
 
@@ -24,7 +26,7 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 
 ## インストール
 
-- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.3.0/better-waseda-moodle-v0.3.0-firefox.xpi)
+- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.4.0/better-waseda-moodle-v0.4.0-firefox.xpi)
 - [Chrome](https://chrome.google.com/webstore/detail/better-waseda-moodle/omijfabnmlifcmmghegpbmoieibfbmmj)
 
 ## ビルド
