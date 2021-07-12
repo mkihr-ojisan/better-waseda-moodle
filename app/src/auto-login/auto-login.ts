@@ -82,7 +82,7 @@ export async function logout(): Promise<void> {
 }
 
 let lastEnsureLogin: number | null = null;
-export async function ensureLogin(): Promise<boolean> {
+export async function ensureLogin(): Promise<void> {
     if (!lastEnsureLogin || lastEnsureLogin + 60000 < Date.now()) { //1分くらいは勝手にログアウトされんやろ
         const response = await fetch('https://wsdmoodle.waseda.jp/my/', {
             method: 'HEAD',
@@ -94,15 +94,11 @@ export async function ensureLogin(): Promise<boolean> {
         if (response.redirected) {
             if (await doLogin()) {
                 lastEnsureLogin = Date.now();
-                return true;
             } else {
                 throw new LoginRequiredError();
             }
         } else {
             lastEnsureLogin = Date.now();
-            return true;
         }
-    } else {
-        return true;
-    }
+    } 
 }

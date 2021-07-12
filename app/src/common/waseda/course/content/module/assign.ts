@@ -1,5 +1,4 @@
 import { ensureLogin } from '../../../../../auto-login/auto-login';
-import { LoginRequiredError } from '../../../../error';
 import { fetchHtml } from '../../../../util/util';
 import { CourseModule } from './course-module';
 
@@ -14,7 +13,7 @@ export type CourseModuleAssignContent = {
 };
 
 export async function fetchCourseModuleAssignContent(module: CourseModule<'assign'>): Promise<CourseModuleAssignContent> {
-    if (!await ensureLogin()) throw new LoginRequiredError();
+    await ensureLogin();
 
     const modulePage = await fetchHtml(`https://wsdmoodle.waseda.jp/mod/assign/view.php?id=${module.id}`);
 
