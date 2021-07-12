@@ -1,6 +1,7 @@
 import { getConfig, onConfigChange } from '../common/config/config';
 import { login } from '../common/waseda/login';
 import { LoginRequiredError } from '../common/error';
+import { setSessionKeyCache } from '../common/waseda/session-key';
 
 export async function initAutoLogin(): Promise<void> {
     onConfigChange(

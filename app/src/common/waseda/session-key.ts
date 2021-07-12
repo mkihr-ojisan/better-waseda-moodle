@@ -35,3 +35,12 @@ export function getSessionKeyCache(): string | undefined {
         return cache.sessionKey;
     }
 }
+
+export function setSessionKeyCache(sessionKey: string, expireAt?: Date): void {
+    if (!expireAt) {
+        expireAt = new Date();
+        expireAt.setHours(expireAt.getHours() + 2);
+    }
+
+    cache = { sessionKey, expireAt };
+}
