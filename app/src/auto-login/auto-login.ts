@@ -1,7 +1,8 @@
 import { getConfig, onConfigChange } from '../common/config/config';
 import { login } from '../common/waseda/login';
 import { LoginRequiredError } from '../common/error';
-import { setSessionKeyCache } from '../common/waseda/session-key';
+import { getSessionKeyCache, setSessionKeyCache } from '../common/waseda/session-key';
+import { postJson } from '../common/util/util';
 
 export async function initAutoLogin(): Promise<void> {
     onConfigChange(
@@ -99,21 +100,28 @@ let lastEnsureLogin: number | null = null;
 export async function ensureLogin(): Promise<void> {
     if (!lastEnsureLogin || lastEnsureLogin + 60000 < Date.now()) {
         //1分くらいは勝手にログアウトされんやろ
-        const response = await fetch('https://wsdmoodle.waseda.jp/my/', {
-            method: 'HEAD',
-            credentials: 'include',
-            mode: 'cors',
-            redirect: 'manual',
-        });
+        const sessionKey = getSessionKeyCache();
+        if (!sessionKey) {
+            await doLogin();
+            return;
+        }
 
-        if (response.redirected) {
+        const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}`, [
+            {
+                index: 0,
+                methodname: 'core_session_touch',
+                args: {},
+            },
+        ]);
+
+        if (response[0]?.data) {
+            lastEnsureLogin = Date.now();
+        } else {
             if (await doLogin()) {
                 lastEnsureLogin = Date.now();
             } else {
                 throw new LoginRequiredError();
             }
-        } else {
-            lastEnsureLogin = Date.now();
         }
     }
 }

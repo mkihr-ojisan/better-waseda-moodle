@@ -31,7 +31,7 @@ export async function fetchSessionKey(force?: boolean): Promise<string> {
 }
 
 export function getSessionKeyCache(): string | undefined {
-    if (cache && cache.expireAt < new Date()) {
+    if (cache && cache.expireAt > new Date()) {
         return cache.sessionKey;
     }
 }
