@@ -38,5 +38,6 @@ module.exports = {
         '@typescript-eslint/ban-types': 0,
         '@typescript-eslint/no-explicit-any': 0,
         'comma-dangle': ['error', 'always-multiline'],
+        '@typescript-eslint/no-non-null-assertion': 0,
     },
 };
