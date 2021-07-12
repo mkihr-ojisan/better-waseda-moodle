@@ -18,7 +18,7 @@ type Props = {
     course: CourseListItem;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         height: '100%',
     },
@@ -59,7 +59,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
 export default function CourseCard(props: Props): ReactElement {
     const classes = useStyles();
     const [menuOpen, setMenuOpen] = useState(false);
@@ -67,7 +66,7 @@ export default function CourseCard(props: Props): ReactElement {
     const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
     const context = useContext(CourseOverviewContext);
 
-    const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
+    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('xs'));
 
     const courseData = context.courseData[props.course.id];
     const courseName = courseData?.overrideName ?? props.course.name;
@@ -79,7 +78,7 @@ export default function CourseCard(props: Props): ReactElement {
     const closeMenu = () => {
         setMenuOpen(false);
     };
-    const handleContextMenu: React.MouseEventHandler = event => {
+    const handleContextMenu: React.MouseEventHandler = (event) => {
         if (!menuOpen) {
             event.preventDefault();
             setAnchorPosition({ top: event.clientY, left: event.clientX });
@@ -88,10 +87,7 @@ export default function CourseCard(props: Props): ReactElement {
     };
 
     return (
-        <Card
-            className={classes.root}
-            onContextMenu={isSmallScreen ? handleContextMenu : undefined}
-        >
+        <Card className={classes.root} onContextMenu={isSmallScreen ? handleContextMenu : undefined}>
             <CourseImage
                 alt={courseName}
                 height="8"
@@ -107,7 +103,12 @@ export default function CourseCard(props: Props): ReactElement {
                 }}
                 title={
                     <Typography variant="body1" classes={{ root: classes.cardHeaderTypographyRoot }}>
-                        <a className={classes.title} href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}>{courseName}</a>
+                        <a
+                            className={classes.title}
+                            href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}
+                        >
+                            {courseName}
+                        </a>
                     </Typography>
                 }
                 action={
@@ -117,19 +118,18 @@ export default function CourseCard(props: Props): ReactElement {
                                 <MoreVert />
                             </IconButton>
                         </Grid>
-                        {
-                            courseData?.note ?
-                                <Grid item>
-                                    <Tooltip classes={{ tooltip: classes.noteTooltip }} title={
-                                        <Typography variant="body1">{courseData?.note}</Typography>
-                                    }>
-                                        <IconButton edge={false} size="small">
-                                            <NoteIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid> :
-                                null
-                        }
+                        {courseData?.note ? (
+                            <Grid item>
+                                <Tooltip
+                                    classes={{ tooltip: classes.noteTooltip }}
+                                    title={<Typography variant="body1">{courseData?.note}</Typography>}
+                                >
+                                    <IconButton edge={false} size="small">
+                                        <NoteIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                        ) : null}
                     </Grid>
                 }
             />

@@ -26,7 +26,11 @@ export type TimetableEntry = {
     dayPeriod: DayPeriod;
 };
 
-export async function registerCourseData<T extends keyof CourseDataEntry>(courseId: number, key: T, value: CourseDataEntry[T]): Promise<void> {
+export async function registerCourseData<T extends keyof CourseDataEntry>(
+    courseId: number,
+    key: T,
+    value: CourseDataEntry[T]
+): Promise<void> {
     const configValue = await getConfig('courseData');
 
     const entry = configValue[courseId] ?? (configValue[courseId] = {});

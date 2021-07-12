@@ -12,7 +12,9 @@ export async function login(userId: string, password: string): Promise<string> {
         try {
             await logout();
 
-            const loginPage = await fetchHtml('https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off');
+            const loginPage = await fetchHtml(
+                'https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off'
+            );
 
             const loginInfoPostUrl = loginPage.getElementById('login')?.getAttribute('action');
             if (!loginInfoPostUrl) throw new InvalidResponseError('cannot find loginInfoPostUrl');
@@ -27,7 +29,9 @@ export async function login(userId: string, password: string): Promise<string> {
             const loginResponse = await fetchHtml(loginInfoPostUrlFull.href, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 method: 'POST',
-                body: `csrf_token=${csrfToken}&j_username=${encodeURIComponent(userId)}&j_password=${encodeURIComponent(password)}&_eventId_proceed=Login`,
+                body: `csrf_token=${csrfToken}&j_username=${encodeURIComponent(userId)}&j_password=${encodeURIComponent(
+                    password
+                )}&_eventId_proceed=Login`,
             });
 
             const RelayState = loginResponse.querySelector('input[name="RelayState"]')?.getAttribute('value');
@@ -43,7 +47,10 @@ export async function login(userId: string, password: string): Promise<string> {
                 body: `RelayState=${encodeURIComponent(RelayState)}&SAMLResponse=${encodeURIComponent(SAMLResponse)}`,
             });
 
-            const sessionKey = moodleTop.querySelector('[data-title="logout,moodle"]')?.getAttribute('href')?.match(/sesskey=(.*)$/)?.[1];
+            const sessionKey = moodleTop
+                .querySelector('[data-title="logout,moodle"]')
+                ?.getAttribute('href')
+                ?.match(/sesskey=(.*)$/)?.[1];
             if (!sessionKey) throw new InvalidResponseError('cannot find sessionKey');
 
             const sessionKeyExpire = new Date();

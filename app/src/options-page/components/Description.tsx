@@ -8,7 +8,7 @@ type Props = {
     children?: ReactNode;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         marginInlineStart: theme.spacing(4),
         marginBottom: theme.spacing(2),
@@ -20,7 +20,7 @@ export default function Description(props: Props): ReactElement {
     const classes = useStyles();
     return (
         <Typography classes={{ root: classes.root }} variant="body2">
-            {props.children || props.messageName && browser.i18n.getMessage(props.messageName)}
+            {props.children || (props.messageName && browser.i18n.getMessage(props.messageName))}
         </Typography>
     );
 }

@@ -20,7 +20,7 @@ type Props = {
     anchorReference?: PopoverReference;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     menuDivider: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
@@ -42,11 +42,11 @@ export default function CourseMenu(props: Props): ReactElement {
             <OpenSyllabusMenuItem course={props.course} onCloseMenu={props.onClose} />
             <AssignmentListMenuItem course={props.course} onCloseMenu={props.onClose} />
             <Divider classes={{ root: classes.menuDivider }} />
-            {
-                props.course.isHidden
-                    ? <UnhideCourseMenuItem course={props.course} onCloseMenu={props.onClose} />
-                    : <HideCourseMenuItem course={props.course} onCloseMenu={props.onClose} />
-            }
+            {props.course.isHidden ? (
+                <UnhideCourseMenuItem course={props.course} onCloseMenu={props.onClose} />
+            ) : (
+                <HideCourseMenuItem course={props.course} onCloseMenu={props.onClose} />
+            )}
             <TimetableSettingsMenuItem course={props.course} onCloseMenu={props.onClose} />
             <SettingsMenuItem course={props.course} onCloseMenu={props.onClose} />
         </Menu>

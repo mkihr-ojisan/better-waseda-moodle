@@ -10,7 +10,7 @@ type Props = {
     emptyView?: ReactElement;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
@@ -18,13 +18,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function CourseListView(props: Props): ReactElement {
-    const courses = props.courses
-        .sort(compareCourse)
-        .map(c => (
-            <Grid item xs={props.cardWidth ?? 12} sm={props.cardWidth ?? 6} md={props.cardWidth ?? 4} lg={props.cardWidth ?? 4} xl={props.cardWidth ?? 3} key={c.id}>
-                <CourseCard course={c} />
-            </Grid>
-        ));
+    const courses = props.courses.sort(compareCourse).map((c) => (
+        <Grid
+            item
+            xs={props.cardWidth ?? 12}
+            sm={props.cardWidth ?? 6}
+            md={props.cardWidth ?? 4}
+            lg={props.cardWidth ?? 4}
+            xl={props.cardWidth ?? 3}
+            key={c.id}
+        >
+            <CourseCard course={c} />
+        </Grid>
+    ));
     const classes = useStyles();
 
     if (courses.length > 0 || !props.emptyView) {

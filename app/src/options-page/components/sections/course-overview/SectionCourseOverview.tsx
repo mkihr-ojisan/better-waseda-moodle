@@ -26,8 +26,10 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     const [type, setType] = useConfig('courseOverview.type');
 
     const [courseCacheClearedSnackbarOpen, setCourseCacheClearedSnackbarOpen] = useState(false);
-    const [fetchTimetableDataAndSyllabusUrlMessageOpen, setFetchTimetableDataAndSyllabusUrlMessageOpen] = useState(false);
-    const [fetchTimetableDataAndSyllabusUrlDoneMessageOpen, setFetchTimetableDataAndSyllabusUrlDoneMessageOpen] = useState(false);
+    const [fetchTimetableDataAndSyllabusUrlMessageOpen, setFetchTimetableDataAndSyllabusUrlMessageOpen] =
+        useState(false);
+    const [fetchTimetableDataAndSyllabusUrlDoneMessageOpen, setFetchTimetableDataAndSyllabusUrlDoneMessageOpen] =
+        useState(false);
     const [fetchTimetableDataAndSyllabusUrlError, setFetchTimetableDataAndSyllabusError] = useState<Error | null>(null);
     const [isFetchingTimetableDataAndSyllabusUrl, setIsFetchingTimetableDataAndSyllabusUrl] = useState(false);
 
@@ -39,7 +41,7 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
         };
     }
     function handleSelectChange<T extends string>(setStateFunc: (value: T) => void) {
-        return (event: React.ChangeEvent<{ value: unknown; }>) => {
+        return (event: React.ChangeEvent<{ value: unknown }>) => {
             setStateFunc(event.target.value as T);
         };
     }
@@ -51,15 +53,18 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     }
     function handleFetchTimetableDataAndSyllabusUrl() {
         setIsFetchingTimetableDataAndSyllabusUrl(true);
-        fetchTimetableDataAndSyllabusUrl().then(() => {
-            setFetchTimetableDataAndSyllabusError(null);
-        }).catch(error => {
-            setFetchTimetableDataAndSyllabusError(error);
-        }).finally(() => {
-            setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(true);
-            setIsFetchingTimetableDataAndSyllabusUrl(false);
-            setFetchTimetableDataAndSyllabusUrlMessageOpen(false);
-        });
+        fetchTimetableDataAndSyllabusUrl()
+            .then(() => {
+                setFetchTimetableDataAndSyllabusError(null);
+            })
+            .catch((error) => {
+                setFetchTimetableDataAndSyllabusError(error);
+            })
+            .finally(() => {
+                setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(true);
+                setIsFetchingTimetableDataAndSyllabusUrl(false);
+                setFetchTimetableDataAndSyllabusUrlMessageOpen(false);
+            });
     }
 
     return (
@@ -77,13 +82,15 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                     disabled={!enabled}
                 >
                     <MenuItem value="normal">{browser.i18n.getMessage('optionsCourseOverviewTypeNormal')}</MenuItem>
-                    <MenuItem value="timetable">{browser.i18n.getMessage('optionsCourseOverviewTypeTimetable')}</MenuItem>
+                    <MenuItem value="timetable">
+                        {browser.i18n.getMessage('optionsCourseOverviewTypeTimetable')}
+                    </MenuItem>
                 </TextField>
                 <OptionShowPeriodTime />
             </FormGroup>
 
             <Box my={1}>
-                <Grid container spacing={1} >
+                <Grid container spacing={1}>
                     <Grid item>
                         <Button variant="outlined" onClick={handleClearCourseCache}>
                             {browser.i18n.getMessage('optionsClearCourseListCache')}
@@ -97,26 +104,48 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
                 </Grid>
             </Box>
 
-            <AutoCloseAlert severity="success" open={courseCacheClearedSnackbarOpen} onClose={() => setCourseCacheClearedSnackbarOpen(false)}>
+            <AutoCloseAlert
+                severity="success"
+                open={courseCacheClearedSnackbarOpen}
+                onClose={() => setCourseCacheClearedSnackbarOpen(false)}
+            >
                 {browser.i18n.getMessage('optionsClearCourseListCacheMessage')}
             </AutoCloseAlert>
 
-            <Dialog open={fetchTimetableDataAndSyllabusUrlMessageOpen} onClose={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}>
+            <Dialog
+                open={fetchTimetableDataAndSyllabusUrlMessageOpen}
+                onClose={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}
+            >
                 <DialogContent>
-                    <DialogContentText>{browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlMessage')}</DialogContentText>
+                    <DialogContentText>
+                        {browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlMessage')}
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     {isFetchingTimetableDataAndSyllabusUrl && <CircularProgress />}
-                    <Button color="primary" disabled={isFetchingTimetableDataAndSyllabusUrl} onClick={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}>
+                    <Button
+                        color="primary"
+                        disabled={isFetchingTimetableDataAndSyllabusUrl}
+                        onClick={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}
+                    >
                         {browser.i18n.getMessage('cancel')}
                     </Button>
-                    <Button color="primary" disabled={isFetchingTimetableDataAndSyllabusUrl} onClick={handleFetchTimetableDataAndSyllabusUrl}>
+                    <Button
+                        color="primary"
+                        disabled={isFetchingTimetableDataAndSyllabusUrl}
+                        onClick={handleFetchTimetableDataAndSyllabusUrl}
+                    >
                         {browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlMessageOK')}
                     </Button>
                 </DialogActions>
             </Dialog>
-            <AutoCloseAlert severity={fetchTimetableDataAndSyllabusUrlError ? 'error' : 'success'} open={fetchTimetableDataAndSyllabusUrlDoneMessageOpen} onClose={() => setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(false)}>
-                {fetchTimetableDataAndSyllabusUrlError?.message ?? browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlDoneMessage')}
+            <AutoCloseAlert
+                severity={fetchTimetableDataAndSyllabusUrlError ? 'error' : 'success'}
+                open={fetchTimetableDataAndSyllabusUrlDoneMessageOpen}
+                onClose={() => setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(false)}
+            >
+                {fetchTimetableDataAndSyllabusUrlError?.message ??
+                    browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlDoneMessage')}
             </AutoCloseAlert>
         </Section>
     );
@@ -126,10 +155,17 @@ async function fetchTimetableDataAndSyllabusUrl(): Promise<void> {
     const [list, infos] = await Promise.all([fetchCourseList(), fetchCourseRegistrationInfo()]);
 
     for (const course of list) {
-        const info = infos.find(i => i.name === course.name && i.status === '決定');
+        const info = infos.find((i) => i.name === course.name && i.status === '決定');
         if (!info) continue;
 
-        await registerCourseData(course.id, 'timetableData', info.termDayPeriods.map(v => ({ yearTerm: { year: parseInt(course.category), term: v.term }, dayPeriod: v.dayPeriod })));
+        await registerCourseData(
+            course.id,
+            'timetableData',
+            info.termDayPeriods.map((v) => ({
+                yearTerm: { year: parseInt(course.category), term: v.term },
+                dayPeriod: v.dayPeriod,
+            }))
+        );
         await registerCourseData(course.id, 'syllabusUrl', info.syllabusUrl);
     }
 }

@@ -5,7 +5,7 @@ export function usePromise<T>(promise: () => Promise<T>, deps?: React.Dependency
 
     useEffect(() => {
         let isCancelled = false;
-        promise().then(v => {
+        promise().then((v) => {
             if (!isCancelled) setValue(v);
         });
         return () => {

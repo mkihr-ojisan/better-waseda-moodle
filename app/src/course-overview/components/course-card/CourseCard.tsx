@@ -17,7 +17,7 @@ type Props = {
     course: CourseListItem;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         height: '100%',
     },
@@ -34,7 +34,6 @@ const useStyles = makeStyles(theme => ({
         whiteSpace: 'break-spaces',
     },
 }));
-
 
 export default function CourseCard(props: Props): ReactElement {
     const classes = useStyles();
@@ -53,12 +52,7 @@ export default function CourseCard(props: Props): ReactElement {
 
     return (
         <Card className={classes.root}>
-            <CourseImage
-                alt={courseName}
-                height="112"
-                title={courseName}
-                course={props.course}
-            />
+            <CourseImage alt={courseName} height="112" title={courseName} course={props.course} />
             <CardHeader
                 disableTypography={true}
                 classes={{
@@ -67,7 +61,12 @@ export default function CourseCard(props: Props): ReactElement {
                 }}
                 title={
                     <Typography variant="body1">
-                        <a className={classes.title} href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}>{courseName}</a>
+                        <a
+                            className={classes.title}
+                            href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}
+                        >
+                            {courseName}
+                        </a>
                     </Typography>
                 }
                 action={
@@ -77,29 +76,23 @@ export default function CourseCard(props: Props): ReactElement {
                                 <MoreVert />
                             </IconButton>
                         </Grid>
-                        {
-                            courseData?.note ?
-                                <Grid item>
-                                    <Tooltip classes={{ tooltip: classes.noteTooltip }} title={
-                                        <Typography variant="body1">{courseData?.note}</Typography>
-                                    }>
-                                        <IconButton edge={false} size="small">
-                                            <NoteIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid> :
-                                null
-                        }
+                        {courseData?.note ? (
+                            <Grid item>
+                                <Tooltip
+                                    classes={{ tooltip: classes.noteTooltip }}
+                                    title={<Typography variant="body1">{courseData?.note}</Typography>}
+                                >
+                                    <IconButton edge={false} size="small">
+                                        <NoteIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                        ) : null}
                     </Grid>
                 }
             />
 
-            <CourseMenu
-                anchorEl={anchorEl}
-                course={props.course}
-                onClose={closeMenu}
-                open={Boolean(anchorEl)}
-            />
+            <CourseMenu anchorEl={anchorEl} course={props.course} onClose={closeMenu} open={Boolean(anchorEl)} />
         </Card>
     );
 }

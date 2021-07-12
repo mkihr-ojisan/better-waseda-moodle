@@ -5,19 +5,24 @@ import React, { ReactElement, ReactNode, useEffect, useMemo, useState } from 're
 import { bwmThemeOptions } from './BWMTheme';
 
 // DarkReaderで設定された背景色と文字色を取得する
-function useDarkReaderColor(): { bgR: number, bgG: number, bgB: number, fgR: number, fgG: number, fgB: number; } | null {
+function useDarkReaderColor(): { bgR: number; bgG: number; bgB: number; fgR: number; fgG: number; fgB: number } | null {
     const style = getComputedStyle(document.documentElement);
     const [bgColor, setBgColor] = useState(style.getPropertyValue('--darkreader-neutral-background').trim());
     const [fgColor, setFgColor] = useState(style.getPropertyValue('--darkreader-neutral-text').trim());
 
     useEffect(() => {
         //darkreaderによるstyleの変更を監視する
-        const observer = new MutationObserver(records => {
+        const observer = new MutationObserver((records) => {
             for (const record of records) {
                 if (
-                    Array.from(record.addedNodes).some(node => node instanceof HTMLStyleElement && node.classList.contains('darkreader')) ||
-                    Array.from(record.removedNodes).some(node => node instanceof HTMLStyleElement && node.classList.contains('darkreader')) ||
-                    record.target.parentNode instanceof HTMLStyleElement && record.target.parentNode.classList.contains('darkreader')
+                    Array.from(record.addedNodes).some(
+                        (node) => node instanceof HTMLStyleElement && node.classList.contains('darkreader')
+                    ) ||
+                    Array.from(record.removedNodes).some(
+                        (node) => node instanceof HTMLStyleElement && node.classList.contains('darkreader')
+                    ) ||
+                    (record.target.parentNode instanceof HTMLStyleElement &&
+                        record.target.parentNode.classList.contains('darkreader'))
                 ) {
                     const style = getComputedStyle(document.documentElement);
                     setBgColor(style.getPropertyValue('--darkreader-neutral-background').trim());
@@ -29,7 +34,6 @@ function useDarkReaderColor(): { bgR: number, bgG: number, bgB: number, fgR: num
         observer.observe(document.head, { subtree: true, characterData: true, childList: true });
         return () => observer.disconnect();
     }, []);
-
 
     return useMemo(() => {
         if (!bgColor || !fgColor) return null;
@@ -98,10 +102,6 @@ function useDarkReaderTheme(): Theme {
     }, [darkReaderColor]);
 }
 
-export default function BWMThemeDarkReader(props: { children: ReactNode; }): ReactElement {
-    return (
-        <ThemeProvider theme={useDarkReaderTheme()}>
-            {props.children}
-        </ThemeProvider>
-    );
+export default function BWMThemeDarkReader(props: { children: ReactNode }): ReactElement {
+    return <ThemeProvider theme={useDarkReaderTheme()}>{props.children}</ThemeProvider>;
 }

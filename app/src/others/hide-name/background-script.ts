@@ -3,12 +3,14 @@ import { onConfigChange } from '../../common/config/config';
 let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
 
 export function initHideName(): void {
-    onConfigChange('hideName.enabled', (_, newValue) => {
-        if (newValue)
-            register();
-        else
-            unregister();
-    }, true);
+    onConfigChange(
+        'hideName.enabled',
+        (_, newValue) => {
+            if (newValue) register();
+            else unregister();
+        },
+        true
+    );
 }
 
 async function register() {

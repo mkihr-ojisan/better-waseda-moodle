@@ -10,7 +10,9 @@ elemMessage.textContent = browser.i18n.getMessage('autoLoginPageMessage');
 
 btnGotoFallbackPage.textContent = browser.i18n.getMessage('autoLoginFallbackButtonText');
 btnGotoFallbackPage.addEventListener('click', () => {
-    location.replace('https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off');
+    location.replace(
+        'https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off'
+    );
 });
 
 (async () => {

@@ -15,7 +15,7 @@ type Props = {
     onClose?: () => void;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     closeButton: {
         position: 'absolute',
         right: theme.spacing(1),
@@ -28,7 +28,7 @@ export default function HiddenCoursesDialog(props: Props): ReactElement {
     const classes = useStyles();
     const context = useContext(CourseOverviewContext);
 
-    const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     return (
         <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="md" fullScreen={isSmallScreen}>
@@ -40,7 +40,7 @@ export default function HiddenCoursesDialog(props: Props): ReactElement {
             </DialogTitle>
             <DialogContent>
                 <CourseListView
-                    courses={context.courseList.filter(c => c.isHidden)}
+                    courses={context.courseList.filter((c) => c.isHidden)}
                     cardWidth={isSmallScreen ? undefined : 4}
                     emptyView={
                         <DialogContentText>

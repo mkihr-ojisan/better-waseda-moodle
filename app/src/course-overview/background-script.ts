@@ -3,12 +3,14 @@ import { onConfigChange } from '../common/config/config';
 let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
 
 export function initCourseOverview(): void {
-    onConfigChange('courseOverview.enabled', (_, newValue) => {
-        if (newValue)
-            register();
-        else
-            unregister();
-    }, true);
+    onConfigChange(
+        'courseOverview.enabled',
+        (_, newValue) => {
+            if (newValue) register();
+            else unregister();
+        },
+        true
+    );
 }
 
 async function register() {

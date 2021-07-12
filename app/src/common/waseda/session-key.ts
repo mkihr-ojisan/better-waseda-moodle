@@ -3,8 +3,8 @@ import { InvalidResponseError } from '../error';
 import { fetchHtml } from '../util/util';
 
 let cache: {
-    sessionKey: string,
-    expireAt: Date,
+    sessionKey: string;
+    expireAt: Date;
 } | null = null;
 
 export async function fetchSessionKey(force?: boolean): Promise<string> {
@@ -15,7 +15,10 @@ export async function fetchSessionKey(force?: boolean): Promise<string> {
         expireAt.setHours(expireAt.getHours() + 2); //TODO: 要検証
 
         const moodleTop = await fetchHtml('https://wsdmoodle.waseda.jp/my/');
-        const sessionKey = moodleTop.querySelector('a[href^="https://wsdmoodle.waseda.jp/login/logout.php?sesskey="]')?.getAttribute('href')?.split('=')[1];
+        const sessionKey = moodleTop
+            .querySelector('a[href^="https://wsdmoodle.waseda.jp/login/logout.php?sesskey="]')
+            ?.getAttribute('href')
+            ?.split('=')[1];
         if (!sessionKey) throw new InvalidResponseError('cannot find session key');
 
         cache = {
@@ -30,5 +33,5 @@ export async function fetchSessionKey(force?: boolean): Promise<string> {
 export function getSessionKeyCache(): string | undefined {
     if (cache && cache.expireAt < new Date()) {
         return cache.sessionKey;
-    } 
+    }
 }

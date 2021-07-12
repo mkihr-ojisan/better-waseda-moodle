@@ -10,7 +10,7 @@ labelAutoLogin.textContent = browser.i18n.getMessage('autoLoginCheckboxLabel');
 document.getElementById('wrapper-password')?.insertAdjacentElement('afterend', checkboxAutoLogin);
 checkboxAutoLogin.insertAdjacentElement('afterend', labelAutoLogin);
 
-getConfig('autoLogin.enabled').then(enabled => checkboxAutoLogin.checked = enabled === true);
+getConfig('autoLogin.enabled').then((enabled) => (checkboxAutoLogin.checked = enabled === true));
 
 document.getElementById('login')?.addEventListener('submit', () => {
     setConfig('autoLogin.enabled', checkboxAutoLogin.checked);

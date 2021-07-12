@@ -8,9 +8,8 @@ type Props = {
     title: string;
     alt: string;
     height: string;
-    classes?: { cardMediaRoot?: string; };
+    classes?: { cardMediaRoot?: string };
 };
-
 
 export default function CourseImage(props: Props): ReactElement {
     const context = useContext(CourseOverviewContext);

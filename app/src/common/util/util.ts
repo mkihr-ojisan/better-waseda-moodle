@@ -25,13 +25,15 @@ export async function postForm(url: string, form: Record<string, string>, init: 
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: Object.entries(form).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&'),
+        body: Object.entries(form)
+            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+            .join('&'),
     });
     return await fetch(url, init);
 }
 
 export function sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export type Vendor = 'firefox' | 'chrome' | 'opera' | 'edge';

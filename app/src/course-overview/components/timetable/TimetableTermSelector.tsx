@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function TimetableTermSelector(props: Props): ReactElement {
-    const handleChange = (event: React.ChangeEvent<{ value: unknown; }>) => {
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const selectedIndex = event.target.value as number;
         props.onChange?.(props.terms[selectedIndex], selectedIndex);
     };
@@ -19,15 +19,14 @@ export default function TimetableTermSelector(props: Props): ReactElement {
     if (props.terms.length > 0) {
         return (
             <FormControl>
-                <Select
-                    value={props.selectedIndex}
-                    onChange={handleChange}
-                >
-                    {
-                        props.terms.map((term, i) => {
-                            return <MenuItem value={i} key={i}>{yearTermToString(term)}</MenuItem>;
-                        })
-                    }
+                <Select value={props.selectedIndex} onChange={handleChange}>
+                    {props.terms.map((term, i) => {
+                        return (
+                            <MenuItem value={i} key={i}>
+                                {yearTermToString(term)}
+                            </MenuItem>
+                        );
+                    })}
                 </Select>
             </FormControl>
         );

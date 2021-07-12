@@ -20,8 +20,6 @@ const sections: React.FunctionComponent<SectionComponentProps>[] = [
 ];
 
 export default function Options(): ReactElement {
-
-
     const [expanded, setExpanded] = React.useState<number | null>(null);
 
     function handleChange(i: number) {
@@ -30,15 +28,9 @@ export default function Options(): ReactElement {
 
     return (
         <BWMThemePrefersColorScheme>
-            {
-                sections.map((SectionComponent, i) => (
-                    <SectionComponent
-                        key={i}
-                        expanded={expanded === i}
-                        onChange={handleChange(i)}
-                    />
-                ))
-            }
+            {sections.map((SectionComponent, i) => (
+                <SectionComponent key={i} expanded={expanded === i} onChange={handleChange(i)} />
+            ))}
         </BWMThemePrefersColorScheme>
     );
 }

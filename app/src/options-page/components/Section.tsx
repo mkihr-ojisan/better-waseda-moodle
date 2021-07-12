@@ -10,7 +10,7 @@ type Props = {
     titleMessageName: string;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     sectionContentRoot: {
         marginBlockStart: theme.spacing(2),
         marginBlockEnd: theme.spacing(4),

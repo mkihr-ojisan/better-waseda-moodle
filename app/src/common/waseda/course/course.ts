@@ -13,9 +13,15 @@ export type CourseListItem = {
     category: string;
 };
 
-
 export type DayOfWeek = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
-export type Term = 'spring_quarter' | 'summer_quarter' | 'fall_quarter' | 'winter_quarter' | 'spring_semester' | 'fall_semester' | 'full_year';
+export type Term =
+    | 'spring_quarter'
+    | 'summer_quarter'
+    | 'fall_quarter'
+    | 'winter_quarter'
+    | 'spring_semester'
+    | 'fall_semester'
+    | 'full_year';
 export type YearTerm = {
     year: number;
     term: Term;
@@ -50,17 +56,39 @@ export function termToString(term: Term): string {
 export function yearTermToString(yearTerm: YearTerm): string {
     switch (yearTerm.term) {
         case 'spring_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('springQuarter');
+            return (
+                browser.i18n.getMessage('year', yearTerm.year.toString()) +
+                ' ' +
+                browser.i18n.getMessage('springQuarter')
+            );
         case 'summer_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('summerQuarter');
+            return (
+                browser.i18n.getMessage('year', yearTerm.year.toString()) +
+                ' ' +
+                browser.i18n.getMessage('summerQuarter')
+            );
         case 'fall_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('fallQuarter');
+            return (
+                browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('fallQuarter')
+            );
         case 'winter_quarter':
-            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('winterQuarter');
+            return (
+                browser.i18n.getMessage('year', yearTerm.year.toString()) +
+                ' ' +
+                browser.i18n.getMessage('winterQuarter')
+            );
         case 'spring_semester':
-            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('springSemester');
+            return (
+                browser.i18n.getMessage('year', yearTerm.year.toString()) +
+                ' ' +
+                browser.i18n.getMessage('springSemester')
+            );
         case 'fall_semester':
-            return browser.i18n.getMessage('year', yearTerm.year.toString()) + ' ' + browser.i18n.getMessage('fallSemester');
+            return (
+                browser.i18n.getMessage('year', yearTerm.year.toString()) +
+                ' ' +
+                browser.i18n.getMessage('fallSemester')
+            );
         case 'full_year':
             return browser.i18n.getMessage('year', yearTerm.year.toString());
     }
@@ -74,14 +102,14 @@ export function dayPeriodEquals(a: DayPeriod, b: DayPeriod): boolean {
     return a.day === b.day && a.period.from === b.period.from && a.period.to === b.period.to;
 }
 
-const termFlags: { [key in Term]: number; } = {
-    'spring_quarter': 0b0001,
-    'summer_quarter': 0b0010,
-    'fall_quarter': 0b0100,
-    'winter_quarter': 0b1000,
-    'spring_semester': 0b0011,
-    'fall_semester': 0b1100,
-    'full_year': 0b1111,
+const termFlags: { [key in Term]: number } = {
+    spring_quarter: 0b0001,
+    summer_quarter: 0b0010,
+    fall_quarter: 0b0100,
+    winter_quarter: 0b1000,
+    spring_semester: 0b0011,
+    fall_semester: 0b1100,
+    full_year: 0b1111,
 };
 export function uniqueYearTerms(yearTerms: YearTerm[]): YearTerm[] {
     const map = new Map<number, Set<Term>>(); // year -> Term[]
@@ -108,19 +136,35 @@ export function uniqueYearTerms(yearTerms: YearTerm[]): YearTerm[] {
         const hasFallQuarter = terms.has('fall_quarter');
         const hasWinterQuarter = terms.has('winter_quarter');
 
-        if (!hasSpringQuarter && !hasSummerQuarter && (hasSpringSemester || (hasFallQuarter || hasWinterQuarter || hasFallSemester) && hasFullYear))
+        if (
+            !hasSpringQuarter &&
+            !hasSummerQuarter &&
+            (hasSpringSemester || ((hasFallQuarter || hasWinterQuarter || hasFallSemester) && hasFullYear))
+        )
             uniqueYearTerms.push({ year, term: 'spring_semester' });
-        if (hasSpringQuarter || hasSummerQuarter && (hasSpringSemester || hasFullYear))
+        if (hasSpringQuarter || (hasSummerQuarter && (hasSpringSemester || hasFullYear)))
             uniqueYearTerms.push({ year, term: 'spring_quarter' });
-        if (hasSummerQuarter || hasSpringQuarter && (hasSpringSemester || hasFullYear))
+        if (hasSummerQuarter || (hasSpringQuarter && (hasSpringSemester || hasFullYear)))
             uniqueYearTerms.push({ year, term: 'summer_quarter' });
-        if (!hasFallQuarter && !hasWinterQuarter && (hasFallSemester || (hasSpringQuarter || hasSummerQuarter || hasSpringSemester) && hasFullYear))
+        if (
+            !hasFallQuarter &&
+            !hasWinterQuarter &&
+            (hasFallSemester || ((hasSpringQuarter || hasSummerQuarter || hasSpringSemester) && hasFullYear))
+        )
             uniqueYearTerms.push({ year, term: 'fall_semester' });
-        if (hasFallQuarter || hasWinterQuarter && (hasFallSemester || hasFullYear))
+        if (hasFallQuarter || (hasWinterQuarter && (hasFallSemester || hasFullYear)))
             uniqueYearTerms.push({ year, term: 'fall_quarter' });
-        if (hasWinterQuarter || hasFallQuarter && (hasFallSemester || hasFullYear))
+        if (hasWinterQuarter || (hasFallQuarter && (hasFallSemester || hasFullYear)))
             uniqueYearTerms.push({ year, term: 'winter_quarter' });
-        if (!hasSpringQuarter && !hasSummerQuarter && !hasFallQuarter && !hasWinterQuarter && !hasSpringSemester && !hasFallSemester && hasFullYear)
+        if (
+            !hasSpringQuarter &&
+            !hasSummerQuarter &&
+            !hasFallQuarter &&
+            !hasWinterQuarter &&
+            !hasSpringSemester &&
+            !hasFallSemester &&
+            hasFullYear
+        )
             uniqueYearTerms.push({ year, term: 'full_year' });
     }
 
@@ -129,7 +173,7 @@ export function uniqueYearTerms(yearTerms: YearTerm[]): YearTerm[] {
 
 export function containsYearTerm(container: YearTerm, containee: YearTerm): boolean {
     if (container.year !== containee.year) return false;
-    return ((termFlags[container.term] & termFlags[containee.term]) === termFlags[containee.term]);
+    return (termFlags[container.term] & termFlags[containee.term]) === termFlags[containee.term];
 }
 
 export function dayOfWeekToString(day: DayOfWeek): string {

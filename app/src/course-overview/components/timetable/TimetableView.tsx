@@ -15,14 +15,19 @@ export default function TimetableView(): ReactElement {
 
     // TimetableTermSelectorに表示するYearTerm
     const terms = useMemo(
-        () => uniqueYearTerms(courseList.flatMap(course => courseData[course.id]?.timetableData?.map(entry => entry.yearTerm) ?? [])),
-        [courseData, courseList],
+        () =>
+            uniqueYearTerms(
+                courseList.flatMap(
+                    (course) => courseData[course.id]?.timetableData?.map((entry) => entry.yearTerm) ?? []
+                )
+            ),
+        [courseData, courseList]
     );
 
     // 時間割表の下に表示する
     const coursesNotInTimetable = useMemo(
-        () => courseList.filter(course => (courseData[course.id]?.timetableData?.length ?? 0) === 0),
-        [courseData, courseList],
+        () => courseList.filter((course) => (courseData[course.id]?.timetableData?.length ?? 0) === 0),
+        [courseData, courseList]
     );
 
     const [selectedTerm, setSelectedTerm] = useConfig('timetable.selectedTerm');
@@ -36,13 +41,11 @@ export default function TimetableView(): ReactElement {
         if (selectedTerm !== null) setSelectedTerm(null);
         selectedTermIndex = null;
     } else if (selectedTerm !== null) {
-        const index = terms.findIndex(t => yearTermEquals(selectedTerm, t));
+        const index = terms.findIndex((t) => yearTermEquals(selectedTerm, t));
         if (index === -1) {
             selectedTermIndex = 0;
             setSelectedTerm(terms[0]);
-        }
-        else
-            selectedTermIndex = index;
+        } else selectedTermIndex = index;
     } else {
         selectedTermIndex = 0;
         setSelectedTerm(terms[0]);
@@ -54,7 +57,6 @@ export default function TimetableView(): ReactElement {
     function handleCloseHiddenCoursesDialog() {
         setHiddenCoursesDialogOpen(false);
     }
-
 
     return (
         <>
@@ -70,12 +72,9 @@ export default function TimetableView(): ReactElement {
                 </Grid>
             </Grid>
 
-            {
-                selectedTerm &&
-                <Timetable selectedTerm={selectedTerm} showPeriodTime={showPeriodTime} />
-            }
+            {selectedTerm && <Timetable selectedTerm={selectedTerm} showPeriodTime={showPeriodTime} />}
 
-            <CourseListView courses={coursesNotInTimetable.filter(c => !c.isHidden)} />
+            <CourseListView courses={coursesNotInTimetable.filter((c) => !c.isHidden)} />
         </>
     );
 }

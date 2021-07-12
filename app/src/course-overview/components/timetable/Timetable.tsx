@@ -12,7 +12,7 @@ type Props = {
     showPeriodTime: boolean;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     table: {
         borderCollapse: 'collapse',
         tableLayout: 'fixed',
@@ -60,13 +60,10 @@ const useStyles = makeStyles(theme => ({
 export default function Timetable(props: Props): ReactElement {
     const context = useContext(CourseOverviewContext);
     const classes = useStyles();
-    const {
-        timetableCells,
-        showSaturday,
-        showSunday,
-        show6thPeriod,
-        show7thPeriod,
-    } = useTimetableCells(context, props.selectedTerm);
+    const { timetableCells, showSaturday, showSunday, show6thPeriod, show7thPeriod } = useTimetableCells(
+        context,
+        props.selectedTerm
+    );
 
     const weekdays: DayOfWeek[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
     const time = [
@@ -85,112 +82,80 @@ export default function Timetable(props: Props): ReactElement {
             <thead>
                 <tr>
                     <th></th>
-                    {weekdays.map(day => <th key={day}>{dayOfWeekToShortString(day)}</th>)}
+                    {weekdays.map((day) => (
+                        <th key={day}>{dayOfWeekToShortString(day)}</th>
+                    ))}
                     {showSaturday && <th>{dayOfWeekToShortString('saturday')}</th>}
                     {showSunday && <th>{dayOfWeekToShortString('sunday')}</th>}
                 </tr>
             </thead>
             <tbody>
-                {
-                    [0, 1, 2, 3, 4].map(period => (
-                        <tr key={period}>
-                            <th title={props.showPeriodTime ? undefined : time[period].join(' - ')}>
-                                <Grid container direction="column" justify="space-between">
-                                    {
-                                        props.showPeriodTime ?
-                                            <Grid item>
-                                                <Typography variant="caption">
-                                                    {time[period][0]}
-                                                </Typography>
-                                            </Grid> :
-                                            null
-                                    }
+                {[0, 1, 2, 3, 4].map((period) => (
+                    <tr key={period}>
+                        <th title={props.showPeriodTime ? undefined : time[period].join(' - ')}>
+                            <Grid container direction="column" justify="space-between">
+                                {props.showPeriodTime ? (
                                     <Grid item>
-                                        {period + 1}
+                                        <Typography variant="caption">{time[period][0]}</Typography>
                                     </Grid>
-                                    {
-                                        props.showPeriodTime ?
-                                            <Grid item>
-                                                <Typography variant="caption">
-                                                    {time[period][1]}
-                                                </Typography>
-                                            </Grid> :
-                                            null
-                                    }
-                                </Grid>
-                            </th>
-                            {weekdays.map(day => timetableCells[day][period].node)}
-                            {showSaturday && timetableCells['saturday'][period].node}
-                            {showSunday && timetableCells['sunday'][period].node}
-                        </tr>
-                    ))
-                }
-                {
-                    show6thPeriod &&
+                                ) : null}
+                                <Grid item>{period + 1}</Grid>
+                                {props.showPeriodTime ? (
+                                    <Grid item>
+                                        <Typography variant="caption">{time[period][1]}</Typography>
+                                    </Grid>
+                                ) : null}
+                            </Grid>
+                        </th>
+                        {weekdays.map((day) => timetableCells[day][period].node)}
+                        {showSaturday && timetableCells['saturday'][period].node}
+                        {showSunday && timetableCells['sunday'][period].node}
+                    </tr>
+                ))}
+                {show6thPeriod && (
                     <tr>
                         <th title={props.showPeriodTime ? undefined : time[5].join(' - ')}>
                             <Grid container direction="column" justify="space-between">
-                                {
-                                    props.showPeriodTime ?
-                                        <Grid item>
-                                            <Typography variant="caption">
-                                                {time[5][0]}
-                                            </Typography>
-                                        </Grid> :
-                                        null
-                                }
-                                <Grid item>
-                                    {6}
-                                </Grid>
-                                {
-                                    props.showPeriodTime ?
-                                        <Grid item>
-                                            <Typography variant="caption">
-                                                {time[5][1]}
-                                            </Typography>
-                                        </Grid> :
-                                        null
-                                }
+                                {props.showPeriodTime ? (
+                                    <Grid item>
+                                        <Typography variant="caption">{time[5][0]}</Typography>
+                                    </Grid>
+                                ) : null}
+                                <Grid item>{6}</Grid>
+                                {props.showPeriodTime ? (
+                                    <Grid item>
+                                        <Typography variant="caption">{time[5][1]}</Typography>
+                                    </Grid>
+                                ) : null}
                             </Grid>
                         </th>
-                        {weekdays.map(day => timetableCells[day][5].node)}
+                        {weekdays.map((day) => timetableCells[day][5].node)}
                         {showSaturday && timetableCells['saturday'][5].node}
                         {showSunday && timetableCells['sunday'][5].node}
                     </tr>
-                }
-                {
-                    show7thPeriod &&
+                )}
+                {show7thPeriod && (
                     <tr>
                         <th title={props.showPeriodTime ? undefined : time[6].join(' - ')}>
                             <Grid container direction="column" justify="space-between">
-                                {
-                                    props.showPeriodTime ?
-                                        <Grid item>
-                                            <Typography variant="caption">
-                                                {time[6][0]}
-                                            </Typography>
-                                        </Grid> :
-                                        null
-                                }
-                                <Grid item>
-                                    {7}
-                                </Grid>
-                                {
-                                    props.showPeriodTime ?
-                                        <Grid item>
-                                            <Typography variant="caption">
-                                                {time[6][1]}
-                                            </Typography>
-                                        </Grid> :
-                                        null
-                                }
+                                {props.showPeriodTime ? (
+                                    <Grid item>
+                                        <Typography variant="caption">{time[6][0]}</Typography>
+                                    </Grid>
+                                ) : null}
+                                <Grid item>{7}</Grid>
+                                {props.showPeriodTime ? (
+                                    <Grid item>
+                                        <Typography variant="caption">{time[6][1]}</Typography>
+                                    </Grid>
+                                ) : null}
                             </Grid>
                         </th>
-                        {weekdays.map(day => timetableCells[day][6].node)}
+                        {weekdays.map((day) => timetableCells[day][6].node)}
                         {showSaturday && timetableCells['saturday'][6].node}
                         {showSunday && timetableCells['sunday'][6].node}
                     </tr>
-                }
+                )}
             </tbody>
         </table>
     );
@@ -199,87 +164,84 @@ export default function Timetable(props: Props): ReactElement {
 function useTimetableCells(context: CourseOverviewContextProps, selectedTerm: YearTerm) {
     const viewportHeight = useViewportHeight();
 
-    return useMemo(
-        () => {
-            let showSunday = false;
-            let showSaturday = false;
-            let show6thPeriod = false;
-            let show7thPeriod = false;
-            for (const course of context.courseList) {
-                if (course.isHidden) continue;
+    return useMemo(() => {
+        let showSunday = false;
+        let showSaturday = false;
+        let show6thPeriod = false;
+        let show7thPeriod = false;
+        for (const course of context.courseList) {
+            if (course.isHidden) continue;
 
-                for (const { yearTerm, dayPeriod } of context.courseData[course.id]?.timetableData ?? []) {
-                    if (containsYearTerm(yearTerm, selectedTerm)) {
-                        if (dayPeriod.day === 'saturday') {
-                            showSaturday = true;
-                        } else if (dayPeriod.day === 'sunday') {
-                            showSaturday = showSunday = true;
-                        }
-                        if (dayPeriod.period.to === 7) {
-                            show6thPeriod = show7thPeriod = true;
-                        } else if (dayPeriod.period.to === 6) {
-                            show6thPeriod = true;
-                        }
+            for (const { yearTerm, dayPeriod } of context.courseData[course.id]?.timetableData ?? []) {
+                if (containsYearTerm(yearTerm, selectedTerm)) {
+                    if (dayPeriod.day === 'saturday') {
+                        showSaturday = true;
+                    } else if (dayPeriod.day === 'sunday') {
+                        showSaturday = showSunday = true;
+                    }
+                    if (dayPeriod.period.to === 7) {
+                        show6thPeriod = show7thPeriod = true;
+                    } else if (dayPeriod.period.to === 6) {
+                        show6thPeriod = true;
                     }
                 }
             }
+        }
 
-            const timetableRowCount = show6thPeriod ? (show7thPeriod ? 7 : 6) : 5;
-            const timetableRowHeight = (rowspan: number) => {
-                return (Math.max((viewportHeight - 250) / timetableRowCount, 80) * rowspan + (rowspan - 1)) + 'px';
-            };
+        const timetableRowCount = show6thPeriod ? (show7thPeriod ? 7 : 6) : 5;
+        const timetableRowHeight = (rowspan: number) => {
+            return Math.max((viewportHeight - 250) / timetableRowCount, 80) * rowspan + (rowspan - 1) + 'px';
+        };
 
-            const timetableCells: Record<string, { node: ReactNode, isEmpty: boolean; }[]> = {};
-            for (const day of ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']) {
-                timetableCells[day] = [];
-                for (let period = 1; period <= 7; period++) {
-                    timetableCells[day][period - 1] = {
+        const timetableCells: Record<string, { node: ReactNode; isEmpty: boolean }[]> = {};
+        for (const day of ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']) {
+            timetableCells[day] = [];
+            for (let period = 1; period <= 7; period++) {
+                timetableCells[day][period - 1] = {
+                    node: (
+                        <td key={day}>
+                            <div style={{ height: timetableRowHeight(1) }}></div>
+                        </td>
+                    ),
+                    isEmpty: true,
+                };
+            }
+        }
+
+        for (const course of context.courseList) {
+            if (course.isHidden) continue;
+
+            for (const { yearTerm, dayPeriod } of context.courseData[course.id]?.timetableData ?? []) {
+                if (containsYearTerm(yearTerm, selectedTerm)) {
+                    const length = dayPeriod.period.to - dayPeriod.period.from + 1;
+                    timetableCells[dayPeriod.day][dayPeriod.period.from - 1] = {
                         node: (
-                            <td key={day}>
-                                <div style={{ height: timetableRowHeight(1) }}></div>
+                            <td key={dayPeriod.day} rowSpan={length}>
+                                <div style={{ height: timetableRowHeight(length) }}>
+                                    <TimetableCourseCard course={course} />
+                                </div>
                             </td>
                         ),
-                        isEmpty: true,
+                        isEmpty: false,
                     };
-                }
-            }
-
-            for (const course of context.courseList) {
-                if (course.isHidden) continue;
-
-                for (const { yearTerm, dayPeriod } of context.courseData[course.id]?.timetableData ?? []) {
-                    if (containsYearTerm(yearTerm, selectedTerm)) {
-                        const length = dayPeriod.period.to - dayPeriod.period.from + 1;
-                        timetableCells[dayPeriod.day][dayPeriod.period.from - 1] = {
-                            node: (
-                                <td key={dayPeriod.day} rowSpan={length}>
-                                    <div style={{ height: timetableRowHeight(length) }}>
-                                        <TimetableCourseCard course={course} />
-                                    </div>
-                                </td>
-                            ),
+                    for (let period = dayPeriod.period.from; period < dayPeriod.period.to; period++) {
+                        timetableCells[dayPeriod.day][period] = {
+                            node: null,
                             isEmpty: false,
                         };
-                        for (let period = dayPeriod.period.from; period < dayPeriod.period.to; period++) {
-                            timetableCells[dayPeriod.day][period] = {
-                                node: null,
-                                isEmpty: false,
-                            };
-                        }
                     }
                 }
             }
+        }
 
-            return {
-                timetableCells,
-                showSaturday,
-                showSunday,
-                show6thPeriod,
-                show7thPeriod,
-            };
-        },
-        [context.courseList, context.courseData, selectedTerm, viewportHeight],
-    );
+        return {
+            timetableCells,
+            showSaturday,
+            showSunday,
+            show6thPeriod,
+            show7thPeriod,
+        };
+    }, [context.courseList, context.courseData, selectedTerm, viewportHeight]);
 }
 
 /*function useHighlightedDayPeriod(): { day: DayOfWeek, period: number | null; } {
