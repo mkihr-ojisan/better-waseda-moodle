@@ -24,7 +24,7 @@ export async function enableConfigSync(mode: 'discard_local' | 'force_upload'): 
 }
 
 export async function disableConfigSync(): Promise<void> {
-    if (!await isConfigSyncEnabled()) return;
+    if (!(await isConfigSyncEnabled())) return;
 
     await browser.storage.local.set(await browser.storage.sync.get());
     await browser.storage.local.set({ [CONFIG_SYNC_ENABLED_CONFIG_KEY]: false });

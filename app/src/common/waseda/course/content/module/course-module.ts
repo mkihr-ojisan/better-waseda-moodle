@@ -5,7 +5,32 @@ export type CourseModule<T extends CourseModuleType = CourseModuleType> = {
     title?: string;
     type: T;
 };
-export type CourseModuleType = 'assign' | 'assignment' | 'book' | 'chat' | 'choice' | 'data' | 'feedback' | 'folder' | 'forum' | 'glossary' | 'h5pactvity' | 'imscp' | 'label' | 'lesson' | 'lti' | 'page' | 'quiz' | 'resource' | 'scorm' | 'survey' | 'url' | 'wiki' | 'workshop' | 'zoom' | 'unknown';
+export type CourseModuleType =
+    | 'assign'
+    | 'assignment'
+    | 'book'
+    | 'chat'
+    | 'choice'
+    | 'data'
+    | 'feedback'
+    | 'folder'
+    | 'forum'
+    | 'glossary'
+    | 'h5pactvity'
+    | 'imscp'
+    | 'label'
+    | 'lesson'
+    | 'lti'
+    | 'page'
+    | 'quiz'
+    | 'resource'
+    | 'scorm'
+    | 'survey'
+    | 'url'
+    | 'wiki'
+    | 'workshop'
+    | 'zoom'
+    | 'unknown';
 
 export function parseModule(elem: HTMLElement): CourseModule {
     const id = getModuleId(elem);
@@ -30,6 +55,31 @@ function getModuleTitle(elem: HTMLElement): string | undefined {
 }
 
 function getModuleType(elem: HTMLElement): CourseModuleType {
-    const types: CourseModuleType[] = ['assign', 'assignment', 'book', 'chat', 'choice', 'data', 'feedback', 'folder', 'forum', 'glossary', 'h5pactvity', 'imscp', 'label', 'lesson', 'lti', 'page', 'quiz', 'resource', 'scorm', 'survey', 'url', 'wiki', 'workshop', 'zoom'];
-    return types.find(t => elem.classList.contains('modtype_' + t)) ?? 'unknown';
+    const types: CourseModuleType[] = [
+        'assign',
+        'assignment',
+        'book',
+        'chat',
+        'choice',
+        'data',
+        'feedback',
+        'folder',
+        'forum',
+        'glossary',
+        'h5pactvity',
+        'imscp',
+        'label',
+        'lesson',
+        'lti',
+        'page',
+        'quiz',
+        'resource',
+        'scorm',
+        'survey',
+        'url',
+        'wiki',
+        'workshop',
+        'zoom',
+    ];
+    return types.find((t) => elem.classList.contains('modtype_' + t)) ?? 'unknown';
 }

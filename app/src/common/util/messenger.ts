@@ -1,7 +1,7 @@
 export class MessengerServer {
-    instructions: { [key: string]: Function; } = {};
+    instructions: { [key: string]: Function } = {};
     constructor() {
-        browser.runtime.onConnect.addListener(port => {
+        browser.runtime.onConnect.addListener((port) => {
             port.onMessage.addListener((message: any) => {
                 (async () => {
                     const inst = message.inst;
@@ -36,7 +36,7 @@ export class MessengerServer {
 }
 
 export class MessengerClient {
-    promises: { [key: number]: { resolve: Function, reject: Function; }; } = {};
+    promises: { [key: number]: { resolve: Function; reject: Function } } = {};
     port: browser.runtime.Port;
     constructor(port?: browser.runtime.Port) {
         this.port = port ?? browser.runtime.connect();
@@ -61,7 +61,7 @@ export class MessengerClient {
 
     exec(inst: string, ...args: any[]): Promise<any> {
         const id = Math.random();
-        const promise = new Promise((resolve, reject) => this.promises[id] = { resolve, reject });
+        const promise = new Promise((resolve, reject) => (this.promises[id] = { resolve, reject }));
         this.port.postMessage({
             inst,
             args,

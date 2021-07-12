@@ -26,9 +26,7 @@ export default React.forwardRef(function CourseMenuItem(props: Props, ref: Ref<a
 
     return (
         <MenuItem onClick={handleClick} innerRef={ref}>
-            <ListItemIcon classes={{ root: classes.listItemIconRoot }}>
-                {props.icon}
-            </ListItemIcon>
+            <ListItemIcon classes={{ root: classes.listItemIconRoot }}>{props.icon}</ListItemIcon>
             {props.children}
         </MenuItem>
     );

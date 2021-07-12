@@ -16,7 +16,13 @@ export default function OptionShowPeriodTime(): ReactElement | null {
 
     return (
         <FormControlLabel
-            control={<Switch checked={showPeriodTime} onChange={handleChange} disabled={!enabled || courseOverviewType !== 'timetable'} />}
+            control={
+                <Switch
+                    checked={showPeriodTime}
+                    onChange={handleChange}
+                    disabled={!enabled || courseOverviewType !== 'timetable'}
+                />
+            }
             label={browser.i18n.getMessage('optionsCourseOverviewTimetableShowPeriodTime')}
         />
     );

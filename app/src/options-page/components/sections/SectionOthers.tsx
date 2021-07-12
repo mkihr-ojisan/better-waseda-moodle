@@ -14,12 +14,15 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
     const [hideNameEnabled, setHideNameEnabled] = useConfig('hideName.enabled');
     const [syllabusLinkFixEnabled, setSyllabusLinkFixEnabled] = useConfig('syllabusLinkFix.enabled');
 
-    if (viewInBrowserEnabled === undefined
-        || removeLoadingVideoEnabled === undefined
-        || checkNotesOnSubmitting === undefined
-        || disableRateLimitEnabled === undefined
-        || hideNameEnabled === undefined
-        || syllabusLinkFixEnabled === undefined) return null;
+    if (
+        viewInBrowserEnabled === undefined ||
+        removeLoadingVideoEnabled === undefined ||
+        checkNotesOnSubmitting === undefined ||
+        disableRateLimitEnabled === undefined ||
+        hideNameEnabled === undefined ||
+        syllabusLinkFixEnabled === undefined
+    )
+        return null;
 
     function handleSwitchChange(setStateFunc: (value: boolean) => void) {
         return (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,27 +33,43 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
     return (
         <Section titleMessageName="optionsSectionOthers" {...props}>
             <FormControlLabel
-                control={<Switch checked={viewInBrowserEnabled} onChange={handleSwitchChange(setViewInBrowserEnabled)} />}
+                control={
+                    <Switch checked={viewInBrowserEnabled} onChange={handleSwitchChange(setViewInBrowserEnabled)} />
+                }
                 label={browser.i18n.getMessage('optionsViewInBrowserEnabled')}
             />
             <Description messageName="optionsViewInBrowserDescription" />
 
             <FormControlLabel
-                control={<Switch checked={removeLoadingVideoEnabled} onChange={handleSwitchChange(setRemoveLoadingVideoEnabled)} />}
+                control={
+                    <Switch
+                        checked={removeLoadingVideoEnabled}
+                        onChange={handleSwitchChange(setRemoveLoadingVideoEnabled)}
+                    />
+                }
                 label={browser.i18n.getMessage('optionsRemoveLoadingVideo')}
             />
             <Description>
-                <a href="https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?" target='_blank'>{browser.i18n.getMessage('optionsRemoveLoadingVideoDescription')}</a>
+                <a href="https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?" target="_blank">
+                    {browser.i18n.getMessage('optionsRemoveLoadingVideoDescription')}
+                </a>
             </Description>
 
             <FormControlLabel
-                control={<Switch checked={checkNotesOnSubmitting} onChange={handleSwitchChange(setCheckNotesOnSubmitting)} />}
+                control={
+                    <Switch checked={checkNotesOnSubmitting} onChange={handleSwitchChange(setCheckNotesOnSubmitting)} />
+                }
                 label={browser.i18n.getMessage('optionsCheckNotesOnSubmitting')}
             />
             <Description messageName="optionsCheckNotesOnSubmittingDescription" />
 
             <FormControlLabel
-                control={<Switch checked={disableRateLimitEnabled} onChange={handleSwitchChange(setDisableRateLimitEnabled)} />}
+                control={
+                    <Switch
+                        checked={disableRateLimitEnabled}
+                        onChange={handleSwitchChange(setDisableRateLimitEnabled)}
+                    />
+                }
                 label={browser.i18n.getMessage('optionsDisableRateLimitEnabled')}
             />
             <Description messageName="optionsDisableRateLimitEnabledDescription" />
@@ -62,7 +81,9 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
             <Description messageName="optionsHideNameEnabledDescription" />
 
             <FormControlLabel
-                control={<Switch checked={syllabusLinkFixEnabled} onChange={handleSwitchChange(setSyllabusLinkFixEnabled)} />}
+                control={
+                    <Switch checked={syllabusLinkFixEnabled} onChange={handleSwitchChange(setSyllabusLinkFixEnabled)} />
+                }
                 label={browser.i18n.getMessage('optionsSyllabusLinkFixEnabled')}
             />
             <Description messageName="optionsSyllabusLinkFixEnabledDescription" />

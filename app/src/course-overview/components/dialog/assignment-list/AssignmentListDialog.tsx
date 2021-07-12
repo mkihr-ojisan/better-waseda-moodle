@@ -25,7 +25,7 @@ type Props = {
     onClose: () => void;
     course: CourseListItem;
 };
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     title: {
         paddingInlineEnd: '48px',
     },
@@ -52,15 +52,18 @@ export default function AssignmentListDialog(props: Props): ReactElement | null 
     );
 }
 
-function AssignmentListDialogContent(props: Props & { limit: pLimit.Limit; }): ReactElement {
+function AssignmentListDialogContent(props: Props & { limit: pLimit.Limit }): ReactElement {
     const classes = useStyles();
 
     const courseContent = usePromise(() => fetchCourseContent(props.course), [props.course]);
     const assignments: [CourseSection, CourseModule<'assign'>][] | undefined = useMemo(
-        () => courseContent?.sections?.flatMap(
-            section => section.modules.filter(module => module.type === 'assign').map(module => [section, module] as [CourseSection, CourseModule<'assign'>]),
-        ),
-        [courseContent],
+        () =>
+            courseContent?.sections?.flatMap((section) =>
+                section.modules
+                    .filter((module) => module.type === 'assign')
+                    .map((module) => [section, module] as [CourseSection, CourseModule<'assign'>])
+            ),
+        [courseContent]
     );
 
     return (
@@ -72,24 +75,31 @@ function AssignmentListDialogContent(props: Props & { limit: pLimit.Limit; }): R
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                {
-                    assignments ?
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell width="50%"></TableCell>
-                                    <TableCell width="20%">{browser.i18n.getMessage('courseOverviewAssignmentDialogAssignmentStatus')}</TableCell>
-                                    <TableCell width="15%">{browser.i18n.getMessage('courseOverviewAssignmentDialogGradingStatus')}</TableCell>
-                                    <TableCell width="15%">{browser.i18n.getMessage('courseOverviewAssignmentDialogGrade')}</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {assignments.map(([section, module]) => <Assignment key={module.id} section={section} module={module} pLimit={props.limit} />)}
-                            </TableBody>
-                        </Table> :
-                        <CenteredCircularProgress />
-                }
-
+                {assignments ? (
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell width="50%"></TableCell>
+                                <TableCell width="20%">
+                                    {browser.i18n.getMessage('courseOverviewAssignmentDialogAssignmentStatus')}
+                                </TableCell>
+                                <TableCell width="15%">
+                                    {browser.i18n.getMessage('courseOverviewAssignmentDialogGradingStatus')}
+                                </TableCell>
+                                <TableCell width="15%">
+                                    {browser.i18n.getMessage('courseOverviewAssignmentDialogGrade')}
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {assignments.map(([section, module]) => (
+                                <Assignment key={module.id} section={section} module={module} pLimit={props.limit} />
+                            ))}
+                        </TableBody>
+                    </Table>
+                ) : (
+                    <CenteredCircularProgress />
+                )}
             </DialogContent>
         </>
     );

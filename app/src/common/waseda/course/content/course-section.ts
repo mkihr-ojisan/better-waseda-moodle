@@ -21,7 +21,7 @@ export function parseSection(elem: HTMLElement): CourseSection {
     const summaryHtml = elem.getElementsByClassName('summary')[0]?.innerHTML;
 
     const modules: CourseModule[] = [];
-    elem.querySelectorAll('ul.section > li').forEach(moduleElem => {
+    elem.querySelectorAll('ul.section > li').forEach((moduleElem) => {
         modules.push(parseModule(moduleElem as HTMLElement));
     });
 

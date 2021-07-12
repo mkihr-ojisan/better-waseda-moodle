@@ -24,8 +24,5 @@ window.addEventListener('DOMContentLoaded', async () => {
     rootElement.id = 'bwmCourseOverviewRoot';
     elem.insertAdjacentElement('afterend', rootElement);
 
-    ReactDOM.render(
-        <CourseOverview />,
-        rootElement,
-    );
+    ReactDOM.render(<CourseOverview />, rootElement);
 });

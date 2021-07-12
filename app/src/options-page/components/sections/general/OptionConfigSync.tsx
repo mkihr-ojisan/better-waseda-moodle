@@ -8,7 +8,12 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
 import React, { ReactElement, useEffect, useState } from 'react';
-import { checkConflictWhenEnablingConfigSync, disableConfigSync, enableConfigSync, isConfigSyncEnabled } from '../../../../common/config/sync';
+import {
+    checkConflictWhenEnablingConfigSync,
+    disableConfigSync,
+    enableConfigSync,
+    isConfigSyncEnabled,
+} from '../../../../common/config/sync';
 import Description from '../../Description';
 
 export default function OptionConfigSync(): ReactElement | null {
@@ -60,9 +65,8 @@ function useIsConfigSyncEnabled(): boolean | undefined {
 
     useEffect(() => {
         let isCancelled = false;
-        isConfigSyncEnabled().then(v => {
-            if (!isCancelled)
-                setValue(v);
+        isConfigSyncEnabled().then((v) => {
+            if (!isCancelled) setValue(v);
         });
 
         return () => {
@@ -109,10 +113,10 @@ function SyncEnableModeSelectionDialog(props: SyncEnableModeSelectionDialogProps
                 </RadioGroup>
             </DialogContent>
             <DialogActions>
-                <Button onClick={props.onClose} color="primary" >
+                <Button onClick={props.onClose} color="primary">
                     {browser.i18n.getMessage('cancel')}
                 </Button>
-                <Button onClick={handleOK} color="primary" >
+                <Button onClick={handleOK} color="primary">
                     {browser.i18n.getMessage('optionsSyncEnableModeSelectionDialogOK')}
                 </Button>
             </DialogActions>

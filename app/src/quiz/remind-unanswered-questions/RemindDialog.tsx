@@ -15,7 +15,6 @@ type Props = {
 };
 
 export default function RemindDialog(props: Props): ReactElement {
-
     function handleClickBack() {
         props.onClose();
     }
@@ -29,15 +28,11 @@ export default function RemindDialog(props: Props): ReactElement {
         <BWMThemeDarkReader>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogContent>
-                    <Box mb={1}>
-                        {browser.i18n.getMessage('quizRemindUnansweredQuestionsDialogMessage')}
-                    </Box>
+                    <Box mb={1}>{browser.i18n.getMessage('quizRemindUnansweredQuestionsDialogMessage')}</Box>
                     <ul>
-                        {
-                            props.unansweredQuestions.map(q => (
-                                <li key={q.name}>{q.name}</li>
-                            ))
-                        }
+                        {props.unansweredQuestions.map((q) => (
+                            <li key={q.name}>{q.name}</li>
+                        ))}
                     </ul>
                 </DialogContent>
                 <DialogActions>

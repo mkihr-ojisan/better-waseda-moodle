@@ -70,10 +70,7 @@ function CourseSettingsDialogContent(props: Props) {
                                 />
                             </Grid>
                             <Grid item>
-                                <Button
-                                    variant="outlined"
-                                    onClick={handleSetNameToDefault}
-                                >
+                                <Button variant="outlined" onClick={handleSetNameToDefault}>
                                     {browser.i18n.getMessage('courseOverviewSettingsDialogSetNameToDefault')}
                                 </Button>
                             </Grid>

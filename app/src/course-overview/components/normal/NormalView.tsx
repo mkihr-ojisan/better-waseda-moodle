@@ -26,7 +26,7 @@ export default function NormalView(): ReactElement {
                     <HiddenCoursesDialog open={hiddenCoursesDialogOpen} onClose={handleCloseHiddenCoursesDialog} />
                 </Grid>
             </Grid>
-            <CourseListView courses={context.courseList.filter(c => !c.isHidden)} />
+            <CourseListView courses={context.courseList.filter((c) => !c.isHidden)} />
         </>
     );
 }

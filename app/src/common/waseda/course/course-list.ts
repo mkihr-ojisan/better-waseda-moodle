@@ -49,7 +49,10 @@ async function doFetchCourseList(): Promise<CourseListItem[]> {
 
     const courseList = [];
     try {
-        const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}&info=core_course_get_enrolled_courses_by_timeline_classification`, request) as Response;
+        const response = (await postJson(
+            `https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}&info=core_course_get_enrolled_courses_by_timeline_classification`,
+            request
+        )) as Response;
 
         for (const responseItem of response) {
             if (responseItem.error) {
@@ -59,8 +62,7 @@ async function doFetchCourseList(): Promise<CourseListItem[]> {
                 }
                 throw new InvalidResponseError(response[0].exception?.message);
             }
-            if (!responseItem.data)
-                throw new InvalidResponseError('data is null');
+            if (!responseItem.data) throw new InvalidResponseError('data is null');
 
             for (const course of responseItem.data.courses) {
                 courseList.push({
@@ -88,54 +90,63 @@ export interface FetchCourseListOptions {
     forceFetch?: boolean;
 }
 
-type Response = [{
-    error: boolean;
-    exception?: {
-        message: string;
-        errorcode: string;
-        link: string;
-        moreinfourl: string;
-    };
-    data?: {
-        courses: [
-            {
-                id: number;
-                fullname: string;
-                shortname: string;
-                idnumber: string;
-                summary: string;
-                summaryformat: number;
-                startdate: number;
-                enddate: number;
-                visible: boolean;
-                fullnamedisplay: string;
-                viewurl: string;
-                courseimage: string;
-                progress: number;
-                hasprogress: boolean;
-                isfavourite: boolean;
-                hidden: boolean;
-                showshortname: boolean;
-                coursecategory: string;
-            }
-        ];
-        nextoffset: number;
-    };
-}];
+type Response = [
+    {
+        error: boolean;
+        exception?: {
+            message: string;
+            errorcode: string;
+            link: string;
+            moreinfourl: string;
+        };
+        data?: {
+            courses: [
+                {
+                    id: number;
+                    fullname: string;
+                    shortname: string;
+                    idnumber: string;
+                    summary: string;
+                    summaryformat: number;
+                    startdate: number;
+                    enddate: number;
+                    visible: boolean;
+                    fullnamedisplay: string;
+                    viewurl: string;
+                    courseimage: string;
+                    progress: number;
+                    hasprogress: boolean;
+                    isfavourite: boolean;
+                    hidden: boolean;
+                    showshortname: boolean;
+                    coursecategory: string;
+                }
+            ];
+            nextoffset: number;
+        };
+    }
+];
 
 export async function setHiddenFromCourseList(course: Course, isHidden: boolean): Promise<void> {
-    const request = [{
-        args: {
-            preferences: [{
-                type: `block_myoverview_hidden_course_${course.id}`,
-                value: isHidden ? true : null,
-            }],
+    const request = [
+        {
+            args: {
+                preferences: [
+                    {
+                        type: `block_myoverview_hidden_course_${course.id}`,
+                        value: isHidden ? true : null,
+                    },
+                ],
+            },
+            index: 0,
+            methodname: 'core_user_update_user_preferences',
         },
-        index: 0,
-        methodname: 'core_user_update_user_preferences',
-    }];
+    ];
 
-    const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}&info=core_user_update_user_preferences`, request);
+    const response = await postJson(
+        `https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}&info=core_user_update_user_preferences`,
+        request
+    );
 
     if (response[0]?.error) {
         if (response[0]?.exception?.errorcode === 'invalidsesskey') {
@@ -147,7 +158,7 @@ export async function setHiddenFromCourseList(course: Course, isHidden: boolean)
 
     const cache: CourseListItem[] | undefined = await idb.get('cache', cacheStore);
     if (cache) {
-        const index = cache.findIndex(c => c.id === course.id);
+        const index = cache.findIndex((c) => c.id === course.id);
         if (index >= 0) {
             cache[index].isHidden = isHidden;
             await idb.set('cache', cache, cacheStore);

@@ -3,12 +3,14 @@ import { onConfigChange } from '../../common/config/config';
 let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
 
 export function initSyllabusLinkFix(): void {
-    onConfigChange('syllabusLinkFix.enabled', (_, newValue) => {
-        if (newValue)
-            register();
-        else
-            unregister();
-    }, true);
+    onConfigChange(
+        'syllabusLinkFix.enabled',
+        (_, newValue) => {
+            if (newValue) register();
+            else unregister();
+        },
+        true
+    );
 }
 
 async function register() {

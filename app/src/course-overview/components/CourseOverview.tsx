@@ -20,8 +20,12 @@ export type CourseOverviewContextProps = {
 export const CourseOverviewContext = createContext<CourseOverviewContextProps>({
     courseList: [],
     courseData: {},
-    hideCourse: () => { /* do nothing */ },
-    unhideCourse: () => { /* do nothing */ },
+    hideCourse: () => {
+        /* do nothing */
+    },
+    unhideCourse: () => {
+        /* do nothing */
+    },
 });
 
 export default function CourseOverview(): ReactElement {
@@ -29,16 +33,21 @@ export default function CourseOverview(): ReactElement {
     const courseData = useCourseData();
     const [courseOverviewType] = useConfig('courseOverview.type');
 
-    const contextValue = useMemo<CourseOverviewContextProps | undefined>(() => courseList && courseData && ({
-        courseList,
-        courseData,
-        hideCourse: course => {
-            setHiddenFromCourseList(course, true);
-        },
-        unhideCourse: course => {
-            setHiddenFromCourseList(course, false);
-        },
-    }), [courseData, courseList, setHiddenFromCourseList]);
+    const contextValue = useMemo<CourseOverviewContextProps | undefined>(
+        () =>
+            courseList &&
+            courseData && {
+                courseList,
+                courseData,
+                hideCourse: (course) => {
+                    setHiddenFromCourseList(course, true);
+                },
+                unhideCourse: (course) => {
+                    setHiddenFromCourseList(course, false);
+                },
+            },
+        [courseData, courseList, setHiddenFromCourseList]
+    );
 
     if (contextValue && courseOverviewType) {
         return (
@@ -68,7 +77,7 @@ function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidd
     const [courseListValue, setCourseListValue] = useState<CourseListItem[] | undefined>(undefined);
     useEffect(() => {
         let isCancelled = false;
-        courseList.then(value => {
+        courseList.then((value) => {
             if (!isCancelled) setCourseListValue(value);
         });
         return () => {
@@ -79,14 +88,14 @@ function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidd
     const setHiddenFromCourseList = (course: Course, isHidden: boolean) => {
         messengerClient.exec('setHiddenFromCourseList', course, isHidden);
         setCourseListValue(
-            courseListValue?.map(c =>
-                c.id === course.id ?
-                    {
-                        ...c,
-                        isHidden,
-                    } :
-                    c,
-            ),
+            courseListValue?.map((c) =>
+                c.id === course.id
+                    ? {
+                          ...c,
+                          isHidden,
+                      }
+                    : c
+            )
         );
     };
 
@@ -94,15 +103,20 @@ function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidd
 }
 
 function useCourseData(): Record<number, CourseDataEntry | undefined> | undefined {
-    const [courseDataValue, setCourseDataValue] = useState<Record<number, CourseDataEntry | undefined> | undefined>(undefined);
+    const [courseDataValue, setCourseDataValue] = useState<Record<number, CourseDataEntry | undefined> | undefined>(
+        undefined
+    );
     useEffect(() => {
         let isCancelled = false;
 
-        courseData.then(value => {
+        courseData.then((value) => {
             if (!isCancelled) setCourseDataValue(value);
         });
 
-        const listener = (_: Record<number, CourseDataEntry | undefined> | undefined, value: Record<number, CourseDataEntry | undefined>) => {
+        const listener = (
+            _: Record<number, CourseDataEntry | undefined> | undefined,
+            value: Record<number, CourseDataEntry | undefined>
+        ) => {
             setCourseDataValue(value);
         };
         onConfigChange('courseData', listener, false);

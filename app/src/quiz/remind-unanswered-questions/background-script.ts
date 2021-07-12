@@ -3,12 +3,14 @@ import { onConfigChange } from '../../common/config/config';
 let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
 
 export function initRemindUnansweredQuestions(): void {
-    onConfigChange('quiz.remindUnansweredQuestions.enabled', (_, newValue) => {
-        if (newValue)
-            register();
-        else
-            unregister();
-    }, true);
+    onConfigChange(
+        'quiz.remindUnansweredQuestions.enabled',
+        (_, newValue) => {
+            if (newValue) register();
+            else unregister();
+        },
+        true
+    );
 }
 
 async function register() {
