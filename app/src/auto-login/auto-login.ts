@@ -52,7 +52,7 @@ export async function doLogin(): Promise<boolean> {
     if (await getConfig('autoLogin.enabled')) {
         const userId = await getConfig('autoLogin.loginId');
         const password = await getConfig('autoLogin.password');
-        await login(userId, password);
+        setSessionKeyCache(await login(userId, password));
         lastEnsureLogin = Date.now();
         return true;
     } else {
