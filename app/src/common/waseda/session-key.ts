@@ -26,3 +26,9 @@ export async function fetchSessionKey(force?: boolean): Promise<string> {
 
     return cache.sessionKey;
 }
+
+export function getSessionKeyCache(): string | undefined {
+    if (cache && cache.expireAt < new Date()) {
+        return cache.sessionKey;
+    } 
+}
