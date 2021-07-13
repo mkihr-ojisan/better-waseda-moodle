@@ -7,7 +7,7 @@ export async function fetchJson(url: string, init: RequestInit = {}): Promise<an
     return JSON.parse(await (await fetch(url, init)).text());
 }
 
-export async function postJson(url: string, body: any, init: RequestInit = {}): Promise<any> {
+export async function postJson<T>(url: string, body: T, init: RequestInit = {}): Promise<any> {
     Object.assign(init, {
         method: 'POST',
         headers: {
