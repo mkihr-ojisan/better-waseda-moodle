@@ -16,10 +16,8 @@ btnGotoFallbackPage.addEventListener('click', () => {
 });
 
 (async () => {
-    const messenger = new MessengerClient();
-
     try {
-        await messenger.exec('doLogin');
+        await MessengerClient.exec('doLogin');
 
         const redirectUrl = new URL(location.href).searchParams.get('redirectUrl');
         if (redirectUrl) {

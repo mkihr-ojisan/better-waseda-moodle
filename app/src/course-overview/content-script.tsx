@@ -8,9 +8,7 @@ import CourseOverview from './components/CourseOverview';
 import { CourseListItem } from '../common/waseda/course/course';
 import { getConfig } from '../common/config/config';
 
-export const messengerClient = new MessengerClient();
-
-export const courseList = messengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>;
+export const courseList = MessengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>;
 export const courseData = getConfig('courseData');
 
 window.addEventListener('DOMContentLoaded', async () => {

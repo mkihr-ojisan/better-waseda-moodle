@@ -4,10 +4,11 @@ import { Course, CourseListItem } from '../../common/waseda/course/course';
 import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
 import CenteredCircularProgress from '../../common/react/CenteredCircularProgress';
 import useConfig from '../../common/react/useConfig';
-import { courseData, courseList, messengerClient } from '../content-script';
+import { courseData, courseList } from '../content-script';
 import NormalView from './normal/NormalView';
 import TimetableView from './timetable/TimetableView';
 import { CourseDataEntry } from '../../common/waseda/course/course-data';
+import { MessengerClient } from '../../common/util/messenger';
 
 export type CourseOverviewType = 'normal' | 'timetable';
 
@@ -86,7 +87,7 @@ function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidd
     }, []);
 
     const setHiddenFromCourseList = (course: Course, isHidden: boolean) => {
-        messengerClient.exec('setHiddenFromCourseList', course, isHidden);
+        MessengerClient.exec('setHiddenFromCourseList', course, isHidden);
         setCourseListValue(
             courseListValue?.map((c) =>
                 c.id === course.id

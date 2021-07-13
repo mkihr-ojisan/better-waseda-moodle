@@ -36,10 +36,11 @@ export class MessengerServer {
 }
 
 export class MessengerClient {
-    promises: { [key: number]: { resolve: Function; reject: Function } } = {};
-    port: browser.runtime.Port;
-    constructor(port?: browser.runtime.Port) {
-        this.port = port ?? browser.runtime.connect();
+    private static promises: { [key: number]: { resolve: Function; reject: Function } } = {};
+    private static port: browser.runtime.Port;
+    private static initialized = false;
+    private static init() {
+        this.port = browser.runtime.connect();
 
         this.port.onMessage.addListener((message: any) => {
             const inst = message.inst;
@@ -57,10 +58,14 @@ export class MessengerClient {
             }
             delete this.promises[id];
         });
+
+        this.initialized = true;
     }
 
-    exec(inst: string, ...args: any[]): Promise<any> {
-        const id = Math.random();
+    static exec(inst: string, ...args: any[]): Promise<any> {
+        if (!this.initialized) this.init();
+
+        const id = Date.now();
         const promise = new Promise((resolve, reject) => (this.promises[id] = { resolve, reject }));
         this.port.postMessage({
             inst,
