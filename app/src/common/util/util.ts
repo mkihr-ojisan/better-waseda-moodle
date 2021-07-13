@@ -43,3 +43,14 @@ export const VENDOR = __VENDOR__;
 export function range(start: number, endExclusive: number, step = 1): number[] {
     return Array.from({ length: Math.ceil((endExclusive - start) / step) }, (_, k) => start + step * k);
 }
+
+export type ContextType = 'background_script' | 'extension_page' | 'content_script';
+export function getCurrentContextType(): ContextType {
+    if (location.href === browser.runtime.getURL('_generated_background_page.html')) {
+        return 'background_script';
+    } else if (browser.webRequest) {
+        return 'extension_page';
+    } else {
+        return 'content_script';
+    }
+}
