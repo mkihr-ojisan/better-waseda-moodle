@@ -1,3 +1,5 @@
+import { InternalError } from '../error';
+
 export async function fetchHtml(url: string, init: RequestInit = {}): Promise<Document> {
     Object.assign(init, { credentials: 'include', mode: 'cors' });
     return new DOMParser().parseFromString(await (await fetch(url, init)).text(), 'text/html');
@@ -55,5 +57,11 @@ export function getCurrentContextType(): ContextType {
         return (currentContextType = 'extension_page');
     } else {
         return (currentContextType = 'content_script');
+    }
+}
+
+export function assertCurrentContextType(type: ContextType): void {
+    if (__DEBUG__ && currentContextType !== getCurrentContextType()) {
+        throw new InternalError(`assertion failed: current context must be '${type}'`);
     }
 }
