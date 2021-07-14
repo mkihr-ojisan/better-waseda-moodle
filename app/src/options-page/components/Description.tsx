@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles';
+import { alpha } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { ReactElement, ReactNode } from 'react';
 
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         marginInlineStart: theme.spacing(4),
         marginBottom: theme.spacing(2),
-        color: fade(theme.palette.text.primary, 0.8),
+        color: alpha(theme.palette.text.primary, 0.8),
     },
 }));
 
