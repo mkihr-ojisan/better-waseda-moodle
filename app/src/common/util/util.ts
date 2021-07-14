@@ -45,12 +45,15 @@ export function range(start: number, endExclusive: number, step = 1): number[] {
 }
 
 export type ContextType = 'background_script' | 'extension_page' | 'content_script';
+let currentContextType: ContextType | undefined;
 export function getCurrentContextType(): ContextType {
-    if (location.href === browser.runtime.getURL('_generated_background_page.html')) {
-        return 'background_script';
+    if (currentContextType) {
+        return currentContextType;
+    } else if (location.href === browser.runtime.getURL('_generated_background_page.html')) {
+        return (currentContextType = 'background_script');
     } else if (browser.webRequest) {
-        return 'extension_page';
+        return (currentContextType = 'extension_page');
     } else {
-        return 'content_script';
+        return (currentContextType = 'content_script');
     }
 }
