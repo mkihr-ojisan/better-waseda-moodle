@@ -7,9 +7,9 @@ let cache: {
     expireAt: Date;
 } | null = null;
 
-export async function fetchSessionKey(force?: boolean): Promise<string> {
+export async function fetchSessionKey(force?: boolean, noLogin?: boolean): Promise<string> {
     if (force || !cache || cache.expireAt < new Date()) {
-        await ensureLogin();
+        if (!noLogin) await ensureLogin();
 
         const expireAt = new Date();
         expireAt.setHours(expireAt.getHours() + 2); //TODO: 要検証
