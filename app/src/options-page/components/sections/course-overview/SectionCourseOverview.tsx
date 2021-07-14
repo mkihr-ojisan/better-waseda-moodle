@@ -14,9 +14,10 @@ import TextField from '@material-ui/core/TextField';
 import React, { ReactElement, useState } from 'react';
 import AutoCloseAlert from '../../../../common/react/AutoCloseAlert';
 import useConfig from '../../../../common/react/useConfig';
+import { MessengerClient } from '../../../../common/util/messenger';
+import { CourseListItem } from '../../../../common/waseda/course/course';
 import { registerCourseData } from '../../../../common/waseda/course/course-data';
-import { clearCourseListCache, fetchCourseList } from '../../../../common/waseda/course/course-list';
-import { fetchCourseRegistrationInfo } from '../../../../common/waseda/course/course-registration';
+import { CourseRegistrationInfo } from '../../../../common/waseda/course/course-registration';
 import { SectionComponentProps } from '../../Options';
 import Section from '../../Section';
 import OptionShowPeriodTime from './OptionShowPeriodTime';
@@ -47,7 +48,7 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
     }
 
     function handleClearCourseCache() {
-        clearCourseListCache().then(() => {
+        MessengerClient.exec('clearCourseListCache').then(() => {
             setCourseCacheClearedSnackbarOpen(true);
         });
     }
@@ -152,7 +153,10 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
 }
 
 async function fetchTimetableDataAndSyllabusUrl(): Promise<void> {
-    const [list, infos] = await Promise.all([fetchCourseList(), fetchCourseRegistrationInfo()]);
+    const [list, infos]: [CourseListItem[], CourseRegistrationInfo[]] = await Promise.all([
+        MessengerClient.exec('fetchCourseList'),
+        MessengerClient.exec('fetchCourseRegistrationInfo'),
+    ]);
 
     for (const course of list) {
         const info = infos.find((i) => i.name === course.name && i.status === '決定');

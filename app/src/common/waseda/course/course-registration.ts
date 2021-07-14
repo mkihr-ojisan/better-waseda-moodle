@@ -2,6 +2,7 @@ import { doLogin } from '../../../auto-login/auto-login';
 import { DayOfWeek, DayPeriod, Term } from './course';
 import { assertCurrentContextType, fetchHtml, postForm } from '../../util/util';
 import { InvalidResponseError, LoginRequiredError, UnderMaintenanceError } from '../../error';
+import { MessengerServer } from '../../util/messenger';
 
 assertCurrentContextType('background_script');
 
@@ -189,6 +190,7 @@ export async function fetchCourseRegistrationInfo(): Promise<CourseRegistrationI
 
     return info;
 }
+MessengerServer.addInstruction({ fetchCourseRegistrationInfo });
 
 function getTextFromElement(elem: HTMLElement): string {
     let str = '';

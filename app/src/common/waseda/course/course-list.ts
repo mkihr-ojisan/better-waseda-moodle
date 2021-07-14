@@ -174,3 +174,4 @@ MessengerServer.addInstruction({ setHiddenFromCourseList });
 export async function clearCourseListCache(): Promise<void> {
     await idb.clear(cacheStore);
 }
+MessengerServer.addInstruction({ clearCourseListCache });
