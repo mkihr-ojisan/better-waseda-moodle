@@ -1,4 +1,4 @@
-import { ensureLogin } from '../../../../../auto-login/auto-login';
+import { MessengerClient } from '../../../../util/messenger';
 import { fetchHtml } from '../../../../util/util';
 import { CourseModule } from './course-module';
 
@@ -15,7 +15,7 @@ export type CourseModuleAssignContent = {
 export async function fetchCourseModuleAssignContent(
     module: CourseModule<'assign'>
 ): Promise<CourseModuleAssignContent> {
-    await ensureLogin();
+    await MessengerClient.exec('ensureLogin');
 
     const modulePage = await fetchHtml(`https://wsdmoodle.waseda.jp/mod/assign/view.php?id=${module.id}`);
 
