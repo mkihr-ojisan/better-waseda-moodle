@@ -1,7 +1,9 @@
 import { doLogin } from '../../../auto-login/auto-login';
 import { DayOfWeek, DayPeriod, Term } from './course';
-import { fetchHtml, postForm } from '../../util/util';
+import { assertCurrentContextType, fetchHtml, postForm } from '../../util/util';
 import { InvalidResponseError, LoginRequiredError, UnderMaintenanceError } from '../../error';
+
+assertCurrentContextType('background_script');
 
 export type CourseRegistrationInfo = {
     termDayPeriods: {

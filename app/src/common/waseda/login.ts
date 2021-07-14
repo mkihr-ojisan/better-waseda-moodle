@@ -1,6 +1,8 @@
 import { logout } from '../../auto-login/auto-login';
 import { InvalidResponseError, UserIdOrPasswordNotSetError } from '../error';
-import { fetchHtml } from '../util/util';
+import { assertCurrentContextType, fetchHtml } from '../util/util';
+
+assertCurrentContextType('background_script');
 
 let loginPromise: Promise<string> | null = null;
 export async function login(userId: string, password: string): Promise<string> {

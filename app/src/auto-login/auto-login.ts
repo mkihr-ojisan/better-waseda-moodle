@@ -5,6 +5,8 @@ import { fetchSessionKey, getSessionKeyCache, setSessionKeyCache } from '../comm
 import { assertCurrentContextType, postJson } from '../common/util/util';
 import { MessengerServer } from '../common/util/messenger';
 
+assertCurrentContextType('background_script');
+
 export async function initAutoLogin(): Promise<void> {
     assertCurrentContextType('background_script');
 

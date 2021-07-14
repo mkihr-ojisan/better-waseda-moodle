@@ -1,7 +1,10 @@
 // キャッシュして同期関数にしたgetConfig, setConfig, removeConfig
 
 import { InternalError } from '../error';
+import { assertCurrentContextType } from '../util/util';
 import { ConfigKey, ConfigValue, defaultValue, getStorage } from './config';
+
+assertCurrentContextType('background_script');
 
 let cache: { [key: string]: any } | undefined;
 

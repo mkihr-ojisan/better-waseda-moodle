@@ -1,10 +1,12 @@
 import { Course, CourseListItem } from './course';
-import { postJson } from '../../util/util';
+import { assertCurrentContextType, postJson } from '../../util/util';
 import { fetchSessionKey } from '../session-key';
 import * as idb from 'idb-keyval';
 import parseEntities from 'parse-entities';
 import { InvalidResponseError } from '../../error';
 import { MessengerServer } from '../../util/messenger';
+
+assertCurrentContextType('background_script');
 
 const cacheStore = idb.createStore('courseListCache', 'courseListCache');
 

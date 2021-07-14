@@ -1,6 +1,8 @@
 import { ensureLogin } from '../../auto-login/auto-login';
 import { InvalidResponseError } from '../error';
-import { fetchHtml } from '../util/util';
+import { assertCurrentContextType, fetchHtml } from '../util/util';
+
+assertCurrentContextType('background_script');
 
 let cache: {
     sessionKey: string;
