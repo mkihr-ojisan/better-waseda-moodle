@@ -49,6 +49,7 @@ module.exports = {
         config.plugins.push(
             new webpack.DefinePlugin({
                 __VENDOR__: JSON.stringify(vendor),
+                __DEBUG__: JSON.stringify(dev),
             })
         );
 
