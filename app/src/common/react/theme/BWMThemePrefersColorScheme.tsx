@@ -1,5 +1,4 @@
-import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import React, { ReactElement, ReactNode, useMemo } from 'react';
 import { bwmThemeOptions } from './BWMTheme';
@@ -8,7 +7,7 @@ export default function BWMThemePrefersColorScheme(props: { children: ReactNode 
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
         () =>
-            createMuiTheme({
+            createTheme({
                 ...bwmThemeOptions,
                 palette: {
                     ...bwmThemeOptions.palette,

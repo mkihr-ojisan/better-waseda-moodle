@@ -1,5 +1,4 @@
-import { createMuiTheme, Theme } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider, createTheme, Theme } from '@material-ui/core/styles';
 import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 import React, { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react';
 import { bwmThemeOptions } from './BWMTheme';
@@ -54,7 +53,7 @@ function useDarkReaderTheme(): Theme {
 
     return useMemo(() => {
         if (!darkReaderColor) {
-            return createMuiTheme(bwmThemeOptions);
+            return createTheme(bwmThemeOptions);
         }
 
         const { bgR, bgG, bgB, fgR, fgG, fgB } = darkReaderColor;
@@ -90,7 +89,7 @@ function useDarkReaderTheme(): Theme {
             };
         }
 
-        const newTheme = createMuiTheme({
+        const newTheme = createTheme({
             ...bwmThemeOptions,
             palette: {
                 ...bwmThemeOptions.palette,
