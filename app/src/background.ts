@@ -10,6 +10,7 @@ import { initHideName } from './others/hide-name/background-script';
 import { initSyllabusLinkFix } from './others/syllabus-link-fix/background-script';
 import { enableConfigSyncIfFirstRun } from './common/config/sync';
 import { assertCurrentContextType } from './common/util/util';
+import './common/waseda/course/course-list';
 
 // #!blink_only
 import './common/polyfills/content-script-register';
