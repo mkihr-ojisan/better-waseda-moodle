@@ -61,7 +61,9 @@ export function getCurrentContextType(): ContextType {
 }
 
 export function assertCurrentContextType(type: ContextType): void {
-    if (__DEBUG__ && currentContextType !== getCurrentContextType()) {
-        throw new InternalError(`assertion failed: current context must be '${type}'`);
+    if (__DEBUG__ && type !== getCurrentContextType()) {
+        throw new InternalError(
+            `assertion failed: current context must be '${type}', but it is '${getCurrentContextType()}'`
+        );
     }
 }
