@@ -1,7 +1,7 @@
 import { getConfig, onConfigChange } from '../common/config/config';
 import { login } from '../common/waseda/login';
 import { LoginRequiredError } from '../common/error';
-import { getSessionKeyCache, setSessionKeyCache } from '../common/waseda/session-key';
+import { fetchSessionKey, getSessionKeyCache, setSessionKeyCache } from '../common/waseda/session-key';
 import { postJson } from '../common/util/util';
 
 export async function initAutoLogin(): Promise<void> {
@@ -102,7 +102,12 @@ export async function ensureLogin(): Promise<void> {
         //1分くらいは勝手にログアウトされんやろ
         const sessionKey = getSessionKeyCache();
         if (!sessionKey) {
-            await doLogin();
+            try {
+                await fetchSessionKey(false, true);
+                lastEnsureLogin = Date.now();
+            } catch {
+                await doLogin();
+            }
             return;
         }
 
