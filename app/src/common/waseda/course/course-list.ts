@@ -4,6 +4,7 @@ import { fetchSessionKey } from '../session-key';
 import * as idb from 'idb-keyval';
 import parseEntities from 'parse-entities';
 import { InvalidResponseError } from '../../error';
+import { MessengerServer } from '../../util/messenger';
 
 const cacheStore = idb.createStore('courseListCache', 'courseListCache');
 
@@ -16,6 +17,7 @@ export async function fetchCourseList(options: FetchCourseListOptions = {}): Pro
         return await doFetchCourseList();
     }
 }
+MessengerServer.addInstruction({ fetchCourseList });
 
 async function doFetchCourseList(): Promise<CourseListItem[]> {
     const request = [
@@ -165,6 +167,7 @@ export async function setHiddenFromCourseList(course: Course, isHidden: boolean)
         }
     }
 }
+MessengerServer.addInstruction({ setHiddenFromCourseList });
 
 export async function clearCourseListCache(): Promise<void> {
     await idb.clear(cacheStore);

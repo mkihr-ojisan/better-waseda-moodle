@@ -2,9 +2,12 @@ import { getConfig, onConfigChange } from '../common/config/config';
 import { login } from '../common/waseda/login';
 import { LoginRequiredError } from '../common/error';
 import { fetchSessionKey, getSessionKeyCache, setSessionKeyCache } from '../common/waseda/session-key';
-import { postJson } from '../common/util/util';
+import { assertCurrentContextType, postJson } from '../common/util/util';
+import { MessengerServer } from '../common/util/messenger';
 
 export async function initAutoLogin(): Promise<void> {
+    assertCurrentContextType('background_script');
+
     onConfigChange(
         'autoLogin.enabled',
         (_, newValue) => {
@@ -69,6 +72,7 @@ export async function doLogin(): Promise<boolean> {
         return false;
     }
 }
+MessengerServer.addInstruction({ doLogin });
 
 let logoutPromise: Promise<void> | null = null;
 export async function logout(): Promise<void> {
@@ -95,6 +99,7 @@ export async function logout(): Promise<void> {
 
     return await logoutPromise;
 }
+MessengerServer.addInstruction({ logout });
 
 let lastEnsureLogin: number | null = null;
 export async function ensureLogin(): Promise<void> {

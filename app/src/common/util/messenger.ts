@@ -27,11 +27,13 @@ export class MessengerServer {
             });
         });
     }
-    static addInstruction(name: string, f: Function): void {
-        if (name in this.instructions) {
-            throw new Error(`Instruction '${name}' already exists`);
+    static addInstruction(functions: Record<string, Function>): void {
+        for (const [name, f] of Object.entries(functions)) {
+            if (name in this.instructions) {
+                throw new Error(`Instruction '${name}' already exists`);
+            }
+            this.instructions[name] = f;
         }
-        this.instructions[name] = f;
     }
 }
 
