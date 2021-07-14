@@ -1,6 +1,6 @@
 export class MessengerServer {
-    instructions: { [key: string]: Function } = {};
-    constructor() {
+    private static instructions: { [key: string]: Function } = {};
+    static init(): void {
         browser.runtime.onConnect.addListener((port) => {
             port.onMessage.addListener((message: any) => {
                 (async () => {
@@ -27,7 +27,7 @@ export class MessengerServer {
             });
         });
     }
-    addInstruction(name: string, f: Function): void {
+    static addInstruction(name: string, f: Function): void {
         if (name in this.instructions) {
             throw new Error(`Instruction '${name}' already exists`);
         }
