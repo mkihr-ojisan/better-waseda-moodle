@@ -93,7 +93,7 @@ export default function Timetable(props: Props): ReactElement {
                 {[0, 1, 2, 3, 4].map((period) => (
                     <tr key={period}>
                         <th title={props.showPeriodTime ? undefined : time[period].join(' - ')}>
-                            <Grid container direction="column" justify="space-between">
+                            <Grid container direction="column" justifyContent="space-between">
                                 {props.showPeriodTime ? (
                                     <Grid item>
                                         <Typography variant="caption">{time[period][0]}</Typography>
@@ -115,7 +115,7 @@ export default function Timetable(props: Props): ReactElement {
                 {show6thPeriod && (
                     <tr>
                         <th title={props.showPeriodTime ? undefined : time[5].join(' - ')}>
-                            <Grid container direction="column" justify="space-between">
+                            <Grid container direction="column" justifyContent="space-between">
                                 {props.showPeriodTime ? (
                                     <Grid item>
                                         <Typography variant="caption">{time[5][0]}</Typography>
@@ -137,7 +137,7 @@ export default function Timetable(props: Props): ReactElement {
                 {show7thPeriod && (
                     <tr>
                         <th title={props.showPeriodTime ? undefined : time[6].join(' - ')}>
-                            <Grid container direction="column" justify="space-between">
+                            <Grid container direction="column" justifyContent="space-between">
                                 {props.showPeriodTime ? (
                                     <Grid item>
                                         <Typography variant="caption">{time[6][0]}</Typography>

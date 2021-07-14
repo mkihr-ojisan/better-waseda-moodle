@@ -174,7 +174,7 @@ function TimetableSettingsDialogContent(props: Props): ReactElement {
                     </Table>
                 </TableContainer>
 
-                <Grid container justify="center">
+                <Grid container justifyContent="center">
                     <Grid item>
                         <Button variant="outlined" startIcon={<Add />} onClick={handleAddEntry}>
                             {browser.i18n.getMessage('courseOverviewTimetableSettingsDialogAddEntryButton')}
