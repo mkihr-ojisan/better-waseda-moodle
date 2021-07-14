@@ -135,3 +135,4 @@ export async function ensureLogin(): Promise<void> {
         }
     }
 }
+MessengerServer.addInstruction({ ensureLogin });
