@@ -26,7 +26,7 @@ function listener(details: browser.webRequest._OnHeadersReceivedDetails) {
 
     const index = headers.findIndex((h) => h.name.toLowerCase() === 'content-disposition');
     if (index !== -1) {
-        headers.splice(index, 1);
+        headers[index].value = headers[index].value?.replace(/^([^;]*)attachment/i, '$1inline');
         return {
             responseHeaders: headers,
         };
