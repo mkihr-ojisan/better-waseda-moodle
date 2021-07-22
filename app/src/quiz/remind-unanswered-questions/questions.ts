@@ -82,13 +82,19 @@ function checkIfAnswered(elem: Element, type: QuestionType): boolean {
             );
         case 'calculatedmulti':
         case 'multichoice':
-        case 'multichoiceset':
-            return (
-                Array.from(elem.querySelectorAll('input[type=radio]')).some(
-                    (e) => (e as HTMLInputElement).value !== '-1' && (e as HTMLInputElement).checked
-                ) ||
-                Array.from(elem.querySelectorAll('input[type=checkbox]')).some((e) => (e as HTMLInputElement).checked)
+        case 'multichoiceset': {
+            const names: Record<string, boolean | undefined> = {};
+            for (const radio of Array.from(elem.querySelectorAll('input[type=radio]')) as HTMLInputElement[]) {
+                if (!names[radio.name] && radio.value !== '-1') {
+                    names[radio.name] = radio.checked;
+                }
+            }
+            if (Object.values(names).every((checked) => checked)) return true;
+
+            return Array.from(elem.querySelectorAll('input[type=checkbox]')).some(
+                (e) => (e as HTMLInputElement).checked
             );
+        }
         case 'ddmarker':
             return Array.from(elem.querySelectorAll('.ddform > input')).some(
                 (e) => (e as HTMLInputElement).value !== ''
@@ -126,8 +132,15 @@ function checkIfAnswered(elem: Element, type: QuestionType): boolean {
         case 'match':
         case 'randomsamatch':
             return Array.from(elem.querySelectorAll('select')).every((e) => e.value !== '0');
-        case 'truefalse':
-            return Array.from(elem.querySelectorAll('input[type=radio]')).some((e) => (e as HTMLInputElement).checked);
+        case 'truefalse': {
+            const names: Record<string, boolean | undefined> = {};
+            for (const radio of Array.from(elem.querySelectorAll('input[type=radio]')) as HTMLInputElement[]) {
+                if (!names[radio.name]) {
+                    names[radio.name] = radio.checked;
+                }
+            }
+            return Object.values(names).every((checked) => checked);
+        }
         case 'random':
         case 'multianswer':
         case 'tests':
