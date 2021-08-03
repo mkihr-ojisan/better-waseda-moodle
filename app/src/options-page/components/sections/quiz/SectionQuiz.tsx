@@ -5,7 +5,7 @@ import OptionMoreVisibleRemainingTime from './OptionMoreVisibleRemainingTime';
 import OptionRemindUnansweredQuestions from './OptionRemindUnansweredQuestions';
 import OptionRemindUnansweredQuestionsSequentialQuizOnly from './OptionRemindUnansweredQuestionsSequentialQuizOnly';
 
-export default function SectionQuiz(props: SectionComponentProps): ReactElement | null {
+export default React.memo(function SectionQuiz(props: SectionComponentProps): ReactElement | null {
     return (
         <Section titleMessageName="optionsSectionQuiz" {...props}>
             <OptionMoreVisibleRemainingTime />
@@ -13,4 +13,4 @@ export default function SectionQuiz(props: SectionComponentProps): ReactElement 
             <OptionRemindUnansweredQuestionsSequentialQuizOnly />
         </Section>
     );
-}
+});

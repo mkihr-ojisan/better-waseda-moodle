@@ -14,7 +14,9 @@ export type ConfigContextValue =
 
 export const ConfigContext = React.createContext<ConfigContextValue>(undefined);
 
-export function ConfigContextProvider(props: PropsWithChildren<{}>): ReactElement | null {
+export const ConfigContextProvider = React.memo(function ConfigContextProvider(
+    props: PropsWithChildren<{}>
+): ReactElement | null {
     const config = usePromise(() => getAllConfig(), []);
 
     useEffect(() => {
@@ -49,4 +51,4 @@ export function ConfigContextProvider(props: PropsWithChildren<{}>): ReactElemen
     if (!value) return null;
 
     return <ConfigContext.Provider value={value}>{props.children}</ConfigContext.Provider>;
-}
+});

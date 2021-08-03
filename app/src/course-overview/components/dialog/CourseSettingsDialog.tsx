@@ -16,13 +16,13 @@ type Props = {
     onClose: () => void;
 };
 
-export default function CourseSettingsDialog(props: Props): ReactElement {
+export default React.memo(function CourseSettingsDialog(props: Props): ReactElement {
     return (
         <Dialog open={props.open} fullWidth maxWidth="sm">
             {props.open && <CourseSettingsDialogContent {...props} />}
         </Dialog>
     );
-}
+});
 
 function CourseSettingsDialogContent(props: Props) {
     const context = useContext(CourseOverviewContext);

@@ -9,16 +9,18 @@ type Props = {
     onCloseMenu: () => void;
 };
 
-export default React.forwardRef(function HideCourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
-    const context = useContext(CourseOverviewContext);
+export default React.memo(
+    React.forwardRef(function HideCourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
+        const context = useContext(CourseOverviewContext);
 
-    function handleClick() {
-        context.hideCourse(props.course);
-    }
+        function handleClick() {
+            context.hideCourse(props.course);
+        }
 
-    return (
-        <CourseMenuItem icon={<VisibilityOff />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
-            {browser.i18n.getMessage('courseOverviewHide')}
-        </CourseMenuItem>
-    );
-});
+        return (
+            <CourseMenuItem icon={<VisibilityOff />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
+                {browser.i18n.getMessage('courseOverviewHide')}
+            </CourseMenuItem>
+        );
+    })
+);

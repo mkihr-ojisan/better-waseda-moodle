@@ -9,19 +9,21 @@ type Props = {
     onCloseMenu: () => void;
 };
 
-export default React.forwardRef(function SettingsMenuItem(props: Props, ref: Ref<any>): ReactElement {
-    const [dialogOpen, setDialogOpen] = useState(false);
+export default React.memo(
+    React.forwardRef(function SettingsMenuItem(props: Props, ref: Ref<any>): ReactElement {
+        const [dialogOpen, setDialogOpen] = useState(false);
 
-    function handleClick() {
-        setDialogOpen(true);
-    }
+        function handleClick() {
+            setDialogOpen(true);
+        }
 
-    return (
-        <>
-            <CourseMenuItem icon={<Settings />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
-                {browser.i18n.getMessage('courseOverviewSettings')}
-            </CourseMenuItem>
-            <CourseSettingsDialog course={props.course} open={dialogOpen} onClose={() => setDialogOpen(false)} />
-        </>
-    );
-});
+        return (
+            <>
+                <CourseMenuItem icon={<Settings />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
+                    {browser.i18n.getMessage('courseOverviewSettings')}
+                </CourseMenuItem>
+                <CourseSettingsDialog course={props.course} open={dialogOpen} onClose={() => setDialogOpen(false)} />
+            </>
+        );
+    })
+);

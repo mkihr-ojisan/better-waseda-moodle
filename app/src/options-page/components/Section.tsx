@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Section(props: Props): ReactElement {
+export default React.memo(function Section(props: Props): ReactElement {
     const classes = useStyles();
 
     return (
@@ -30,4 +30,4 @@ export default function Section(props: Props): ReactElement {
             </Typography>
         </Container>
     );
-}
+});

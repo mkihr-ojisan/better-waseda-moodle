@@ -101,6 +101,6 @@ function useDarkReaderTheme(): Theme {
     }, [darkReaderColor]);
 }
 
-export default function BWMThemeDarkReader(props: { children: ReactNode }): ReactElement {
+export default React.memo(function BWMThemeDarkReader(props: { children: ReactNode }): ReactElement {
     return <ThemeProvider theme={useDarkReaderTheme()}>{props.children}</ThemeProvider>;
-}
+});

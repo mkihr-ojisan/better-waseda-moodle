@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AssignmentListDialog(props: Props): ReactElement | null {
+export default React.memo(function AssignmentListDialog(props: Props): ReactElement | null {
     const limit = useMemo(() => pLimit(2), []);
 
     function handleClose() {
@@ -50,7 +50,7 @@ export default function AssignmentListDialog(props: Props): ReactElement | null 
             {props.open && <AssignmentListDialogContent {...props} limit={limit} />}
         </Dialog>
     );
-}
+});
 
 function AssignmentListDialogContent(props: Props & { limit: pLimit.Limit }): ReactElement {
     const classes = useStyles();

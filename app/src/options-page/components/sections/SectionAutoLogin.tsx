@@ -7,7 +7,7 @@ import useConfig from '../../../common/react/useConfig';
 import { SectionComponentProps } from '../Options';
 import Section from '../Section';
 
-export default function SectionAutoLogin(props: SectionComponentProps): ReactElement | null {
+export default React.memo(function SectionAutoLogin(props: SectionComponentProps): ReactElement | null {
     const [enabled, setEnabled] = useConfig('autoLogin.enabled');
     const [loginId, setLoginId] = useConfig('autoLogin.loginId');
     const [password, setPassword] = useConfig('autoLogin.password');
@@ -48,4 +48,4 @@ export default function SectionAutoLogin(props: SectionComponentProps): ReactEle
             </FormGroup>
         </Section>
     );
-}
+});

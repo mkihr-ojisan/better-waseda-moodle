@@ -6,7 +6,7 @@ import Description from '../Description';
 import { SectionComponentProps } from '../Options';
 import Section from '../Section';
 
-export default function SectionOthers(props: SectionComponentProps): ReactElement | null {
+export default React.memo(function SectionOthers(props: SectionComponentProps): ReactElement | null {
     const [viewInBrowserEnabled, setViewInBrowserEnabled] = useConfig('viewInBrowser.enabled');
     const [removeLoadingVideoEnabled, setRemoveLoadingVideoEnabled] = useConfig('removeLoadingVideo.enabled');
     const [checkNotesOnSubmitting, setCheckNotesOnSubmitting] = useConfig('checkNotesOnSubmitting.enabled');
@@ -89,4 +89,4 @@ export default function SectionOthers(props: SectionComponentProps): ReactElemen
             <Description messageName="optionsSyllabusLinkFixEnabledDescription" />
         </Section>
     );
-}
+});

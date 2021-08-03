@@ -5,7 +5,7 @@ import CourseListView from '../CourseListView';
 import { CourseOverviewContext } from '../CourseOverview';
 import HiddenCoursesDialog from '../dialog/HiddenCoursesDialog';
 
-export default function NormalView(): ReactElement {
+export default React.memo(function NormalView(): ReactElement {
     const context = useContext(CourseOverviewContext);
 
     const [hiddenCoursesDialogOpen, setHiddenCoursesDialogOpen] = useState(false);
@@ -29,4 +29,4 @@ export default function NormalView(): ReactElement {
             <CourseListView courses={context.courseList.filter((c) => !c.isHidden)} />
         </>
     );
-}
+});

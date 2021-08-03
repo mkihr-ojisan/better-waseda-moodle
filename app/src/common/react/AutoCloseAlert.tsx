@@ -11,7 +11,7 @@ type Props = {
     children?: ReactNode;
 };
 
-export default function AutoCloseAlert(props: Props): ReactElement | null {
+export default React.memo(function AutoCloseAlert(props: Props): ReactElement | null {
     const [hover, setHover] = useState(false);
 
     useTimer(props.open && !hover, 3000, () => props.onClose());
@@ -23,4 +23,4 @@ export default function AutoCloseAlert(props: Props): ReactElement | null {
             </Alert>
         </Collapse>
     );
-}
+});

@@ -14,7 +14,7 @@ type Props = {
     unansweredQuestions: Question[];
 };
 
-export default function RemindDialog(props: Props): ReactElement {
+export default React.memo(function RemindDialog(props: Props): ReactElement {
     function handleClickBack() {
         props.onClose();
     }
@@ -46,4 +46,4 @@ export default function RemindDialog(props: Props): ReactElement {
             </Dialog>
         </BWMThemeDarkReader>
     );
-}
+});

@@ -9,7 +9,7 @@ import HiddenCoursesDialog from '../dialog/HiddenCoursesDialog';
 import Timetable from './Timetable';
 import TimetableTermSelector from './TimetableTermSelector';
 
-export default function TimetableView(): ReactElement {
+export default React.memo(function TimetableView(): ReactElement {
     const { courseList, courseData } = useContext(CourseOverviewContext);
     const [hiddenCoursesDialogOpen, setHiddenCoursesDialogOpen] = useState(false);
 
@@ -77,4 +77,4 @@ export default function TimetableView(): ReactElement {
             <CourseListView courses={coursesNotInTimetable.filter((c) => !c.isHidden)} />
         </>
     );
-}
+});

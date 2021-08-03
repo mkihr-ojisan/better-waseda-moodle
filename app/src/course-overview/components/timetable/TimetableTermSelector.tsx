@@ -10,7 +10,7 @@ type Props = {
     onChange?: (selectedTerm: YearTerm, selectedIndex: number) => void;
 };
 
-export default function TimetableTermSelector(props: Props): ReactElement {
+export default React.memo(function TimetableTermSelector(props: Props): ReactElement {
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const selectedIndex = event.target.value as number;
         props.onChange?.(props.terms[selectedIndex], selectedIndex);
@@ -41,4 +41,4 @@ export default function TimetableTermSelector(props: Props): ReactElement {
             </FormControl>
         );
     }
-}
+});

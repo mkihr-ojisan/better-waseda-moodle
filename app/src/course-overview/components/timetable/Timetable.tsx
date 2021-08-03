@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Timetable(props: Props): ReactElement {
+export default React.memo(function Timetable(props: Props): ReactElement {
     const context = useContext(CourseOverviewContext);
     const classes = useStyles();
     const { timetableCells, showSaturday, showSunday, show6thPeriod, show7thPeriod } = useTimetableCells(
@@ -159,7 +159,7 @@ export default function Timetable(props: Props): ReactElement {
             </tbody>
         </table>
     );
-}
+});
 
 function useTimetableCells(context: CourseOverviewContextProps, selectedTerm: YearTerm) {
     const viewportHeight = useViewportHeight();

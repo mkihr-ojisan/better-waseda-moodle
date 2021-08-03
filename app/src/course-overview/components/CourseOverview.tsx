@@ -30,7 +30,7 @@ export const CourseOverviewContext = createContext<CourseOverviewContextProps>({
     },
 });
 
-export default function CourseOverview(): ReactElement {
+export default React.memo(function CourseOverview(): ReactElement {
     const [courseList, setHiddenFromCourseList] = useCourseList();
     const courseData = useCourseData();
     const [courseOverviewType] = useConfig('courseOverview.type');
@@ -75,7 +75,7 @@ export default function CourseOverview(): ReactElement {
             </BWMThemeDarkReader>
         );
     }
-}
+});
 
 function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidden: boolean) => void] {
     const [courseListValue, setCourseListValue] = useState<CourseListItem[] | undefined>(undefined);

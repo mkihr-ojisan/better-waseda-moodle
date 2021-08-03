@@ -16,18 +16,20 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default React.forwardRef(function CourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
-    const classes = useStyles();
+export default React.memo(
+    React.forwardRef(function CourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
+        const classes = useStyles();
 
-    function handleClick() {
-        props.onClick();
-        props.onCloseMenu();
-    }
+        function handleClick() {
+            props.onClick();
+            props.onCloseMenu();
+        }
 
-    return (
-        <MenuItem onClick={handleClick} innerRef={ref}>
-            <ListItemIcon classes={{ root: classes.listItemIconRoot }}>{props.icon}</ListItemIcon>
-            {props.children}
-        </MenuItem>
-    );
-});
+        return (
+            <MenuItem onClick={handleClick} innerRef={ref}>
+                <ListItemIcon classes={{ root: classes.listItemIconRoot }}>{props.icon}</ListItemIcon>
+                {props.children}
+            </MenuItem>
+        );
+    })
+);

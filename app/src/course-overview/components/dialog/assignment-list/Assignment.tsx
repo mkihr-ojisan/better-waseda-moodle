@@ -14,7 +14,7 @@ type Props = {
     pLimit: pLimit.Limit;
 };
 
-export default function Assignment(props: Props): ReactElement | null {
+export default React.memo(function Assignment(props: Props): ReactElement | null {
     const assignment = usePromise(
         () => props.pLimit(() => fetchCourseModuleAssignContent(props.module)),
         [props.module]
@@ -36,4 +36,4 @@ export default function Assignment(props: Props): ReactElement | null {
             <TableCell>{assignment ? assignment.feedback.grade : null}</TableCell>
         </TableRow>
     );
-}
+});

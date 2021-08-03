@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function HiddenCoursesDialog(props: Props): ReactElement {
+export default React.memo(function HiddenCoursesDialog(props: Props): ReactElement {
     const classes = useStyles();
     const context = useContext(CourseOverviewContext);
 
@@ -51,4 +51,4 @@ export default function HiddenCoursesDialog(props: Props): ReactElement {
             </DialogContent>
         </Dialog>
     );
-}
+});

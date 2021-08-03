@@ -22,7 +22,7 @@ import { SectionComponentProps } from '../../Options';
 import Section from '../../Section';
 import OptionShowPeriodTime from './OptionShowPeriodTime';
 
-export default function SectionCourseOverview(props: SectionComponentProps): ReactElement | null {
+export default React.memo(function SectionCourseOverview(props: SectionComponentProps): ReactElement | null {
     const [enabled, setEnabled] = useConfig('courseOverview.enabled');
     const [type, setType] = useConfig('courseOverview.type');
 
@@ -150,7 +150,7 @@ export default function SectionCourseOverview(props: SectionComponentProps): Rea
             </AutoCloseAlert>
         </Section>
     );
-}
+});
 
 async function fetchTimetableDataAndSyllabusUrl(): Promise<void> {
     const [list, infos]: [CourseListItem[], CourseRegistrationInfo[]] = await Promise.all([

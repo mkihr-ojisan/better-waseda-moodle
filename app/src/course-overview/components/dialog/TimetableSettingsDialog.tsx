@@ -63,9 +63,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function TimetableSettingsDialog(props: Props): ReactElement {
+export default React.memo(function TimetableSettingsDialog(props: Props): ReactElement {
     return <Dialog open={props.open}>{props.open && <TimetableSettingsDialogContent {...props} />}</Dialog>;
-}
+});
 
 function TimetableSettingsDialogContent(props: Props): ReactElement {
     const context = useContext(CourseOverviewContext);

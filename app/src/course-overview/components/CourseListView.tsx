@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CourseListView(props: Props): ReactElement {
+export default React.memo(function CourseListView(props: Props): ReactElement {
     const courses = props.courses.sort(compareCourse).map((c) => (
         <Grid
             item
@@ -42,7 +42,7 @@ export default function CourseListView(props: Props): ReactElement {
     } else {
         return props.emptyView;
     }
-}
+});
 
 function compareCourse(a: CourseListItem, b: CourseListItem) {
     if (a.name < b.name) {

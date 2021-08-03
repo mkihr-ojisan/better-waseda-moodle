@@ -11,7 +11,7 @@ type Props = {
     classes?: { cardMediaRoot?: string };
 };
 
-export default function CourseImage(props: Props): ReactElement {
+export default React.memo(function CourseImage(props: Props): ReactElement {
     const context = useContext(CourseOverviewContext);
 
     const overrideCourseImage = context.courseData[props.course.id]?.overrideImage;
@@ -53,4 +53,4 @@ export default function CourseImage(props: Props): ReactElement {
             />
         );
     }
-}
+});

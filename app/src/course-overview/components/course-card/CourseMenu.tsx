@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CourseMenu(props: Props): ReactElement {
+export default React.memo(function CourseMenu(props: Props): ReactElement {
     const classes = useStyles();
 
     return (
@@ -51,4 +51,4 @@ export default function CourseMenu(props: Props): ReactElement {
             <SettingsMenuItem course={props.course} onCloseMenu={props.onClose} />
         </Menu>
     );
-}
+});

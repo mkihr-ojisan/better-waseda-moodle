@@ -6,7 +6,7 @@ import OptionBackupConfig from './OptionBackupConfig';
 import OptionConfigSync from './OptionConfigSync';
 import OptionRestoreConfig from './OptionRestoreConfig';
 
-export default function SectionGeneral(props: SectionComponentProps): ReactElement | null {
+export default React.memo(function SectionGeneral(props: SectionComponentProps): ReactElement | null {
     return (
         <Section titleMessageName="optionsSectionGeneral" {...props}>
             <OptionConfigSync />
@@ -21,4 +21,4 @@ export default function SectionGeneral(props: SectionComponentProps): ReactEleme
             </Grid>
         </Section>
     );
-}
+});

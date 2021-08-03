@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CourseCard(props: Props): ReactElement {
+export default React.memo(function CourseCard(props: Props): ReactElement {
     const classes = useStyles();
     const [menuOpen, setMenuOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -143,4 +143,4 @@ export default function CourseCard(props: Props): ReactElement {
             />
         </Card>
     );
-}
+});

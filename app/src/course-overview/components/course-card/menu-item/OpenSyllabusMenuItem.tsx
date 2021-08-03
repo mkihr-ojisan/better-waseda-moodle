@@ -15,49 +15,55 @@ type Props = {
     onCloseMenu: () => void;
 };
 
-export default React.forwardRef(function OpenSyllabusMenuItem(props: Props, ref: Ref<any>): ReactElement {
-    const context = useContext(CourseOverviewContext);
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [settingsOpen, setSettingsOpen] = useState(false);
+export default React.memo(
+    React.forwardRef(function OpenSyllabusMenuItem(props: Props, ref: Ref<any>): ReactElement {
+        const context = useContext(CourseOverviewContext);
+        const [dialogOpen, setDialogOpen] = useState(false);
+        const [settingsOpen, setSettingsOpen] = useState(false);
 
-    function handleClick() {
-        const syllabusUrl = context.courseData[props.course.id]?.syllabusUrl;
-        if (syllabusUrl) {
-            window.open(syllabusUrl, '_blank');
-        } else {
-            setDialogOpen(true);
+        function handleClick() {
+            const syllabusUrl = context.courseData[props.course.id]?.syllabusUrl;
+            if (syllabusUrl) {
+                window.open(syllabusUrl, '_blank');
+            } else {
+                setDialogOpen(true);
+            }
         }
-    }
 
-    function handleCancel() {
-        setDialogOpen(false);
-    }
-    function handleOpenSettings() {
-        setDialogOpen(false);
-        setSettingsOpen(true);
-    }
+        function handleCancel() {
+            setDialogOpen(false);
+        }
+        function handleOpenSettings() {
+            setDialogOpen(false);
+            setSettingsOpen(true);
+        }
 
-    return (
-        <>
-            <CourseMenuItem icon={<LaunchIcon />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
-                {browser.i18n.getMessage('courseOverviewOpenSyllabus')}
-            </CourseMenuItem>
-            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-                <DialogContent>
-                    <DialogContentText>
-                        {browser.i18n.getMessage('courseOverviewSyllabusUrlNotSetDialogMessage')}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button color="primary" onClick={handleCancel}>
-                        {browser.i18n.getMessage('cancel')}
-                    </Button>
-                    <Button color="primary" onClick={handleOpenSettings}>
-                        {browser.i18n.getMessage('courseOverviewSyllabusUrlNotSetDialogOpenSettings')}
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <CourseSettingsDialog course={props.course} open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-        </>
-    );
-});
+        return (
+            <>
+                <CourseMenuItem icon={<LaunchIcon />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
+                    {browser.i18n.getMessage('courseOverviewOpenSyllabus')}
+                </CourseMenuItem>
+                <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+                    <DialogContent>
+                        <DialogContentText>
+                            {browser.i18n.getMessage('courseOverviewSyllabusUrlNotSetDialogMessage')}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button color="primary" onClick={handleCancel}>
+                            {browser.i18n.getMessage('cancel')}
+                        </Button>
+                        <Button color="primary" onClick={handleOpenSettings}>
+                            {browser.i18n.getMessage('courseOverviewSyllabusUrlNotSetDialogOpenSettings')}
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <CourseSettingsDialog
+                    course={props.course}
+                    open={settingsOpen}
+                    onClose={() => setSettingsOpen(false)}
+                />
+            </>
+        );
+    })
+);
