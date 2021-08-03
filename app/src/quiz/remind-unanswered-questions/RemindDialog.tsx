@@ -4,6 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import React, { ReactElement } from 'react';
+import { useCallback } from 'react';
 import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
 import { Question } from './questions';
 
@@ -15,14 +16,14 @@ type Props = {
 };
 
 export default React.memo(function RemindDialog(props: Props): ReactElement {
-    function handleClickBack() {
+    const handleClickBack = useCallback(() => {
         props.onClose();
-    }
+    }, [props]);
 
-    function handleClickContinue() {
+    const handleClickContinue = useCallback(() => {
         props.onClose();
         props.onContinue();
-    }
+    }, [props]);
 
     return (
         <BWMThemeDarkReader>

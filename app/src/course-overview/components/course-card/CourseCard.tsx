@@ -12,6 +12,7 @@ import CourseMenu from './CourseMenu';
 import NoteIcon from '@material-ui/icons/Note';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
+import { useCallback } from 'react';
 
 type Props = {
     course: CourseListItem;
@@ -43,12 +44,12 @@ export default React.memo(function CourseCard(props: Props): ReactElement {
     const courseData = context.courseData[props.course.id];
     const courseName = courseData?.overrideName ?? props.course.name;
 
-    const handleOpenMenuButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleOpenMenuButtonClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
-    };
-    const closeMenu = () => {
+    }, []);
+    const closeMenu = useCallback(() => {
         setAnchorEl(null);
-    };
+    }, []);
 
     return (
         <Card className={classes.root}>

@@ -1,6 +1,7 @@
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import React, { ReactElement } from 'react';
+import { useCallback } from 'react';
 import useConfig from '../../../../common/react/useConfig';
 
 export default function OptionShowPeriodTime(): ReactElement | null {
@@ -8,11 +9,14 @@ export default function OptionShowPeriodTime(): ReactElement | null {
     const [courseOverviewType] = useConfig('courseOverview.type');
     const [showPeriodTime, setShowPeriodTime] = useConfig('timetable.showPeriodTime');
 
-    if (showPeriodTime === undefined) return null;
+    const handleChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setShowPeriodTime(event.target.checked);
+        },
+        [setShowPeriodTime]
+    );
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setShowPeriodTime(event.target.checked);
-    }
+    if (showPeriodTime === undefined) return null;
 
     return (
         <FormControlLabel

@@ -19,6 +19,7 @@ import { CourseListItem } from '../../../../common/waseda/course/course';
 import Assignment from './Assignment';
 import pLimit from 'p-limit';
 import CenteredCircularProgress from '../../../../common/react/CenteredCircularProgress';
+import { useCallback } from 'react';
 
 type Props = {
     open: boolean;
@@ -40,10 +41,10 @@ const useStyles = makeStyles((theme) => ({
 export default React.memo(function AssignmentListDialog(props: Props): ReactElement | null {
     const limit = useMemo(() => pLimit(2), []);
 
-    function handleClose() {
+    const handleClose = useCallback(() => {
         limit.clearQueue();
         props.onClose();
-    }
+    }, [limit, props]);
 
     return (
         <Dialog open={props.open} onClose={handleClose} maxWidth="md" fullWidth>

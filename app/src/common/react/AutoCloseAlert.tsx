@@ -1,6 +1,6 @@
 import Collapse from '@material-ui/core/Collapse';
 import Alert, { Color } from '@material-ui/lab/Alert';
-import React, { ReactElement, ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode, useCallback, useState } from 'react';
 import useTimer from './useTimer';
 
 type Props = {
@@ -16,9 +16,12 @@ export default React.memo(function AutoCloseAlert(props: Props): ReactElement | 
 
     useTimer(props.open && !hover, 3000, () => props.onClose());
 
+    const handleMouseEnter = useCallback(() => setHover(true), []);
+    const handleMouseLeave = useCallback(() => setHover(false), []);
+
     return (
         <Collapse in={props.open}>
-            <Alert severity={props.severity} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <Alert severity={props.severity} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
                 {props.children}
             </Alert>
         </Collapse>

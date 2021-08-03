@@ -6,6 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import React, { ReactElement, useContext, useState } from 'react';
+import { useCallback } from 'react';
 import { CourseListItem } from '../../../common/waseda/course/course';
 import { registerCourseData } from '../../../common/waseda/course/course-data';
 import { CourseOverviewContext } from '../CourseOverview';
@@ -31,28 +32,28 @@ function CourseSettingsDialogContent(props: Props) {
     const [syllabusUrl, setSyllabusUrl] = useState(courseData?.syllabusUrl ?? '');
     const [note, setNote] = useState(courseData?.note ?? '');
 
-    function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const handleNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
-    }
-    function handleSetNameToDefault() {
+    }, []);
+    const handleSetNameToDefault = useCallback(() => {
         setName(props.course.name);
-    }
-    function handleSyllabusUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
+    }, [props.course.name]);
+    const handleSyllabusUrlChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setSyllabusUrl(event.target.value);
-    }
-    function handleNoteChange(event: React.ChangeEvent<HTMLInputElement>) {
+    }, []);
+    const handleNoteChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setNote(event.target.value);
-    }
+    }, []);
 
-    function handleCancel() {
+    const handleCancel = useCallback(() => {
         props.onClose();
-    }
-    async function handleOK() {
+    }, [props]);
+    const handleOK = useCallback(async () => {
         await registerCourseData(props.course.id, 'overrideName', name === props.course.name ? undefined : name);
         await registerCourseData(props.course.id, 'syllabusUrl', syllabusUrl === '' ? undefined : syllabusUrl);
         await registerCourseData(props.course.id, 'note', note === '' ? undefined : note);
         props.onClose();
-    }
+    }, [name, note, props, syllabusUrl]);
 
     return (
         <>

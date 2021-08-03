@@ -2,6 +2,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import React, { ReactElement } from 'react';
+import { useCallback } from 'react';
 import { YearTerm, yearTermToString } from '../../../common/waseda/course/course';
 
 type Props = {
@@ -11,10 +12,14 @@ type Props = {
 };
 
 export default React.memo(function TimetableTermSelector(props: Props): ReactElement {
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const selectedIndex = event.target.value as number;
-        props.onChange?.(props.terms[selectedIndex], selectedIndex);
-    };
+    const handleChange = useCallback(
+        (event: React.ChangeEvent<{ value: unknown }>) => {
+            const selectedIndex = event.target.value as number;
+            props.onChange?.(props.terms[selectedIndex], selectedIndex);
+        },
+        [props]
+    );
+    const noEntryRenderValue = useCallback(() => browser.i18n.getMessage('courseOverviewTimetableNoEntry'), []);
 
     if (props.terms.length > 0) {
         return (
@@ -33,11 +38,7 @@ export default React.memo(function TimetableTermSelector(props: Props): ReactEle
     } else {
         return (
             <FormControl disabled>
-                <Select
-                    value=""
-                    renderValue={() => browser.i18n.getMessage('courseOverviewTimetableNoEntry')}
-                    displayEmpty
-                />
+                <Select value="" renderValue={noEntryRenderValue} displayEmpty />
             </FormControl>
         );
     }

@@ -3,6 +3,7 @@ import { ConfigKey, ConfigValue, onConfigChange, removeConfigChangeListener, set
 import equal from 'fast-deep-equal';
 import { useContext } from 'react';
 import { ConfigContext } from './ConfigContext';
+import { useCallback } from 'react';
 
 // configの取得は非同期なのでまだ値が取得されていないときはundefinedを返す
 export default function useConfig<T extends ConfigKey>(
@@ -28,10 +29,13 @@ export default function useConfig<T extends ConfigKey>(
 
     return [
         value,
-        (v) => {
-            setConfig(key, v);
-            valueRef.current = v;
-            setValue(v);
-        },
+        useCallback(
+            (v) => {
+                setConfig(key, v);
+                valueRef.current = v;
+                setValue(v);
+            },
+            [key]
+        ),
     ];
 }

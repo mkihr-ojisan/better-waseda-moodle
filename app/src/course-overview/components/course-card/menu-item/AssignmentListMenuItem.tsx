@@ -1,4 +1,4 @@
-import React, { ReactElement, Ref } from 'react';
+import React, { ReactElement, Ref, useCallback } from 'react';
 import { useState } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import AssignmentListDialog from '../../dialog/assignment-list/AssignmentListDialog';
@@ -14,9 +14,10 @@ export default React.memo(
     React.forwardRef(function AssignmentListMenuItem(props: Props, ref: Ref<any>): ReactElement {
         const [dialogOpen, setDialogOpen] = useState(false);
 
-        function handleClick() {
+        const handleClick = useCallback(() => {
             setDialogOpen(true);
-        }
+        }, []);
+        const handleClose = useCallback(() => setDialogOpen(false), []);
 
         return (
             <>
@@ -28,7 +29,7 @@ export default React.memo(
                 >
                     {browser.i18n.getMessage('courseOverviewAssignmentList')}
                 </CourseMenuItem>
-                <AssignmentListDialog open={dialogOpen} onClose={() => setDialogOpen(false)} course={props.course} />
+                <AssignmentListDialog open={dialogOpen} onClose={handleClose} course={props.course} />
             </>
         );
     })

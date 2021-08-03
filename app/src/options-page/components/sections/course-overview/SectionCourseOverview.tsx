@@ -12,6 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import React, { ReactElement, useState } from 'react';
+import { useCallback } from 'react';
 import AutoCloseAlert from '../../../../common/react/AutoCloseAlert';
 import useConfig from '../../../../common/react/useConfig';
 import { MessengerClient } from '../../../../common/util/messenger';
@@ -34,8 +35,6 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
     const [fetchTimetableDataAndSyllabusUrlError, setFetchTimetableDataAndSyllabusError] = useState<Error | null>(null);
     const [isFetchingTimetableDataAndSyllabusUrl, setIsFetchingTimetableDataAndSyllabusUrl] = useState(false);
 
-    if (enabled === undefined || type === undefined) return null;
-
     function handleSwitchChange(setStateFunc: (value: boolean) => void) {
         return (event: React.ChangeEvent<HTMLInputElement>) => {
             setStateFunc(event.target.checked);
@@ -47,12 +46,12 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
         };
     }
 
-    function handleClearCourseCache() {
+    const handleClearCourseCache = useCallback(() => {
         MessengerClient.exec('clearCourseListCache').then(() => {
             setCourseCacheClearedSnackbarOpen(true);
         });
-    }
-    function handleFetchTimetableDataAndSyllabusUrl() {
+    }, []);
+    const handleFetchTimetableDataAndSyllabusUrl = useCallback(() => {
         setIsFetchingTimetableDataAndSyllabusUrl(true);
         fetchTimetableDataAndSyllabusUrl()
             .then(() => {
@@ -66,7 +65,22 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
                 setIsFetchingTimetableDataAndSyllabusUrl(false);
                 setFetchTimetableDataAndSyllabusUrlMessageOpen(false);
             });
-    }
+    }, []);
+    const handleFetchTimetableDataNadSyllabusUrlClick = useCallback(
+        () => setFetchTimetableDataAndSyllabusUrlMessageOpen(true),
+        []
+    );
+    const handleClearCourseListCacheMessageClose = useCallback(() => setCourseCacheClearedSnackbarOpen(false), []);
+    const handleFetchTimetableDataAndSyllabusUrlMessageClose = useCallback(
+        () => setFetchTimetableDataAndSyllabusUrlMessageOpen(false),
+        []
+    );
+    const handleFetchTimetableDataAndSyllabusUrlDoneMessageClose = useCallback(
+        () => setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(false),
+        []
+    );
+
+    if (enabled === undefined || type === undefined) return null;
 
     return (
         <Section titleMessageName="optionsSectionCourseOverview" {...props}>
@@ -98,7 +112,7 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
                         </Button>
                     </Grid>
                     <Grid item>
-                        <Button variant="outlined" onClick={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(true)}>
+                        <Button variant="outlined" onClick={handleFetchTimetableDataNadSyllabusUrlClick}>
                             {browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrl')}
                         </Button>
                     </Grid>
@@ -108,14 +122,14 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
             <AutoCloseAlert
                 severity="success"
                 open={courseCacheClearedSnackbarOpen}
-                onClose={() => setCourseCacheClearedSnackbarOpen(false)}
+                onClose={handleClearCourseListCacheMessageClose}
             >
                 {browser.i18n.getMessage('optionsClearCourseListCacheMessage')}
             </AutoCloseAlert>
 
             <Dialog
                 open={fetchTimetableDataAndSyllabusUrlMessageOpen}
-                onClose={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}
+                onClose={handleFetchTimetableDataAndSyllabusUrlMessageClose}
             >
                 <DialogContent>
                     <DialogContentText>
@@ -127,7 +141,7 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
                     <Button
                         color="primary"
                         disabled={isFetchingTimetableDataAndSyllabusUrl}
-                        onClick={() => setFetchTimetableDataAndSyllabusUrlMessageOpen(false)}
+                        onClick={handleFetchTimetableDataAndSyllabusUrlMessageClose}
                     >
                         {browser.i18n.getMessage('cancel')}
                     </Button>
@@ -143,7 +157,7 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
             <AutoCloseAlert
                 severity={fetchTimetableDataAndSyllabusUrlError ? 'error' : 'success'}
                 open={fetchTimetableDataAndSyllabusUrlDoneMessageOpen}
-                onClose={() => setFetchTimetableDataAndSyllabusUrlDoneMessageOpen(false)}
+                onClose={handleFetchTimetableDataAndSyllabusUrlDoneMessageClose}
             >
                 {fetchTimetableDataAndSyllabusUrlError?.message ??
                     browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlDoneMessage')}

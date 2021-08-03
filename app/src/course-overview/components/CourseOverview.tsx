@@ -10,6 +10,7 @@ import TimetableView from './timetable/TimetableView';
 import { CourseDataEntry } from '../../common/waseda/course/course-data';
 import { MessengerClient } from '../../common/util/messenger';
 import { ConfigContextProvider } from '../../common/react/ConfigContext';
+import { useCallback } from 'react';
 
 export type CourseOverviewType = 'normal' | 'timetable';
 
@@ -89,10 +90,10 @@ function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidd
         };
     }, []);
 
-    const setHiddenFromCourseList = (course: Course, isHidden: boolean) => {
+    const setHiddenFromCourseList = useCallback((course: Course, isHidden: boolean) => {
         MessengerClient.exec('setHiddenFromCourseList', course, isHidden);
-        setCourseListValue(
-            courseListValue?.map((c) =>
+        setCourseListValue((prev) =>
+            prev?.map((c) =>
                 c.id === course.id
                     ? {
                           ...c,
@@ -101,7 +102,7 @@ function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidd
                     : c
             )
         );
-    };
+    }, []);
 
     return [courseListValue, setHiddenFromCourseList];
 }

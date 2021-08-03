@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button';
 import React, { ReactElement, useState } from 'react';
+import { useCallback } from 'react';
 import { getStorage } from '../../../../common/config/config';
 import { CONFIG_SYNC_ENABLED_CONFIG_KEY, isConfigSyncEnabled } from '../../../../common/config/sync';
 import AutoCloseAlert from '../../../../common/react/AutoCloseAlert';
@@ -8,7 +9,7 @@ export default function OptionRestoreConfig(): ReactElement {
     const [configRestoredMessageOpen, setConfigRestoredMessageOpen] = useState(false);
     const [configRestoreError, setConfigRestoreError] = useState<string | null>(null);
 
-    function handleRestoreConfig() {
+    const handleRestoreConfig = useCallback(() => {
         const input = document.createElement('input');
         input.type = 'file';
         input.click();
@@ -35,7 +36,8 @@ export default function OptionRestoreConfig(): ReactElement {
             setConfigRestoredMessageOpen(true);
             setConfigRestoreError(null);
         };
-    }
+    }, []);
+    const handleConfigRestoredMessageClose = useCallback(() => setConfigRestoredMessageOpen(false), []);
 
     return (
         <>
@@ -45,7 +47,7 @@ export default function OptionRestoreConfig(): ReactElement {
 
             <AutoCloseAlert
                 open={configRestoredMessageOpen}
-                onClose={() => setConfigRestoredMessageOpen(false)}
+                onClose={handleConfigRestoredMessageClose}
                 severity={configRestoreError ? 'error' : 'success'}
             >
                 {configRestoreError ?? browser.i18n.getMessage('optionsRestoreConfigSuccess')}

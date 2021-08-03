@@ -13,6 +13,7 @@ import CourseMenu from '../course-card/CourseMenu';
 import NoteIcon from '@material-ui/icons/Note';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
+import { useCallback } from 'react';
 
 type Props = {
     course: CourseListItem;
@@ -71,20 +72,23 @@ export default React.memo(function CourseCard(props: Props): ReactElement {
     const courseData = context.courseData[props.course.id];
     const courseName = courseData?.overrideName ?? props.course.name;
 
-    const handleOpenMenuButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleOpenMenuButtonClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
         setMenuOpen(true);
-    };
-    const closeMenu = () => {
+    }, []);
+    const closeMenu = useCallback(() => {
         setMenuOpen(false);
-    };
-    const handleContextMenu: React.MouseEventHandler = (event) => {
-        if (!menuOpen) {
-            event.preventDefault();
-            setAnchorPosition({ top: event.clientY, left: event.clientX });
-            setMenuOpen(true);
-        }
-    };
+    }, []);
+    const handleContextMenu: React.MouseEventHandler = useCallback(
+        (event) => {
+            if (!menuOpen) {
+                event.preventDefault();
+                setAnchorPosition({ top: event.clientY, left: event.clientX });
+                setMenuOpen(true);
+            }
+        },
+        [menuOpen]
+    );
 
     return (
         <Card className={classes.root} onContextMenu={isSmallScreen ? handleContextMenu : undefined}>

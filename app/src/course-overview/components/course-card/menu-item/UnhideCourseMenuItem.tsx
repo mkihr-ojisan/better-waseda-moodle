@@ -1,5 +1,6 @@
 import Visibility from '@material-ui/icons/Visibility';
 import React, { ReactElement, useContext, Ref } from 'react';
+import { useCallback } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import { CourseOverviewContext } from '../../CourseOverview';
 import CourseMenuItem from './CourseMenuItem';
@@ -13,9 +14,9 @@ export default React.memo(
     React.forwardRef(function UnhideCourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
         const context = useContext(CourseOverviewContext);
 
-        function handleClick() {
+        const handleClick = useCallback(() => {
             context.unhideCourse(props.course);
-        }
+        }, [context, props.course]);
 
         return (
             <CourseMenuItem icon={<Visibility />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>

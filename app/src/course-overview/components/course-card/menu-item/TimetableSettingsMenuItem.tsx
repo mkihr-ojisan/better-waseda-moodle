@@ -1,5 +1,5 @@
 import CalendarToday from '@material-ui/icons/CalendarToday';
-import React, { ReactElement, useState, Ref } from 'react';
+import React, { ReactElement, useState, Ref, useCallback } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import TimetableSettingsDialog from '../../dialog/TimetableSettingsDialog';
 import CourseMenuItem from './CourseMenuItem';
@@ -13,9 +13,10 @@ export default React.memo(
     React.forwardRef(function TimetableSettingsMenuItem(props: Props, ref: Ref<any>): ReactElement {
         const [dialogOpen, setDialogOpen] = useState(false);
 
-        function handleClick() {
+        const handleClick = useCallback(() => {
             setDialogOpen(true);
-        }
+        }, []);
+        const handleClose = useCallback(() => setDialogOpen(false), []);
 
         return (
             <>
@@ -27,7 +28,7 @@ export default React.memo(
                 >
                     {browser.i18n.getMessage('courseOverviewTimetableSettings')}
                 </CourseMenuItem>
-                <TimetableSettingsDialog course={props.course} open={dialogOpen} onClose={() => setDialogOpen(false)} />
+                <TimetableSettingsDialog course={props.course} open={dialogOpen} onClose={handleClose} />
             </>
         );
     })

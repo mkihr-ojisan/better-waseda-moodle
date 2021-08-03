@@ -9,6 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import { CourseOverviewContext } from '../../CourseOverview';
+import { useCallback } from 'react';
 
 type Props = {
     course: CourseListItem;
@@ -21,29 +22,31 @@ export default React.memo(
         const [dialogOpen, setDialogOpen] = useState(false);
         const [settingsOpen, setSettingsOpen] = useState(false);
 
-        function handleClick() {
+        const handleClick = useCallback(() => {
             const syllabusUrl = context.courseData[props.course.id]?.syllabusUrl;
             if (syllabusUrl) {
                 window.open(syllabusUrl, '_blank');
             } else {
                 setDialogOpen(true);
             }
-        }
+        }, [context.courseData, props.course.id]);
 
-        function handleCancel() {
+        const handleCancel = useCallback(() => {
             setDialogOpen(false);
-        }
-        function handleOpenSettings() {
+        }, []);
+        const handleOpenSettings = useCallback(() => {
             setDialogOpen(false);
             setSettingsOpen(true);
-        }
+        }, []);
+
+        const handleClose = useCallback(() => setDialogOpen(false), []);
 
         return (
             <>
                 <CourseMenuItem icon={<LaunchIcon />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
                     {browser.i18n.getMessage('courseOverviewOpenSyllabus')}
                 </CourseMenuItem>
-                <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+                <Dialog open={dialogOpen} onClose={handleClose}>
                     <DialogContent>
                         <DialogContentText>
                             {browser.i18n.getMessage('courseOverviewSyllabusUrlNotSetDialogMessage')}
@@ -58,11 +61,7 @@ export default React.memo(
                         </Button>
                     </DialogActions>
                 </Dialog>
-                <CourseSettingsDialog
-                    course={props.course}
-                    open={settingsOpen}
-                    onClose={() => setSettingsOpen(false)}
-                />
+                <CourseSettingsDialog course={props.course} open={settingsOpen} onClose={handleClose} />
             </>
         );
     })

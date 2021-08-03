@@ -36,6 +36,7 @@ import {
 import { range } from '../../../common/util/util';
 import { CourseOverviewContext } from './../CourseOverview';
 import { CourseDataEntry, registerCourseData } from '../../../common/waseda/course/course-data';
+import { useCallback } from 'react';
 
 type Props = {
     open: boolean;
@@ -80,12 +81,12 @@ function TimetableSettingsDialogContent(props: Props): ReactElement {
 
     const classes = useStyles();
 
-    function handleEntryChange(index: number, entry: TimetableSettingsEntry) {
+    const handleEntryChange = (index: number, entry: TimetableSettingsEntry) => {
         const newEntries = [...settingsEntries];
         newEntries[index] = entry;
         setSettingsEntries(newEntries);
-    }
-    function handleAddEntry() {
+    };
+    const handleAddEntry = useCallback(() => {
         const newEntries = [...settingsEntries];
         newEntries.push({
             yearTerm: {
@@ -101,16 +102,16 @@ function TimetableSettingsDialogContent(props: Props): ReactElement {
             },
         });
         setSettingsEntries(newEntries);
-    }
-    function handleDeleteEntry(index: number) {
+    }, [settingsEntries]);
+    const handleDeleteEntry = (index: number) => {
         const newEntries = [...settingsEntries];
         newEntries.splice(index, 1);
         setSettingsEntries(newEntries);
-    }
-    function handleCancel() {
+    };
+    const handleCancel = useCallback(() => {
         props.onClose();
-    }
-    function handleOK() {
+    }, [props]);
+    const handleOK = useCallback(() => {
         if (conflicts.some((c) => c !== null)) {
             setShowAlertConflict(true);
             return;
@@ -118,7 +119,8 @@ function TimetableSettingsDialogContent(props: Props): ReactElement {
 
         registerCourseData(props.course.id, 'timetableData', settingsEntries);
         props.onClose();
-    }
+    }, [conflicts, props, settingsEntries]);
+    const handleClose = useCallback(() => setShowAlertConflict(false), []);
 
     return (
         <>
@@ -191,14 +193,14 @@ function TimetableSettingsDialogContent(props: Props): ReactElement {
                 </Button>
             </DialogActions>
 
-            <Dialog open={showAlertConflict} onClose={() => setShowAlertConflict(false)}>
+            <Dialog open={showAlertConflict} onClose={handleClose}>
                 <DialogContent>
                     <DialogContentText>
                         {browser.i18n.getMessage('courseOverviewTimetableSettingsCannotSetDueToConflict')}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="primary" onClick={() => setShowAlertConflict(false)}>
+                    <Button color="primary" onClick={handleClose}>
                         {browser.i18n.getMessage('ok')}
                     </Button>
                 </DialogActions>
@@ -216,57 +218,72 @@ type TimetableSettingsEntryComponentProps = {
 function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentProps): ReactElement {
     const classes = useStyles();
 
-    function handleYearChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        props.onChange({
-            yearTerm: {
-                year: parseInt(event.target.value),
-                term: props.settingsEntry.yearTerm.term,
-            },
-            dayPeriod: props.settingsEntry.dayPeriod,
-        });
-    }
-    function handleTermChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) {
-        props.onChange({
-            yearTerm: {
-                year: props.settingsEntry.yearTerm.year,
-                term: event.target.value as Term,
-            },
-            dayPeriod: props.settingsEntry.dayPeriod,
-        });
-    }
-    function handleDayChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) {
-        props.onChange({
-            yearTerm: props.settingsEntry.yearTerm,
-            dayPeriod: {
-                day: event.target.value as DayOfWeek,
-                period: props.settingsEntry.dayPeriod.period,
-            },
-        });
-    }
-    function handlePeriodFromChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) {
-        props.onChange({
-            yearTerm: props.settingsEntry.yearTerm,
-            dayPeriod: {
-                day: props.settingsEntry.dayPeriod.day,
-                period: {
-                    from: event.target.value as number,
-                    to: event.target.value as number,
+    const handleYearChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            props.onChange({
+                yearTerm: {
+                    year: parseInt(event.target.value),
+                    term: props.settingsEntry.yearTerm.term,
                 },
-            },
-        });
-    }
-    function handlePeriodToChange(event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) {
-        props.onChange({
-            yearTerm: props.settingsEntry.yearTerm,
-            dayPeriod: {
-                day: props.settingsEntry.dayPeriod.day,
-                period: {
-                    from: props.settingsEntry.dayPeriod.period.from,
-                    to: event.target.value as number,
+                dayPeriod: props.settingsEntry.dayPeriod,
+            });
+        },
+        [props]
+    );
+    const handleTermChange = useCallback(
+        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+            props.onChange({
+                yearTerm: {
+                    year: props.settingsEntry.yearTerm.year,
+                    term: event.target.value as Term,
                 },
-            },
-        });
-    }
+                dayPeriod: props.settingsEntry.dayPeriod,
+            });
+        },
+        [props]
+    );
+    const handleDayChange = useCallback(
+        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+            props.onChange({
+                yearTerm: props.settingsEntry.yearTerm,
+                dayPeriod: {
+                    day: event.target.value as DayOfWeek,
+                    period: props.settingsEntry.dayPeriod.period,
+                },
+            });
+        },
+        [props]
+    );
+    const handlePeriodFromChange = useCallback(
+        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+            props.onChange({
+                yearTerm: props.settingsEntry.yearTerm,
+                dayPeriod: {
+                    day: props.settingsEntry.dayPeriod.day,
+                    period: {
+                        from: event.target.value as number,
+                        to: event.target.value as number,
+                    },
+                },
+            });
+        },
+        [props]
+    );
+    const handlePeriodToChange = useCallback(
+        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+            props.onChange({
+                yearTerm: props.settingsEntry.yearTerm,
+                dayPeriod: {
+                    day: props.settingsEntry.dayPeriod.day,
+                    period: {
+                        from: props.settingsEntry.dayPeriod.period.from,
+                        to: event.target.value as number,
+                    },
+                },
+            });
+        },
+        [props]
+    );
 
     return (
         <TableRow>

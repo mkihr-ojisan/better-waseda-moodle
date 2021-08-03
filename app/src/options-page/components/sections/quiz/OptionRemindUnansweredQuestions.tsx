@@ -1,17 +1,21 @@
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import React, { ReactElement } from 'react';
+import { useCallback } from 'react';
 import useConfig from '../../../../common/react/useConfig';
 import Description from '../../Description';
 
 export default function OptionRemindUnansweredQuestions(): ReactElement | null {
     const [enabled, setEnabled] = useConfig('quiz.remindUnansweredQuestions.enabled');
 
-    if (enabled === undefined) return null;
+    const handleChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setEnabled(event.target.checked);
+        },
+        [setEnabled]
+    );
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setEnabled(event.target.checked);
-    }
+    if (enabled === undefined) return null;
 
     return (
         <>

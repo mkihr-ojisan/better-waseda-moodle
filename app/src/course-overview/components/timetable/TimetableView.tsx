@@ -8,10 +8,18 @@ import { CourseOverviewContext } from '../CourseOverview';
 import HiddenCoursesDialog from '../dialog/HiddenCoursesDialog';
 import Timetable from './Timetable';
 import TimetableTermSelector from './TimetableTermSelector';
+import { useCallback } from 'react';
 
 export default React.memo(function TimetableView(): ReactElement {
     const { courseList, courseData } = useContext(CourseOverviewContext);
     const [hiddenCoursesDialogOpen, setHiddenCoursesDialogOpen] = useState(false);
+
+    const handleOpenHiddenCoursesDialog = useCallback(() => {
+        setHiddenCoursesDialogOpen(true);
+    }, []);
+    const handleCloseHiddenCoursesDialog = useCallback(() => {
+        setHiddenCoursesDialogOpen(false);
+    }, []);
 
     // TimetableTermSelectorに表示するYearTerm
     const terms = useMemo(
@@ -49,13 +57,6 @@ export default React.memo(function TimetableView(): ReactElement {
     } else {
         selectedTermIndex = 0;
         setSelectedTerm(terms[0]);
-    }
-
-    function handleOpenHiddenCoursesDialog() {
-        setHiddenCoursesDialogOpen(true);
-    }
-    function handleCloseHiddenCoursesDialog() {
-        setHiddenCoursesDialogOpen(false);
     }
 
     return (
