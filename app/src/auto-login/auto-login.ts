@@ -21,7 +21,7 @@ export async function initAutoLogin(): Promise<void> {
                 );
                 browser.webRequest.onBeforeRequest.addListener(
                     onBeforeRequestListener,
-                    { urls: ['https://wsdmoodle.waseda.jp/login/index.php'] },
+                    { urls: ['https://wsdmoodle.waseda.jp/login/index.php*'] },
                     ['blocking']
                 );
             } else {
@@ -41,7 +41,7 @@ function onHeaderReceivedListener(details: browser.webRequest._OnHeadersReceived
         for (const header of details.responseHeaders ?? []) {
             if (
                 header.name.toLowerCase() === 'location' &&
-                header.value === 'https://wsdmoodle.waseda.jp/login/index.php'
+                header.value?.startsWith('https://wsdmoodle.waseda.jp/login/index.php')
             ) {
                 requestedUrls.set(details.requestId, details.url);
             }
