@@ -105,3 +105,7 @@ function storageChangeListener(changes: Record<string, browser.storage.StorageCh
             listeners[key]?.forEach((listener) => listener(oldValue, newValue ?? defaultValue[key as ConfigKey]));
     }
 }
+
+export async function getAllConfig(): Promise<Config> {
+    return (await getStorage()).get() as Promise<Config>;
+}

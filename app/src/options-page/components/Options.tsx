@@ -5,6 +5,7 @@ import SectionAutoLogin from './sections/SectionAutoLogin';
 import SectionDashboard from './sections/course-overview/SectionCourseOverview';
 import SectionOthers from './sections/SectionOthers';
 import SectionQuiz from './sections/quiz/SectionQuiz';
+import { ConfigContextProvider } from '../../common/react/ConfigContext';
 
 export type SectionComponentProps = {
     expanded: boolean;
@@ -27,10 +28,12 @@ export default function Options(): ReactElement {
     }
 
     return (
-        <BWMThemePrefersColorScheme>
-            {sections.map((SectionComponent, i) => (
-                <SectionComponent key={i} expanded={expanded === i} onChange={handleChange(i)} />
-            ))}
-        </BWMThemePrefersColorScheme>
+        <ConfigContextProvider>
+            <BWMThemePrefersColorScheme>
+                {sections.map((SectionComponent, i) => (
+                    <SectionComponent key={i} expanded={expanded === i} onChange={handleChange(i)} />
+                ))}
+            </BWMThemePrefersColorScheme>
+        </ConfigContextProvider>
     );
 }

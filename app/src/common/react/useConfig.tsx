@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { ConfigKey, ConfigValue, onConfigChange, removeConfigChangeListener, setConfig } from '../config/config';
 import equal from 'fast-deep-equal';
+import { useContext } from 'react';
+import { ConfigContext } from './ConfigContext';
 
 // configの取得は非同期なのでまだ値が取得されていないときはundefinedを返す
 export default function useConfig<T extends ConfigKey>(
     key: T
 ): [ConfigValue<T> | undefined, (value: ConfigValue<T>) => void] {
-    const [value, setValue] = useState<ConfigValue<T> | undefined>(undefined);
+    const context = useContext(ConfigContext);
+
+    const [value, setValue] = useState<ConfigValue<T> | undefined>(context?.getConfig(key));
     const valueRef = useRef<ConfigValue<T>>();
 
     useEffect(() => {
@@ -16,11 +20,11 @@ export default function useConfig<T extends ConfigKey>(
                 setValue(newValue);
             }
         };
-        onConfigChange<T>(key, listener, true);
+        onConfigChange<T>(key, listener, context === undefined);
         return () => {
             removeConfigChangeListener(key, listener);
         };
-    }, [key]);
+    }, [context, key]);
 
     return [
         value,

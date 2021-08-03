@@ -9,6 +9,7 @@ import NormalView from './normal/NormalView';
 import TimetableView from './timetable/TimetableView';
 import { CourseDataEntry } from '../../common/waseda/course/course-data';
 import { MessengerClient } from '../../common/util/messenger';
+import { ConfigContextProvider } from '../../common/react/ConfigContext';
 
 export type CourseOverviewType = 'normal' | 'timetable';
 
@@ -52,18 +53,20 @@ export default function CourseOverview(): ReactElement {
 
     if (contextValue && courseOverviewType) {
         return (
-            <BWMThemeDarkReader>
-                <CourseOverviewContext.Provider value={contextValue}>
-                    {(() => {
-                        switch (courseOverviewType) {
-                            case 'normal':
-                                return <NormalView />;
-                            case 'timetable':
-                                return <TimetableView />;
-                        }
-                    })()}
-                </CourseOverviewContext.Provider>
-            </BWMThemeDarkReader>
+            <ConfigContextProvider>
+                <BWMThemeDarkReader>
+                    <CourseOverviewContext.Provider value={contextValue}>
+                        {(() => {
+                            switch (courseOverviewType) {
+                                case 'normal':
+                                    return <NormalView />;
+                                case 'timetable':
+                                    return <TimetableView />;
+                            }
+                        })()}
+                    </CourseOverviewContext.Provider>
+                </BWMThemeDarkReader>
+            </ConfigContextProvider>
         );
     } else {
         return (
