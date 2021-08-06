@@ -1,10 +1,11 @@
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import React, { ReactElement } from 'react';
-import useConfig from '../../../common/react/useConfig';
-import Description from '../Description';
-import { SectionComponentProps } from '../Options';
-import Section from '../Section';
+import useConfig from '../../../../common/react/useConfig';
+import Description from '../../Description';
+import { SectionComponentProps } from '../../Options';
+import Section from '../../Section';
+import OptionCheckSession from './OptionCheckSession';
 
 export default React.memo(function SectionOthers(props: SectionComponentProps): ReactElement | null {
     const [viewInBrowserEnabled, setViewInBrowserEnabled] = useConfig('viewInBrowser.enabled');
@@ -87,6 +88,8 @@ export default React.memo(function SectionOthers(props: SectionComponentProps): 
                 label={browser.i18n.getMessage('optionsSyllabusLinkFixEnabled')}
             />
             <Description messageName="optionsSyllabusLinkFixEnabledDescription" />
+
+            <OptionCheckSession />
         </Section>
     );
 });

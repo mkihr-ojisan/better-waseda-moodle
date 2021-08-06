@@ -3,7 +3,7 @@ import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefers
 import SectionGeneral from './sections/general/SectionGeneral';
 import SectionAutoLogin from './sections/SectionAutoLogin';
 import SectionDashboard from './sections/course-overview/SectionCourseOverview';
-import SectionOthers from './sections/SectionOthers';
+import SectionOthers from './sections/others/SectionOthers';
 import SectionQuiz from './sections/quiz/SectionQuiz';
 import { ConfigContextProvider } from '../../common/react/ConfigContext';
 

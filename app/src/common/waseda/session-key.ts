@@ -1,6 +1,7 @@
 import { ensureLogin } from '../../auto-login/auto-login';
 import { InvalidResponseError } from '../error';
-import { assertCurrentContextType, fetchHtml } from '../util/util';
+import { MessengerServer } from '../util/messenger';
+import { assertCurrentContextType, fetchHtml, postJson } from '../util/util';
 
 assertCurrentContextType('background_script');
 
@@ -46,3 +47,16 @@ export function setSessionKeyCache(sessionKey: string, expireAt?: Date): void {
 
     cache = { sessionKey, expireAt };
 }
+
+export async function checkSessionAlive(sessionKey: string): Promise<boolean> {
+    const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}`, [
+        {
+            index: 0,
+            methodname: 'core_session_touch',
+            args: {},
+        },
+    ]);
+
+    return !!response[0]?.data;
+}
+MessengerServer.addInstruction({ checkSessionAlive });

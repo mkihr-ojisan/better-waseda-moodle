@@ -1,8 +1,13 @@
 import { getConfig, onConfigChange } from '../common/config/config';
 import { login } from '../common/waseda/login';
 import { LoginRequiredError } from '../common/error';
-import { fetchSessionKey, getSessionKeyCache, setSessionKeyCache } from '../common/waseda/session-key';
-import { assertCurrentContextType, postJson } from '../common/util/util';
+import {
+    checkSessionAlive,
+    fetchSessionKey,
+    getSessionKeyCache,
+    setSessionKeyCache,
+} from '../common/waseda/session-key';
+import { assertCurrentContextType } from '../common/util/util';
 import { MessengerServer } from '../common/util/messenger';
 
 assertCurrentContextType('background_script');
@@ -74,7 +79,6 @@ export async function doLogin(): Promise<boolean> {
         return false;
     }
 }
-MessengerServer.addInstruction({ doLogin });
 
 let logoutPromise: Promise<void> | null = null;
 export async function logout(): Promise<void> {
@@ -101,32 +105,27 @@ export async function logout(): Promise<void> {
 
     return await logoutPromise;
 }
-MessengerServer.addInstruction({ logout });
+
+export async function checkLogin(): Promise<boolean> {
+    const sessionKey = getSessionKeyCache();
+    if (!sessionKey) {
+        try {
+            await fetchSessionKey(false, true);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    return checkSessionAlive(sessionKey);
+}
 
 let lastEnsureLogin: number | null = null;
 export async function ensureLogin(): Promise<void> {
     if (!lastEnsureLogin || lastEnsureLogin + 60000 < Date.now()) {
         //1分くらいは勝手にログアウトされんやろ
-        const sessionKey = getSessionKeyCache();
-        if (!sessionKey) {
-            try {
-                await fetchSessionKey(false, true);
-                lastEnsureLogin = Date.now();
-            } catch {
-                await doLogin();
-            }
-            return;
-        }
 
-        const response = await postJson(`https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${sessionKey}`, [
-            {
-                index: 0,
-                methodname: 'core_session_touch',
-                args: {},
-            },
-        ]);
-
-        if (response[0]?.data) {
+        if (await checkLogin()) {
             lastEnsureLogin = Date.now();
         } else {
             if (await doLogin()) {
@@ -137,4 +136,5 @@ export async function ensureLogin(): Promise<void> {
         }
     }
 }
-MessengerServer.addInstruction({ ensureLogin });
+
+MessengerServer.addInstruction({ doLogin, logout, checkLogin, ensureLogin });

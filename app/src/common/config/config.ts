@@ -24,6 +24,10 @@ export type Config = {
     courseData: Record<number, CourseDataEntry | undefined>;
     'quiz.remindUnansweredQuestions.enabled': boolean;
     'quiz.remindUnansweredQuestions.sequentialQuizOnly': boolean;
+    'checkSession.enabled': boolean;
+    'checkSession.quiz': boolean;
+    'checkSession.assignment': boolean;
+    'checkSession.forum': boolean;
 };
 
 export const defaultValue: Config = {
@@ -44,9 +48,13 @@ export const defaultValue: Config = {
     courseData: {},
     'quiz.remindUnansweredQuestions.enabled': true,
     'quiz.remindUnansweredQuestions.sequentialQuizOnly': true,
+    'checkSession.enabled': true,
+    'checkSession.quiz': true,
+    'checkSession.assignment': true,
+    'checkSession.forum': true,
 };
 
-const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined) => void)[] } = {};
+const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined, key: any) => void)[] } = {};
 
 let _storage: browser.storage.StorageArea | undefined;
 export async function getStorage(): Promise<browser.storage.StorageArea> {
@@ -76,12 +84,12 @@ export async function removeConfig<T extends ConfigKey>(key: T): Promise<void> {
 
 export async function onConfigChange<T extends ConfigKey>(
     key: T,
-    listener: (oldValue: ConfigValue<T> | undefined, newValue: ConfigValue<T>) => void,
+    listener: (oldValue: ConfigValue<T> | undefined, newValue: ConfigValue<T>, key: T) => void,
     initCall: boolean
 ): Promise<void> {
     if (!listeners[key]) listeners[key] = [];
     listeners[key].push(listener);
-    if (initCall) listener(undefined, await getConfig(key));
+    if (initCall) listener(undefined, await getConfig(key), key);
 
     if (!browser.storage.onChanged.hasListener(storageChangeListener)) {
         browser.storage.onChanged.addListener(storageChangeListener);
@@ -102,7 +110,7 @@ export function removeConfigChangeListener<T extends ConfigKey>(
 function storageChangeListener(changes: Record<string, browser.storage.StorageChange>): void {
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
         if (!equal(oldValue, newValue))
-            listeners[key]?.forEach((listener) => listener(oldValue, newValue ?? defaultValue[key as ConfigKey]));
+            listeners[key]?.forEach((listener) => listener(oldValue, newValue ?? defaultValue[key as ConfigKey], key));
     }
 }
 

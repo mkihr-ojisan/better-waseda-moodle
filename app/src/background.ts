@@ -15,6 +15,7 @@ import './common/waseda/course/course-list';
 // #!blink_only
 import './common/polyfills/content-script-register';
 import { initRemindUnansweredQuestions } from './quiz/remind-unanswered-questions/background-script';
+import { initCheckSession } from './others/check-session/background-script';
 
 assertCurrentContextType('background_script');
 
@@ -33,4 +34,5 @@ MessengerServer.init();
     initHideName();
     initSyllabusLinkFix();
     initRemindUnansweredQuestions();
+    initCheckSession();
 })();

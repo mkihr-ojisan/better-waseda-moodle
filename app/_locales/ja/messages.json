@@ -211,6 +211,26 @@
     "message": "新しいウィンドウで開き、右クリック禁止という前時代的な挙動を修正します。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
+  "optionsCheckSessionEnabled": {
+    "message": "提出前にセッションを確認する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionEnabledDescription": {
+    "message": "小テスト・課題・フォーラムの提出前にセッションがタイムアウトしていないか確認します。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionQuiz": {
+    "message": "小テスト",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionAssignment": {
+    "message": "課題",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionForum": {
+    "message": "フォーラム",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
   "courseOverviewHide": {
     "message": "非表示",
     "description": "コース概要のメニューの項目"
@@ -368,6 +388,14 @@
   "quizRemindUnansweredQuestionsDialogBack": {
     "message": "解答に戻る",
     "description": "未回答の問題があるときに表示するメッセージ"
+  },
+  "checkSessionCheckingMessage": {
+    "message": "セッションを確認しています…",
+    "description": "小テストの解答などの送信前にセッションを確認しているときに表示するメッセージ"
+  },
+  "checkSessionExpiredMessage": {
+    "message": "セッションがタイムアウトしたようです。このまま提出することはできないので、**提出する内容を控えた上で**リロードするなどして提出してください。",
+    "description": "セッションがタイムアウトしている状態で送信しようとしたときに表示するメッセージ"
   },
   "sundayShort": {
     "message": "日"
