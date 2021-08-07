@@ -487,6 +487,9 @@
   "underMaintenanceError": {
     "message": "メンテナンス中です。"
   },
+  "timetableConflictError": {
+    "message": "時間割が重複しているため設定できません。"
+  },
   "otherError": {
     "message": "エラーが発生しました: $1"
   }

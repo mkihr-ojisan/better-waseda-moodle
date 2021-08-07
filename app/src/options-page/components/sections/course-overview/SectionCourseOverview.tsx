@@ -182,7 +182,8 @@ async function fetchTimetableDataAndSyllabusUrl(): Promise<void> {
             info.termDayPeriods.map((v) => ({
                 yearTerm: { year: parseInt(course.category), term: v.term },
                 dayPeriod: v.dayPeriod,
-            }))
+            })),
+            true
         );
         await registerCourseData(course.id, 'syllabusUrl', info.syllabusUrl);
     }

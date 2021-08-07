@@ -27,3 +27,9 @@ export class UnderMaintenanceError extends Error {
         super(browser.i18n.getMessage('underMaintenanceError'));
     }
 }
+
+export class TimetableConflictError extends Error {
+    constructor() {
+        super(browser.i18n.getMessage('timetableConflictError'));
+    }
+}
