@@ -168,7 +168,7 @@
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsRemoveLoadingVideoDescription": {
-    "message": "この動画が再生されないようにします。",
+    "message": "[この動画](https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?)が再生されないようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsCheckNotesOnSubmitting": {

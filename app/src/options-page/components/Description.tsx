@@ -19,7 +19,11 @@ const useStyles = makeStyles((theme) => ({
 export default React.memo(function Description(props: Props): ReactElement {
     const classes = useStyles();
     return (
-        <Typography classes={{ root: classes.root }} variant="body2">
+        <Typography
+            classes={{ root: classes.root }}
+            variant="body2"
+            component={'div' /*中に<ReactMarkdown>を入れると<p>が入れ子になってしまうので*/}
+        >
             {props.children || (props.messageName && browser.i18n.getMessage(props.messageName))}
         </Typography>
     );

@@ -1,6 +1,7 @@
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import React, { ReactElement } from 'react';
+import ReactMarkdown from 'react-markdown';
 import useConfig from '../../../../common/react/useConfig';
 import Description from '../../Description';
 import { SectionComponentProps } from '../../Options';
@@ -51,9 +52,9 @@ export default React.memo(function SectionOthers(props: SectionComponentProps): 
                 label={browser.i18n.getMessage('optionsRemoveLoadingVideo')}
             />
             <Description>
-                <a href="https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?" target="_blank">
+                <ReactMarkdown linkTarget="_blank">
                     {browser.i18n.getMessage('optionsRemoveLoadingVideoDescription')}
-                </a>
+                </ReactMarkdown>
             </Description>
 
             <FormControlLabel
