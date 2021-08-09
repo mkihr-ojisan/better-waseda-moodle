@@ -34,9 +34,11 @@
     "src/auto-login/auto-login-page.html",
     "res/videos/dummy-video.mp4"
   ],
-  "options_ui": {
-    "page": "src/options-page/options.html"
+  "__firefox__options_ui": {
+    "page": "src/options-page/options.html",
+    "open_in_tab": true
   },
+  "__chrome__options_page": "src/options-page/options.html",
   "__firefox__browser_specific_settings": {
     "gecko": {
       "id": "better-waseda-moodle@mkihr-ojisan.com",
