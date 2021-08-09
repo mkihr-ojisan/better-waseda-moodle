@@ -16,8 +16,6 @@ export default function OptionShowPeriodTime(): ReactElement | null {
         [setShowPeriodTime]
     );
 
-    if (showPeriodTime === undefined) return null;
-
     return (
         <FormControlLabel
             control={

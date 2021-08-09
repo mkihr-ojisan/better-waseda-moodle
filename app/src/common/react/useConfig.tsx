@@ -1,41 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
-import { ConfigKey, ConfigValue, onConfigChange, removeConfigChangeListener, setConfig } from '../config/config';
-import equal from 'fast-deep-equal';
-import { useContext } from 'react';
-import { ConfigContext } from './ConfigContext';
+import { useEffect, useState } from 'react';
+import {
+    ConfigKey,
+    ConfigValue,
+    getConfig,
+    onConfigChange,
+    removeConfigChangeListener,
+    setConfig,
+} from '../config/config';
 import { useCallback } from 'react';
+import { useRef } from 'react';
 
-// configの取得は非同期なのでまだ値が取得されていないときはundefinedを返す
-export default function useConfig<T extends ConfigKey>(
-    key: T
-): [ConfigValue<T> | undefined, (value: ConfigValue<T>) => void] {
-    const context = useContext(ConfigContext);
+export default function useConfig<T extends ConfigKey>(key: T): [ConfigValue<T>, (value: ConfigValue<T>) => void] {
+    const [value, setValue] = useState(() => getConfig(key));
 
-    const [value, setValue] = useState<ConfigValue<T> | undefined>(context?.getConfig(key));
-    const valueRef = useRef<ConfigValue<T>>();
-
+    const isFirstRun = useRef(true);
     useEffect(() => {
         const listener = (_: ConfigValue<T> | undefined, newValue: ConfigValue<T>) => {
-            if (!equal(valueRef.current, newValue)) {
-                valueRef.current = newValue;
-                setValue(newValue);
-            }
+            setValue(newValue);
         };
-        onConfigChange<T>(key, listener, context === undefined);
+        onConfigChange(key, listener, !isFirstRun.current);
+        isFirstRun.current = false;
         return () => {
             removeConfigChangeListener(key, listener);
         };
-    }, [context, key]);
+    });
 
-    return [
-        value,
-        useCallback(
-            (v) => {
-                setConfig(key, v);
-                valueRef.current = v;
-                setValue(v);
-            },
-            [key]
-        ),
-    ];
+    return [value, useCallback((value) => setConfig(key, value), [key])];
 }

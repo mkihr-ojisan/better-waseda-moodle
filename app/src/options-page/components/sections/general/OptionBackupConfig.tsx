@@ -1,13 +1,11 @@
 import Button from '@material-ui/core/Button';
 import React, { ReactElement } from 'react';
 import { useCallback } from 'react';
-import { getStorage } from '../../../../common/config/config';
-import { CONFIG_SYNC_ENABLED_CONFIG_KEY } from '../../../../common/config/sync';
+import { exportConfig } from '../../../../common/config/config';
 
 export default function OptionBackupConfig(): ReactElement {
     const handleBackupConfig = useCallback(async () => {
-        const config = await (await getStorage()).get();
-        delete config[CONFIG_SYNC_ENABLED_CONFIG_KEY];
+        const config = exportConfig();
 
         const a = document.createElement('a');
         a.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(config, undefined, 2));

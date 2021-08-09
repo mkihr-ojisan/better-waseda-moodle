@@ -1,4 +1,6 @@
+import copy from 'fast-copy';
 import { InternalError } from '../error';
+import { DeepReadonly } from './types';
 
 export async function fetchHtml(url: string, init: RequestInit = {}): Promise<Document> {
     Object.assign(init, { credentials: 'include', mode: 'cors' });
@@ -66,4 +68,8 @@ export function assertCurrentContextType(type: ContextType): void {
             `assertion failed: current context must be '${type}', but it is '${getCurrentContextType()}'`
         );
     }
+}
+
+export function clone<T, S extends DeepReadonly<T>>(obj: S): T {
+    return copy(obj) as T;
 }

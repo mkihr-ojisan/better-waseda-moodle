@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { getConfig } from '../../common/config/config';
+import { getConfigAsync } from '../../common/config/config';
 import { getQuestions, Question } from './questions';
 import RemindDialog from './RemindDialog';
 
@@ -9,7 +9,7 @@ function isSequentialQuiz() {
 }
 
 (async () => {
-    if (!isSequentialQuiz() && (await getConfig('quiz.remindUnansweredQuestions.sequentialQuizOnly'))) return;
+    if (!isSequentialQuiz() && (await getConfigAsync('quiz.remindUnansweredQuestions.sequentialQuizOnly'))) return;
 
     const reactRoot = document.createElement('div');
     document.body.appendChild(reactRoot);

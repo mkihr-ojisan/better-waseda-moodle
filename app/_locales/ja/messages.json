@@ -40,7 +40,7 @@
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
   "optionsSyncConfigDescription": {
-    "message": "ブラウザの同期機能を使用して、同じFirefoxアカウントやGoogleアカウントにログインしているブラウザ間でBetter Waseda Moodleの設定を同期します。この設定を変更すると拡張機能が再読み込みされます。",
+    "message": "ブラウザの同期機能を使用して、同じFirefoxアカウントやGoogleアカウントにログインしているブラウザ間でBetter Waseda Moodleの設定を同期します。",
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
   "optionsSyncEnableModeSelectionDialogMessage": {

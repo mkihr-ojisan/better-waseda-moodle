@@ -16,16 +16,6 @@ export default React.memo(function SectionOthers(props: SectionComponentProps): 
     const [hideNameEnabled, setHideNameEnabled] = useConfig('hideName.enabled');
     const [syllabusLinkFixEnabled, setSyllabusLinkFixEnabled] = useConfig('syllabusLinkFix.enabled');
 
-    if (
-        viewInBrowserEnabled === undefined ||
-        removeLoadingVideoEnabled === undefined ||
-        checkNotesOnSubmitting === undefined ||
-        disableRateLimitEnabled === undefined ||
-        hideNameEnabled === undefined ||
-        syllabusLinkFixEnabled === undefined
-    )
-        return null;
-
     function handleSwitchChange(setStateFunc: (value: boolean) => void) {
         return (event: React.ChangeEvent<HTMLInputElement>) => {
             setStateFunc(event.target.checked);

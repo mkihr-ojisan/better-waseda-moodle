@@ -1,5 +1,6 @@
 import { ConfigValue, getConfig, setConfig } from '../../config/config';
 import { TimetableConflictError } from '../../error';
+import { DeepReadonly } from '../../util/types';
 import { containsYearTerm, DayPeriod, YearTerm } from './course';
 
 export type CourseDataEntry = {
@@ -30,19 +31,23 @@ export type TimetableEntry = {
 export async function registerCourseData<T extends keyof CourseDataEntry>(
     courseId: number,
     key: T,
-    value: CourseDataEntry[T],
+    value: DeepReadonly<CourseDataEntry[T]>,
     overrideConflict?: boolean
 ): Promise<void> {
-    const configValue = await getConfig('courseData');
+    const configValue = getConfig('courseData');
 
     if (key === 'timetableData') {
         await checkTimetableConflict(configValue, courseId, (value ?? []) as TimetableEntry[], overrideConflict);
     }
 
-    const entry = configValue[courseId] ?? (configValue[courseId] = {});
-    entry[key] = value;
+    const newConfigValue = {
+        ...configValue,
+        [courseId]: {
+            [key]: value,
+        },
+    };
 
-    await setConfig('courseData', configValue);
+    setConfig('courseData', newConfigValue);
 }
 
 async function checkTimetableConflict(

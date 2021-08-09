@@ -15,8 +15,6 @@ export default function OptionMoreVisibleRemainingTime(): ReactElement | null {
         [setValue]
     );
 
-    if (value === undefined) return null;
-
     return (
         <>
             <FormControlLabel

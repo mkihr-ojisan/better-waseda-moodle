@@ -1,4 +1,4 @@
-import { registerContentScript } from '../../common/config/content-script-registry';
+import registerContentScript from '../../common/config/registerContentScript';
 
 export function initRemindUnansweredQuestions(): void {
     registerContentScript('quiz.remindUnansweredQuestions.enabled', {

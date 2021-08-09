@@ -1,12 +1,15 @@
+import equal from 'fast-deep-equal';
 import { CourseOverviewType } from '../../course-overview/components/CourseOverview';
+import { InternalError } from '../error';
+import { ObjectValuesDeepReadonly } from '../util/types';
 import { YearTerm } from '../waseda/course/course';
 import { CourseDataEntry } from '../waseda/course/course-data';
-import equal from 'fast-deep-equal';
-import { isConfigSyncEnabled } from './sync';
+import AsyncLock from 'async-lock';
 
 export type ConfigKey = keyof Config;
 export type ConfigValue<T extends ConfigKey> = Config[T];
-export type Config = {
+export type Config = ObjectValuesDeepReadonly<{
+    'config.sync.enabled': boolean;
     'autoLogin.enabled': boolean;
     'autoLogin.loginId': string;
     'autoLogin.password': string;
@@ -28,9 +31,10 @@ export type Config = {
     'checkSession.quiz': boolean;
     'checkSession.assignment': boolean;
     'checkSession.forum': boolean;
-};
+}>;
 
 export const defaultValue: Config = {
+    'config.sync.enabled': false,
     'autoLogin.enabled': false,
     'autoLogin.loginId': '',
     'autoLogin.password': '',
@@ -54,46 +58,141 @@ export const defaultValue: Config = {
     'checkSession.forum': true,
 };
 
+export async function getConfigAsync<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {
+    if (key === 'config.sync.enabled') {
+        return getIsConfigSyncEnabled() as Promise<ConfigValue<T>>;
+    }
+
+    return (await browser.storage[(await getIsConfigSyncEnabled()) ? 'sync' : 'local'].get(key))[key];
+}
+export async function setConfigAsync<T extends ConfigKey>(key: T, value: ConfigValue<T>): Promise<void> {
+    if (key === 'config.sync.enabled') throw new InternalError('use `enableConfigSync` or `disableConfigSync` instead');
+
+    return await browser.storage[(await getIsConfigSyncEnabled()) ? 'sync' : 'local'].set({ [key]: value });
+}
+
+let cache: Partial<Config> | undefined;
+let syncEnabled: boolean | undefined;
 const listeners: { [key: string]: ((oldValue: any | undefined, newValue: any | undefined, key: any) => void)[] } = {};
+const lock = new AsyncLock();
 
-let _storage: browser.storage.StorageArea | undefined;
-export async function getStorage(): Promise<browser.storage.StorageArea> {
-    if (_storage) {
-        return _storage;
-    } else if (await isConfigSyncEnabled()) {
-        return (_storage = browser.storage.sync);
-    } else {
-        return (_storage = browser.storage.local);
+export async function initConfigCache(): Promise<void> {
+    syncEnabled = await getIsConfigSyncEnabled();
+    cache = (await browser.storage[syncEnabled ? 'sync' : 'local'].get()) as Partial<Config>;
+    browser.storage.onChanged.addListener(onStorageChanged);
+}
+
+async function getIsConfigSyncEnabled(): Promise<boolean> {
+    return (await browser.storage.local.get('config.sync.enabled'))['config.sync.enabled'];
+}
+
+export function isConfigSyncEnabled(): boolean {
+    if (syncEnabled === undefined) throw new InternalError('config cache not initialized');
+    return syncEnabled;
+}
+
+function callConfigChangeListeners(oldConfig: Partial<Config>, newConfig: Partial<Config>): void {
+    for (const key of Object.keys(defaultValue) as ConfigKey[]) {
+        if (key === 'config.sync.enabled') continue;
+
+        const oldValue = oldConfig[key] === undefined ? defaultValue[key] : oldConfig[key];
+        const newValue = newConfig[key] === undefined ? defaultValue[key] : newConfig[key];
+
+        if (!equal(oldValue, newValue)) {
+            listeners[key]?.forEach((f) => f(oldValue, newValue, key));
+        }
     }
 }
 
-export async function getConfig<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {
-    const value = (await (await getStorage()).get(key))[key];
-    if (value === undefined) {
-        return defaultValue[key];
-    } else {
-        return value;
-    }
-}
-export async function setConfig<T extends ConfigKey>(key: T, value: ConfigValue<T>): Promise<void> {
-    await (await getStorage()).set({ [key]: value });
-}
-export async function removeConfig<T extends ConfigKey>(key: T): Promise<void> {
-    await (await getStorage()).remove([key]);
+async function onStorageChanged(
+    changes: { [key: string]: browser.storage.StorageChange },
+    areaName: string
+): Promise<void> {
+    lock.acquire('config', async () => {
+        if (!cache) throw new InternalError('unreachable');
+
+        if (
+            areaName === 'local' &&
+            'config.sync.enabled' in changes &&
+            changes['config.sync.enabled'].newValue !== syncEnabled
+        ) {
+            syncEnabled = !!changes['config.sync.enabled'].newValue;
+            const oldCache = cache;
+            cache = (await browser.storage[syncEnabled ? 'sync' : 'local'].get()) as Partial<Config>;
+            // 上のawaitの間にsetConfigされるとおかしくなりそう
+
+            callConfigChangeListeners(oldCache, cache);
+            listeners['config.sync.enabled']?.forEach((f) => f(!syncEnabled, syncEnabled, 'config.sync.enabled'));
+            return;
+        }
+
+        if ((areaName === 'sync') !== syncEnabled) return;
+
+        // listener内でgetConfigしても古い値が渡らないようにforを分ける
+        for (const [key, change] of Object.entries(changes)) {
+            (cache as any)[key] = change.newValue;
+        }
+        for (const [key, change] of Object.entries(changes)) {
+            const oldValue = change.oldValue === undefined ? defaultValue[key as ConfigKey] : change.oldValue;
+            const newValue = change.newValue === undefined ? defaultValue[key as ConfigKey] : change.newValue;
+
+            if (!equal(oldValue, newValue)) {
+                listeners[key]?.forEach((f) => f(oldValue, newValue, key));
+            }
+        }
+    });
 }
 
-export async function onConfigChange<T extends ConfigKey>(
+export function getConfig<T extends ConfigKey>(key: T): ConfigValue<T> {
+    if (!cache) throw new InternalError('config cache not initialized');
+
+    if (key === 'config.sync.enabled') return syncEnabled as ConfigValue<T>;
+
+    const cacheValue = cache[key] as ConfigValue<T> | undefined;
+    return cacheValue === undefined ? defaultValue[key] : cacheValue;
+}
+export function setConfig<T extends ConfigKey>(key: T, value: ConfigValue<T>): void {
+    if (!cache) throw new InternalError('config cache not initialized');
+    if (key === 'config.sync.enabled') throw new InternalError('use `enableConfigSync` or `disableConfigSync` instead');
+
+    const oldValue = cache[key] === undefined ? defaultValue[key] : cache[key];
+
+    if (equal(value, defaultValue[key])) {
+        browser.storage[syncEnabled ? 'sync' : 'local'].remove(key);
+        delete cache[key];
+    } else {
+        browser.storage[syncEnabled ? 'sync' : 'local'].set({ [key]: value });
+        cache[key] = value;
+    }
+
+    if (!equal(oldValue, value)) {
+        // ここで呼ばなくても上のonStorageChangedから呼ばれるが、Reactで使うときに同期的にlistenerが呼ばれたほうが嬉しい
+        listeners[key]?.forEach((f) => f(oldValue, value, key));
+    }
+}
+export function removeConfig<T extends ConfigKey>(key: T): void {
+    if (!cache) throw new InternalError('config cache not initialized');
+    if (key === 'config.sync.enabled') throw new InternalError('use `enableConfigSync` or `disableConfigSync` instead');
+
+    const oldValue = cache[key] === undefined ? defaultValue[key] : cache[key];
+    const newValue = defaultValue[key];
+
+    browser.storage[syncEnabled ? 'sync' : 'local'].remove(key);
+    delete cache[key];
+
+    if (!equal(oldValue, newValue)) {
+        // ここで呼ばなくても上のonStorageChangedから呼ばれるが、Reactで使うときに同期的にlistenerが呼ばれたほうが嬉しい
+        listeners[key]?.forEach((f) => f(oldValue, newValue, key));
+    }
+}
+export function onConfigChange<T extends ConfigKey>(
     key: T,
     listener: (oldValue: ConfigValue<T> | undefined, newValue: ConfigValue<T>, key: T) => void,
     initCall: boolean
-): Promise<void> {
-    if (!listeners[key]) listeners[key] = [];
+): void {
+    listeners[key] = listeners[key] ?? [];
     listeners[key].push(listener);
-    if (initCall) listener(undefined, await getConfig(key), key);
-
-    if (!browser.storage.onChanged.hasListener(storageChangeListener)) {
-        browser.storage.onChanged.addListener(storageChangeListener);
-    }
+    if (initCall) listener(undefined, getConfig(key), key);
 }
 
 export function removeConfigChangeListener<T extends ConfigKey>(
@@ -107,13 +206,122 @@ export function removeConfigChangeListener<T extends ConfigKey>(
     return true;
 }
 
-function storageChangeListener(changes: Record<string, browser.storage.StorageChange>): void {
-    for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-        if (!equal(oldValue, newValue))
-            listeners[key]?.forEach((listener) => listener(oldValue, newValue ?? defaultValue[key as ConfigKey], key));
+export function exportConfig(): Partial<Config> {
+    if (!cache) throw new InternalError('config cache not initialized');
+
+    const config: Partial<Config> = { ...cache };
+    delete config['autoLogin.enabled'];
+    delete config['autoLogin.loginId'];
+    delete config['autoLogin.password'];
+
+    config['config.sync.enabled'] = syncEnabled;
+
+    return config;
+}
+
+export async function importConfig(config: Partial<Config>): Promise<void> {
+    lock.acquire('config', async () => {
+        if (!cache) throw new InternalError('config cache not initialized');
+
+        browser.storage.onChanged.removeListener(onStorageChanged);
+
+        try {
+            const { 'config.sync.enabled': newSyncEnabled, ...others } = config;
+            const oldSyncEnabled = syncEnabled;
+            syncEnabled = newSyncEnabled;
+            if (syncEnabled) {
+                await browser.storage.local.clear();
+                await browser.storage.local.set({ 'config.sync.enabled': true });
+                await browser.storage.sync.clear();
+                await browser.storage.sync.set(others);
+            } else {
+                await browser.storage.local.clear();
+                await browser.storage.local.set(others);
+            }
+
+            const oldCache = cache;
+            cache = others;
+            callConfigChangeListeners(oldCache, cache);
+            if (oldSyncEnabled !== newSyncEnabled)
+                listeners['config.sync.enabled']?.forEach((f) =>
+                    f(oldSyncEnabled, newSyncEnabled, 'config.sync.enabled')
+                );
+        } finally {
+            browser.storage.onChanged.addListener(onStorageChanged);
+        }
+    });
+}
+
+export async function enableConfigSync(mode: 'discard_local' | 'force_upload'): Promise<void> {
+    lock.acquire('config', async () => {
+        if (syncEnabled) return;
+        if (!cache) throw new InternalError('config cache not initialized');
+
+        browser.storage.onChanged.removeListener(onStorageChanged);
+
+        try {
+            if (mode === 'force_upload') {
+                await browser.storage.sync.clear();
+
+                const config = await browser.storage.local.get();
+                delete config['config.sync.enabled'];
+                await browser.storage.sync.set(config);
+            }
+
+            await browser.storage.local.clear();
+            await browser.storage.local.set({ ['config.sync.enabled']: true });
+
+            syncEnabled = true;
+
+            const oldCache = cache;
+            cache = await browser.storage.sync.get();
+            callConfigChangeListeners(oldCache, cache);
+            listeners['config.sync.enabled']?.forEach((f) => f(!syncEnabled, syncEnabled, 'config.sync.enabled'));
+        } finally {
+            browser.storage.onChanged.addListener(onStorageChanged);
+        }
+    });
+}
+
+export async function disableConfigSync(): Promise<void> {
+    lock.acquire('config', async () => {
+        if (!syncEnabled) return;
+        if (!cache) throw new InternalError('config cache not initialized');
+
+        browser.storage.onChanged.removeListener(onStorageChanged);
+
+        try {
+            const oldCache = cache;
+            cache = await browser.storage.sync.get();
+            await browser.storage.local.set(cache);
+            await browser.storage.local.set({ 'config.sync.enabled': false });
+
+            syncEnabled = false;
+
+            callConfigChangeListeners(oldCache, cache);
+            listeners['config.sync.enabled']?.forEach((f) => f(!syncEnabled, syncEnabled, 'config.sync.enabled'));
+        } finally {
+            browser.storage.onChanged.addListener(onStorageChanged);
+        }
+    });
+}
+
+export async function checkConflictWhenEnablingConfigSync(): Promise<boolean> {
+    const [local, sync] = await Promise.all([browser.storage.local.get(), browser.storage.sync.get()]);
+    delete local['config.sync.enabled'];
+    if (Object.keys(sync).length === 0) {
+        return false;
+    } else if (equal(local, sync)) {
+        return false;
+    } else {
+        return true;
     }
 }
 
-export async function getAllConfig(): Promise<Config> {
-    return (await getStorage()).get() as Promise<Config>;
+export async function enableConfigSyncIfFirstRun(): Promise<void> {
+    const local = await browser.storage.local.get();
+    if (Object.keys(local).length === 0) {
+        // storage.localが空だったら初めて拡張機能が実行されたとみなす
+        await enableConfigSync('discard_local');
+    }
 }

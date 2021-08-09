@@ -40,9 +40,6 @@ export default React.memo(function TimetableView(): ReactElement {
 
     const [selectedTerm, setSelectedTerm] = useConfig('timetable.selectedTerm');
     const [showPeriodTime] = useConfig('timetable.showPeriodTime');
-    if (selectedTerm === undefined || showPeriodTime === undefined) {
-        return <></>;
-    }
 
     let selectedTermIndex;
     if (terms.length === 0) {

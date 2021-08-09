@@ -7,18 +7,18 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { useCallback } from 'react';
 import {
     checkConflictWhenEnablingConfigSync,
     disableConfigSync,
     enableConfigSync,
-    isConfigSyncEnabled,
-} from '../../../../common/config/sync';
+} from '../../../../common/config/config';
+import useConfig from '../../../../common/react/useConfig';
 import Description from '../../Description';
 
 export default function OptionConfigSync(): ReactElement | null {
-    const isConfigSyncEnabled = useIsConfigSyncEnabled();
+    const [isConfigSyncEnabled] = useConfig('config.sync.enabled');
     const [syncEnableModeSelectionDialogOpen, setSyncEnableModeSelectionDialogOpen] = useState(false);
 
     const handleEnableSync = useCallback(async () => {
@@ -26,15 +26,10 @@ export default function OptionConfigSync(): ReactElement | null {
             setSyncEnableModeSelectionDialogOpen(true);
         } else {
             await enableConfigSync('discard_local');
-
-            // FirefoxはenableConfigSync内で呼ばれるbrowser.runtime.reloadで設定ページも再読込みされるが、Chromeではされないしlocation.reloadも効かないので
-            window.close();
         }
     }, []);
     const handleDisableSync = useCallback(async () => {
         await disableConfigSync();
-
-        window.close();
     }, []);
     const handleChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +42,6 @@ export default function OptionConfigSync(): ReactElement | null {
         [handleDisableSync, handleEnableSync]
     );
     const handleSyncEnableModeSelectionDialogClose = useCallback(() => setSyncEnableModeSelectionDialogOpen(false), []);
-
-    if (isConfigSyncEnabled === undefined) return null;
 
     return (
         <>
@@ -65,22 +58,6 @@ export default function OptionConfigSync(): ReactElement | null {
         </>
     );
 }
-function useIsConfigSyncEnabled(): boolean | undefined {
-    const [value, setValue] = useState<boolean | undefined>(undefined);
-
-    useEffect(() => {
-        let isCancelled = false;
-        isConfigSyncEnabled().then((v) => {
-            if (!isCancelled) setValue(v);
-        });
-
-        return () => {
-            isCancelled = true;
-        };
-    }, []);
-
-    return value;
-}
 
 type SyncEnableModeSelectionDialogProps = {
     open: boolean;
@@ -94,9 +71,8 @@ function SyncEnableModeSelectionDialog(props: SyncEnableModeSelectionDialogProps
     }, []);
     const handleOK = useCallback(async () => {
         await enableConfigSync(selectedMode);
-
-        window.close();
-    }, [selectedMode]);
+        props.onClose();
+    }, [props, selectedMode]);
 
     return (
         <Dialog open={props.open} onClose={props.onClose}>

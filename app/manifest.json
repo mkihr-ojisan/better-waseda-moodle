@@ -28,14 +28,6 @@
       "js": [
         "src/auto-login/my-waseda-login-page.js"
       ]
-    },
-    {
-      "matches": [
-        "https://wsdmoodle.waseda.jp/mod/assign/view.php?*"
-      ],
-      "js": [
-        "src/others/check-notes-on-submitting/content-script.js"
-      ]
     }
   ],
   "web_accessible_resources": [

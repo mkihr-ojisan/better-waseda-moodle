@@ -1,6 +1,6 @@
 import { ConfigKey, onConfigChange } from './config';
 
-export function registerContentScript(
+export default function registerContentScript(
     configKeys: ConfigKey | ConfigKey[],
     contentScriptOptions: browser.contentScripts.RegisteredContentScriptOptions
 ): void {

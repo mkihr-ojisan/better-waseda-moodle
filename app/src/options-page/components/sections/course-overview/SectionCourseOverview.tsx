@@ -80,8 +80,6 @@ export default React.memo(function SectionCourseOverview(props: SectionComponent
         []
     );
 
-    if (enabled === undefined || type === undefined) return null;
-
     return (
         <Section titleMessageName="optionsSectionCourseOverview" {...props}>
             <FormGroup>

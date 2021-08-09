@@ -15,8 +15,6 @@ export default function OptionRemindUnansweredQuestions(): ReactElement | null {
         [setEnabled]
     );
 
-    if (enabled === undefined) return null;
-
     return (
         <>
             <FormControlLabel

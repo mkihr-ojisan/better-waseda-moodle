@@ -69,9 +69,9 @@ function onBeforeRequestListener(details: browser.webRequest._OnBeforeRequestDet
 }
 
 export async function doLogin(): Promise<boolean> {
-    if (await getConfig('autoLogin.enabled')) {
-        const userId = await getConfig('autoLogin.loginId');
-        const password = await getConfig('autoLogin.password');
+    if (getConfig('autoLogin.enabled')) {
+        const userId = getConfig('autoLogin.loginId');
+        const password = getConfig('autoLogin.password');
         setSessionKeyCache(await login(userId, password));
         lastEnsureLogin = Date.now();
         return true;

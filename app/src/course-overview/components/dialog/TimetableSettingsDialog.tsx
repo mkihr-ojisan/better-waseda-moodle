@@ -37,6 +37,7 @@ import { range } from '../../../common/util/util';
 import { CourseOverviewContext } from './../CourseOverview';
 import { CourseDataEntry, registerCourseData } from '../../../common/waseda/course/course-data';
 import { useCallback } from 'react';
+import { DeepReadonly } from '../../../common/util/types';
 
 type Props = {
     open: boolean;
@@ -70,7 +71,7 @@ export default React.memo(function TimetableSettingsDialog(props: Props): ReactE
 
 function TimetableSettingsDialogContent(props: Props): ReactElement {
     const context = useContext(CourseOverviewContext);
-    const [settingsEntries, setSettingsEntries] = useState<TimetableSettingsEntry[]>(
+    const [settingsEntries, setSettingsEntries] = useState<DeepReadonly<TimetableSettingsEntry[]>>(
         context.courseData[props.course.id]?.timetableData ?? []
     );
     const conflicts = useMemo(
@@ -372,8 +373,8 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
 }
 
 function findConflicts(
-    courseData: Record<number, CourseDataEntry | undefined>,
-    settingsEntries: TimetableSettingsEntry[],
+    courseData: DeepReadonly<Record<number, CourseDataEntry | undefined>>,
+    settingsEntries: DeepReadonly<TimetableSettingsEntry[]>,
     courseList: CourseListItem[],
     course: CourseListItem
 ): TimetableConflict[] {
