@@ -1,8 +1,9 @@
-import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import React, { ReactElement, useState } from 'react';
 import { useCallback } from 'react';
 import { importConfig } from '../../../../common/config/config';
-import AutoCloseAlert from '../../../../common/react/AutoCloseAlert';
+import Action from '../../options/Action';
 
 export default function OptionRestoreConfig(): ReactElement {
     const [configRestoredMessageOpen, setConfigRestoredMessageOpen] = useState(false);
@@ -36,17 +37,22 @@ export default function OptionRestoreConfig(): ReactElement {
 
     return (
         <>
-            <Button variant="outlined" onClick={handleRestoreConfig}>
-                {browser.i18n.getMessage('optionsRestoreConfig')}
-            </Button>
+            <Action
+                message="optionsRestoreConfig"
+                description="optionsRestoreConfigDescription"
+                buttonMessage="optionsRestoreConfigButton"
+                onClick={handleRestoreConfig}
+            />
 
-            <AutoCloseAlert
+            <Snackbar
                 open={configRestoredMessageOpen}
                 onClose={handleConfigRestoredMessageClose}
-                severity={configRestoreError ? 'error' : 'success'}
+                autoHideDuration={5000}
             >
-                {configRestoreError ?? browser.i18n.getMessage('optionsRestoreConfigSuccess')}
-            </AutoCloseAlert>
+                <Alert severity={configRestoreError ? 'error' : 'success'} onClose={handleConfigRestoredMessageClose}>
+                    {configRestoreError ?? browser.i18n.getMessage('optionsRestoreConfigSuccess')}
+                </Alert>
+            </Snackbar>
         </>
     );
 }

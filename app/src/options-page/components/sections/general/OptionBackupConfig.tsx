@@ -1,7 +1,7 @@
-import Button from '@material-ui/core/Button';
 import React, { ReactElement } from 'react';
 import { useCallback } from 'react';
 import { exportConfig } from '../../../../common/config/config';
+import Action from '../../options/Action';
 
 export default function OptionBackupConfig(): ReactElement {
     const handleBackupConfig = useCallback(async () => {
@@ -12,10 +12,14 @@ export default function OptionBackupConfig(): ReactElement {
         a.download = 'better-waseda-moodle-' + formatDate(new Date()) + '.json';
         a.click();
     }, []);
+
     return (
-        <Button variant="outlined" onClick={handleBackupConfig}>
-            {browser.i18n.getMessage('optionsBackupConfig')}
-        </Button>
+        <Action
+            message="optionsBackupConfig"
+            description="optionsBackupConfigDescription"
+            buttonMessage="optionsBackupConfigButton"
+            onClick={handleBackupConfig}
+        />
     );
 }
 

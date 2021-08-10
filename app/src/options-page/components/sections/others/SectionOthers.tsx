@@ -1,86 +1,62 @@
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import React, { ReactElement } from 'react';
-import ReactMarkdown from 'react-markdown';
-import useConfig from '../../../../common/react/useConfig';
-import Description from '../../Description';
-import { SectionComponentProps } from '../../Options';
-import Section from '../../Section';
-import OptionCheckSession from './OptionCheckSession';
+import List from '@material-ui/core/List';
+import ToggleOption from '../../options/ToggleOption';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
-export default React.memo(function SectionOthers(props: SectionComponentProps): ReactElement | null {
-    const [viewInBrowserEnabled, setViewInBrowserEnabled] = useConfig('viewInBrowser.enabled');
-    const [removeLoadingVideoEnabled, setRemoveLoadingVideoEnabled] = useConfig('removeLoadingVideo.enabled');
-    const [checkNotesOnSubmitting, setCheckNotesOnSubmitting] = useConfig('checkNotesOnSubmitting.enabled');
-    const [disableRateLimitEnabled, setDisableRateLimitEnabled] = useConfig('disableRateLimit.enabled');
-    const [hideNameEnabled, setHideNameEnabled] = useConfig('hideName.enabled');
-    const [syllabusLinkFixEnabled, setSyllabusLinkFixEnabled] = useConfig('syllabusLinkFix.enabled');
-
-    function handleSwitchChange(setStateFunc: (value: boolean) => void) {
-        return (event: React.ChangeEvent<HTMLInputElement>) => {
-            setStateFunc(event.target.checked);
-        };
-    }
-
-    return (
-        <Section titleMessageName="optionsSectionOthers" {...props}>
-            <FormControlLabel
-                control={
-                    <Switch checked={viewInBrowserEnabled} onChange={handleSwitchChange(setViewInBrowserEnabled)} />
-                }
-                label={browser.i18n.getMessage('optionsViewInBrowserEnabled')}
-            />
-            <Description messageName="optionsViewInBrowserDescription" />
-
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={removeLoadingVideoEnabled}
-                        onChange={handleSwitchChange(setRemoveLoadingVideoEnabled)}
-                    />
-                }
-                label={browser.i18n.getMessage('optionsRemoveLoadingVideo')}
-            />
-            <Description>
-                <ReactMarkdown linkTarget="_blank">
-                    {browser.i18n.getMessage('optionsRemoveLoadingVideoDescription')}
-                </ReactMarkdown>
-            </Description>
-
-            <FormControlLabel
-                control={
-                    <Switch checked={checkNotesOnSubmitting} onChange={handleSwitchChange(setCheckNotesOnSubmitting)} />
-                }
-                label={browser.i18n.getMessage('optionsCheckNotesOnSubmitting')}
-            />
-            <Description messageName="optionsCheckNotesOnSubmittingDescription" />
-
-            <FormControlLabel
-                control={
-                    <Switch
-                        checked={disableRateLimitEnabled}
-                        onChange={handleSwitchChange(setDisableRateLimitEnabled)}
-                    />
-                }
-                label={browser.i18n.getMessage('optionsDisableRateLimitEnabled')}
-            />
-            <Description messageName="optionsDisableRateLimitEnabledDescription" />
-
-            <FormControlLabel
-                control={<Switch checked={hideNameEnabled} onChange={handleSwitchChange(setHideNameEnabled)} />}
-                label={browser.i18n.getMessage('optionsHideNameEnabled')}
-            />
-            <Description messageName="optionsHideNameEnabledDescription" />
-
-            <FormControlLabel
-                control={
-                    <Switch checked={syllabusLinkFixEnabled} onChange={handleSwitchChange(setSyllabusLinkFixEnabled)} />
-                }
-                label={browser.i18n.getMessage('optionsSyllabusLinkFixEnabled')}
-            />
-            <Description messageName="optionsSyllabusLinkFixEnabledDescription" />
-
-            <OptionCheckSession />
-        </Section>
-    );
-});
+export default {
+    title: 'optionsSectionOthers',
+    Icon: MoreHorizIcon,
+    Component: function SectionQuiz(): ReactElement {
+        return (
+            <List>
+                <ToggleOption
+                    configKey="viewInBrowser.enabled"
+                    message="optionsViewInBrowserEnabled"
+                    description="optionsViewInBrowserDescription"
+                />
+                <ToggleOption
+                    configKey="removeLoadingVideo.enabled"
+                    message="optionsRemoveLoadingVideo"
+                    description="optionsRemoveLoadingVideoDescription"
+                    useMarkdownForDescription
+                />
+                <ToggleOption
+                    configKey="checkNotesOnSubmitting.enabled"
+                    message="optionsCheckNotesOnSubmitting"
+                    description="optionsCheckNotesOnSubmittingDescription"
+                />
+                <ToggleOption
+                    configKey="disableRateLimit.enabled"
+                    message="optionsDisableRateLimitEnabled"
+                    description="optionsDisableRateLimitEnabledDescription"
+                />
+                <ToggleOption
+                    configKey="hideName.enabled"
+                    message="optionsHideNameEnabled"
+                    description="optionsHideNameEnabledDescription"
+                />
+                <ToggleOption
+                    configKey="syllabusLinkFix.enabled"
+                    message="optionsSyllabusLinkFixEnabled"
+                    description="optionsSyllabusLinkFixEnabledDescription"
+                />
+                <ToggleOption
+                    configKey="checkSession.enabled"
+                    message="optionsCheckSessionEnabled"
+                    description="optionsCheckSessionEnabledDescription"
+                />
+                {/*<Indent>
+                    <DisableOptions configKey="checkSession.enabled">
+                        <CheckBoxOption configKey="checkSession.quiz" message="optionsCheckSessionQuiz" dense />
+                        <CheckBoxOption
+                            configKey="checkSession.assignment"
+                            message="optionsCheckSessionAssignment"
+                            dense
+                        />
+                        <CheckBoxOption configKey="checkSession.forum" message="optionsCheckSessionForum" dense />
+                    </DisableOptions>
+                </Indent>*/}
+            </List>
+        );
+    },
+};

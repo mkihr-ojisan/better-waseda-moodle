@@ -4,20 +4,29 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
-import React, { ReactElement, useState } from 'react';
-import { useCallback } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import {
     checkConflictWhenEnablingConfigSync,
     disableConfigSync,
     enableConfigSync,
 } from '../../../../common/config/config';
 import useConfig from '../../../../common/react/useConfig';
-import Description from '../../Description';
 
-export default function OptionConfigSync(): ReactElement | null {
+const useStyles = makeStyles(() => ({
+    listItemRoot: {
+        paddingRight: 70,
+    },
+}));
+
+export default React.memo(function ToggleOption() {
+    const classes = useStyles();
     const [isConfigSyncEnabled] = useConfig('config.sync.enabled');
     const [syncEnableModeSelectionDialogOpen, setSyncEnableModeSelectionDialogOpen] = useState(false);
 
@@ -31,25 +40,26 @@ export default function OptionConfigSync(): ReactElement | null {
     const handleDisableSync = useCallback(async () => {
         await disableConfigSync();
     }, []);
-    const handleChange = useCallback(
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            if (event.target.checked) {
-                handleEnableSync();
-            } else {
-                handleDisableSync();
-            }
-        },
-        [handleDisableSync, handleEnableSync]
-    );
+    const handleClick = useCallback(() => {
+        if (isConfigSyncEnabled) {
+            handleDisableSync();
+        } else {
+            handleEnableSync();
+        }
+    }, [handleDisableSync, handleEnableSync, isConfigSyncEnabled]);
     const handleSyncEnableModeSelectionDialogClose = useCallback(() => setSyncEnableModeSelectionDialogOpen(false), []);
 
     return (
         <>
-            <FormControlLabel
-                control={<Switch checked={isConfigSyncEnabled} onChange={handleChange} />}
-                label={browser.i18n.getMessage('optionsSyncConfig')}
-            />
-            <Description messageName="optionsSyncConfigDescription" />
+            <ListItem button onClick={handleClick} classes={{ root: classes.listItemRoot }}>
+                <ListItemText
+                    primary={browser.i18n.getMessage('optionsSyncConfig')}
+                    secondary={browser.i18n.getMessage('optionsSyncConfigDescription')}
+                />
+                <ListItemSecondaryAction>
+                    <Switch checked={isConfigSyncEnabled} onClick={handleClick} />
+                </ListItemSecondaryAction>
+            </ListItem>
 
             <SyncEnableModeSelectionDialog
                 open={syncEnableModeSelectionDialogOpen}
@@ -57,7 +67,7 @@ export default function OptionConfigSync(): ReactElement | null {
             />
         </>
     );
-}
+});
 
 type SyncEnableModeSelectionDialogProps = {
     open: boolean;

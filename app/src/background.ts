@@ -12,6 +12,7 @@ import { initHideName } from './others/hide-name/background-script';
 import { initSyllabusLinkFix } from './others/syllabus-link-fix/background-script';
 import { assertCurrentContextType } from './common/util/util';
 import './common/waseda/course/course-list';
+import './common/waseda/course/course-registration';
 import { initRemindUnansweredQuestions } from './quiz/remind-unanswered-questions/background-script';
 import { initCheckSession } from './others/check-session/background-script';
 import { enableConfigSyncIfFirstRun, initConfigCache } from './common/config/config';

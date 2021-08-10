@@ -1,24 +1,20 @@
-import Grid from '@material-ui/core/Grid';
 import React, { ReactElement } from 'react';
-import { SectionComponentProps } from '../../Options';
-import Section from '../../Section';
-import OptionBackupConfig from './OptionBackupConfig';
+import SettingsIcon from '@material-ui/icons/Settings';
+import List from '@material-ui/core/List';
 import OptionConfigSync from './OptionConfigSync';
+import OptionBackupConfig from './OptionBackupConfig';
 import OptionRestoreConfig from './OptionRestoreConfig';
 
-export default React.memo(function SectionGeneral(props: SectionComponentProps): ReactElement | null {
-    return (
-        <Section titleMessageName="optionsSectionGeneral" {...props}>
-            <OptionConfigSync />
-
-            <Grid container spacing={1}>
-                <Grid item>
-                    <OptionBackupConfig />
-                </Grid>
-                <Grid item>
-                    <OptionRestoreConfig />
-                </Grid>
-            </Grid>
-        </Section>
-    );
-});
+export default {
+    title: 'optionsSectionGeneral',
+    Icon: SettingsIcon,
+    Component: function SectionGeneral(): ReactElement {
+        return (
+            <List>
+                <OptionConfigSync />
+                <OptionBackupConfig />
+                <OptionRestoreConfig />
+            </List>
+        );
+    },
+};

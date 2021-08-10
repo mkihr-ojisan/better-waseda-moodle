@@ -7,6 +7,9 @@ import { CourseDataEntry } from '../waseda/course/course-data';
 import AsyncLock from 'async-lock';
 
 export type ConfigKey = keyof Config;
+export type ConfigKeyWithType<T> = {
+    [P in keyof Config]: ConfigValue<P> extends T ? (T extends ConfigValue<P> ? P : never) : never;
+}[keyof Config];
 export type ConfigValue<T extends ConfigKey> = Config[T];
 export type Config = ObjectValuesDeepReadonly<{
     'config.sync.enabled': boolean;

@@ -31,6 +31,10 @@
     "message": "通常のログインページに移動する",
     "description": "自動ログインに失敗したときに、MyWasedaのログインページに移動するボタンに表示する文字列"
   },
+  "optionsPageTitle": {
+    "message": "Better Waseda Moodleの設定",
+    "description": "設定ページのタイトル"
+  },
   "optionsSectionGeneral": {
     "message": "一般",
     "description": "設定ページの「一般」セクションの見出し"
@@ -63,8 +67,24 @@
     "message": "設定のバックアップ",
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
+  "optionsBackupConfigDescription": {
+    "message": "Better Waseda Moodleの設定をJSONファイルとして出力します。自動ログインの設定は出力されません。",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsBackupConfigButton": {
+    "message": "バックアップ",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
   "optionsRestoreConfig": {
     "message": "設定の復元",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsRestoreConfigDescription": {
+    "message": "バックアップした設定ファイルを読み込んで設定を復元します。",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsRestoreConfigButton": {
+    "message": "ファイルを選択",
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
   "optionsRestoreConfigSuccess": {
@@ -77,6 +97,10 @@
   },
   "optionsEnableAutoLogin": {
     "message": "自動ログインを有効にする",
+    "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
+  },
+  "optionsEnableAutoLoginDescription": {
+    "message": "ログインが必要なページを開いたときに自動でログイン処理を行います。",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
   },
   "optionsLoginId": {
@@ -93,6 +117,10 @@
   },
   "optionsEnableCourseOverview": {
     "message": "コース概要を置き換える",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
+  "optionsEnableCourseOverviewDescription": {
+    "message": "ダッシュボードのコース概要をBetter Waseda Moodleのものに置き換えます。時間割表などを使用するにはこのオプションを有効にする必要があります。",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
   "optionsCourseOverviewTypeLabel": {
@@ -115,6 +143,14 @@
     "message": "コース一覧のキャッシュを削除する",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
+  "optionsClearCourseListCacheDescription": {
+    "message": "コース一覧の表示を高速化するためのキャッシュを削除します。",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
+  "optionsClearCourseListCacheButton": {
+    "message": "削除",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
   "optionsClearCourseListCacheMessage": {
     "message": "コース一覧のキャッシュを削除しました",
     "description": "コース一覧のキャッシュを削除したときに表示するスナックバーのメッセージ"
@@ -123,13 +159,17 @@
     "message": "時間割とシラバスのURLを取得する",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsFetchTimetableDataAndSyllabusUrlMessage": {
+  "optionsFetchTimetableDataAndSyllabusUrlDescription": {
     "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。既存の設定は上書きされます。履修登録ページがメンテナンス中の場合は取得できません。また、Moodleのコース名と科目名が一致していないなど特殊な科目の情報は取得できないことがあります。",
-    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsFetchTimetableDataAndSyllabusUrlMessageOK": {
-    "message": "続行",
-    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+  "optionsFetchTimetableDataAndSyllabusUrlButton": {
+    "message": "取得",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
+  "optionsFetchTimetableDataAndSyllabusUrlProcessing": {
+    "message": "取得しています…",
+    "description": "時間割とシラバスのURLの取得中に表示するメッセージ"
   },
   "optionsFetchTimetableDataAndSyllabusUrlDoneMessage": {
     "message": "時間割とシラバスのURLを取得しました",
