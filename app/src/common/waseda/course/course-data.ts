@@ -1,3 +1,4 @@
+import AsyncLock from 'async-lock';
 import { ConfigValue, getConfig, setConfig } from '../../config/config';
 import { TimetableConflictError } from '../../error';
 import { DeepReadonly } from '../../util/types';
@@ -28,26 +29,30 @@ export type TimetableEntry = {
     dayPeriod: DayPeriod;
 };
 
+const lock = new AsyncLock();
 export async function registerCourseData<T extends keyof CourseDataEntry>(
     courseId: number,
     key: T,
     value: DeepReadonly<CourseDataEntry[T]>,
     overrideConflict?: boolean
 ): Promise<void> {
-    const configValue = getConfig('courseData');
+    lock.acquire('registerCourseData', async () => {
+        const configValue = getConfig('courseData');
 
-    if (key === 'timetableData') {
-        await checkTimetableConflict(configValue, courseId, (value ?? []) as TimetableEntry[], overrideConflict);
-    }
+        if (key === 'timetableData') {
+            await checkTimetableConflict(configValue, courseId, (value ?? []) as TimetableEntry[], overrideConflict);
+        }
 
-    const newConfigValue = {
-        ...configValue,
-        [courseId]: {
-            [key]: value,
-        },
-    };
+        const newConfigValue = {
+            ...configValue,
+            [courseId]: {
+                ...configValue[courseId],
+                [key]: value,
+            },
+        };
 
-    setConfig('courseData', newConfigValue);
+        setConfig('courseData', newConfigValue);
+    });
 }
 
 async function checkTimetableConflict(
@@ -80,9 +85,9 @@ async function checkTimetableConflict(
             }
             if (conflictIndices.length > 0) {
                 await registerCourseData(
-                    courseId,
+                    parseInt(id),
                     'timetableData',
-                    entries.filter((_, i) => !conflictIndices.includes(i))
+                    courseDataEntry.timetableData.filter((_, i) => !conflictIndices.includes(i))
                 );
             }
         }
