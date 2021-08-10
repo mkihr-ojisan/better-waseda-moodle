@@ -49,7 +49,11 @@ export default function OptionRestoreConfig(): ReactElement {
                 onClose={handleConfigRestoredMessageClose}
                 autoHideDuration={5000}
             >
-                <Alert severity={configRestoreError ? 'error' : 'success'} onClose={handleConfigRestoredMessageClose}>
+                <Alert
+                    severity={configRestoreError ? 'error' : 'success'}
+                    onClose={handleConfigRestoredMessageClose}
+                    variant="filled"
+                >
                     {configRestoreError ?? browser.i18n.getMessage('optionsRestoreConfigSuccess')}
                 </Alert>
             </Snackbar>

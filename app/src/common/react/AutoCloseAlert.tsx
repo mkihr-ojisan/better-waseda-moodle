@@ -21,7 +21,12 @@ export default React.memo(function AutoCloseAlert(props: Props): ReactElement | 
 
     return (
         <Collapse in={props.open}>
-            <Alert severity={props.severity} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <Alert
+                severity={props.severity}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                variant="filled"
+            >
                 {props.children}
             </Alert>
         </Collapse>

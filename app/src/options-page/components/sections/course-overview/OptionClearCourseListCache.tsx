@@ -29,7 +29,7 @@ export default React.memo(function OptionClearCourseListCache() {
                 onClose={handleClearCourseListCacheMessageClose}
                 autoHideDuration={5000}
             >
-                <Alert severity="success" onClose={handleClearCourseListCacheMessageClose}>
+                <Alert severity="success" onClose={handleClearCourseListCacheMessageClose} variant="filled">
                     {browser.i18n.getMessage('optionsClearCourseListCacheMessage')}
                 </Alert>
             </Snackbar>

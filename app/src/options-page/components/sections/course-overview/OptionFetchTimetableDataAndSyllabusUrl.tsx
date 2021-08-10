@@ -62,7 +62,7 @@ export default React.memo(function OptionFetchTimetableDataAndSyllabusUrl() {
             </Dialog>
 
             <Snackbar open={snackBarOpen} onClose={handleCloseSnackBar} autoHideDuration={5000}>
-                <Alert severity={error ? 'error' : 'success'} onClose={handleCloseSnackBar}>
+                <Alert severity={error ? 'error' : 'success'} onClose={handleCloseSnackBar} variant="filled">
                     {error?.message ?? browser.i18n.getMessage('optionsFetchTimetableDataAndSyllabusUrlDoneMessage')}
                 </Alert>
             </Snackbar>
