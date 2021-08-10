@@ -67,7 +67,7 @@ export class MessengerClient {
     static exec(inst: string, ...args: any[]): Promise<any> {
         if (!this.initialized) this.init();
 
-        const id = Date.now();
+        const id = Math.random();
         const promise = new Promise((resolve, reject) => (this.promises[id] = { resolve, reject }));
         this.port.postMessage({
             inst,
