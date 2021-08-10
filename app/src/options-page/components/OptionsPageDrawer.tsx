@@ -83,17 +83,20 @@ function OptionsPageDrawerContent(props: Props) {
             <Divider />
             <List>
                 {OPTIONS_PAGE_SECTIONS.map((section, i) => (
-                    <ListItem
-                        button
-                        key={section.title}
-                        onClick={() => handleClick(i)}
-                        selected={i === props.selectedSectionIndex}
-                    >
-                        <ListItemIcon>
-                            <section.Icon />
-                        </ListItemIcon>
-                        <ListItemText primary={browser.i18n.getMessage(section.title)} />
-                    </ListItem>
+                    <>
+                        {section.divider && <Divider />}
+                        <ListItem
+                            button
+                            key={section.title}
+                            onClick={() => handleClick(i)}
+                            selected={i === props.selectedSectionIndex}
+                        >
+                            <ListItemIcon>
+                                <section.Icon />
+                            </ListItemIcon>
+                            <ListItemText primary={browser.i18n.getMessage(section.title)} />
+                        </ListItem>
+                    </>
                 ))}
             </List>
         </>

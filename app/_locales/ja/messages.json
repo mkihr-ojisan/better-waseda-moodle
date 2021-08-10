@@ -271,6 +271,18 @@
     "message": "フォーラム",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
+  "optionsAboutTitle": {
+    "message": "Better Waseda Moodleについて",
+    "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"
+  },
+  "optionsAboutDisclaimer": {
+    "message": "Better Waseda MoodleはMITライセンスの下で公開されているフリーソフトウェアです。早稲田大学の許可を受けずに公開しているため、自己責任で使用してください。作者はBetter Waseda Moodleの開発を引き継ぐ学生をいつでも募集しています。",
+    "description": "設定ページの「Better Waseda Moodleについて」セクションに表示するメッセージ"
+  },
+  "optionsAboutSourceCode": {
+    "message": "ソースコード",
+    "description": "設定ページの「Better Waseda Moodleについて」セクションに表示するメッセージ"
+  },
   "courseOverviewHide": {
     "message": "非表示",
     "description": "コース概要のメニューの項目"
@@ -532,5 +544,8 @@
   },
   "otherError": {
     "message": "エラーが発生しました: $1"
+  },
+  "version": {
+    "message": "バージョン $1"
   }
 }

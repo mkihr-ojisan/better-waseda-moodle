@@ -13,6 +13,7 @@ import SectionCourseOverview from './sections/course-overview/SectionCourseOverv
 import { useSignal } from '../../common/react/signal';
 import SectionQuiz from './sections/quiz/SectionQuiz';
 import SectionOthers from './sections/others/SectionOthers';
+import SectionAbout from './sections/about/SectionAbout';
 
 export const OPTIONS_PAGE_DRAWER_WIDTH = 240;
 
@@ -25,6 +26,7 @@ const useStyles = makeStyles(() => ({
 export type OptionsPageSection = {
     title: string;
     Icon: React.FC;
+    divider?: boolean;
     Component: React.FC;
 };
 export const OPTIONS_PAGE_SECTIONS: OptionsPageSection[] = [
@@ -33,6 +35,7 @@ export const OPTIONS_PAGE_SECTIONS: OptionsPageSection[] = [
     SectionCourseOverview,
     SectionQuiz,
     SectionOthers,
+    SectionAbout,
 ];
 
 export default React.memo(function OptionsPage() {
