@@ -3,7 +3,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ToggleOption from '../../options/ToggleOption';
 import List from '@material-ui/core/List';
 import DisableOptions from '../../options/DisableOptions';
-import Indent from '../../options/Indent';
 import TextBoxOption from '../../options/TextBoxOption';
 
 export default {

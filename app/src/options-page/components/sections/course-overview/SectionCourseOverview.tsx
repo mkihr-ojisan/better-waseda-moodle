@@ -4,7 +4,6 @@ import List from '@material-ui/core/List';
 import SelectOption from '../../options/SelectOption';
 import ToggleOption from '../../options/ToggleOption';
 import DisableOptions from '../../options/DisableOptions';
-import Indent from '../../options/Indent';
 import OptionClearCourseListCache from './OptionClearCourseListCache';
 import OptionFetchTimetableDataAndSyllabusUrl from './OptionFetchTimetableDataAndSyllabusUrl';
 
