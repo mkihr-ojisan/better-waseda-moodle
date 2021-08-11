@@ -1,18 +1,20 @@
 import { logout } from '../../auto-login/auto-login';
 import { InvalidResponseError, UserIdOrPasswordNotSetError } from '../error';
+import { createProgressPromise, ProgressPromise } from '../util/ExPromise';
 import { assertCurrentContextType, fetchHtml } from '../util/util';
 
 assertCurrentContextType('background_script');
 
-let loginPromise: Promise<string> | null = null;
-export async function login(userId: string, password: string): Promise<string> {
+let loginPromise: ProgressPromise<string, number> | null = null;
+export function login(userId: string, password: string): ProgressPromise<string, number> {
     if (loginPromise) {
-        return await loginPromise;
+        return loginPromise;
     }
 
-    loginPromise = (async () => {
+    loginPromise = createProgressPromise(async (reportProgress) => {
         try {
             await logout();
+            reportProgress(1 / 4);
 
             const loginPage = await fetchHtml(
                 'https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off'
@@ -28,6 +30,7 @@ export async function login(userId: string, password: string): Promise<string> {
 
             if (!userId || !password) throw new UserIdOrPasswordNotSetError();
 
+            reportProgress(2 / 4);
             const loginResponse = await fetchHtml(loginInfoPostUrlFull.href, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 method: 'POST',
@@ -43,6 +46,7 @@ export async function login(userId: string, password: string): Promise<string> {
 
             const moodleTopPostUrl = loginResponse.getElementsByTagName('form')[0]?.getAttribute('action');
             if (!moodleTopPostUrl) throw new InvalidResponseError('moodleTopPostUrl');
+            reportProgress(3 / 4);
             const moodleTop = await fetchHtml(moodleTopPostUrl, {
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 method: 'POST',
@@ -58,11 +62,12 @@ export async function login(userId: string, password: string): Promise<string> {
             const sessionKeyExpire = new Date();
             sessionKeyExpire.setHours(sessionKeyExpire.getDate() + 1);
 
+            reportProgress(4 / 4);
             return sessionKey;
         } finally {
             loginPromise = null;
         }
-    })();
+    });
 
-    return await loginPromise;
+    return loginPromise;
 }
