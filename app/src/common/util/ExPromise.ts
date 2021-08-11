@@ -8,6 +8,7 @@ export class PromiseCancelledError<R> extends Error {
 }
 
 export interface ProgressPromise<T, P = undefined> extends Promise<T>, EventTarget {
+    currentProgress: P | undefined;
     onprogress: ((event: PromiseProgressEvent<P>) => void) | null;
 }
 export class PromiseProgressEvent<P> extends Event {
@@ -29,6 +30,7 @@ export class ExPromise<T, R, P>
 
     onprogress: ((event: PromiseProgressEvent<P>) => void) | null = null;
     cachedValue: PromiseLike<T>;
+    currentProgress: P | undefined;
 
     constructor(
         f: (
@@ -54,6 +56,7 @@ export class ExPromise<T, R, P>
             }
         };
         const reportProgress = (progress: P) => {
+            this.currentProgress = progress;
             this.dispatchEvent(new PromiseProgressEvent(progress));
         };
 
