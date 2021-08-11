@@ -62,7 +62,6 @@ export class ExPromise<T, R, P>
         });
     }
     [Symbol.toStringTag]: string;
-    [Symbol.toStringTag] = 'ExPromise';
 
     cancel(reason: R): void {
         this.cancellation = { isCancelled: true, reason };
