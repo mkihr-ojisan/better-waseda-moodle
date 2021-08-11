@@ -7,7 +7,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { OPTIONS_PAGE_DRAWER_WIDTH, OPTIONS_PAGE_SECTIONS } from './OptionsPage';
 
 const useStyles = makeStyles((theme) => ({
@@ -83,20 +83,15 @@ function OptionsPageDrawerContent(props: Props) {
             <Divider />
             <List>
                 {OPTIONS_PAGE_SECTIONS.map((section, i) => (
-                    <>
+                    <Fragment key={section.name}>
                         {section.divider && <Divider />}
-                        <ListItem
-                            button
-                            key={section.title}
-                            onClick={() => handleClick(i)}
-                            selected={i === props.selectedSectionIndex}
-                        >
+                        <ListItem button onClick={() => handleClick(i)} selected={i === props.selectedSectionIndex}>
                             <ListItemIcon>
                                 <section.Icon />
                             </ListItemIcon>
                             <ListItemText primary={browser.i18n.getMessage(section.title)} />
                         </ListItem>
-                    </>
+                    </Fragment>
                 ))}
             </List>
         </>

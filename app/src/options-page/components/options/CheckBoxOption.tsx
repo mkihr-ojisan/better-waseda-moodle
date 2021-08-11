@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { useCallback } from 'react';
 import { useContext } from 'react';
 import { ConfigKeyWithType } from '../../../common/config/config';
-import CustomizedReactMarkdown from '../../../common/react/CustomizedReactMarkdown';
+import CustomizedReactMarkdown from '../OptionsPageReactMarkdown';
 import useConfig from '../../../common/react/useConfig';
 import { DisabledOptionsContext } from './DisableOptions';
 

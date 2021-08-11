@@ -3,10 +3,11 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles } from '@material-ui/core/styles';
 import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 import React, { useCallback } from 'react';
 import { useContext } from 'react';
 import { ConfigKeyWithType } from '../../../common/config/config';
-import CustomizedReactMarkdown from '../../../common/react/CustomizedReactMarkdown';
+import CustomizedReactMarkdown from '../OptionsPageReactMarkdown';
 import useConfig from '../../../common/react/useConfig';
 import { DisabledOptionsContext } from './DisableOptions';
 
@@ -37,7 +38,12 @@ export default React.memo(function ToggleOption(props: Props) {
     return (
         <ListItem button onClick={handleClick} disabled={disabled} classes={{ root: classes.listItemRoot }}>
             <ListItemText
-                primary={browser.i18n.getMessage(props.message, props.messageSubstitutions)}
+                disableTypography
+                primary={
+                    <Typography variant="body1" color="textPrimary">
+                        {browser.i18n.getMessage(props.message, props.messageSubstitutions)}
+                    </Typography>
+                }
                 secondary={
                     props.description &&
                     (props.useMarkdownForDescription ? (
@@ -46,7 +52,10 @@ export default React.memo(function ToggleOption(props: Props) {
                                 browser.i18n.getMessage(props.description, props.descriptionSubstitutions)}
                         </CustomizedReactMarkdown>
                     ) : (
-                        props.description && browser.i18n.getMessage(props.description, props.descriptionSubstitutions)
+                        <Typography variant="body2" color="textSecondary">
+                            {props.description &&
+                                browser.i18n.getMessage(props.description, props.descriptionSubstitutions)}
+                        </Typography>
                     ))
                 }
             />
