@@ -50,11 +50,13 @@ function onHeaderReceivedListener(details: browser.webRequest._OnHeadersReceived
                 header.value?.startsWith('https://wsdmoodle.waseda.jp/login/index.php')
             ) {
                 requestedUrls.set(details.requestId, details.url);
+                doLogin(); // 早めにログイン処理を始めておく
+                return;
             }
         }
     }
 
-    return {};
+    return;
 }
 
 // ログインページへのリクエストをブロックして、代わりにauto-login-page.htmlに遷移させる
