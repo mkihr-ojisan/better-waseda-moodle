@@ -11,6 +11,7 @@ type Props = {
     section: OptionsPageSection;
     scrollOffset: number;
     scrollSignal: Signal<number>;
+    selectedSectionIndex: number;
     index: number;
     onScrolledTo: () => void;
 };
@@ -32,16 +33,12 @@ export default React.memo(function OptionsPageSectionContent(props: Props) {
         )
     );
 
-    const isScrolledToSectionRef = useRef(false);
     useEffect(() => {
         const listener = () => {
-            if (elem.current) {
+            if (elem.current && props.selectedSectionIndex !== props.index) {
                 const scroll = window.scrollY + props.scrollOffset - elem.current.offsetTop;
                 const isScrolledToSection = (0 <= scroll || props.index === 0) && scroll < elem.current.offsetHeight;
-                if (!isScrolledToSectionRef.current && isScrolledToSection) {
-                    props.onScrolledTo();
-                }
-                isScrolledToSectionRef.current = isScrolledToSection;
+                if (isScrolledToSection) props.onScrolledTo();
             }
         };
         document.addEventListener('scroll', listener);

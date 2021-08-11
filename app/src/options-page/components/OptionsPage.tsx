@@ -53,6 +53,7 @@ export default React.memo(function OptionsPage() {
     const doScrollToSection = useCallback(
         (index) => {
             scrollSignal.send(index);
+            setTimeout(() => setSelectedSectionIndex(index), 100); //うーん………
         },
         [scrollSignal]
     );

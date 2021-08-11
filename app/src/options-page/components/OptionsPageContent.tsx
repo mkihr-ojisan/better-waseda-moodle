@@ -37,6 +37,7 @@ export default React.memo(function OptionsPageContent(props: Props) {
                             scrollOffset={headerMarginRef.current?.offsetHeight ?? 0}
                             scrollSignal={props.scrollSignal}
                             index={i}
+                            selectedSectionIndex={props.selectedSectionIndex}
                             onScrolledTo={() => props.onScrolledToSection(i)}
                         />
                     ))}
