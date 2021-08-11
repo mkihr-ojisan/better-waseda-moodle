@@ -84,69 +84,95 @@ export class ExPromise<T, R, P>
 
 export function createCancellableProgressCachedPromise<T, R, P>(
     f: (
-        resolve: (value: T) => void,
-        reject: (reason: any) => void,
         resolveCache: (value: T) => void,
         checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void,
         reportProgress: (progress: P) => void
-    ) => void
+    ) => Promise<T> | T
 ): CancellablePromise<T, R> & ProgressPromise<T, P> & CachedPromise<T> {
-    return new ExPromise(f);
+    return new ExPromise(async (resolve, reject, resolveCache, checkCancelled, reportProgress) => {
+        try {
+            resolve(await f(resolveCache, checkCancelled, reportProgress));
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 export function createCancellableProgressPromise<T, R, P>(
     f: (
-        resolve: (value: T) => void,
-        reject: (reason: any) => void,
         checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void,
         reportProgress: (progress: P) => void
-    ) => void
+    ) => Promise<T> | T
 ): CancellablePromise<T, R> & ProgressPromise<T, P> {
-    return new ExPromise((resolve, reject, _resolveCache, checkCancelled, reportProgress) =>
-        f(resolve, reject, checkCancelled, reportProgress)
-    );
+    return new ExPromise(async (resolve, reject, _resolveCache, checkCancelled, reportProgress) => {
+        try {
+            resolve(await f(checkCancelled, reportProgress));
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 export function createCancellableCachedPromise<T, R>(
     f: (
-        resolve: (value: T) => void,
-        reject: (reason: any) => void,
         resolveCache: (value: T) => void,
         checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void
-    ) => void
+    ) => Promise<T> | T
 ): CancellablePromise<T, R> & CachedPromise<T> {
-    return new ExPromise((resolve, reject, resolveCache, checkCancelled) =>
-        f(resolve, reject, resolveCache, checkCancelled)
-    );
+    return new ExPromise(async (resolve, reject, resolveCache, checkCancelled) => {
+        try {
+            resolve(await f(resolveCache, checkCancelled));
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 export function createProgressCachedPromise<T, P>(
-    f: (
-        resolve: (value: T) => void,
-        reject: (reason: any) => void,
-        resolveCache: (value: T) => void,
-        reportProgress: (progress: P) => void
-    ) => void
+    f: (resolveCache: (value: T) => void, reportProgress: (progress: P) => void) => Promise<T> | T
 ): ProgressPromise<T, P> & CachedPromise<T> {
-    return new ExPromise((resolve, reject, resolveCache, _checkCancelled, reportProgress) =>
-        f(resolve, reject, resolveCache, reportProgress)
-    );
+    return new ExPromise(async (resolve, reject, resolveCache, _checkCancelled, reportProgress) => {
+        try {
+            resolve(await f(resolveCache, reportProgress));
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 export function createCancellablePromise<T, R>(
-    f: (
-        resolve: (value: T) => void,
-        reject: (reason: any) => void,
-        checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void
-    ) => void
+    f: (checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void) => Promise<T> | T
 ): CancellablePromise<T, R> {
-    return new ExPromise((resolve, reject, _resolveCache, checkCancelled) => f(resolve, reject, checkCancelled));
+    return new ExPromise(async (resolve, reject, _resolveCache, checkCancelled) => {
+        try {
+            resolve(await f(checkCancelled));
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
 export function createProgressPromise<T, P>(
-    f: (resolve: (value: T) => void, reject: (reason: any) => void, reportProgress: (progress: P) => void) => void
+    f: (reportProgress: (progress: P) => void) => Promise<T> | T
 ): ProgressPromise<T, P> {
-    return new ExPromise((resolve, reject, _resolveCache, _checkCancelled, reportProgress) =>
-        f(resolve, reject, reportProgress)
-    );
+    return new ExPromise(async (resolve, reject, _resolveCache, _checkCancelled, reportProgress) => {
+        try {
+            resolve(await f(reportProgress));
+        } catch (e) {
+            reject(e);
+        }
+    });
 }
-export function createCachedPromise<T>(
-    f: (resolve: (value: T) => void, reject: (reason: any) => void, resolveCache: (value: T) => void) => void
-): CachedPromise<T> {
-    return new ExPromise((resolve, reject, resolveCache) => f(resolve, reject, resolveCache));
+export function createCachedPromise<T>(f: (resolveCache: (value: T) => void) => Promise<T> | T): CachedPromise<T> {
+    return new ExPromise(async (resolve, reject, resolveCache) => {
+        try {
+            resolve(await f(resolveCache));
+        } catch (e) {
+            reject(e);
+        }
+    });
+}
+export function pipeProgress<T, P>(
+    reportProgress: (progress: P) => void,
+    promise: ProgressPromise<T, P>
+): ProgressPromise<T, P> {
+    promise.addEventListener('progress', (event) => {
+        reportProgress((event as PromiseProgressEvent<P>).progress);
+    });
+    return promise;
 }
