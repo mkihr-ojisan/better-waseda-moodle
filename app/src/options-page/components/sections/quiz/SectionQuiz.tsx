@@ -7,6 +7,7 @@ import NoPaddingList from '../../NoPaddingList';
 import Divider from '@material-ui/core/Divider';
 
 export default {
+    name: 'SectionQuiz',
     title: 'optionsSectionQuiz',
     Icon: BallotIcon,
     Component: function SectionQuiz(): ReactElement {

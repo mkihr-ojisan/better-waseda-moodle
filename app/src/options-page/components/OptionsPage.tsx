@@ -14,6 +14,9 @@ import { useSignal } from '../../common/react/signal';
 import SectionQuiz from './sections/quiz/SectionQuiz';
 import SectionOthers from './sections/others/SectionOthers';
 import SectionAbout from './sections/about/SectionAbout';
+import { useEffect } from 'react';
+import { MessengerClient } from '../../common/util/messenger';
+import { OptionsPageParameter } from '../background-script';
 
 export const OPTIONS_PAGE_DRAWER_WIDTH = 240;
 
@@ -24,6 +27,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export type OptionsPageSection = {
+    name: string;
     title: string;
     Icon: React.FC;
     divider?: boolean;
@@ -59,6 +63,23 @@ export default React.memo(function OptionsPage() {
     );
     const handleScrolledToSection = useCallback((index) => {
         setSelectedSectionIndex(index);
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            const param = (await MessengerClient.exec('getOptionsPageParameter')) as OptionsPageParameter;
+            if (param?.defaultSelectedSection) {
+                const index = OPTIONS_PAGE_SECTIONS.findIndex(
+                    (section) => section.name === param.defaultSelectedSection
+                );
+                if (index !== -1) {
+                    doScrollToSection(index);
+                } else {
+                    console.warn(`unknown section '${param.defaultSelectedSection}'`);
+                }
+            }
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

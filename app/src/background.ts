@@ -17,6 +17,7 @@ import { initRemindUnansweredQuestions } from './quiz/remind-unanswered-question
 import { initCheckSession } from './others/check-session/background-script';
 import { enableConfigSyncIfFirstRun, initConfigCache } from './common/config/config';
 import { initCheckNotesOnSubmitting } from './others/check-notes-on-submitting/background-script';
+import './options-page/background-script';
 
 assertCurrentContextType('background_script');
 

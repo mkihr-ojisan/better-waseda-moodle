@@ -7,6 +7,7 @@ import Divider from '@material-ui/core/Divider';
 import NoPaddingList from '../../NoPaddingList';
 
 export default {
+    name: 'SectionGeneral',
     title: 'optionsSectionGeneral',
     Icon: SettingsIcon,
     Component: function SectionGeneral(): ReactElement {

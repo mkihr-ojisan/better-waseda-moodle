@@ -6,6 +6,7 @@ import TextBoxOption from '../../options/TextBoxOption';
 import NoPaddingList from '../../NoPaddingList';
 
 export default {
+    name: 'SectionAutoLogin',
     title: 'optionsSectionAutoLogin',
     Icon: ExitToAppIcon,
     Component: function SectionGeneral(): ReactElement {

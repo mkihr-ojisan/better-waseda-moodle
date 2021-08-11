@@ -18,6 +18,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default {
+    name: 'SectionAbout',
     title: 'optionsAboutTitle',
     Icon: InfoIcon,
     divider: true,

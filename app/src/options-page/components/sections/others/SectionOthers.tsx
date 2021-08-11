@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import NoPaddingList from '../../NoPaddingList';
 
 export default {
+    name: 'SectionOthers',
     title: 'optionsSectionOthers',
     Icon: MoreHorizIcon,
     Component: function SectionQuiz(): ReactElement {
