@@ -1,4 +1,4 @@
-import { ExPromise } from './ExPromise';
+import { ExPromise, PromiseProgressEvent } from './ExPromise';
 
 export class MessengerServer {
     private static instructions: { [key: string]: Function } = {};
@@ -20,10 +20,10 @@ export class MessengerServer {
                                 const value = this.instructions[inst].apply(undefined, args);
                                 if (value instanceof ExPromise) {
                                     this.pendingExPromises[id] = value;
-                                    value.addEventListener('progress', (progress) => {
+                                    value.addEventListener('progress', (event) => {
                                         port.postMessage({
                                             inst: '__retProgress',
-                                            value: progress,
+                                            value: (event as PromiseProgressEvent<any>).progress,
                                             id,
                                         });
                                     });
@@ -92,9 +92,11 @@ export class MessengerClient {
             switch (inst) {
                 case '__retOk':
                     this.promises[id].resolve(message.value);
+                    delete this.promises[id];
                     break;
                 case '__retErr':
                     this.promises[id].reject(Error(message.value));
+                    delete this.promises[id];
                     break;
                 case '__retProgress':
                     this.promises[id].reportProgress?.(message.value);
@@ -105,7 +107,6 @@ export class MessengerClient {
                 default:
                     throw new Error(`unknown instruction '${inst}'`);
             }
-            delete this.promises[id];
         });
 
         this.initialized = true;
