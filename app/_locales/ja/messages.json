@@ -160,7 +160,7 @@
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
   "optionsFetchTimetableDataAndSyllabusUrlDescription": {
-    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。既存の設定は上書きされます。履修登録ページがメンテナンス中の場合は取得できません。また、Moodleのコース名と科目名が一致していないなど特殊な科目の情報は取得できないことがあります。",
+    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。取得した時間割が既存の設定と重複する場合は上書きされます。",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
   "optionsFetchTimetableDataAndSyllabusUrlButton": {
@@ -196,15 +196,15 @@
     "description": "設定ページの「その他」セクションの見出し"
   },
   "optionsViewInBrowserEnabled": {
-    "message": "PDF、画像等をブラウザで開く",
+    "message": "PDF・画像・動画等をブラウザで開く",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsViewInBrowserDescription": {
-    "message": "PDF、画像等を保存せずに直接ブラウザで開けるようにします。",
+    "message": "ブラウザで開くことができるファイルを、保存せずに直接ブラウザで開けるようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsRemoveLoadingVideo": {
-    "message": "動画コンテンツの読み込み中に再生される動画を削除する",
+    "message": "動画コンテンツの読み込み中に再生される動画をスキップする",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsRemoveLoadingVideoDescription": {
@@ -248,7 +248,7 @@
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsSyllabusLinkFixEnabledDescription": {
-    "message": "新しいウィンドウで開き、右クリック禁止という前時代的な挙動を修正します。",
+    "message": "右クリック禁止を解除し、リンク先を同じタブで開くようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsCheckSessionEnabled": {
@@ -276,7 +276,7 @@
     "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"
   },
   "optionsAboutDisclaimer": {
-    "message": "Better Waseda MoodleはMITライセンスの下で公開されているフリーソフトウェアです。早稲田大学の許可を受けずに公開しているため、自己責任で使用してください。作者はBetter Waseda Moodleの開発を引き継ぐ学生をいつでも募集しています。",
+    "message": "Better Waseda MoodleはMITライセンスの下で公開されているフリーソフトウェアです。特に早稲田大学の許可を得るということはせずに公開しているので、自己責任で使用してください。作者はBetter Waseda Moodleの開発を引き継いでくれる学生をいつでも募集しています。",
     "description": "設定ページの「Better Waseda Moodleについて」セクションに表示するメッセージ"
   },
   "optionsAboutSourceCode": {
