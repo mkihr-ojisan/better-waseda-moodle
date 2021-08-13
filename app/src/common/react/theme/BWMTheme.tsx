@@ -1,12 +1,15 @@
 import { ThemeOptions } from '@material-ui/core';
 
+export const PRIMARY_COLOR = '#ed6c00';
+export const SECONDARY_COLOR = '#cc0624';
+
 export const bwmThemeOptions: ThemeOptions = {
     palette: {
         primary: {
-            main: '#ed6c00',
+            main: PRIMARY_COLOR,
         },
         secondary: {
-            main: '#cc0624',
+            main: SECONDARY_COLOR,
         },
     },
     overrides: {
@@ -18,6 +21,13 @@ export const bwmThemeOptions: ThemeOptions = {
         MuiInputBase: {
             input: {
                 boxShadow: 'none !important', // [role="button"]:focus
+            },
+        },
+        MuiCssBaseline: {
+            '@global': {
+                a: {
+                    color: PRIMARY_COLOR,
+                },
             },
         },
     },
