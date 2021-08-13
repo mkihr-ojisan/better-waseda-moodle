@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useCallback } from 'react';
 import { useEffect } from 'react';
@@ -16,7 +17,16 @@ type Props = {
     onScrolledTo: () => void;
 };
 
+const useStyles = makeStyles(() => ({
+    grid: {
+        '&:last-child > .MuiPaper-root': {
+            marginBottom: 'calc(100vh - 100% - 30px)',
+        },
+    },
+}));
+
 export default React.memo(function OptionsPageSectionContent(props: Props) {
+    const classes = useStyles();
     const elem = useRef<HTMLDivElement | null>(null);
 
     useHandleSignal(
@@ -48,7 +58,7 @@ export default React.memo(function OptionsPageSectionContent(props: Props) {
     });
 
     return (
-        <Grid ref={elem} item>
+        <Grid ref={elem} item className={classes.grid}>
             <Typography variant="h6">{browser.i18n.getMessage(props.section.title)}</Typography>
             <Paper>
                 <props.section.Component />
