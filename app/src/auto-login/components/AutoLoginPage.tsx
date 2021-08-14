@@ -47,7 +47,7 @@ export default React.memo(function AutoLoginPage(props: AutoLoginPageProps) {
             <CssBaseline />
             <Dialog hideBackdrop open maxWidth="xs" fullWidth>
                 <DialogTitle disableTypography classes={{ root: classes.dialogTitleRoot }}>
-                    <img src="/res/images/icon-256.png" className={classes.dialogTitleIcon} />
+                    <img src="/res/images/icon.svg" className={classes.dialogTitleIcon} />
                     <Typography variant="h6">{browser.i18n.getMessage('appName')}</Typography>
                 </DialogTitle>
                 <DialogContent>

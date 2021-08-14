@@ -6,7 +6,7 @@
   "manifest_version": 2,
   "default_locale": "ja",
   "icons": {
-    "256": "res/images/icon-256.png"
+    "256": "res/images/icon.svg"
   },
   "background": {
     "scripts": [

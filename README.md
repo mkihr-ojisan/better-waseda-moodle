@@ -1,6 +1,6 @@
 # Better Waseda Moodle
 
-<img src="https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/app/res/images/icon-256.png" alt="Better Waseda Moodle" width="128">
+<img src="https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/app/res/images/icon.svg" alt="Better Waseda Moodle" width="128">
 
 Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 

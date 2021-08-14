@@ -28,7 +28,7 @@ export default {
         return (
             <div className={classes.center}>
                 <Box py={3}>
-                    <img src="/res/images/icon-256.png" width="128" />
+                    <img src="/res/images/icon.svg" width="128" />
                 </Box>
                 <Box pb={3}>
                     <Typography variant="h6">{browser.i18n.getMessage('appName')}</Typography>
