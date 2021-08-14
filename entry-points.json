@@ -4,5 +4,6 @@
     "src/others/syllabus-link-fix/content-script.ts",
     "src/options-page/options.tsx",
     "src/quiz/remind-unanswered-questions/content-script.tsx",
-    "src/others/check-session/content-script.tsx"
+    "src/others/check-session/content-script.tsx",
+    "src/browser-action-popup/popup.tsx"
 ]

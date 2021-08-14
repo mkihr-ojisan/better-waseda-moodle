@@ -449,6 +449,18 @@
     "message": "セッションがタイムアウトしたようです。このまま提出することはできないので、**提出する内容を控えた上で**リロードするなどして提出してください。",
     "description": "セッションがタイムアウトしている状態で送信しようとしたときに表示するメッセージ"
   },
+  "popupSettingsButtonTitle": {
+    "message": "Better Waseda Moodleの設定",
+    "description": "ポップアップの設定ボタンのタイトル"
+  },
+  "popupRefreshList": {
+    "message": "リストを更新",
+    "description": "ポップアップの更新ボタンのタイトル"
+  },
+  "popupIndefinite": {
+    "message": "無期限",
+    "description": "ポップアップ内で無期限の課題の対して表示するメッセージ"
+  },
   "sundayShort": {
     "message": "日"
   },
@@ -547,5 +559,8 @@
   },
   "version": {
     "message": "バージョン $1"
+  },
+  "dateFormatMonthDateDay": {
+    "message": "M/d(EEEEE)"
   }
 }

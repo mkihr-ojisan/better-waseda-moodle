@@ -49,5 +49,14 @@
       "update_url": "https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/main/firefox-updates.json"
     }
   },
-  "incognito": "not_allowed"
+  "incognito": "not_allowed",
+  "browser_action": {
+    "default_icon": {
+      "__firefox__256": "res/images/icon.svg",
+      "__chrome|opera|edge__48": "res/images/icon-48.png",
+      "__chrome|opera|edge__128": "res/images/icon-128.png"
+    },
+    "default_title": "__MSG_appName__",
+    "default_popup": "src/browser-action-popup/popup.html"
+  }
 }
