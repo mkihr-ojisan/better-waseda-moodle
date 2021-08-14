@@ -31,7 +31,7 @@ export default function Popup(): ReactElement | null {
         <BWMThemePrefersColorScheme>
             <CssBaseline />
             <div className={classes.root}>
-                <TodoListView items={todoItems} onRefreshListRequest={handleRefresh} />
+                <TodoListView loading={state !== 'fulfilled'} items={todoItems} onRefreshListRequest={handleRefresh} />
                 <Header loading={state !== 'fulfilled'} onRefreshListRequest={handleRefresh} />
             </div>
         </BWMThemePrefersColorScheme>

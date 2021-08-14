@@ -461,6 +461,14 @@
     "message": "無期限",
     "description": "ポップアップ内で無期限の課題の対して表示するメッセージ"
   },
+  "popupEmptyMessageLoading": {
+    "message": "取得しています…",
+    "description": "ポップアップのリストが空で、取得中のときに表示するメッセージ"
+  },
+  "popupEmptyMessage": {
+    "message": "TODOリストは空です。",
+    "description": "ポップアップのリストが空のときに表示するメッセージ"
+  },
   "sundayShort": {
     "message": "日"
   },

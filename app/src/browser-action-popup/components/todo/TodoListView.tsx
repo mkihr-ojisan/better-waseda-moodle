@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { useMemo } from 'react';
+import Center from '../../../common/react/Center';
 import { TodoItem } from '../../../common/todo-list/todo';
 import TodoListViewDate from './TodoListViewDate';
 
@@ -15,6 +17,7 @@ const useStyles = makeStyles(() => ({
 
 export type TodoListViewProps = {
     items: TodoItem[] | undefined;
+    loading: boolean;
     onRefreshListRequest: () => void;
 };
 
@@ -50,19 +53,29 @@ export default React.memo(function TodoListView(props: TodoListViewProps) {
         return { dates, indefiniteItems };
     }, [props.items]);
 
-    return (
-        <Grid container direction="column" spacing={1} className={classes.root} wrap="nowrap">
-            {indefiniteItems.length > 0 && (
-                <TodoListViewDate items={indefiniteItems} onRefreshListRequest={props.onRefreshListRequest} />
-            )}
-            {dates?.map(({ date, items }) => (
-                <TodoListViewDate
-                    key={date.getFullYear() * 366 + date.getMonth() * 31 + date.getDate()}
-                    date={date}
-                    items={items}
-                    onRefreshListRequest={props.onRefreshListRequest}
-                />
-            ))}
-        </Grid>
-    );
+    if (props.items && props.items.length > 0) {
+        return (
+            <Grid container direction="column" spacing={1} className={classes.root} wrap="nowrap">
+                {indefiniteItems.length > 0 && (
+                    <TodoListViewDate items={indefiniteItems} onRefreshListRequest={props.onRefreshListRequest} />
+                )}
+                {dates?.map(({ date, items }) => (
+                    <TodoListViewDate
+                        key={date.getFullYear() * 366 + date.getMonth() * 31 + date.getDate()}
+                        date={date}
+                        items={items}
+                        onRefreshListRequest={props.onRefreshListRequest}
+                    />
+                ))}
+            </Grid>
+        );
+    } else {
+        return (
+            <Center>
+                <Typography variant="body2" color="textSecondary">
+                    {browser.i18n.getMessage(props.loading ? 'popupEmptyMessageLoading' : 'popupEmptyMessage')}
+                </Typography>
+            </Center>
+        );
+    }
 });
