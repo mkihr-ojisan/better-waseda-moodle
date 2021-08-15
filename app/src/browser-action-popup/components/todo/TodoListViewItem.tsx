@@ -74,7 +74,7 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
 
     const popupState = usePopupState({ variant: 'popover', popupId: 'todo-list-view-item-menu' });
 
-    const handleMenuItemClick = (action: TodoItemAction) => () => {
+    const handleMenuItemClick = (action: TodoItemAction<any>) => () => {
         popupState.close();
         const ret = action.onAction(props.todoItem);
         if (ret?.closePopup) {
@@ -88,7 +88,7 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
     return (
         <Paper className={classes.root}>
             <div className={classes.icon}>
-                <props.todoItem.Icon />
+                <props.todoItem.Icon item={props.todoItem} />
             </div>
             <Grid
                 container
@@ -136,7 +136,7 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
                 {props.todoItem.actions.map((action, i) => [
                     <MenuItem key={i} onClick={handleMenuItemClick(action)} dense>
                         <ListItemIcon className={classes.listItemIconRoot}>
-                            <action.Icon />
+                            <action.Icon item={props.todoItem} action={action} />
                         </ListItemIcon>
                         {action.title}
                     </MenuItem>,
