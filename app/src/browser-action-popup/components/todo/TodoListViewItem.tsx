@@ -138,7 +138,7 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
                 {props.todoItem.actions.map((action, i) => [
                     <MenuItem key={i} onClick={handleMenuItemClick(action)} dense>
                         <ListItemIcon className={classes.listItemIconRoot}>
-                            <action.Icon item={props.todoItem} action={action} />
+                            {action.Icon && <action.Icon item={props.todoItem} action={action} />}
                         </ListItemIcon>
                         {action.title}
                     </MenuItem>,

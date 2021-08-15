@@ -14,7 +14,7 @@ export type TodoItem<T = undefined> = {
 };
 
 export type TodoItemAction<T> = {
-    Icon: React.FC<TodoItemActionIconProps<T>>;
+    Icon?: React.FC<TodoItemActionIconProps<T>>;
     title: string;
     onAction: (item: TodoItem) => TodoItemActionReturn | undefined;
     divider?: boolean /* trueなら下に<Divider />を挟む */;
