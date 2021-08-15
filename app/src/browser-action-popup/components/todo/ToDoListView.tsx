@@ -8,9 +8,9 @@ import { useCallback } from 'react';
 import { useState } from 'react';
 import { useMemo } from 'react';
 import Center from '../../../common/react/Center';
-import { TodoItem } from '../../../common/todo-list/todo';
+import { ToDoItem } from '../../../common/todo-list/todo';
 import { AlertColor } from '../../../common/util/types';
-import TodoListViewDate from './TodoListViewDate';
+import ToDoListViewDate from './ToDoListViewDate';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -23,13 +23,13 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export type TodoListViewProps = {
-    items: TodoItem[] | undefined;
+export type ToDoListViewProps = {
+    items: ToDoItem[] | undefined;
     loading: boolean;
     onRefreshListRequest: () => void;
 };
 
-export default React.memo(function TodoListView(props: TodoListViewProps) {
+export default React.memo(function ToDoListView(props: ToDoListViewProps) {
     const classes = useStyles();
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -50,9 +50,9 @@ export default React.memo(function TodoListView(props: TodoListViewProps) {
 
         const dates: {
             date: Date;
-            items: TodoItem[];
+            items: ToDoItem[];
         }[] = [];
-        const indefiniteItems: TodoItem[] = [];
+        const indefiniteItems: ToDoItem[] = [];
         for (const item of props.items) {
             if (!item.dueDate) {
                 indefiniteItems.push(item);
@@ -78,14 +78,14 @@ export default React.memo(function TodoListView(props: TodoListViewProps) {
         return (
             <Grid container direction="column" spacing={1} className={classes.root} wrap="nowrap">
                 {indefiniteItems.length > 0 && (
-                    <TodoListViewDate
+                    <ToDoListViewDate
                         items={indefiniteItems}
                         onRefreshListRequest={props.onRefreshListRequest}
                         handleShowSnackbar={handleShowSnackbar}
                     />
                 )}
                 {dates?.map(({ date, items }) => (
-                    <TodoListViewDate
+                    <ToDoListViewDate
                         key={date.getFullYear() * 366 + date.getMonth() * 31 + date.getDate()}
                         date={date}
                         items={items}

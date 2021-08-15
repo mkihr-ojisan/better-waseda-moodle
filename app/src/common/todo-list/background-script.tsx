@@ -3,7 +3,7 @@ import { assertCurrentContextType } from '../util/util';
 
 assertCurrentContextType('background_script');
 
-export function initTodoList(): void {
+export function initToDoList(): void {
     onConfigChange(
         'todo.enabled',
         (_, newValue) => {

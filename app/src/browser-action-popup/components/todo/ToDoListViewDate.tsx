@@ -2,14 +2,14 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { TodoItem } from '../../../common/todo-list/todo';
+import { ToDoItem } from '../../../common/todo-list/todo';
 import { format } from '../../../common/util/date';
 import { AlertColor } from '../../../common/util/types';
-import TodoListViewItem from './TodoListViewItem';
+import ToDoListViewItem from './ToDoListViewItem';
 
-export type TodoListViewDateProps = {
+export type ToDoListViewDateProps = {
     date?: Date;
-    items: TodoItem[];
+    items: ToDoItem[];
     onRefreshListRequest: () => void;
     handleShowSnackbar: (message: string, severity: AlertColor) => void;
 };
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default React.memo(function TodoListViewDate(props: TodoListViewDateProps) {
+export default React.memo(function ToDoListViewDate(props: ToDoListViewDateProps) {
     const classes = useStyles();
 
     return (
@@ -34,7 +34,7 @@ export default React.memo(function TodoListViewDate(props: TodoListViewDateProps
             </Grid>
             {props.items.map((item) => (
                 <Grid item key={item.id}>
-                    <TodoListViewItem
+                    <ToDoListViewItem
                         todoItem={item}
                         onRefreshListRequest={props.onRefreshListRequest}
                         handleShowSnackbar={props.handleShowSnackbar}

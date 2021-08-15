@@ -466,24 +466,24 @@
     "description": "ポップアップのリストが空で、取得中のときに表示するメッセージ"
   },
   "popupEmptyMessage": {
-    "message": "TODOリストは空です。",
+    "message": "ToDoリストは空です。",
     "description": "ポップアップのリストが空のときに表示するメッセージ"
   },
   "popupHideItem": {
     "message": "非表示",
-    "description": "TODO項目のメニューに表示するメッセージ"
+    "description": "ToDo項目のメニューに表示するメッセージ"
   },
   "popupHideCourse": {
     "message": "この科目を非表示",
-    "description": "TODO項目のメニューに表示するメッセージ"
+    "description": "ToDo項目のメニューに表示するメッセージ"
   },
   "popupHideType": {
     "message": "この種類を非表示",
-    "description": "TODO項目のメニューに表示するメッセージ"
+    "description": "ToDo項目のメニューに表示するメッセージ"
   },
   "popupHideNotice": {
     "message": "非表示にした項目は設定から再表示できます。",
-    "description": "初めてTODO項目を非表示にしたときに表示するメッセージ"
+    "description": "初めてToDo項目を非表示にしたときに表示するメッセージ"
   },
   "sundayShort": {
     "message": "日"

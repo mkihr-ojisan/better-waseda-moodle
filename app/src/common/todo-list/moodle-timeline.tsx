@@ -4,17 +4,17 @@ import { ReactElement } from 'react';
 import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 import { MessengerClient } from '../util/messenger';
 import { ActionEvent } from '../waseda/calendar';
-import { TodoItem, TodoItemAction, TodoItemIconProps } from './todo';
+import { ToDoItem, ToDoItemAction, ToDoItemIconProps } from './todo';
 import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { getConfig, setConfig } from '../config/config';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
-export function getTodoItemsFromMoodleTimeline(): CachedPromise<TodoItem<ActionEvent>[]> {
+export function getToDoItemsFromMoodleTimeline(): CachedPromise<ToDoItem<ActionEvent>[]> {
     return createCachedPromise(async (resolveCache) => {
         const promise: CachedPromise<ActionEvent[]> = MessengerClient.exec('fetchActionEventsByTimeSort');
-        resolveCache(promise.cachedValue.then((items) => filterOutHiddenEvents(items).map(actionEventToTodoItem)));
+        resolveCache(promise.cachedValue.then((items) => filterOutHiddenEvents(items).map(actionEventToToDoItem)));
 
-        return filterOutHiddenEvents(await promise).map(actionEventToTodoItem);
+        return filterOutHiddenEvents(await promise).map(actionEventToToDoItem);
     });
 }
 
@@ -28,8 +28,8 @@ function filterOutHiddenEvents(events: ActionEvent[]): ActionEvent[] {
     );
 }
 
-function actionEventToTodoItem(event: ActionEvent): TodoItem<ActionEvent> {
-    const actions: TodoItemAction<ActionEvent>[] = [];
+function actionEventToToDoItem(event: ActionEvent): ToDoItem<ActionEvent> {
+    const actions: ToDoItemAction<ActionEvent>[] = [];
 
     if (event.action?.actionable) {
         actions.push({
@@ -139,7 +139,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-function Icon(props: TodoItemIconProps<ActionEvent>): ReactElement {
+function Icon(props: ToDoItemIconProps<ActionEvent>): ReactElement {
     const classes = useStyles();
     return (
         <img

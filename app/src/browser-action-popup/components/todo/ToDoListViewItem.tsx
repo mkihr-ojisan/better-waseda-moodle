@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { MouseEventHandler } from 'react';
-import { TodoItem, TodoItemAction } from '../../../common/todo-list/todo';
+import { ToDoItem, ToDoItemAction } from '../../../common/todo-list/todo';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Grid from '@material-ui/core/Grid';
 import Center from '../../../common/react/Center';
@@ -15,8 +15,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 import { AlertColor } from '../../../common/util/types';
 
-export type TodoListViewItemProps = {
-    todoItem: TodoItem;
+export type ToDoListViewItemProps = {
+    todoItem: ToDoItem;
     onRefreshListRequest: () => void;
     handleShowSnackbar: (message: string, severity: AlertColor) => void;
 };
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default React.memo(function TodoListViewItem(props: TodoListViewItemProps) {
+export default React.memo(function ToDoListViewItem(props: ToDoListViewItemProps) {
     const classes = useStyles();
 
     const handleLinkClick: MouseEventHandler<HTMLAnchorElement> = useCallback((event) => {
@@ -76,7 +76,7 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
 
     const popupState = usePopupState({ variant: 'popover', popupId: 'todo-list-view-item-menu' });
 
-    const handleMenuItemClick = (action: TodoItemAction<any>) => () => {
+    const handleMenuItemClick = (action: ToDoItemAction<any>) => () => {
         popupState.close();
         const ret = action.onAction(props.todoItem);
         if (ret?.closePopup) {
