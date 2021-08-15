@@ -1,19 +1,20 @@
 import React from 'react';
 import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 
-export type TodoItem = {
+export type TodoItem<T = undefined> = {
     id: string;
-    Icon: React.FC;
+    Icon: React.FC<TodoItemIconProps<T>>;
     category?: string;
     categoryHref?: string;
     title: string;
     titleHref?: string;
-    actions: TodoItemAction[];
+    actions: TodoItemAction<T>[];
     dueDate?: Date;
+    data: T;
 };
 
-export type TodoItemAction = {
-    Icon: React.FC;
+export type TodoItemAction<T> = {
+    Icon: React.FC<TodoItemActionIconProps<T>>;
     title: string;
     onAction: (item: TodoItem) => TodoItemActionReturn | undefined;
     divider?: boolean /* trueなら下に<Divider />を挟む */;
@@ -22,6 +23,15 @@ export type TodoItemAction = {
 export type TodoItemActionReturn = {
     closePopup?: boolean;
     refreshList?: boolean;
+};
+
+export type TodoItemIconProps<T> = {
+    item: TodoItem<T>;
+};
+
+export type TodoItemActionIconProps<T> = {
+    item: TodoItem<T>;
+    action: TodoItemAction<T>;
 };
 
 export function getTodoItems(): CachedPromise<TodoItem[]> {
