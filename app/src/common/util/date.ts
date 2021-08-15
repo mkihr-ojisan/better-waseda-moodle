@@ -25,13 +25,7 @@ export function format(
 
 export function formatDistanceToNowStrict(
     date: number | Date,
-    options?:
-        | {
-              includeSeconds?: boolean | undefined;
-              addSuffix?: boolean | undefined;
-              locale?: globalThis.Locale | undefined;
-          }
-        | undefined
+    options?: Parameters<typeof dateFns.formatDistanceToNowStrict>[1]
 ): string {
     options = options ?? {};
     options.locale = getLocale();
