@@ -105,6 +105,7 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
                         className={classes.titleCategory}
                         href={props.todoItem.categoryHref}
                         onClick={handleLinkClick}
+                        title={props.todoItem.category}
                     >
                         {props.todoItem.category}
                     </Typography>
@@ -120,6 +121,7 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
                     className={classes.titleCategory}
                     href={props.todoItem.titleHref}
                     onClick={handleLinkClick}
+                    title={props.todoItem.title}
                 >
                     {props.todoItem.title}
                 </Typography>
