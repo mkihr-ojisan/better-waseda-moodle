@@ -19,6 +19,7 @@ import { enableConfigSyncIfFirstRun, initConfigCache } from './common/config/con
 import { initCheckNotesOnSubmitting } from './others/check-notes-on-submitting/background-script';
 import './options-page/background-script';
 import './common/waseda/calendar';
+import { initTodoList } from './common/todo-list/background-script';
 
 assertCurrentContextType('background_script');
 
@@ -39,4 +40,5 @@ MessengerServer.init();
     initRemindUnansweredQuestions();
     initCheckSession();
     initCheckNotesOnSubmitting();
+    initTodoList();
 })();

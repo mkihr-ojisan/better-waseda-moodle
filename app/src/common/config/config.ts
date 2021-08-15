@@ -34,6 +34,7 @@ export type Config = ObjectValuesDeepReadonly<{
     'checkSession.quiz': boolean;
     'checkSession.assignment': boolean;
     'checkSession.forum': boolean;
+    'todo.enabled': boolean;
     'todo.hiddenItems': { courses: number[]; ids: number[]; modules: string[] };
     'todo.hideItemNoticeShown': boolean;
 }>;
@@ -61,6 +62,7 @@ export const defaultValue: Config = {
     'checkSession.quiz': true,
     'checkSession.assignment': true,
     'checkSession.forum': true,
+    'todo.enabled': true,
     'todo.hiddenItems': { courses: [], ids: [], modules: [] },
     'todo.hideItemNoticeShown': false,
 };
