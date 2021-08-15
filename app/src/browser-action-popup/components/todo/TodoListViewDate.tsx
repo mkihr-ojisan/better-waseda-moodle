@@ -4,12 +4,14 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { TodoItem } from '../../../common/todo-list/todo';
 import { format } from '../../../common/util/date';
+import { AlertColor } from '../../../common/util/types';
 import TodoListViewItem from './TodoListViewItem';
 
 export type TodoListViewDateProps = {
     date?: Date;
     items: TodoItem[];
     onRefreshListRequest: () => void;
+    handleShowSnackbar: (message: string, severity: AlertColor) => void;
 };
 
 const useStyles = makeStyles(() => ({
@@ -32,7 +34,11 @@ export default React.memo(function TodoListViewDate(props: TodoListViewDateProps
             </Grid>
             {props.items.map((item) => (
                 <Grid item key={item.id}>
-                    <TodoListViewItem todoItem={item} onRefreshListRequest={props.onRefreshListRequest} />
+                    <TodoListViewItem
+                        todoItem={item}
+                        onRefreshListRequest={props.onRefreshListRequest}
+                        handleShowSnackbar={props.handleShowSnackbar}
+                    />
                 </Grid>
             ))}
         </>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { CachedPromise, createCachedPromise } from '../util/ExPromise';
+import { AlertColor } from '../util/types';
 
 export type TodoItem<T = undefined> = {
     id: string;
@@ -23,6 +24,10 @@ export type TodoItemAction<T> = {
 export type TodoItemActionReturn = {
     closePopup?: boolean;
     refreshList?: boolean;
+    showSnackbar?: {
+        message: string;
+        severity: AlertColor;
+    };
 };
 
 export type TodoItemIconProps<T> = {

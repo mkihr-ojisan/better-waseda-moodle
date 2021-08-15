@@ -13,10 +13,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
+import { AlertColor } from '../../../common/util/types';
 
 export type TodoListViewItemProps = {
     todoItem: TodoItem;
     onRefreshListRequest: () => void;
+    handleShowSnackbar: (message: string, severity: AlertColor) => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -82,6 +84,9 @@ export default React.memo(function TodoListViewItem(props: TodoListViewItemProps
         }
         if (ret?.refreshList) {
             props.onRefreshListRequest();
+        }
+        if (ret?.showSnackbar) {
+            props.handleShowSnackbar(ret.showSnackbar.message, ret.showSnackbar.severity);
         }
     };
 

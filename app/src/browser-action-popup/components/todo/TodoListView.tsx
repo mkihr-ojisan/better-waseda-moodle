@@ -1,10 +1,15 @@
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
 import Typography from '@material-ui/core/Typography';
+import Alert from '@material-ui/lab/Alert';
 import React from 'react';
+import { useCallback } from 'react';
+import { useState } from 'react';
 import { useMemo } from 'react';
 import Center from '../../../common/react/Center';
 import { TodoItem } from '../../../common/todo-list/todo';
+import { AlertColor } from '../../../common/util/types';
 import TodoListViewDate from './TodoListViewDate';
 
 const useStyles = makeStyles(() => ({
@@ -12,6 +17,9 @@ const useStyles = makeStyles(() => ({
         overflowY: 'auto',
         width: '100%',
         margin: 0,
+    },
+    snackbar: {
+        bottom: 48,
     },
 }));
 
@@ -23,6 +31,19 @@ export type TodoListViewProps = {
 
 export default React.memo(function TodoListView(props: TodoListViewProps) {
     const classes = useStyles();
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('success');
+
+    const handleShowSnackbar = useCallback((message: string, severity: AlertColor) => {
+        setSnackbarOpen(true);
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity);
+    }, []);
+    const handleCloseSnackbar = useCallback(() => {
+        setSnackbarOpen(false);
+    }, []);
 
     const { dates, indefiniteItems } = useMemo(() => {
         if (!props.items) return { dates: [], indefiniteItems: [] };
@@ -57,7 +78,11 @@ export default React.memo(function TodoListView(props: TodoListViewProps) {
         return (
             <Grid container direction="column" spacing={1} className={classes.root} wrap="nowrap">
                 {indefiniteItems.length > 0 && (
-                    <TodoListViewDate items={indefiniteItems} onRefreshListRequest={props.onRefreshListRequest} />
+                    <TodoListViewDate
+                        items={indefiniteItems}
+                        onRefreshListRequest={props.onRefreshListRequest}
+                        handleShowSnackbar={handleShowSnackbar}
+                    />
                 )}
                 {dates?.map(({ date, items }) => (
                     <TodoListViewDate
@@ -65,8 +90,19 @@ export default React.memo(function TodoListView(props: TodoListViewProps) {
                         date={date}
                         items={items}
                         onRefreshListRequest={props.onRefreshListRequest}
+                        handleShowSnackbar={handleShowSnackbar}
                     />
                 ))}
+                <Snackbar
+                    open={snackbarOpen}
+                    onClose={handleCloseSnackbar}
+                    autoHideDuration={5000}
+                    className={classes.snackbar}
+                >
+                    <Alert severity={snackbarSeverity} onClose={handleCloseSnackbar} variant="filled">
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
             </Grid>
         );
     } else {
