@@ -18,6 +18,7 @@ import { initCheckSession } from './others/check-session/background-script';
 import { enableConfigSyncIfFirstRun, initConfigCache } from './common/config/config';
 import { initCheckNotesOnSubmitting } from './others/check-notes-on-submitting/background-script';
 import './options-page/background-script';
+import './common/waseda/calendar';
 
 assertCurrentContextType('background_script');
 
