@@ -1,6 +1,7 @@
 import React from 'react';
 import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 import { AlertColor } from '../util/types';
+import { getTodoItemsFromMoodleTimeline } from './moodle-timeline';
 
 export type TodoItem<T = undefined> = {
     id: string;
@@ -39,9 +40,11 @@ export type TodoItemActionIconProps<T> = {
     action: TodoItemAction<T>;
 };
 
-export function getTodoItems(): CachedPromise<TodoItem[]> {
+export function getTodoItems(): CachedPromise<TodoItem<any>[]> {
     return createCachedPromise(async (resolveCache) => {
-        resolveCache([]);
-        return [];
+        const promises: CachedPromise<TodoItem<any>[]>[] = [getTodoItemsFromMoodleTimeline()];
+        resolveCache((await Promise.all(promises.map((p) => p.cachedValue))).flat());
+
+        return (await Promise.all(promises)).flat();
     });
 }

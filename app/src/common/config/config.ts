@@ -34,6 +34,8 @@ export type Config = ObjectValuesDeepReadonly<{
     'checkSession.quiz': boolean;
     'checkSession.assignment': boolean;
     'checkSession.forum': boolean;
+    'todo.hiddenItems': { courses: number[]; ids: number[]; modules: string[] };
+    'todo.hideItemNoticeShown': boolean;
 }>;
 
 export const defaultValue: Config = {
@@ -59,6 +61,8 @@ export const defaultValue: Config = {
     'checkSession.quiz': true,
     'checkSession.assignment': true,
     'checkSession.forum': true,
+    'todo.hiddenItems': { courses: [], ids: [], modules: [] },
+    'todo.hideItemNoticeShown': false,
 };
 
 export async function getConfigAsync<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {
