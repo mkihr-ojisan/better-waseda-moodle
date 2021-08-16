@@ -37,7 +37,7 @@
     "idb-keyval": "^5.0.6",
     "match-pattern": "^0.0.2",
     "material-ui-popup-state": "^1.9.0",
-    "p-limit": "^3.1.0",
+    "p-limit": "^4.0.0",
     "parse-entities": "^2.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

@@ -17,7 +17,7 @@ import { CourseSection } from '../../../../common/waseda/course/content/course-s
 import { CourseModule } from '../../../../common/waseda/course/content/module/course-module';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import Assignment from './Assignment';
-import pLimit from 'p-limit';
+import pLimit, { LimitFunction } from 'p-limit';
 import CenteredCircularProgress from '../../../../common/react/CenteredCircularProgress';
 import { useCallback } from 'react';
 
@@ -53,7 +53,7 @@ export default React.memo(function AssignmentListDialog(props: Props): ReactElem
     );
 });
 
-function AssignmentListDialogContent(props: Props & { limit: pLimit.Limit }): ReactElement {
+function AssignmentListDialogContent(props: Props & { limit: LimitFunction }): ReactElement {
     const classes = useStyles();
 
     const courseContent = usePromise(() => fetchCourseContent(props.course), [props.course]);
