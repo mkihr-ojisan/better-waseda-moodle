@@ -36,7 +36,7 @@ export default React.memo(function TextBoxOption(props: Props) {
                 }
             />
             <ListItemSecondaryAction>
-                <Button variant="outlined" onClick={props.onClick}>
+                <Button variant="outlined" onClick={props.onClick} disabled={disabled}>
                     {browser.i18n.getMessage(props.buttonMessage, props.buttonMessageSubstitutions)}
                 </Button>
             </ListItemSecondaryAction>
