@@ -15,6 +15,7 @@
   },
   "permissions": [
     "*://*.waseda.jp/*",
+    "https://login.microsoftonline.com/*",
     "storage",
     "webRequest",
     "webRequestBlocking",
