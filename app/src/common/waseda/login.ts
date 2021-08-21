@@ -1,6 +1,5 @@
-import { logout } from '../../auto-login/auto-login';
-import { InvalidResponseError, UserIdOrPasswordNotSetError } from '../error';
-import { fetchHtml } from '../util/util';
+import { InvalidResponseError } from '../error';
+import { postForm } from '../util/util';
 
 let loginPromise: Promise<string> | null = null;
 export async function login(userId: string, password: string): Promise<string> {
@@ -10,40 +9,105 @@ export async function login(userId: string, password: string): Promise<string> {
 
     loginPromise = (async () => {
         try {
-            await logout();
+            const response = await fetch(
+                'https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https://wsdmoodle.waseda.jp/&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off',
+                { credentials: 'include', mode: 'cors' },
+            );
+            let page = new DOMParser().parseFromString(await response.text(), 'text/html');
 
-            const loginPage = await fetchHtml('https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off');
+            if (response.url !== 'https://wsdmoodle.waseda.jp/my/') {
+                if (page.getElementsByTagName('script')[0]?.textContent?.startsWith('//<![CDATA[\n$Config={')) {
+                    const strLoginParams = page.getElementsByTagName('script')[0]?.textContent?.slice(20, -7);
+                    if (!strLoginParams) throw new InvalidResponseError('cannot find `$Config`');
+                    const loginParams = JSON.parse(strLoginParams);
 
-            const loginInfoPostUrl = loginPage.getElementById('login')?.getAttribute('action');
-            if (!loginInfoPostUrl) throw new InvalidResponseError('cannot find loginInfoPostUrl');
+                    const loginRequestForm = {
+                        i13: '0',
+                        login: userId,
+                        loginfmt: userId,
+                        type: '11',
+                        LoginOptions: '3',
+                        lrt: '',
+                        lrtPartition: '',
+                        hisRegion: '',
+                        hisScaleUnit: '',
+                        passwd: password,
+                        ps: '2',
+                        psRNGCDefaultType: '',
+                        psRNGCEntropy: '',
+                        psRNGCSLK: '',
+                        canary: loginParams.canary,
+                        ctx: loginParams.sCtx,
+                        hpgrequestid: loginParams.sessionId,
+                        flowToken: loginParams.sFT,
+                        PPSX: '',
+                        NewUser: '1',
+                        FoundMSAs: '',
+                        fspost: '0',
+                        i21: '0',
+                        CookieDisclosure: '0',
+                        IsFidoSupported: '0',
+                        isSignupPost: '0',
+                        i2: '1',
+                        i17: '',
+                        i18: '',
+                        i19: '4829',
+                    };
 
-            const loginInfoPostUrlFull = new URL(loginInfoPostUrl, 'https://iaidp.ia.waseda.jp/');
+                    page = new DOMParser().parseFromString(
+                        await (
+                            await postForm(
+                                'https://login.microsoftonline.com/b3865172-9887-4b3a-89ff-95a35b92f4c3/login',
+                                loginRequestForm,
+                            )
+                        ).text(),
+                        'text/html',
+                    );
+                }
 
-            const csrfToken = loginPage.querySelector('input[name="csrf_token"]')?.getAttribute('value');
-            if (!csrfToken) throw new InvalidResponseError('cannot find csrfToken');
+                if (
+                    page.getElementsByTagName('form')[0]?.action ===
+                    'https://iaidp.ia.waseda.jp/idp/profile/Authn/SAML2/POST/SSO'
+                ) {
+                    const requestForm1 = Object.fromEntries(
+                        (Array.from(page.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
+                            ({ name, value }) => [name, value],
+                        ),
+                    );
+                    page = new DOMParser().parseFromString(
+                        await (
+                            await postForm('https://iaidp.ia.waseda.jp/idp/profile/Authn/SAML2/POST/SSO', requestForm1)
+                        ).text(),
+                        'text/html',
+                    );
+                }
 
-            if (!userId || !password) throw new UserIdOrPasswordNotSetError();
+                if (
+                    page.getElementsByTagName('form')[0]?.action ===
+                    'https://wsdmoodle.waseda.jp/auth/saml2/sp/saml2-acs.php/wsdmoodle.waseda.jp'
+                ) {
+                    const requestForm2 = Object.fromEntries(
+                        (Array.from(page.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
+                            ({ name, value }) => [name, value],
+                        ),
+                    );
 
-            const loginResponse = await fetchHtml(loginInfoPostUrlFull.href, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                method: 'POST',
-                body: `csrf_token=${csrfToken}&j_username=${encodeURIComponent(userId)}&j_password=${encodeURIComponent(password)}&_eventId_proceed=Login`,
-            });
+                    page = new DOMParser().parseFromString(
+                        await (
+                            await postForm(
+                                'https://wsdmoodle.waseda.jp/auth/saml2/sp/saml2-acs.php/wsdmoodle.waseda.jp',
+                                requestForm2,
+                            )
+                        ).text(),
+                        'text/html',
+                    );
+                }
+            }
 
-            const RelayState = loginResponse.querySelector('input[name="RelayState"]')?.getAttribute('value');
-            if (!RelayState) throw new InvalidResponseError('cannot find RelayState');
-            const SAMLResponse = loginResponse.querySelector('input[name="SAMLResponse"]')?.getAttribute('value');
-            if (!SAMLResponse) throw new InvalidResponseError('cannot find SAMLResponse');
-
-            const moodleTopPostUrl = loginResponse.getElementsByTagName('form')[0]?.getAttribute('action');
-            if (!moodleTopPostUrl) throw new InvalidResponseError('moodleTopPostUrl');
-            const moodleTop = await fetchHtml(moodleTopPostUrl, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                method: 'POST',
-                body: `RelayState=${encodeURIComponent(RelayState)}&SAMLResponse=${encodeURIComponent(SAMLResponse)}`,
-            });
-
-            const sessionKey = moodleTop.querySelector('[data-title="logout,moodle"]')?.getAttribute('href')?.match(/sesskey=(.*)$/)?.[1];
+            const sessionKey = page
+                .querySelector('[data-title="logout,moodle"]')
+                ?.getAttribute('href')
+                ?.match(/sesskey=(.*)$/)?.[1];
             if (!sessionKey) throw new InvalidResponseError('cannot find sessionKey');
 
             const sessionKeyExpire = new Date();
