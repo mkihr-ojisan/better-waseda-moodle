@@ -68,46 +68,49 @@ export function login(userId: string, password: string): ProgressPromise<string,
                         ).text(),
                         'text/html'
                     );
+
+                    reportProgress(2 / 4);
                 }
 
                 if (
-                    page.getElementsByTagName('form')[0]?.action !==
+                    page.getElementsByTagName('form')[0]?.action ===
                     'https://iaidp.ia.waseda.jp/idp/profile/Authn/SAML2/POST/SSO'
                 ) {
-                    throw new InvalidResponseError('cannot find form');
+                    const requestForm1 = Object.fromEntries(
+                        (Array.from(page.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
+                            ({ name, value }) => [name, value]
+                        )
+                    );
+                    page = new DOMParser().parseFromString(
+                        await (
+                            await postForm('https://iaidp.ia.waseda.jp/idp/profile/Authn/SAML2/POST/SSO', requestForm1)
+                        ).text(),
+                        'text/html'
+                    );
+
+                    reportProgress(3 / 4);
                 }
 
-                reportProgress(2 / 4);
-
-                const requestForm1 = Object.fromEntries(
-                    (Array.from(page.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
-                        ({ name, value }) => [name, value]
-                    )
-                );
-                const response1 = new DOMParser().parseFromString(
-                    await (
-                        await postForm('https://iaidp.ia.waseda.jp/idp/profile/Authn/SAML2/POST/SSO', requestForm1)
-                    ).text(),
-                    'text/html'
-                );
-
-                reportProgress(3 / 4);
-
-                const requestForm2 = Object.fromEntries(
-                    (Array.from(response1.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
-                        ({ name, value }) => [name, value]
-                    )
-                );
-
-                page = new DOMParser().parseFromString(
-                    await (
-                        await postForm(
-                            'https://wsdmoodle.waseda.jp/auth/saml2/sp/saml2-acs.php/wsdmoodle.waseda.jp',
-                            requestForm2
+                if (
+                    page.getElementsByTagName('form')[0]?.action ===
+                    'https://wsdmoodle.waseda.jp/auth/saml2/sp/saml2-acs.php/wsdmoodle.waseda.jp'
+                ) {
+                    const requestForm2 = Object.fromEntries(
+                        (Array.from(page.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
+                            ({ name, value }) => [name, value]
                         )
-                    ).text(),
-                    'text/html'
-                );
+                    );
+
+                    page = new DOMParser().parseFromString(
+                        await (
+                            await postForm(
+                                'https://wsdmoodle.waseda.jp/auth/saml2/sp/saml2-acs.php/wsdmoodle.waseda.jp',
+                                requestForm2
+                            )
+                        ).text(),
+                        'text/html'
+                    );
+                }
             }
 
             const sessionKey = page
