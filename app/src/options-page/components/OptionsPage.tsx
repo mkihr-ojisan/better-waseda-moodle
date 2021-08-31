@@ -17,6 +17,7 @@ import SectionAbout from './sections/about/SectionAbout';
 import { useEffect } from 'react';
 import { MessengerClient } from '../../common/util/messenger';
 import { OptionsPageParameter } from '../background-script';
+import SectionToDoList from './sections/todo-list/SectionToDoList';
 
 export const OPTIONS_PAGE_DRAWER_WIDTH = 240;
 
@@ -38,6 +39,7 @@ export const OPTIONS_PAGE_SECTIONS: OptionsPageSection[] = [
     SectionAutoLogin,
     SectionCourseOverview,
     SectionQuiz,
+    SectionToDoList,
     SectionOthers,
     SectionAbout,
 ];

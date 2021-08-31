@@ -1,4 +1,4 @@
-import { InvalidResponseError } from '../error';
+import { InternalError, InvalidResponseError } from '../error';
 import { MessengerServer } from '../util/messenger';
 import { assertCurrentContextType, postJson } from '../util/util';
 import { fetchSessionKey } from './session-key';
@@ -171,4 +171,50 @@ export function fetchActionEventsByTimeSort(
         })
     );
 }
-MessengerServer.addInstruction({ fetchActionEventsByTimeSort });
+
+export async function fetchCalendarEventById(id: string): Promise<ActionEvent> {
+    type Request = [
+        {
+            index: 0;
+            methodname: 'core_calendar_get_calendar_event_by_id';
+            args: {
+                eventid: string;
+            };
+        }
+    ];
+    type Response = [
+        | {
+              error: false;
+              data: {
+                  event: ActionEvent;
+                  warnings: [];
+              };
+          }
+        | {
+              error: true;
+              exception: {
+                  message: string;
+                  errorcode: string;
+                  link: string;
+                  moreinfourl: string;
+              };
+          }
+    ];
+
+    const request: Request = [
+        { index: 0, methodname: 'core_calendar_get_calendar_event_by_id', args: { eventid: id } },
+    ];
+
+    const response: Response = await postJson(
+        `https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}`,
+        request
+    );
+
+    if (response[0]?.error) {
+        throw new InternalError(response[0].exception.message);
+    }
+
+    return response[0].data.event;
+}
+
+MessengerServer.addInstruction({ fetchActionEventsByTimeSort, fetchCalendarEventById });

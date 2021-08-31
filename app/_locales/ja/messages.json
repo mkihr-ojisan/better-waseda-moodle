@@ -191,6 +191,58 @@
     "message": "前のページに戻れない小テストのみ",
     "description": "設定ページの「小テスト」セクションに表示するメッセージ"
   },
+  "optionsSectionToDoList": {
+    "message": "ToDoリスト",
+    "description": "設定ページの「ToDoリスト」セクションのタイトル"
+  },
+  "optionsToDoListEnabled": {
+    "message": "ToDoリストを有効にする",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsToDoListEnabledDescription": {
+    "message": "有効にするとブラウザのツールバーにあるBetter Waseda MoodleのアイコンをクリックしたときにToDoリストを表示します。",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItems": {
+    "message": "非表示のToDo項目",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemsButton": {
+    "message": "一覧",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogTitle": {
+    "message": "非表示のToDo項目",
+    "description": "非表示のToDo項目ダイアログのタイトル"
+  },
+  "optionsHiddenToDoItemDialogIdsTab": {
+    "message": "項目",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogCoursesTab": {
+    "message": "科目",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogModulesTab": {
+    "message": "種類",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogUnhide": {
+    "message": "再表示",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogIdsEmpty": {
+    "message": "非表示の項目はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogCoursesEmpty": {
+    "message": "非表示の科目はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogModulesEmpty": {
+    "message": "非表示の種類はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"
