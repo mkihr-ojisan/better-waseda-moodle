@@ -40,9 +40,9 @@ export type ToDoItemActionIconProps<T> = {
     action: ToDoItemAction<T>;
 };
 
-export function getToDoItems(): CachedPromise<ToDoItem<any>[]> {
+export function getToDoItems(forceUpdate?: boolean): CachedPromise<ToDoItem<any>[]> {
     return createCachedPromise(async (resolveCache) => {
-        const promises: CachedPromise<ToDoItem<any>[]>[] = [getToDoItemsFromMoodleTimeline()];
+        const promises: CachedPromise<ToDoItem<any>[]>[] = [getToDoItemsFromMoodleTimeline(forceUpdate)];
         resolveCache((await Promise.all(promises.map((p) => p.cachedValue))).flat());
 
         return (await Promise.all(promises)).flat();

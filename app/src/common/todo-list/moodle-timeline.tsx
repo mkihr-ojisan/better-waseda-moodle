@@ -9,9 +9,11 @@ import OpenInNewIcon from '@material-ui/icons/OpenInNew';
 import { getConfig, setConfig } from '../config/config';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
-export function getToDoItemsFromMoodleTimeline(): CachedPromise<ToDoItem<ActionEvent>[]> {
+export function getToDoItemsFromMoodleTimeline(forceUpdate?: boolean): CachedPromise<ToDoItem<ActionEvent>[]> {
     return createCachedPromise(async (resolveCache) => {
-        const promise: CachedPromise<ActionEvent[]> = MessengerClient.exec('fetchActionEventsByTimeSort');
+        const promise: CachedPromise<ActionEvent[]> = MessengerClient.exec('fetchActionEventsByTimeSort', {
+            forceUpdate,
+        });
         resolveCache(promise.cachedValue.then((items) => filterOutHiddenEvents(items).map(actionEventToToDoItem)));
 
         return filterOutHiddenEvents(await promise).map(actionEventToToDoItem);

@@ -21,7 +21,7 @@ export default function Popup(): ReactElement | null {
     const classes = useStyles();
 
     const [refreshCounter, setRefreshCounter] = useState(0); //これをインクリメントすることでリストを更新する
-    const [todoItems, state] = useCachedPromise(() => getToDoItems(), [refreshCounter]);
+    const [todoItems, state] = useCachedPromise(() => getToDoItems(refreshCounter !== 0), [refreshCounter]);
 
     const handleRefresh = useCallback(() => {
         setRefreshCounter((prev) => prev + 1);

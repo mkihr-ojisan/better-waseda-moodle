@@ -113,9 +113,11 @@ type Response = [
 
 const cacheDB = idb.createStore('calendar_action_events_cache', 'calendar_action_events_cache');
 
+const UPDATE_INTERVAL = 60000;
+
 export type FetchActionEventsByTimeSortOptions = {
     fromTimeSort?: Date;
-    doNotResolveCache?: boolean;
+    forceUpdate?: boolean;
 };
 
 const lock = new AsyncLock();
@@ -128,11 +130,15 @@ export function fetchActionEventsByTimeSort(
                 (options?.fromTimeSort?.getTime() ?? Date.now() - 14 * 24 * 60 * 60 * 1000) / 1000
             );
 
-            if (!options?.doNotResolveCache) {
-                const cache: ActionEvent[] | undefined = await idb.get('cache', cacheDB);
+            const cache: ActionEvent[] | undefined = await idb.get('cache', cacheDB);
+            const lastUpdate: Date | undefined = await idb.get('lastUpdate', cacheDB);
 
-                if (cache) {
-                    resolveCache(cache.filter((event) => event.timesort > timesortfrom));
+            if (cache) {
+                const filteredCache = cache.filter((event) => event.timesort > timesortfrom);
+                resolveCache(filteredCache);
+
+                if (!options?.forceUpdate && Date.now() - (lastUpdate?.getTime() ?? 0) < UPDATE_INTERVAL) {
+                    return cache.filter((event) => event.timesort > timesortfrom);
                 }
             }
 
