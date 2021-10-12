@@ -46,7 +46,7 @@ function actionEventToToDoItem(event: ActionEvent): ToDoItem<ActionEvent> {
             divider: true,
             Icon: OpenInNewIcon,
             onAction: () => {
-                window.open('about:blank', '_blank');
+                window.open(event.action.url, '_blank');
                 return { closePopup: true };
             },
         });
