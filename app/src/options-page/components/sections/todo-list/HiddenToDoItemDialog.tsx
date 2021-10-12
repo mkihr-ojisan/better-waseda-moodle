@@ -258,7 +258,7 @@ function HiddenModules(props: Props) {
                     <div className={classes.itemRoot}>
                         <Grid container alignItems="center" className={classes.itemTitleContainer}>
                             <Typography variant="body1" color="textPrimary" className={classes.itemTitle}>
-                                {module}
+                                {browser.i18n.getMessage(`moodleModule_${module}`) || module}
                             </Typography>
                         </Grid>
                         <Button variant="outlined" onClick={() => handleClick(module)}>

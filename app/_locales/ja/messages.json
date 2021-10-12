@@ -638,5 +638,17 @@
   },
   "dateFormatMonthDateDay": {
     "message": "M/d(EEEEE)"
+  },
+  "moodleModule_zoom": {
+    "message": "Zoom ミーティング"
+  },
+  "moodleModule_questionnaire": {
+    "message": "アンケート"
+  },
+  "moodleModule_assign": {
+    "message": "課題"
+  },
+  "moodleModule_quiz": {
+    "message": "小テスト"
   }
 }

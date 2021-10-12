@@ -22,6 +22,13 @@ export function getToDoItemsFromMoodleTimeline(forceUpdate?: boolean): CachedPro
 
 function filterOutHiddenEvents(events: ActionEvent[]): ActionEvent[] {
     const hiddenItems = getConfig('todo.hiddenItems');
+
+    // 時が経って流れた項目は、hiddenItemsから削除する
+    const newHiddenIds = hiddenItems.ids.filter((id) => events.some((event) => event.id === id));
+    if (hiddenItems.ids.length > newHiddenIds.length) {
+        setConfig('todo.hiddenItems', { ...hiddenItems, ids: newHiddenIds });
+    }
+
     return events.filter(
         (event) =>
             !hiddenItems.courses.includes(event.course.id) &&
