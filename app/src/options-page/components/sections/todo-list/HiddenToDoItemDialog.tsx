@@ -125,7 +125,7 @@ const limit = pLimit(1);
 function HiddenIds(props: Props) {
     const classes = useStyles();
 
-    return props.hiddenItems.courses.length > 0 ? (
+    return props.hiddenItems.ids.length > 0 ? (
         <List className={clsx(props.selectedTab !== 'ids' && classes.hidden)}>
             {props.hiddenItems.ids.map((id) => (
                 <ListItem key={id}>
@@ -251,7 +251,7 @@ function HiddenModules(props: Props) {
         setConfig('todo.hiddenItems', newValue);
     };
 
-    return props.hiddenItems.courses.length > 0 ? (
+    return props.hiddenItems.modules.length > 0 ? (
         <List className={clsx(props.selectedTab !== 'modules' && classes.hidden)}>
             {props.hiddenItems.modules.map((module) => (
                 <ListItem key={module}>
