@@ -102,7 +102,7 @@ function checkIfAnswered(elem: Element, type: QuestionType): boolean {
         case 'ddimageortext':
         case 'ddwtos':
             return Array.from(elem.querySelectorAll('input[type=hidden].placeinput')).every(
-                (e) => (e as HTMLInputElement).value !== '0'
+                (e) => (e as HTMLInputElement).value !== '0' && (e as HTMLInputElement).value !== ''
             );
         case 'description':
             return true;
