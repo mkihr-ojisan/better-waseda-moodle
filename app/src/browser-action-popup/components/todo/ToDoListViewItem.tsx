@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
     listItemIconRoot: {
         minWidth: 40,
     },
+    listItemRoot: {
+        minHeight: 36,
+    },
 }));
 
 export default React.memo(function ToDoListViewItem(props: ToDoListViewItemProps) {
@@ -141,7 +144,7 @@ export default React.memo(function ToDoListViewItem(props: ToDoListViewItemProps
 
             <Menu {...bindMenu(popupState)}>
                 {props.todoItem.actions.map((action, i) => [
-                    <MenuItem key={i} onClick={handleMenuItemClick(action)} dense>
+                    <MenuItem key={i} onClick={handleMenuItemClick(action)} dense className={classes.listItemRoot}>
                         <ListItemIcon className={classes.listItemIconRoot}>
                             {action.Icon && <action.Icon item={props.todoItem} action={action} />}
                         </ListItemIcon>
