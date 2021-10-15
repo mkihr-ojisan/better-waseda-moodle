@@ -7,6 +7,9 @@ import TimetableCourseCard from './TimetableCourseCard';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+const TIMETABLE_CELL_MIN_HEIGHT = 80;
+const TIMETABLE_HEIGHT_ADJUST = 350;
+
 type Props = {
     selectedTerm: YearTerm;
     showPeriodTime: boolean;
@@ -190,7 +193,12 @@ function useTimetableCells(context: CourseOverviewContextProps, selectedTerm: Ye
 
         const timetableRowCount = show6thPeriod ? (show7thPeriod ? 7 : 6) : 5;
         const timetableRowHeight = (rowspan: number) => {
-            return Math.max((viewportHeight - 250) / timetableRowCount, 80) * rowspan + (rowspan - 1) + 'px';
+            return (
+                Math.max((viewportHeight - TIMETABLE_HEIGHT_ADJUST) / timetableRowCount, TIMETABLE_CELL_MIN_HEIGHT) *
+                    rowspan +
+                (rowspan - 1) +
+                'px'
+            );
         };
 
         const timetableCells: Record<string, { node: ReactNode; isEmpty: boolean }[]> = {};
