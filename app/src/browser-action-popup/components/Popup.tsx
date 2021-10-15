@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { useCallback } from 'react';
 import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
 import { useCachedPromise } from '../../common/react/usePromise';
@@ -17,7 +17,15 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function Popup(): ReactElement | null {
+export default React.memo(function Popup() {
+    return (
+        <BWMThemePrefersColorScheme>
+            <PopupContent />
+        </BWMThemePrefersColorScheme>
+    );
+});
+
+const PopupContent = React.memo(function Popup() {
     const classes = useStyles();
 
     const [refreshCounter, setRefreshCounter] = useState(0); //これをインクリメントすることでリストを更新する
@@ -28,12 +36,12 @@ export default function Popup(): ReactElement | null {
     }, []);
 
     return (
-        <BWMThemePrefersColorScheme>
+        <>
             <CssBaseline />
             <div className={classes.root}>
                 <ToDoListView loading={state !== 'fulfilled'} items={todoItems} onRefreshListRequest={handleRefresh} />
                 <Header loading={state !== 'fulfilled'} onRefreshListRequest={handleRefresh} />
             </div>
-        </BWMThemePrefersColorScheme>
+        </>
     );
-}
+});

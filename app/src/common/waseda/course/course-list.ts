@@ -82,7 +82,7 @@ async function doFetchCourseList(): Promise<CourseListItem[]> {
             }
         }
     } catch (ex) {
-        throw new InvalidResponseError(ex.message);
+        throw new InvalidResponseError(`${ex}`);
     }
 
     idb.set('cache', courseList, cacheStore);

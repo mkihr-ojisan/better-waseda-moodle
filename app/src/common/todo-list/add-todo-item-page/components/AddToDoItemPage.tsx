@@ -26,7 +26,15 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default React.memo(function AddToDoItemPage(props: OpenAddToDoItemPageOptions) {
+export default React.memo(function AddToDoItemPage() {
+    return (
+        <BWMThemePrefersColorScheme>
+            <AddToDoItemPageContent />
+        </BWMThemePrefersColorScheme>
+    );
+});
+
+const AddToDoItemPageContent = React.memo(function AddToDoItemPageContent(props: OpenAddToDoItemPageOptions) {
     const classes = useStyles();
 
     const [modified, setModified] = useState(false);
@@ -82,7 +90,7 @@ export default React.memo(function AddToDoItemPage(props: OpenAddToDoItemPageOpt
     }, [modified]);
 
     return (
-        <BWMThemePrefersColorScheme>
+        <>
             <CssBaseline />
 
             <Box p={1} className={classes.fill}>
@@ -150,7 +158,7 @@ export default React.memo(function AddToDoItemPage(props: OpenAddToDoItemPageOpt
                     </Grid>
                 </Grid>
             </Box>
-        </BWMThemePrefersColorScheme>
+        </>
     );
 });
 

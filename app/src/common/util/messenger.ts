@@ -51,7 +51,7 @@ export class MessengerServer {
                                 console.error(`Error while executing instruction '${inst}'`, error);
                                 port.postMessage({
                                     inst: '__retErr',
-                                    value: error.message,
+                                    value: `${error}`,
                                     id,
                                 });
                             }

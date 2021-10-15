@@ -23,7 +23,7 @@ export default function OptionRestoreConfig(): ReactElement {
                 config = JSON.parse(await file.text());
             } catch (ex) {
                 setConfigRestoredMessageOpen(true);
-                setConfigRestoreError(browser.i18n.getMessage('otherError', ex.message));
+                setConfigRestoreError(browser.i18n.getMessage('otherError', `${ex}`));
                 return;
             }
 

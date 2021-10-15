@@ -25,7 +25,7 @@ function setProps(props: AutoLoginPageProps) {
         }
     } catch (ex) {
         setProps({
-            error: ex.toString(),
+            error: `${ex}`,
             progress: 0,
         });
     }

@@ -34,6 +34,14 @@ export type AutoLoginPageProps = {
 };
 
 export default React.memo(function AutoLoginPage(props: AutoLoginPageProps) {
+    return (
+        <BWMThemePrefersColorScheme>
+            <AutoLoginPageContent {...props} />
+        </BWMThemePrefersColorScheme>
+    );
+});
+
+const AutoLoginPageContent = React.memo(function AutoLoginPageContent(props: AutoLoginPageProps) {
     const classes = useStyles();
 
     const handleGotoFallbackPageClick = useCallback(() => {
@@ -43,7 +51,7 @@ export default React.memo(function AutoLoginPage(props: AutoLoginPageProps) {
     }, []);
 
     return (
-        <BWMThemePrefersColorScheme>
+        <>
             <CssBaseline />
             <Dialog hideBackdrop open maxWidth="xs" fullWidth>
                 <DialogTitle disableTypography classes={{ root: classes.dialogTitleRoot }}>
@@ -76,7 +84,7 @@ export default React.memo(function AutoLoginPage(props: AutoLoginPageProps) {
                     )}
                 </DialogActions>
             </Dialog>
-        </BWMThemePrefersColorScheme>
+        </>
     );
 });
 

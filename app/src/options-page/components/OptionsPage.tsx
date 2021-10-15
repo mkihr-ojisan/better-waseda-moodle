@@ -44,7 +44,15 @@ export const OPTIONS_PAGE_SECTIONS: OptionsPageSection[] = [
     SectionAbout,
 ];
 
-export default React.memo(function OptionsPage() {
+export default React.memo(function OptionsPageWrapper() {
+    return (
+        <BWMThemePrefersColorScheme>
+            <OptionsPage />
+        </BWMThemePrefersColorScheme>
+    );
+});
+
+const OptionsPage = React.memo(function OptionsPage() {
     const classes = useStyles();
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedSectionIndex, setSelectedSectionIndex] = useState(0);
@@ -85,7 +93,7 @@ export default React.memo(function OptionsPage() {
     }, []);
 
     return (
-        <BWMThemePrefersColorScheme>
+        <>
             <div className={classes.root}>
                 <CssBaseline />
                 <OptionsPageAppBar onDrawerOpen={handleDrawerOpen} />
@@ -101,6 +109,6 @@ export default React.memo(function OptionsPage() {
                     scrollSignal={scrollSignal}
                 />
             </div>
-        </BWMThemePrefersColorScheme>
+        </>
     );
 });
