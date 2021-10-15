@@ -5,6 +5,7 @@ import { ObjectValuesDeepReadonly } from '../util/types';
 import { YearTerm } from '../waseda/course/course';
 import { CourseDataEntry } from '../waseda/course/course-data';
 import AsyncLock from 'async-lock';
+import { UserAddedToDoItem } from '../todo-list/user-added-items';
 
 export type ConfigKey = keyof Config;
 export type ConfigKeyWithType<T> = {
@@ -37,6 +38,7 @@ export type Config = ObjectValuesDeepReadonly<{
     'todo.enabled': boolean;
     'todo.hiddenItems': { courses: number[]; ids: number[]; modules: string[] };
     'todo.hideItemNoticeShown': boolean;
+    'todo.userItems': UserAddedToDoItem[];
 }>;
 
 export const defaultValue: Config = {
@@ -65,6 +67,7 @@ export const defaultValue: Config = {
     'todo.enabled': true,
     'todo.hiddenItems': { courses: [], ids: [], modules: [] },
     'todo.hideItemNoticeShown': false,
+    'todo.userItems': [],
 };
 
 export async function getConfigAsync<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {

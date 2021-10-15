@@ -509,6 +509,10 @@
     "message": "リストを更新",
     "description": "ポップアップの更新ボタンのタイトル"
   },
+  "popupAddButtonTitle": {
+    "message": "ToDo項目を追加",
+    "description": "ポップアップの追加ボタンのタイトル"
+  },
   "popupIndefinite": {
     "message": "無期限",
     "description": "ポップアップ内で無期限の課題の対して表示するメッセージ"
@@ -536,6 +540,38 @@
   "popupHideNotice": {
     "message": "非表示にした項目は設定から再表示できます。",
     "description": "初めてToDo項目を非表示にしたときに表示するメッセージ"
+  },
+  "popupEditItem": {
+    "message": "編集",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupRemoveItem": {
+    "message": "削除",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "addToDoItemPageTitle": {
+    "message": "ToDo項目の追加・編集",
+    "description": "ToDo項目の追加ダイアログのタイトル"
+  },
+  "addToDoItemTitle": {
+    "message": "タイトル",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemIconUrl": {
+    "message": "アイコンのURL",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemCategory": {
+    "message": "科目",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemTitleHref": {
+    "message": "リンク先",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemOK": {
+    "message": "決定",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
   },
   "sundayShort": {
     "message": "日"
