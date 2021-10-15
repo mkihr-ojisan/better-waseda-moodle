@@ -6,12 +6,12 @@ import { usePromise } from '../../../../common/react/usePromise';
 import { CourseSection } from '../../../../common/waseda/course/content/course-section';
 import { fetchCourseModuleAssignContent } from '../../../../common/waseda/course/content/module/assign';
 import { CourseModule } from '../../../../common/waseda/course/content/module/course-module';
-import pLimit from 'p-limit';
+import { LimitFunction } from 'p-limit';
 
 type Props = {
     section: CourseSection;
     module: CourseModule<'assign'>;
-    pLimit: pLimit.Limit;
+    pLimit: LimitFunction;
 };
 
 export default React.memo(function Assignment(props: Props): ReactElement | null {

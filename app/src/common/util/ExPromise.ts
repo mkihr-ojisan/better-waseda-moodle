@@ -36,14 +36,14 @@ export class ExPromise<T, R, P>
         f: (
             resolve: (value: T) => void,
             reject: (reason: any) => void,
-            resolveCache: (value: T) => void,
+            resolveCache: (value: T | PromiseLike<T>) => void,
             checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void,
             reportProgress: (progress: P) => void
         ) => void
     ) {
         super();
 
-        let resolveCache: (value: T) => void | undefined;
+        let resolveCache: (value: T | PromiseLike<T>) => void | undefined;
         this.cachedValue = new Promise((resolve) => {
             resolveCache = resolve;
         });
@@ -87,7 +87,7 @@ export class ExPromise<T, R, P>
 
 export function createCancellableProgressCachedPromise<T, R, P>(
     f: (
-        resolveCache: (value: T) => void,
+        resolveCache: (value: T | PromiseLike<T>) => void,
         checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void,
         reportProgress: (progress: P) => void
     ) => Promise<T> | T
@@ -116,7 +116,7 @@ export function createCancellableProgressPromise<T, R, P>(
 }
 export function createCancellableCachedPromise<T, R>(
     f: (
-        resolveCache: (value: T) => void,
+        resolveCache: (value: T | PromiseLike<T>) => void,
         checkCancelled: (handler: ((reason: R) => boolean) | undefined) => void
     ) => Promise<T> | T
 ): CancellablePromise<T, R> & CachedPromise<T> {
@@ -129,7 +129,7 @@ export function createCancellableCachedPromise<T, R>(
     });
 }
 export function createProgressCachedPromise<T, P>(
-    f: (resolveCache: (value: T) => void, reportProgress: (progress: P) => void) => Promise<T> | T
+    f: (resolveCache: (value: T | PromiseLike<T>) => void, reportProgress: (progress: P) => void) => Promise<T> | T
 ): ProgressPromise<T, P> & CachedPromise<T> {
     return new ExPromise(async (resolve, reject, resolveCache, _checkCancelled, reportProgress) => {
         try {
@@ -161,7 +161,9 @@ export function createProgressPromise<T, P>(
         }
     });
 }
-export function createCachedPromise<T>(f: (resolveCache: (value: T) => void) => Promise<T> | T): CachedPromise<T> {
+export function createCachedPromise<T>(
+    f: (resolveCache: (value: T | PromiseLike<T>) => void) => Promise<T> | T
+): CachedPromise<T> {
     return new ExPromise(async (resolve, reject, resolveCache) => {
         try {
             resolve(await f(resolveCache));

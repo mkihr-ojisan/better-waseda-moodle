@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import React from 'react';
+import clsx from 'clsx';
+import React, { ReactNode } from 'react';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -9,11 +10,16 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default React.memo(function Center(props) {
+export type CenterProps = {
+    children?: ReactNode;
+    className?: string;
+};
+
+export default React.memo(function Center(props: CenterProps) {
     const classes = useStyles();
 
     return (
-        <Grid container className={classes.root} justifyContent="center" alignItems="center">
+        <Grid container className={clsx(classes.root, props.className)} justifyContent="center" alignItems="center">
             <Grid item>{props.children}</Grid>
         </Grid>
     );

@@ -191,6 +191,58 @@
     "message": "前のページに戻れない小テストのみ",
     "description": "設定ページの「小テスト」セクションに表示するメッセージ"
   },
+  "optionsSectionToDoList": {
+    "message": "ToDoリスト",
+    "description": "設定ページの「ToDoリスト」セクションのタイトル"
+  },
+  "optionsToDoListEnabled": {
+    "message": "ToDoリストを有効にする",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsToDoListEnabledDescription": {
+    "message": "有効にするとブラウザのツールバーにあるBetter Waseda MoodleのアイコンをクリックしたときにToDoリストを表示します。",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItems": {
+    "message": "非表示のToDo項目",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemsButton": {
+    "message": "一覧",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogTitle": {
+    "message": "非表示のToDo項目",
+    "description": "非表示のToDo項目ダイアログのタイトル"
+  },
+  "optionsHiddenToDoItemDialogIdsTab": {
+    "message": "項目",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogCoursesTab": {
+    "message": "科目",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogModulesTab": {
+    "message": "種類",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogUnhide": {
+    "message": "再表示",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogIdsEmpty": {
+    "message": "非表示の項目はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogCoursesEmpty": {
+    "message": "非表示の科目はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogModulesEmpty": {
+    "message": "非表示の種類はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"
@@ -449,6 +501,78 @@
     "message": "セッションがタイムアウトしたようです。このまま提出することはできないので、**提出する内容を控えた上で**リロードするなどして提出してください。",
     "description": "セッションがタイムアウトしている状態で送信しようとしたときに表示するメッセージ"
   },
+  "popupSettingsButtonTitle": {
+    "message": "Better Waseda Moodleの設定",
+    "description": "ポップアップの設定ボタンのタイトル"
+  },
+  "popupRefreshList": {
+    "message": "リストを更新",
+    "description": "ポップアップの更新ボタンのタイトル"
+  },
+  "popupAddButtonTitle": {
+    "message": "ToDo項目を追加",
+    "description": "ポップアップの追加ボタンのタイトル"
+  },
+  "popupIndefinite": {
+    "message": "無期限",
+    "description": "ポップアップ内で無期限の課題の対して表示するメッセージ"
+  },
+  "popupEmptyMessageLoading": {
+    "message": "取得しています…",
+    "description": "ポップアップのリストが空で、取得中のときに表示するメッセージ"
+  },
+  "popupEmptyMessage": {
+    "message": "ToDoリストは空です。",
+    "description": "ポップアップのリストが空のときに表示するメッセージ"
+  },
+  "popupHideItem": {
+    "message": "非表示",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupHideCourse": {
+    "message": "この科目を非表示",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupHideType": {
+    "message": "この種類を非表示",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupHideNotice": {
+    "message": "非表示にした項目は設定から再表示できます。",
+    "description": "初めてToDo項目を非表示にしたときに表示するメッセージ"
+  },
+  "popupEditItem": {
+    "message": "編集",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupRemoveItem": {
+    "message": "削除",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "addToDoItemPageTitle": {
+    "message": "ToDo項目の追加・編集",
+    "description": "ToDo項目の追加ダイアログのタイトル"
+  },
+  "addToDoItemTitle": {
+    "message": "タイトル",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemIconUrl": {
+    "message": "アイコンのURL",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemCategory": {
+    "message": "科目",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemTitleHref": {
+    "message": "リンク先",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemOK": {
+    "message": "決定",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
   "sundayShort": {
     "message": "日"
   },
@@ -547,5 +671,20 @@
   },
   "version": {
     "message": "バージョン $1"
+  },
+  "dateFormatMonthDateDay": {
+    "message": "M/d(EEEEE)"
+  },
+  "moodleModule_zoom": {
+    "message": "Zoom ミーティング"
+  },
+  "moodleModule_questionnaire": {
+    "message": "アンケート"
+  },
+  "moodleModule_assign": {
+    "message": "課題"
+  },
+  "moodleModule_quiz": {
+    "message": "小テスト"
   }
 }

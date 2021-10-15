@@ -15,3 +15,5 @@ type DeepReadonlyArray<T> = ReadonlyArray<DeepReadonly<T>>;
 type DeepReadonlyObject<T> = {
     readonly [P in keyof T]: DeepReadonly<T[P]>;
 };
+
+export type AlertColor = 'success' | 'info' | 'warning' | 'error';

@@ -5,5 +5,7 @@
     "src/options-page/options.tsx",
     "src/quiz/remind-unanswered-questions/content-script.tsx",
     "src/others/check-session/content-script.tsx",
-    "src/others/check-notes-on-submitting/content-script.ts"
+    "src/others/check-notes-on-submitting/content-script.ts",
+    "src/browser-action-popup/popup.tsx",
+    "src/common/todo-list/add-todo-item-page/add-todo-item-page.tsx"
 ]

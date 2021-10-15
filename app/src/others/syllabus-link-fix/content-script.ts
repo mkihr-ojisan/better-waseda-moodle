@@ -1,6 +1,7 @@
-const elem = document.createElement('script');
+(() => {
+    const elem = document.createElement('script');
 
-elem.textContent = `
+    elem.textContent = `
 
 document.oncontextmenu = null;
 
@@ -14,4 +15,5 @@ document.querySelectorAll('.ctable-main td:nth-child(3) > a').forEach(elem => {
 
 `;
 
-document.head.appendChild(elem);
+    document.head.appendChild(elem);
+})();
