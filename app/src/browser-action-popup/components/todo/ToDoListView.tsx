@@ -11,6 +11,7 @@ import Center from '../../../common/react/Center';
 import { ToDoItem } from '../../../common/todo-list/todo';
 import { AlertColor } from '../../../common/util/types';
 import ToDoListViewDate from './ToDoListViewDate';
+import Box from '@mui/system/Box';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -93,6 +94,7 @@ export default React.memo(function ToDoListView(props: ToDoListViewProps) {
                         handleShowSnackbar={handleShowSnackbar}
                     />
                 ))}
+                <Box pb={1} />
                 <Snackbar
                     open={snackbarOpen}
                     onClose={handleCloseSnackbar}
