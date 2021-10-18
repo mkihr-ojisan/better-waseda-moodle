@@ -103,8 +103,6 @@ function useDarkReaderTheme(): Theme {
             },
         });
 
-        console.log(newTheme);
-
         return newTheme;
     }, [darkReaderColor]);
 }
