@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ToggleOption from '../../options/ToggleOption';
 import DisableOptions from '../../options/DisableOptions';
 import TextBoxOption from '../../options/TextBoxOption';

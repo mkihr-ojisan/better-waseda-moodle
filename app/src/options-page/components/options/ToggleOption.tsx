@@ -1,18 +1,19 @@
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import { makeStyles } from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
-import Typography from '@material-ui/core/Typography';
+import ListItem from '@mui/material/ListItem';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import makeStyles from '@mui/styles/makeStyles';
+import Switch from '@mui/material/Switch';
+import Typography from '@mui/material/Typography';
 import React, { useCallback } from 'react';
 import { useContext } from 'react';
-import { ConfigKeyWithType } from '../../../common/config/config';
 import CustomizedReactMarkdown from '../OptionsPageReactMarkdown';
 import useConfig from '../../../common/react/useConfig';
 import { DisabledOptionsContext } from './DisableOptions';
+import { ConfigKey } from '../../../common/config/config';
+import { InternalError } from '../../../common/error';
 
 type Props = {
-    configKey: ConfigKeyWithType<boolean>;
+    configKey: ConfigKey;
     message: string;
     messageSubstitutions?: string | string[];
     description?: string;
@@ -28,6 +29,8 @@ const useStyles = makeStyles(() => ({
 
 export default React.memo(function ToggleOption(props: Props) {
     const [value, setValue] = useConfig(props.configKey);
+    if (typeof value !== 'boolean') throw new InternalError('`value` must be boolean.');
+
     const disabled = useContext(DisabledOptionsContext);
     const classes = useStyles();
 

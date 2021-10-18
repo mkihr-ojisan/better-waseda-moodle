@@ -1,4 +1,4 @@
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import React, { ReactElement, useContext, Ref } from 'react';
 import { useCallback } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';

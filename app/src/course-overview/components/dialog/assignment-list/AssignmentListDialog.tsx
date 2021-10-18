@@ -1,14 +1,14 @@
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Close from '@material-ui/icons/Close';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import makeStyles from '@mui/styles/makeStyles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Close from '@mui/icons-material/Close';
 import React, { ReactElement } from 'react';
 import { useMemo } from 'react';
 import { usePromise } from '../../../../common/react/usePromise';
@@ -71,7 +71,7 @@ function AssignmentListDialogContent(props: Props & { limit: LimitFunction }): R
         <>
             <DialogTitle classes={{ root: classes.title }}>
                 {browser.i18n.getMessage('courseOverviewAssignmentDialogTitle', props.course.name)}
-                <IconButton classes={{ root: classes.closeButton }} onClick={props.onClose}>
+                <IconButton classes={{ root: classes.closeButton }} onClick={props.onClose} size="large">
                     <Close />
                 </IconButton>
             </DialogTitle>

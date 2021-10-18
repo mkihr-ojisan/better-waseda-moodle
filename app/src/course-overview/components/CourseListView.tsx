@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
-import Grid, { GridSize } from '@material-ui/core/Grid';
+import makeStyles from '@mui/styles/makeStyles';
+import Grid, { GridSize } from '@mui/material/Grid';
 import React, { ReactElement } from 'react';
 import { CourseListItem } from '../../common/waseda/course/course';
 import CourseCard from './course-card/CourseCard';

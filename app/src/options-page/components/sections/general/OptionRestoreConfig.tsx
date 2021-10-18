@@ -1,5 +1,5 @@
-import Snackbar from '@material-ui/core/Snackbar';
-import Alert from '@material-ui/lab/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import React, { ReactElement, useState } from 'react';
 import { useCallback } from 'react';
 import { importConfig } from '../../../../common/config/config';

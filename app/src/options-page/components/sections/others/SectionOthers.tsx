@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import ToggleOption from '../../options/ToggleOption';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
-import Divider from '@material-ui/core/Divider';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Divider from '@mui/material/Divider';
 import NoPaddingList from '../../NoPaddingList';
 
 export default {

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import AssignmentListDialog from '../../dialog/assignment-list/AssignmentListDialog';
 import CourseMenuItem from './CourseMenuItem';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 
 type Props = {
     course: CourseListItem;

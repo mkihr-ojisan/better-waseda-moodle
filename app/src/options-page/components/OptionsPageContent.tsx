@@ -1,6 +1,6 @@
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useRef } from 'react';
 import { Signal } from '../../common/react/signal';

@@ -1,4 +1,4 @@
-import Visibility from '@material-ui/icons/Visibility';
+import Visibility from '@mui/icons-material/Visibility';
 import React, { ReactElement, useContext, Ref } from 'react';
 import { useCallback } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';

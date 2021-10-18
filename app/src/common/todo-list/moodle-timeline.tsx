@@ -1,13 +1,13 @@
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { ReactElement } from 'react';
 import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 import { MessengerClient } from '../util/messenger';
 import { ActionEvent } from '../waseda/calendar';
 import { ToDoItem, ToDoItemAction, ToDoItemIconProps } from './todo';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { getConfig, setConfig } from '../config/config';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 export function getToDoItemsFromMoodleTimeline(forceUpdate?: boolean): CachedPromise<ToDoItem<ActionEvent>[]> {
     return createCachedPromise(async (resolveCache) => {

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import ToggleOption from '../../options/ToggleOption';
 import NoPaddingList from '../../NoPaddingList';
-import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import DisableOptions from '../../options/DisableOptions';
 import HiddenToDoItems from './HiddenToDoItems';
 

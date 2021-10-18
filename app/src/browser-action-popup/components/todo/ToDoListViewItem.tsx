@@ -1,18 +1,18 @@
-import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography';
 import React, { MouseEventHandler } from 'react';
 import { ToDoItem, ToDoItemAction } from '../../../common/todo-list/todo';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Grid from '@material-ui/core/Grid';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Grid from '@mui/material/Grid';
 import Center from '../../../common/react/Center';
 import { useCallback } from 'react';
 import { usePopupState, bindTrigger, bindMenu } from 'material-ui-popup-state/hooks';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Divider from '@material-ui/core/Divider';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
 import { AlertColor } from '../../../common/util/types';
 
 export type ToDoListViewItemProps = {

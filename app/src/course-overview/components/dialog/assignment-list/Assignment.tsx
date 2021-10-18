@@ -1,6 +1,6 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import CircularProgress from '@mui/material/CircularProgress';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 import React, { ReactElement } from 'react';
 import { usePromise } from '../../../../common/react/usePromise';
 import { CourseSection } from '../../../../common/waseda/course/content/course-section';

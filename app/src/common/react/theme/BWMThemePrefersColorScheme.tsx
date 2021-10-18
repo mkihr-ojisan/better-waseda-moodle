@@ -1,6 +1,5 @@
-import { ThemeProvider, createTheme, ThemeOptions } from '@material-ui/core/styles';
-import { PaletteOptions } from '@material-ui/core/styles/createPalette';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { ThemeProvider, StyledEngineProvider, createTheme, PaletteOptions, ThemeOptions } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import React, { ReactElement, ReactNode, useMemo } from 'react';
 import { bwmThemeOptions } from './BWMTheme';
 
@@ -11,7 +10,7 @@ export default React.memo(function BWMThemePrefersColorScheme(props: { children:
             ...bwmThemeOptions,
             palette: {
                 ...bwmThemeOptions.palette,
-                type: prefersDarkMode ? 'dark' : 'light',
+                mode: prefersDarkMode ? 'dark' : 'light',
             },
         };
 
@@ -19,13 +18,17 @@ export default React.memo(function BWMThemePrefersColorScheme(props: { children:
             // options.paletteにbackgroundプロパティが存在すると値がundefinedでもcreateThemeが補完してくれないので、
             // 上でbackground: prefersDarkMode ? {...} : undefinedみたいに書かずに下のように書く。
             options.palette.background = {
-                default: 'rgb(28, 27, 34)',
-                paper: 'rgb(35, 34, 43)',
+                default: '#1c1b22',
+                paper: '#23222b',
             };
         }
 
         return createTheme(options);
     }, [prefersDarkMode]);
 
-    return <ThemeProvider theme={theme}>{props.children}</ThemeProvider>;
+    return (
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+        </StyledEngineProvider>
+    );
 });

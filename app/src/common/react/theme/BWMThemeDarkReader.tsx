@@ -1,7 +1,13 @@
-import { ThemeProvider, createTheme, Theme } from '@material-ui/core/styles';
-import { PaletteOptions } from '@material-ui/core/styles/createPalette';
+import { PaletteOptions, ThemeProvider } from '@mui/material/styles';
+import { StyledEngineProvider, createTheme, Theme } from '@mui/material/styles';
 import React, { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { bwmThemeOptions } from './BWMTheme';
+
+declare module '@mui/styles/defaultTheme' {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
 
 // DarkReaderで設定された背景色と文字色を取得する
 function useDarkReaderColor(): { bgR: number; bgG: number; bgB: number; fgR: number; fgG: number; fgB: number } | null {
@@ -63,7 +69,7 @@ function useDarkReaderTheme(): Theme {
         let palette: PaletteOptions;
         if (isDark) {
             palette = {
-                type: 'dark',
+                mode: 'dark',
                 text: {
                     primary: rgba(fgR, fgG, fgB, 1),
                     secondary: rgba(fgR, fgG, fgB, 0.7),
@@ -76,7 +82,7 @@ function useDarkReaderTheme(): Theme {
             };
         } else {
             palette = {
-                type: 'light',
+                mode: 'light',
                 text: {
                     primary: rgba(fgR, fgG, fgB, 0.87),
                     secondary: rgba(fgR, fgG, fgB, 0.54),
@@ -97,10 +103,18 @@ function useDarkReaderTheme(): Theme {
             },
         });
 
+        console.log(newTheme);
+
         return newTheme;
     }, [darkReaderColor]);
 }
 
-export default React.memo(function BWMThemeDarkReader(props: { children: ReactNode }): ReactElement {
-    return <ThemeProvider theme={useDarkReaderTheme()}>{props.children}</ThemeProvider>;
+export default React.memo(function BWMThemeDarkReader(props: { children?: ReactNode }): ReactElement {
+    return (
+        <ErrorBoundary fallbackRender={(props) => <p>`${props.error}`</p>}>
+            <StyledEngineProvider injectFirst>
+                <ThemeProvider theme={useDarkReaderTheme()}>{props.children}</ThemeProvider>
+            </StyledEngineProvider>
+        </ErrorBoundary>
+    );
 });

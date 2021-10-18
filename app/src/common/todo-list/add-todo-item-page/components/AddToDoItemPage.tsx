@@ -1,18 +1,18 @@
-import Box from '@material-ui/core/Box';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Grid from '@mui/material/Grid';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 import React, { useCallback, useEffect, useState } from 'react';
 import BWMThemePrefersColorScheme from '../../../react/theme/BWMThemePrefersColorScheme';
 import { usePromise } from '../../../react/usePromise';
 import { MessengerClient } from '../../../util/messenger';
 import { CourseListItem } from '../../../waseda/course/course';
 import { OpenAddToDoItemPageOptions } from '../../todo';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import { makeStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import makeStyles from '@mui/styles/makeStyles';
+import Button from '@mui/material/Button';
 import { addOrUpdateToDoItem } from '../../user-added-items';
 import { v4 as uuidv4 } from 'uuid';
 

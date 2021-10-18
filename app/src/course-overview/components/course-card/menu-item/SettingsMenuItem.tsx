@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, Ref } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import CourseMenuItem from './CourseMenuItem';
-import Settings from '@material-ui/icons/Settings';
+import Settings from '@mui/icons-material/Settings';
 import CourseSettingsDialog from '../../dialog/CourseSettingsDialog';
 import { useCallback } from 'react';
 

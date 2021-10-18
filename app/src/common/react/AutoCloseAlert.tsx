@@ -1,10 +1,10 @@
-import Collapse from '@material-ui/core/Collapse';
-import Alert, { Color } from '@material-ui/lab/Alert';
+import Collapse from '@mui/material/Collapse';
+import Alert, { AlertColor } from '@mui/material/Alert';
 import React, { ReactElement, ReactNode, useCallback, useState } from 'react';
 import useTimer from './useTimer';
 
 type Props = {
-    severity: Color;
+    severity: AlertColor;
     open: boolean;
     onClose: () => void;
     timeout?: number;

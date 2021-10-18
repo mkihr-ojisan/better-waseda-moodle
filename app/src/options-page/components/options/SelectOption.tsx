@@ -1,17 +1,18 @@
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
+import ListItem from '@mui/material/ListItem';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { useCallback } from 'react';
 import { useContext } from 'react';
-import { ConfigKeyWithType, ConfigValue } from '../../../common/config/config';
+import { ConfigKey } from '../../../common/config/config';
+import { InternalError } from '../../../common/error';
 import useConfig from '../../../common/react/useConfig';
 import { DisabledOptionsContext } from './DisableOptions';
 
 type Props<T extends string> = {
-    configKey: ConfigKeyWithType<T>;
+    configKey: ConfigKey;
     message: string;
     messageSubstitutions?: string | string[];
     description?: string;
@@ -35,12 +36,14 @@ const useStyles = makeStyles(() => ({
 export default React.memo(SelectOption) as typeof SelectOption;
 function SelectOption<T extends string>(props: Props<T>) {
     const [value, setValue] = useConfig(props.configKey);
+    if (typeof value !== 'string') throw new InternalError('`value` must be string.');
+
     const disabled = useContext(DisabledOptionsContext);
     const classes = useStyles();
 
     const handleChange = useCallback(
-        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
-            setValue(event.target.value as ConfigValue<ConfigKeyWithType<T>>);
+        (event: SelectChangeEvent<string>) => {
+            setValue(event.target.value as T);
         },
         [setValue]
     );
@@ -54,11 +57,12 @@ function SelectOption<T extends string>(props: Props<T>) {
                 }
             />
             <ListItemSecondaryAction>
-                <Select
-                    value={value}
+                <Select<T>
+                    value={value as T}
                     onChange={handleChange}
                     disabled={disabled}
                     classes={{ root: classes.selectRoot }}
+                    variant="standard"
                 >
                     {props.items.map((item) => (
                         <MenuItem value={item.value} key={item.value}>

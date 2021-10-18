@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import AppsIcon from '@material-ui/icons/Apps';
+import AppsIcon from '@mui/icons-material/Apps';
 import SelectOption from '../../options/SelectOption';
 import ToggleOption from '../../options/ToggleOption';
 import DisableOptions from '../../options/DisableOptions';
 import OptionClearCourseListCache from './OptionClearCourseListCache';
 import OptionFetchTimetableDataAndSyllabusUrl from './OptionFetchTimetableDataAndSyllabusUrl';
-import Divider from '@material-ui/core/Divider';
+import Divider from '@mui/material/Divider';
 import NoPaddingList from '../../NoPaddingList';
 
 export default {

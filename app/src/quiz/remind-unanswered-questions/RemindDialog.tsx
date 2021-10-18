@@ -1,8 +1,8 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 import React, { ReactElement } from 'react';
 import { useCallback } from 'react';
 import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';

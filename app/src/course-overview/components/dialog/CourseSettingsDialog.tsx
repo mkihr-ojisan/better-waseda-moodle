@@ -1,10 +1,10 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import React, { ReactElement, useContext, useState } from 'react';
 import { useCallback } from 'react';
 import { CourseListItem } from '../../../common/waseda/course/course';
@@ -68,6 +68,7 @@ function CourseSettingsDialogContent(props: Props) {
                                     onChange={handleNameChange}
                                     fullWidth
                                     label={browser.i18n.getMessage('courseOverviewSettingsDialogName')}
+                                    variant="standard"
                                 />
                             </Grid>
                             <Grid item>
@@ -83,6 +84,7 @@ function CourseSettingsDialogContent(props: Props) {
                             onChange={handleSyllabusUrlChange}
                             fullWidth
                             label={browser.i18n.getMessage('courseOverviewSettingsDialogSyllabusUrl')}
+                            variant="standard"
                         />
                     </Grid>
                     <Grid item>

@@ -1,9 +1,9 @@
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import InfoIcon from '@material-ui/icons/Info';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography';
+import InfoIcon from '@mui/icons-material/Info';
 import React, { ReactElement } from 'react';
 import Link from '../../options/Link';
 

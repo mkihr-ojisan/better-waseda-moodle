@@ -1,4 +1,4 @@
-import { CircularProgress, Grid } from '@material-ui/core';
+import { CircularProgress, Grid } from '@mui/material';
 import React, { ReactElement } from 'react';
 
 export default function CenteredCircularProgress(): ReactElement {

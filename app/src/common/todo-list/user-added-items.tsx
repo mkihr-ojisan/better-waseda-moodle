@@ -1,12 +1,12 @@
-import SvgIcon from '@material-ui/core/SvgIcon';
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+import SvgIcon from '@mui/material/SvgIcon';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import React from 'react';
 import { getConfig, setConfig } from '../config/config';
 import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 import { openAddToDoItemPage, ToDoItem } from './todo';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { makeStyles } from '@material-ui/core/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import makeStyles from '@mui/styles/makeStyles';
 
 export type UserAddedToDoItem = {
     id: string;

@@ -1,15 +1,15 @@
-import { makeStyles } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import CircularProgress, { CircularProgressProps } from '@material-ui/core/CircularProgress';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Alert from '@material-ui/lab/Alert';
+import makeStyles from '@mui/styles/makeStyles';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
+import CssBaseline from '@mui/material/CssBaseline';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
 import React from 'react';
 import { useCallback } from 'react';
 import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
@@ -54,7 +54,7 @@ const AutoLoginPageContent = React.memo(function AutoLoginPageContent(props: Aut
         <>
             <CssBaseline />
             <Dialog hideBackdrop open maxWidth="xs" fullWidth>
-                <DialogTitle disableTypography classes={{ root: classes.dialogTitleRoot }}>
+                <DialogTitle classes={{ root: classes.dialogTitleRoot }}>
                     <img src="/res/images/icon.svg" className={classes.dialogTitleIcon} />
                     <Typography variant="h6">{browser.i18n.getMessage('appName')}</Typography>
                 </DialogTitle>

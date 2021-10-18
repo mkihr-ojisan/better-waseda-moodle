@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
+import makeStyles from '@mui/styles/makeStyles';
+import Grid from '@mui/material/Grid';
 import clsx from 'clsx';
 import React, { ReactNode } from 'react';
 

@@ -1,4 +1,4 @@
-import CalendarToday from '@material-ui/icons/CalendarToday';
+import CalendarToday from '@mui/icons-material/CalendarToday';
 import React, { ReactElement, useState, Ref, useCallback } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import TimetableSettingsDialog from '../../dialog/TimetableSettingsDialog';

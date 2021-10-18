@@ -8,9 +8,6 @@ import AsyncLock from 'async-lock';
 import { UserAddedToDoItem } from '../todo-list/user-added-items';
 
 export type ConfigKey = keyof Config;
-export type ConfigKeyWithType<T> = {
-    [P in keyof Config]: ConfigValue<P> extends T ? (T extends ConfigValue<P> ? P : never) : never;
-}[keyof Config];
 export type ConfigValue<T extends ConfigKey> = Config[T];
 export type Config = ObjectValuesDeepReadonly<{
     'config.sync.enabled': boolean;

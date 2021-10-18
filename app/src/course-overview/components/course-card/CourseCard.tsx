@@ -1,17 +1,17 @@
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import MoreVert from '@material-ui/icons/MoreVert';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import IconButton from '@mui/material/IconButton';
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography';
+import MoreVert from '@mui/icons-material/MoreVert';
 import React, { ReactElement, useContext, useState } from 'react';
 import { CourseListItem } from '../../../common/waseda/course/course';
 import CourseImage from './CourseImage';
 import { CourseOverviewContext } from '../CourseOverview';
 import CourseMenu from './CourseMenu';
-import NoteIcon from '@material-ui/icons/Note';
-import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
+import NoteIcon from '@mui/icons-material/Note';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
 import { useCallback } from 'react';
 
 type Props = {

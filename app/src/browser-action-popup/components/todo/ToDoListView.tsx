@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
-import Typography from '@material-ui/core/Typography';
-import Alert from '@material-ui/lab/Alert';
+import makeStyles from '@mui/styles/makeStyles';
+import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
+import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
 import React from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';

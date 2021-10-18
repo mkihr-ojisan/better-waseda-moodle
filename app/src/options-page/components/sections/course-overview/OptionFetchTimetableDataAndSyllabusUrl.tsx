@@ -1,10 +1,10 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import Grid from '@material-ui/core/Grid';
-import Snackbar from '@material-ui/core/Snackbar';
-import Typography from '@material-ui/core/Typography';
-import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
+import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
 import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { MessengerClient } from '../../../../common/util/messenger';

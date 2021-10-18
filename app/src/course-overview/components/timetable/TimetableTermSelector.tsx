@@ -1,6 +1,6 @@
-import FormControl from '@material-ui/core/FormControl';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import React, { ReactElement } from 'react';
 import { useCallback } from 'react';
 import { YearTerm, yearTermToString } from '../../../common/waseda/course/course';
@@ -13,7 +13,7 @@ type Props = {
 
 export default React.memo(function TimetableTermSelector(props: Props): ReactElement {
     const handleChange = useCallback(
-        (event: React.ChangeEvent<{ value: unknown }>) => {
+        (event: SelectChangeEvent<number | null>) => {
             const selectedIndex = event.target.value as number;
             props.onChange?.(props.terms[selectedIndex], selectedIndex);
         },
@@ -24,7 +24,7 @@ export default React.memo(function TimetableTermSelector(props: Props): ReactEle
     if (props.terms.length > 0) {
         return (
             <FormControl>
-                <Select value={props.selectedIndex} onChange={handleChange}>
+                <Select value={props.selectedIndex} onChange={handleChange} variant="standard">
                     {props.terms.map((term, i) => {
                         return (
                             <MenuItem value={i} key={i}>

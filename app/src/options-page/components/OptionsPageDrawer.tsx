@@ -1,12 +1,12 @@
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { useTheme } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@mui/material/Divider';
+import Drawer from '@mui/material/Drawer';
+import Hidden from '@mui/material/Hidden';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { useTheme } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { Fragment } from 'react';
 import { OPTIONS_PAGE_DRAWER_WIDTH, OPTIONS_PAGE_SECTIONS } from './OptionsPage';
 
@@ -54,7 +54,7 @@ export default React.memo(function OptionsPageDrawer(props: Props) {
                     <OptionsPageDrawerContent {...props} />
                 </Drawer>
             </Hidden>
-            <Hidden xsDown implementation="css">
+            <Hidden smDown implementation="css">
                 <Drawer
                     classes={{
                         paper: classes.drawerPaper,

@@ -1,5 +1,5 @@
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import React, { ReactElement, useContext, useState } from 'react';
 import { useCallback } from 'react';
 import CourseListView from '../CourseListView';

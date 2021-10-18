@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import ToggleOption from '../../options/ToggleOption';
 import Indent from '../../options/Indent';
 import DisableOptions from '../../options/DisableOptions';
-import BallotIcon from '@material-ui/icons/Ballot';
+import BallotIcon from '@mui/icons-material/Ballot';
 import NoPaddingList from '../../NoPaddingList';
-import Divider from '@material-ui/core/Divider';
+import Divider from '@mui/material/Divider';
 
 export default {
     name: 'SectionQuiz',

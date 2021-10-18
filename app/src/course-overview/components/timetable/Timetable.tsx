@@ -1,11 +1,11 @@
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@mui/styles/makeStyles';
 import React, { ReactElement, ReactNode, useContext, useMemo } from 'react';
 import { containsYearTerm, DayOfWeek, dayOfWeekToShortString, YearTerm } from '../../../common/waseda/course/course';
 import useViewportHeight from '../../../common/react/useViewportHeight';
 import { CourseOverviewContext, CourseOverviewContextProps } from '../CourseOverview';
 import TimetableCourseCard from './TimetableCourseCard';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 const TIMETABLE_CELL_MIN_HEIGHT = 80;
 const TIMETABLE_HEIGHT_ADJUST = 350;
@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
             [theme.breakpoints.up('sm')]: {
                 padding: theme.spacing(1),
             },
-            [theme.breakpoints.down('xs')]: {
-                padding: theme.spacing(1) / 4,
+            [theme.breakpoints.down('sm')]: {
+                padding: theme.spacing(1 / 4),
             },
             boxSizing: 'border-box',
         },

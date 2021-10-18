@@ -1,27 +1,27 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import Select from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Tooltip from '@material-ui/core/Tooltip';
-import Add from '@material-ui/icons/Add';
-import Delete from '@material-ui/icons/Delete';
-import Error from '@material-ui/icons/Error';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import makeStyles from '@mui/styles/makeStyles';
+import SvgIcon from '@mui/material/SvgIcon';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
+import Add from '@mui/icons-material/Add';
+import Delete from '@mui/icons-material/Delete';
+import Error from '@mui/icons-material/Error';
 import React, { ReactElement, useContext, useMemo, useState } from 'react';
 import {
     containsYearTerm,
@@ -232,7 +232,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
         [props]
     );
     const handleTermChange = useCallback(
-        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+        (event: SelectChangeEvent<Term>) => {
             props.onChange({
                 yearTerm: {
                     year: props.settingsEntry.yearTerm.year,
@@ -244,7 +244,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
         [props]
     );
     const handleDayChange = useCallback(
-        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+        (event: SelectChangeEvent<DayOfWeek>) => {
             props.onChange({
                 yearTerm: props.settingsEntry.yearTerm,
                 dayPeriod: {
@@ -256,7 +256,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
         [props]
     );
     const handlePeriodFromChange = useCallback(
-        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+        (event: SelectChangeEvent<number>) => {
             props.onChange({
                 yearTerm: props.settingsEntry.yearTerm,
                 dayPeriod: {
@@ -271,7 +271,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
         [props]
     );
     const handlePeriodToChange = useCallback(
-        (event: React.ChangeEvent<{ name?: string | undefined; value: unknown }>) => {
+        (event: SelectChangeEvent<number>) => {
             props.onChange({
                 yearTerm: props.settingsEntry.yearTerm,
                 dayPeriod: {
@@ -320,7 +320,12 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
                 />
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
-                <Select value={props.settingsEntry.yearTerm.term} onChange={handleTermChange} autoWidth>
+                <Select
+                    value={props.settingsEntry.yearTerm.term}
+                    onChange={handleTermChange}
+                    autoWidth
+                    variant="standard"
+                >
                     {[
                         'full_year',
                         'spring_semester',
@@ -337,7 +342,12 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
                 </Select>
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
-                <Select value={props.settingsEntry.dayPeriod.day} onChange={handleDayChange} autoWidth>
+                <Select
+                    value={props.settingsEntry.dayPeriod.day}
+                    onChange={handleDayChange}
+                    autoWidth
+                    variant="standard"
+                >
                     {['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].map((day) => (
                         <MenuItem key={day} value={day}>
                             {dayOfWeekToString(day as DayOfWeek)}
@@ -346,7 +356,12 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
                 </Select>
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
-                <Select value={props.settingsEntry.dayPeriod.period.from} onChange={handlePeriodFromChange} autoWidth>
+                <Select
+                    value={props.settingsEntry.dayPeriod.period.from}
+                    onChange={handlePeriodFromChange}
+                    autoWidth
+                    variant="standard"
+                >
                     {range(1, 8).map((period) => (
                         <MenuItem key={period} value={period}>
                             {browser.i18n.getMessage('period', period.toString())}
@@ -355,7 +370,12 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
                 </Select>
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
-                <Select value={props.settingsEntry.dayPeriod.period.to} onChange={handlePeriodToChange} autoWidth>
+                <Select
+                    value={props.settingsEntry.dayPeriod.period.to}
+                    onChange={handlePeriodToChange}
+                    autoWidth
+                    variant="standard"
+                >
                     {range(props.settingsEntry.dayPeriod.period.from, 8).map((period) => (
                         <MenuItem key={period} value={period}>
                             {browser.i18n.getMessage('period', period.toString())}
@@ -364,7 +384,7 @@ function TimetableSettingsEntryComponent(props: TimetableSettingsEntryComponentP
                 </Select>
             </TableCell>
             <TableCell padding="none" classes={{ root: classes.tableCell }}>
-                <IconButton onClick={props.onDelete}>
+                <IconButton onClick={props.onDelete} size="large">
                     <Delete />
                 </IconButton>
             </TableCell>

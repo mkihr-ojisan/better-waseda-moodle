@@ -1,13 +1,13 @@
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import React from 'react';
-import SettingsIcon from '@material-ui/icons/Settings';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import SettingsIcon from '@mui/icons-material/Settings';
+import IconButton from '@mui/material/IconButton';
+import makeStyles from '@mui/styles/makeStyles';
+import Paper from '@mui/material/Paper';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useCallback } from 'react';
-import RefreshIcon from '@material-ui/icons/Refresh';
-import AddIcon from '@material-ui/icons/Add';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import AddIcon from '@mui/icons-material/Add';
 import { openAddToDoItemPage } from '../../common/todo-list/todo';
 
 const useStyles = makeStyles(() => ({
@@ -62,12 +62,17 @@ export default React.memo(function Header(props: HeaderProps) {
                     <IconButton
                         onClick={props.onRefreshListRequest}
                         title={browser.i18n.getMessage('popupRefreshList')}
+                        size="large"
                     >
                         <RefreshIcon />
                     </IconButton>
                 )}
                 <Grid item>
-                    <IconButton title={browser.i18n.getMessage('popupAddButtonTitle')} onClick={handleAddButtonClick}>
+                    <IconButton
+                        title={browser.i18n.getMessage('popupAddButtonTitle')}
+                        onClick={handleAddButtonClick}
+                        size="large"
+                    >
                         <AddIcon />
                     </IconButton>
                 </Grid>
@@ -76,6 +81,7 @@ export default React.memo(function Header(props: HeaderProps) {
                     <IconButton
                         title={browser.i18n.getMessage('popupSettingsButtonTitle')}
                         onClick={handleSettingsButtonClick}
+                        size="large"
                     >
                         <SettingsIcon />
                     </IconButton>

@@ -1,13 +1,13 @@
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@mui/material/IconButton';
+import ListItem from '@mui/material/ListItem';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import ListItemText from '@mui/material/ListItemText';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { useCallback } from 'react';
 import { useContext } from 'react';
 import { DisabledOptionsContext } from './DisableOptions';
-import OpenInNewIcon from '@material-ui/icons/OpenInNew';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 type Props = {
     message: string;
@@ -38,7 +38,7 @@ export default React.memo(function Link(props: Props) {
                 }
             />
             <ListItemSecondaryAction>
-                <IconButton onClick={handleClick}>
+                <IconButton onClick={handleClick} size="large">
                     <OpenInNewIcon />
                 </IconButton>
             </ListItemSecondaryAction>

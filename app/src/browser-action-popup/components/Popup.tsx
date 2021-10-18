@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import makeStyles from '@mui/styles/makeStyles';
+import CssBaseline from '@mui/material/CssBaseline';
 import React, { useState } from 'react';
 import { useCallback } from 'react';
 import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';

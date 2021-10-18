@@ -1,10 +1,10 @@
-import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import AppBar from '@mui/material/AppBar';
+import IconButton from '@mui/material/IconButton';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import React from 'react';
-import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles } from '@material-ui/core/styles';
+import MenuIcon from '@mui/icons-material/Menu';
+import makeStyles from '@mui/styles/makeStyles';
 
 type Props = {
     onDrawerOpen: () => void;
@@ -31,6 +31,7 @@ export default React.memo(function OptionsPageAppBar(props: Props) {
                     edge="start"
                     onClick={props.onDrawerOpen}
                     className={classes.menuButton}
+                    size="large"
                 >
                     <MenuIcon />
                 </IconButton>

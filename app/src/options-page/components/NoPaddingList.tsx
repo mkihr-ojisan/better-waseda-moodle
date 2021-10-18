@@ -1,6 +1,6 @@
-import { ListProps } from '@material-ui/core';
-import List from '@material-ui/core/List';
-import { makeStyles } from '@material-ui/core/styles';
+import { ListProps } from '@mui/material';
+import List from '@mui/material/List';
+import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({
