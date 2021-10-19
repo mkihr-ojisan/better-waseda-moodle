@@ -1,5 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { getCurrentContextType } from '../util/util';
 import BWMThemeDarkReader from './theme/BWMThemeDarkReader';
@@ -10,12 +10,14 @@ export default React.memo(function BWMRoot(props) {
         getCurrentContextType() === 'content_script' ? BWMThemeDarkReader : BWMThemePrefersColorScheme;
 
     return (
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-            <ThemeProvider>
-                <CssBaseline />
-                {props.children}
-            </ThemeProvider>
-        </ErrorBoundary>
+        <StrictMode>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <ThemeProvider>
+                    <CssBaseline />
+                    {props.children}
+                </ThemeProvider>
+            </ErrorBoundary>
+        </StrictMode>
     );
 });
 
