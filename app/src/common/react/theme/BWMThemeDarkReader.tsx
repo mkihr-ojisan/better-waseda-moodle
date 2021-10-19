@@ -1,7 +1,6 @@
 import { PaletteOptions, ThemeProvider } from '@mui/material/styles';
 import { StyledEngineProvider, createTheme, Theme } from '@mui/material/styles';
 import React, { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { bwmThemeOptions } from './BWMTheme';
 
 declare module '@mui/styles/defaultTheme' {
@@ -109,10 +108,8 @@ function useDarkReaderTheme(): Theme {
 
 export default React.memo(function BWMThemeDarkReader(props: { children?: ReactNode }): ReactElement {
     return (
-        <ErrorBoundary fallbackRender={(props) => <p>`${props.error}`</p>}>
-            <StyledEngineProvider injectFirst>
-                <ThemeProvider theme={useDarkReaderTheme()}>{props.children}</ThemeProvider>
-            </StyledEngineProvider>
-        </ErrorBoundary>
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={useDarkReaderTheme()}>{props.children}</ThemeProvider>
+        </StyledEngineProvider>
     );
 });

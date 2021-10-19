@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import React, { ReactElement } from 'react';
 import { useCallback } from 'react';
-import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
+import BWMRoot from '../../common/react/BWMRoot';
 import { Question } from './questions';
 
 type Props = {
@@ -26,7 +26,7 @@ export default React.memo(function RemindDialog(props: Props): ReactElement {
     }, [props]);
 
     return (
-        <BWMThemeDarkReader>
+        <BWMRoot>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogContent>
                     <Box mb={1}>{browser.i18n.getMessage('quizRemindUnansweredQuestionsDialogMessage')}</Box>
@@ -45,6 +45,6 @@ export default React.memo(function RemindDialog(props: Props): ReactElement {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </BWMThemeDarkReader>
+        </BWMRoot>
     );
 });

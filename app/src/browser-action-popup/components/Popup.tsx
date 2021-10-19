@@ -1,12 +1,11 @@
 import makeStyles from '@mui/styles/makeStyles';
-import CssBaseline from '@mui/material/CssBaseline';
 import React, { useState } from 'react';
 import { useCallback } from 'react';
-import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
 import { useCachedPromise } from '../../common/react/usePromise';
 import { getToDoItems } from '../../common/todo-list/todo';
 import Header from './Header';
 import ToDoListView from './todo/ToDoListView';
+import BWMRoot from '../../common/react/BWMRoot';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -19,9 +18,9 @@ const useStyles = makeStyles(() => ({
 
 export default React.memo(function Popup() {
     return (
-        <BWMThemePrefersColorScheme>
+        <BWMRoot>
             <PopupContent />
-        </BWMThemePrefersColorScheme>
+        </BWMRoot>
     );
 });
 
@@ -36,12 +35,9 @@ const PopupContent = React.memo(function Popup() {
     }, []);
 
     return (
-        <>
-            <CssBaseline />
-            <div className={classes.root}>
-                <ToDoListView loading={state !== 'fulfilled'} items={todoItems} onRefreshListRequest={handleRefresh} />
-                <Header loading={state !== 'fulfilled'} onRefreshListRequest={handleRefresh} />
-            </div>
-        </>
+        <div className={classes.root}>
+            <ToDoListView loading={state !== 'fulfilled'} items={todoItems} onRefreshListRequest={handleRefresh} />
+            <Header loading={state !== 'fulfilled'} onRefreshListRequest={handleRefresh} />
+        </div>
     );
 });

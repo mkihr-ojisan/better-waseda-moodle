@@ -1,11 +1,9 @@
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import React, { useCallback, useEffect, useState } from 'react';
-import BWMThemePrefersColorScheme from '../../../react/theme/BWMThemePrefersColorScheme';
 import { usePromise } from '../../../react/usePromise';
 import { MessengerClient } from '../../../util/messenger';
 import { CourseListItem } from '../../../waseda/course/course';
@@ -15,6 +13,7 @@ import makeStyles from '@mui/styles/makeStyles';
 import Button from '@mui/material/Button';
 import { addOrUpdateToDoItem } from '../../user-added-items';
 import { v4 as uuidv4 } from 'uuid';
+import BWMRoot from '../../../react/BWMRoot';
 
 const useStyles = makeStyles(() => ({
     fill: {
@@ -28,9 +27,9 @@ const useStyles = makeStyles(() => ({
 
 export default React.memo(function AddToDoItemPage() {
     return (
-        <BWMThemePrefersColorScheme>
+        <BWMRoot>
             <AddToDoItemPageContent />
-        </BWMThemePrefersColorScheme>
+        </BWMRoot>
     );
 });
 
@@ -90,75 +89,71 @@ const AddToDoItemPageContent = React.memo(function AddToDoItemPageContent(props:
     }, [modified]);
 
     return (
-        <>
-            <CssBaseline />
-
-            <Box p={1} className={classes.fill}>
-                <Grid container spacing={2} direction="column" className={classes.fill} wrap="nowrap">
-                    <Grid item>
-                        <TextField
-                            value={title}
-                            label={browser.i18n.getMessage('addToDoItemTitle')}
-                            onChange={handleTitleChange}
-                            fullWidth
-                            variant="outlined"
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField
-                            value={iconUrl}
-                            label={browser.i18n.getMessage('addToDoItemIconUrl')}
-                            onChange={handleIconUrlChange}
-                            fullWidth
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {iconUrl ? <img src={iconUrl} width="24" /> : <FiberManualRecordIcon />}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <Autocomplete
-                            freeSolo
-                            options={courseList?.map((c) => c.name) ?? []}
-                            disableClearable
-                            value={category}
-                            onInputChange={handleCategoryChange}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label={browser.i18n.getMessage('addToDoItemCategory')}
-                                    variant="outlined"
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <TextField
-                            value={titleHref}
-                            label={browser.i18n.getMessage('addToDoItemTitleHref')}
-                            onChange={handleTitleHrefChange}
-                            fullWidth
-                            variant="outlined"
-                        />
-                    </Grid>
-                    {/* TODO: Add datetime picker */}
-                    <Grid item className={classes.spacer} />
-                    <Grid item>
-                        <Grid container direction="row-reverse">
-                            <Grid item>
-                                <Button variant="contained" color="primary" onClick={handleButtonClick}>
-                                    {browser.i18n.getMessage('addToDoItemOK')}
-                                </Button>
-                            </Grid>
+        <Box p={1} className={classes.fill}>
+            <Grid container spacing={2} direction="column" className={classes.fill} wrap="nowrap">
+                <Grid item>
+                    <TextField
+                        value={title}
+                        label={browser.i18n.getMessage('addToDoItemTitle')}
+                        onChange={handleTitleChange}
+                        fullWidth
+                        variant="outlined"
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        value={iconUrl}
+                        label={browser.i18n.getMessage('addToDoItemIconUrl')}
+                        onChange={handleIconUrlChange}
+                        fullWidth
+                        variant="outlined"
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    {iconUrl ? <img src={iconUrl} width="24" /> : <FiberManualRecordIcon />}
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </Grid>
+                <Grid item>
+                    <Autocomplete
+                        freeSolo
+                        options={courseList?.map((c) => c.name) ?? []}
+                        disableClearable
+                        value={category}
+                        onInputChange={handleCategoryChange}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label={browser.i18n.getMessage('addToDoItemCategory')}
+                                variant="outlined"
+                            />
+                        )}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        value={titleHref}
+                        label={browser.i18n.getMessage('addToDoItemTitleHref')}
+                        onChange={handleTitleHrefChange}
+                        fullWidth
+                        variant="outlined"
+                    />
+                </Grid>
+                {/* TODO: Add datetime picker */}
+                <Grid item className={classes.spacer} />
+                <Grid item>
+                    <Grid container direction="row-reverse">
+                        <Grid item>
+                            <Button variant="contained" color="primary" onClick={handleButtonClick}>
+                                {browser.i18n.getMessage('addToDoItemOK')}
+                            </Button>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Box>
-        </>
+            </Grid>
+        </Box>
     );
 });
 

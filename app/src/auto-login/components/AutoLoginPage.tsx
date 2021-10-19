@@ -2,7 +2,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
-import CssBaseline from '@mui/material/CssBaseline';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import React from 'react';
 import { useCallback } from 'react';
-import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
+import BWMRoot from '../../common/react/BWMRoot';
 
 const useStyles = makeStyles(() => ({
     dialogTitleRoot: {
@@ -35,9 +34,9 @@ export type AutoLoginPageProps = {
 
 export default React.memo(function AutoLoginPage(props: AutoLoginPageProps) {
     return (
-        <BWMThemePrefersColorScheme>
+        <BWMRoot>
             <AutoLoginPageContent {...props} />
-        </BWMThemePrefersColorScheme>
+        </BWMRoot>
     );
 });
 
@@ -51,40 +50,35 @@ const AutoLoginPageContent = React.memo(function AutoLoginPageContent(props: Aut
     }, []);
 
     return (
-        <>
-            <CssBaseline />
-            <Dialog hideBackdrop open maxWidth="xs" fullWidth>
-                <DialogTitle classes={{ root: classes.dialogTitleRoot }}>
-                    <img src="/res/images/icon.svg" className={classes.dialogTitleIcon} />
-                    <Typography variant="h6">{browser.i18n.getMessage('appName')}</Typography>
-                </DialogTitle>
-                <DialogContent>
-                    {props.error !== undefined ? (
-                        <Alert severity="error" variant="filled">
-                            {browser.i18n.getMessage('autoLoginFailedMessage')}
-                        </Alert>
-                    ) : (
-                        <Grid container alignItems="center" spacing={2}>
-                            <Grid item>
-                                <CircularProgressWithLabel value={props.progress * 100} />
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="body1">
-                                    {browser.i18n.getMessage('autoLoginPageMessage')}
-                                </Typography>
-                            </Grid>
+        <Dialog hideBackdrop open maxWidth="xs" fullWidth>
+            <DialogTitle classes={{ root: classes.dialogTitleRoot }}>
+                <img src="/res/images/icon.svg" className={classes.dialogTitleIcon} />
+                <Typography variant="h6">{browser.i18n.getMessage('appName')}</Typography>
+            </DialogTitle>
+            <DialogContent>
+                {props.error !== undefined ? (
+                    <Alert severity="error" variant="filled">
+                        {browser.i18n.getMessage('autoLoginFailedMessage')}
+                    </Alert>
+                ) : (
+                    <Grid container alignItems="center" spacing={2}>
+                        <Grid item>
+                            <CircularProgressWithLabel value={props.progress * 100} />
                         </Grid>
-                    )}
-                </DialogContent>
-                <DialogActions>
-                    {props.error && (
-                        <Button color="primary" onClick={handleGotoFallbackPageClick}>
-                            {browser.i18n.getMessage('autoLoginFallbackButtonText')}
-                        </Button>
-                    )}
-                </DialogActions>
-            </Dialog>
-        </>
+                        <Grid item>
+                            <Typography variant="body1">{browser.i18n.getMessage('autoLoginPageMessage')}</Typography>
+                        </Grid>
+                    </Grid>
+                )}
+            </DialogContent>
+            <DialogActions>
+                {props.error && (
+                    <Button color="primary" onClick={handleGotoFallbackPageClick}>
+                        {browser.i18n.getMessage('autoLoginFallbackButtonText')}
+                    </Button>
+                )}
+            </DialogActions>
+        </Dialog>
     );
 });
 

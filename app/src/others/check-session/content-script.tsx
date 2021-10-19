@@ -6,7 +6,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactMarkdown from 'react-markdown';
-import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
+import BWMRoot from '../../common/react/BWMRoot';
 import { MessengerClient } from '../../common/util/messenger';
 
 document.addEventListener(
@@ -86,7 +86,7 @@ function onClickSubmitButton(event: MouseEvent, button: HTMLElement) {
 
 function SessionExpiredAlert(props: { open: boolean; onClose: () => void }) {
     return (
-        <BWMThemeDarkReader>
+        <BWMRoot>
             <Dialog {...props}>
                 <DialogContent>
                     <DialogContentText>
@@ -99,6 +99,6 @@ function SessionExpiredAlert(props: { open: boolean; onClose: () => void }) {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </BWMThemeDarkReader>
+        </BWMRoot>
     );
 }

@@ -1,10 +1,8 @@
 import React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import makeStyles from '@mui/styles/makeStyles';
 import OptionsPageAppBar from './OptionsPageAppBar';
 import OptionsPageDrawer from './OptionsPageDrawer';
 import OptionsPageContent from './OptionsPageContent';
-import BWMThemePrefersColorScheme from '../../common/react/theme/BWMThemePrefersColorScheme';
 import { useState } from 'react';
 import SectionGeneral from './sections/general/SectionGeneral';
 import { useCallback } from 'react';
@@ -18,6 +16,7 @@ import { useEffect } from 'react';
 import { MessengerClient } from '../../common/util/messenger';
 import { OptionsPageParameter } from '../background-script';
 import SectionToDoList from './sections/todo-list/SectionToDoList';
+import BWMRoot from '../../common/react/BWMRoot';
 
 export const OPTIONS_PAGE_DRAWER_WIDTH = 240;
 
@@ -46,9 +45,9 @@ export const OPTIONS_PAGE_SECTIONS: OptionsPageSection[] = [
 
 export default React.memo(function OptionsPageWrapper() {
     return (
-        <BWMThemePrefersColorScheme>
+        <BWMRoot>
             <OptionsPage />
-        </BWMThemePrefersColorScheme>
+        </BWMRoot>
     );
 });
 
@@ -93,22 +92,19 @@ const OptionsPage = React.memo(function OptionsPage() {
     }, []);
 
     return (
-        <>
-            <div className={classes.root}>
-                <CssBaseline />
-                <OptionsPageAppBar onDrawerOpen={handleDrawerOpen} />
-                <OptionsPageDrawer
-                    drawerOpen={drawerOpen}
-                    onCloseDrawer={handleDrawerClose}
-                    selectedSectionIndex={selectedSectionIndex}
-                    doScrollToSection={doScrollToSection}
-                />
-                <OptionsPageContent
-                    selectedSectionIndex={selectedSectionIndex}
-                    onScrolledToSection={handleScrolledToSection}
-                    scrollSignal={scrollSignal}
-                />
-            </div>
-        </>
+        <div className={classes.root}>
+            <OptionsPageAppBar onDrawerOpen={handleDrawerOpen} />
+            <OptionsPageDrawer
+                drawerOpen={drawerOpen}
+                onCloseDrawer={handleDrawerClose}
+                selectedSectionIndex={selectedSectionIndex}
+                doScrollToSection={doScrollToSection}
+            />
+            <OptionsPageContent
+                selectedSectionIndex={selectedSectionIndex}
+                onScrolledToSection={handleScrolledToSection}
+                scrollSignal={scrollSignal}
+            />
+        </div>
     );
 });

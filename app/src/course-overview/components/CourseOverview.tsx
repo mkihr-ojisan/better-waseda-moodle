@@ -1,6 +1,5 @@
 import React, { createContext, ReactElement, useEffect, useMemo, useState } from 'react';
 import { Course, CourseListItem } from '../../common/waseda/course/course';
-import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
 import CenteredCircularProgress from '../../common/react/CenteredCircularProgress';
 import useConfig from '../../common/react/useConfig';
 import { courseList } from '../content-script';
@@ -10,6 +9,7 @@ import { CourseDataEntry } from '../../common/waseda/course/course-data';
 import { MessengerClient } from '../../common/util/messenger';
 import { useCallback } from 'react';
 import { DeepReadonly } from '../../common/util/types';
+import BWMRoot from '../../common/react/BWMRoot';
 
 export type CourseOverviewType = 'normal' | 'timetable';
 
@@ -52,7 +52,7 @@ export default React.memo(function CourseOverview(): ReactElement {
 
     if (contextValue && courseOverviewType) {
         return (
-            <BWMThemeDarkReader>
+            <BWMRoot>
                 <CourseOverviewContext.Provider value={contextValue}>
                     {(() => {
                         switch (courseOverviewType) {
@@ -63,13 +63,13 @@ export default React.memo(function CourseOverview(): ReactElement {
                         }
                     })()}
                 </CourseOverviewContext.Provider>
-            </BWMThemeDarkReader>
+            </BWMRoot>
         );
     } else {
         return (
-            <BWMThemeDarkReader>
+            <BWMRoot>
                 <CenteredCircularProgress />
-            </BWMThemeDarkReader>
+            </BWMRoot>
         );
     }
 });
