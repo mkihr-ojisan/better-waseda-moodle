@@ -13,7 +13,6 @@ const useStyles = makeStyles(() => ({
     },
     notCenter: {
         textAlign: 'initial',
-        textIndent: '1em',
     },
 }));
 
