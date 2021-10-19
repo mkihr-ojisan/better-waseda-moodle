@@ -11,7 +11,7 @@ import { initConfigCache } from '../common/config/config';
 export const courseList = MessengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>;
 const initConfigCachePromise = initConfigCache();
 
-window.addEventListener('DOMContentLoaded', async () => {
+(async () => {
     // 本来のコース概要を隠す
     const elem = document.getElementsByClassName('block-myoverview')[0];
     if (elem instanceof HTMLElement) {
@@ -25,4 +25,4 @@ window.addEventListener('DOMContentLoaded', async () => {
     await initConfigCachePromise;
 
     ReactDOM.render(<CourseOverview />, rootElement);
-});
+})();
