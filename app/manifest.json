@@ -23,16 +23,6 @@
     "webRequestBlocking",
     "cookies"
   ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://iaidp.ia.waseda.jp/idp/profile/SAML2/Redirect/SSO?*"
-      ],
-      "js": [
-        "src/auto-login/my-waseda-login-page.js"
-      ]
-    }
-  ],
   "web_accessible_resources": [
     "src/auto-login/auto-login-page.html",
     "res/videos/dummy-video.mp4"
