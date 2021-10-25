@@ -79,20 +79,8 @@ function generateWebpackEntry() {
 function getEntryPoints() {
     const entryPoints = [];
     entryPoints.push(resolve('app/src/background.ts'));
-    entryPoints.push(...getContentScriptPathsFromManifest());
     entryPoints.push(...getEntryPointsFromJson());
     return entryPoints;
-}
-
-function getContentScriptPathsFromManifest() {
-    const manifest = JSON.parse(readFileSync('app/manifest.json', { encoding: 'utf-8' }));
-    const jsFiles = [];
-    for (const contentScript of manifest.content_scripts) {
-        if (contentScript.js) {
-            jsFiles.push(...contentScript.js);
-        }
-    }
-    return jsFiles.map((f) => resolve('app', f).replace(/.js$/, '.ts'));
 }
 
 function getEntryPointsFromJson() {
