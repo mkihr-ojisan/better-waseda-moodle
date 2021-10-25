@@ -76,8 +76,9 @@ function useDarkReaderTheme(): Theme {
                 },
                 background: {
                     default: rgba(bgR, bgG, bgB, 1),
-                    paper: rgba(bgR + 20, bgG + 20, bgB + 20, 1),
+                    paper: rgba(bgR + 10, bgG + 10, bgB + 10, 1),
                 },
+                divider: rgba(fgR, fgG, fgB, 0.12),
             };
         } else {
             palette = {

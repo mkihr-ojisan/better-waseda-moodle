@@ -6,14 +6,14 @@ import BWMThemeDarkReader from './theme/BWMThemeDarkReader';
 import BWMThemePrefersColorScheme from './theme/BWMThemePrefersColorScheme';
 
 export default React.memo(function BWMRoot(props) {
-    const ThemeProvider =
-        getCurrentContextType() === 'content_script' ? BWMThemeDarkReader : BWMThemePrefersColorScheme;
+    const currentContextType = getCurrentContextType();
+    const ThemeProvider = currentContextType === 'content_script' ? BWMThemeDarkReader : BWMThemePrefersColorScheme;
 
     return (
         <StrictMode>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <ThemeProvider>
-                    <CssBaseline />
+                    {currentContextType === 'extension_page' && <CssBaseline />}
                     {props.children}
                 </ThemeProvider>
             </ErrorBoundary>
