@@ -37,6 +37,15 @@
                             "strict_min_version": "59.0"
                         }
                     }
+                },
+                {
+                    "version": "0.5.0",
+                    "update_link": "https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.5.0/better-waseda-moodle-v0.5.0-firefox.xpi",
+                    "browser_specific_settings": {
+                        "gecko": {
+                            "strict_min_version": "78.0"
+                        }
+                    }
                 }
             ]
         }
