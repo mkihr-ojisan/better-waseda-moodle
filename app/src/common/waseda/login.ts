@@ -1,19 +1,24 @@
 import { InvalidResponseError } from '../error';
-import { postForm } from '../util/util';
+import { createProgressPromise, ProgressPromise } from '../util/ExPromise';
+import { assertCurrentContextType, postForm } from '../util/util';
 
-let loginPromise: Promise<string> | null = null;
-export async function login(userId: string, password: string): Promise<string> {
+assertCurrentContextType('background_script');
+
+let loginPromise: ProgressPromise<string, number> | null = null;
+export function login(userId: string, password: string): ProgressPromise<string, number> {
     if (loginPromise) {
-        return await loginPromise;
+        return loginPromise;
     }
 
-    loginPromise = (async () => {
+    loginPromise = createProgressPromise(async (reportProgress) => {
         try {
             const response = await fetch(
                 'https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https://wsdmoodle.waseda.jp/&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off',
-                { credentials: 'include', mode: 'cors' },
+                { credentials: 'include', mode: 'cors' }
             );
             let page = new DOMParser().parseFromString(await response.text(), 'text/html');
+
+            reportProgress(1 / 4);
 
             if (response.url !== 'https://wsdmoodle.waseda.jp/my/') {
                 if (page.getElementsByTagName('script')[0]?.textContent?.startsWith('//<![CDATA[\n$Config={')) {
@@ -58,11 +63,13 @@ export async function login(userId: string, password: string): Promise<string> {
                         await (
                             await postForm(
                                 'https://login.microsoftonline.com/b3865172-9887-4b3a-89ff-95a35b92f4c3/login',
-                                loginRequestForm,
+                                loginRequestForm
                             )
                         ).text(),
-                        'text/html',
+                        'text/html'
                     );
+
+                    reportProgress(2 / 4);
                 }
 
                 if (
@@ -71,15 +78,17 @@ export async function login(userId: string, password: string): Promise<string> {
                 ) {
                     const requestForm1 = Object.fromEntries(
                         (Array.from(page.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
-                            ({ name, value }) => [name, value],
-                        ),
+                            ({ name, value }) => [name, value]
+                        )
                     );
                     page = new DOMParser().parseFromString(
                         await (
                             await postForm('https://iaidp.ia.waseda.jp/idp/profile/Authn/SAML2/POST/SSO', requestForm1)
                         ).text(),
-                        'text/html',
+                        'text/html'
                     );
+
+                    reportProgress(3 / 4);
                 }
 
                 if (
@@ -88,18 +97,18 @@ export async function login(userId: string, password: string): Promise<string> {
                 ) {
                     const requestForm2 = Object.fromEntries(
                         (Array.from(page.querySelectorAll('input[type=hidden]')) as HTMLInputElement[]).map(
-                            ({ name, value }) => [name, value],
-                        ),
+                            ({ name, value }) => [name, value]
+                        )
                     );
 
                     page = new DOMParser().parseFromString(
                         await (
                             await postForm(
                                 'https://wsdmoodle.waseda.jp/auth/saml2/sp/saml2-acs.php/wsdmoodle.waseda.jp',
-                                requestForm2,
+                                requestForm2
                             )
                         ).text(),
-                        'text/html',
+                        'text/html'
                     );
                 }
             }
@@ -113,11 +122,12 @@ export async function login(userId: string, password: string): Promise<string> {
             const sessionKeyExpire = new Date();
             sessionKeyExpire.setHours(sessionKeyExpire.getDate() + 1);
 
+            reportProgress(4 / 4);
             return sessionKey;
         } finally {
             loginPromise = null;
         }
-    })();
+    });
 
-    return await loginPromise;
+    return loginPromise;
 }

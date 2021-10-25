@@ -1,31 +1,29 @@
-import { useEffect, useRef, useState } from 'react';
-import { ConfigKey, ConfigValue, onConfigChange, removeConfigChangeListener, setConfig } from '../config/config';
-import equal from 'fast-deep-equal';
+import { useEffect, useState } from 'react';
+import {
+    ConfigKey,
+    ConfigValue,
+    getConfig,
+    onConfigChange,
+    removeConfigChangeListener,
+    setConfig,
+} from '../config/config';
+import { useCallback } from 'react';
+import { useRef } from 'react';
 
-// configの取得は非同期なのでまだ値が取得されていないときはundefinedを返す
-export default function useConfig<T extends ConfigKey>(key: T): [ConfigValue<T> | undefined, (value: ConfigValue<T>) => void] {
-    const [value, setValue] = useState<ConfigValue<T> | undefined>(undefined);
-    const valueRef = useRef<ConfigValue<T>>();
+export default function useConfig<T extends ConfigKey>(key: T): [ConfigValue<T>, (value: ConfigValue<T>) => void] {
+    const [value, setValue] = useState(() => getConfig(key));
 
+    const isFirstRun = useRef(true);
     useEffect(() => {
         const listener = (_: ConfigValue<T> | undefined, newValue: ConfigValue<T>) => {
-            if (!equal(valueRef.current, newValue)) {
-                valueRef.current = newValue;
-                setValue(newValue);
-            }
+            setValue(newValue);
         };
-        onConfigChange<T>(key, listener, true);
+        onConfigChange(key, listener, !isFirstRun.current);
+        isFirstRun.current = false;
         return () => {
             removeConfigChangeListener(key, listener);
         };
-    }, [key]);
+    });
 
-    return [
-        value,
-        v => {
-            setConfig(key, v);
-            valueRef.current = v;
-            setValue(v);
-        },
-    ];
+    return [value, useCallback((value) => setConfig(key, value), [key])];
 }

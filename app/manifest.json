@@ -2,11 +2,13 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "manifest_version": 2,
   "default_locale": "ja",
   "icons": {
-    "256": "res/images/icon-256.png"
+    "__firefox__256": "res/images/icon.svg",
+    "__chrome|opera|edge__48": "res/images/icon-48.png",
+    "__chrome|opera|edge__128": "res/images/icon-128.png"
   },
   "background": {
     "scripts": [
@@ -21,36 +23,30 @@
     "webRequestBlocking",
     "cookies"
   ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://iaidp.ia.waseda.jp/idp/profile/SAML2/Redirect/SSO?*"
-      ],
-      "js": [
-        "src/auto-login/my-waseda-login-page.js"
-      ]
-    },
-    {
-      "matches": [
-        "https://wsdmoodle.waseda.jp/mod/assign/view.php?*"
-      ],
-      "js": [
-        "src/others/check-notes-on-submitting/content-script.js"
-      ]
-    }
-  ],
   "web_accessible_resources": [
     "src/auto-login/auto-login-page.html",
     "res/videos/dummy-video.mp4"
   ],
-  "options_ui": {
-    "page": "src/options-page/options.html"
+  "__firefox__options_ui": {
+    "page": "src/options-page/options.html",
+    "open_in_tab": true
   },
+  "__chrome__options_page": "src/options-page/options.html",
   "__firefox__browser_specific_settings": {
     "gecko": {
       "id": "better-waseda-moodle@mkihr-ojisan.com",
       "strict_min_version": "59.0",
       "update_url": "https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/main/firefox-updates.json"
     }
+  },
+  "incognito": "not_allowed",
+  "browser_action": {
+    "default_icon": {
+      "__firefox__256": "res/images/icon.svg",
+      "__chrome|opera|edge__48": "res/images/icon-48.png",
+      "__chrome|opera|edge__128": "res/images/icon-128.png"
+    },
+    "default_title": "__MSG_appName__",
+    "default_popup": "src/browser-action-popup/popup.html"
   }
 }

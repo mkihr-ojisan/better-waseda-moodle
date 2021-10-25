@@ -1,48 +1,58 @@
 import React, { createContext, ReactElement, useEffect, useMemo, useState } from 'react';
-import { onConfigChange, removeConfigChangeListener } from '../../common/config/config';
 import { Course, CourseListItem } from '../../common/waseda/course/course';
-import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
 import CenteredCircularProgress from '../../common/react/CenteredCircularProgress';
 import useConfig from '../../common/react/useConfig';
-import { courseData, courseList, messengerClient } from '../content-script';
+import { courseList } from '../content-script';
 import NormalView from './normal/NormalView';
 import TimetableView from './timetable/TimetableView';
 import { CourseDataEntry } from '../../common/waseda/course/course-data';
+import { MessengerClient } from '../../common/util/messenger';
+import { useCallback } from 'react';
+import { DeepReadonly } from '../../common/util/types';
+import BWMRoot from '../../common/react/BWMRoot';
 
 export type CourseOverviewType = 'normal' | 'timetable';
 
 export type CourseOverviewContextProps = {
     courseList: CourseListItem[];
-    courseData: Record<number, CourseDataEntry | undefined>;
+    courseData: DeepReadonly<Record<number, CourseDataEntry | undefined>>;
     hideCourse: (course: Course) => void;
     unhideCourse: (course: Course) => void;
 };
 export const CourseOverviewContext = createContext<CourseOverviewContextProps>({
     courseList: [],
     courseData: {},
-    hideCourse: () => { /* do nothing */ },
-    unhideCourse: () => { /* do nothing */ },
+    hideCourse: () => {
+        /* do nothing */
+    },
+    unhideCourse: () => {
+        /* do nothing */
+    },
 });
 
-export default function CourseOverview(): ReactElement {
+export default React.memo(function CourseOverview(): ReactElement {
     const [courseList, setHiddenFromCourseList] = useCourseList();
-    const courseData = useCourseData();
+    const [courseData] = useConfig('courseData');
     const [courseOverviewType] = useConfig('courseOverview.type');
 
-    const contextValue = useMemo<CourseOverviewContextProps | undefined>(() => courseList && courseData && ({
-        courseList,
-        courseData,
-        hideCourse: course => {
-            setHiddenFromCourseList(course, true);
-        },
-        unhideCourse: course => {
-            setHiddenFromCourseList(course, false);
-        },
-    }), [courseData, courseList, setHiddenFromCourseList]);
+    const contextValue = useMemo<CourseOverviewContextProps | undefined>(
+        () =>
+            courseList && {
+                courseList,
+                courseData,
+                hideCourse: (course) => {
+                    setHiddenFromCourseList(course, true);
+                },
+                unhideCourse: (course) => {
+                    setHiddenFromCourseList(course, false);
+                },
+            },
+        [courseData, courseList, setHiddenFromCourseList]
+    );
 
     if (contextValue && courseOverviewType) {
         return (
-            <BWMThemeDarkReader>
+            <BWMRoot>
                 <CourseOverviewContext.Provider value={contextValue}>
                     {(() => {
                         switch (courseOverviewType) {
@@ -53,22 +63,22 @@ export default function CourseOverview(): ReactElement {
                         }
                     })()}
                 </CourseOverviewContext.Provider>
-            </BWMThemeDarkReader>
+            </BWMRoot>
         );
     } else {
         return (
-            <BWMThemeDarkReader>
+            <BWMRoot>
                 <CenteredCircularProgress />
-            </BWMThemeDarkReader>
+            </BWMRoot>
         );
     }
-}
+});
 
 function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidden: boolean) => void] {
     const [courseListValue, setCourseListValue] = useState<CourseListItem[] | undefined>(undefined);
     useEffect(() => {
         let isCancelled = false;
-        courseList.then(value => {
+        courseList.then((value) => {
             if (!isCancelled) setCourseListValue(value);
         });
         return () => {
@@ -76,42 +86,19 @@ function useCourseList(): [CourseListItem[] | undefined, (course: Course, isHidd
         };
     }, []);
 
-    const setHiddenFromCourseList = (course: Course, isHidden: boolean) => {
-        messengerClient.exec('setHiddenFromCourseList', course, isHidden);
-        setCourseListValue(
-            courseListValue?.map(c =>
-                c.id === course.id ?
-                    {
-                        ...c,
-                        isHidden,
-                    } :
-                    c,
-            ),
+    const setHiddenFromCourseList = useCallback((course: Course, isHidden: boolean) => {
+        MessengerClient.exec('setHiddenFromCourseList', course, isHidden);
+        setCourseListValue((prev) =>
+            prev?.map((c) =>
+                c.id === course.id
+                    ? {
+                          ...c,
+                          isHidden,
+                      }
+                    : c
+            )
         );
-    };
-
-    return [courseListValue, setHiddenFromCourseList];
-}
-
-function useCourseData(): Record<number, CourseDataEntry | undefined> | undefined {
-    const [courseDataValue, setCourseDataValue] = useState<Record<number, CourseDataEntry | undefined> | undefined>(undefined);
-    useEffect(() => {
-        let isCancelled = false;
-
-        courseData.then(value => {
-            if (!isCancelled) setCourseDataValue(value);
-        });
-
-        const listener = (_: Record<number, CourseDataEntry | undefined> | undefined, value: Record<number, CourseDataEntry | undefined>) => {
-            setCourseDataValue(value);
-        };
-        onConfigChange('courseData', listener, false);
-
-        return () => {
-            isCancelled = true;
-            removeConfigChangeListener('courseData', listener);
-        };
     }, []);
 
-    return courseDataValue;
+    return [courseListValue, setHiddenFromCourseList];
 }

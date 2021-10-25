@@ -1,11 +1,12 @@
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import React, { ReactElement, useContext, useState } from 'react';
+import { useCallback } from 'react';
 import { CourseListItem } from '../../../common/waseda/course/course';
 import { registerCourseData } from '../../../common/waseda/course/course-data';
 import { CourseOverviewContext } from '../CourseOverview';
@@ -16,13 +17,13 @@ type Props = {
     onClose: () => void;
 };
 
-export default function CourseSettingsDialog(props: Props): ReactElement {
+export default React.memo(function CourseSettingsDialog(props: Props): ReactElement {
     return (
-        <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="sm" disableBackdropClick>
+        <Dialog open={props.open} fullWidth maxWidth="sm">
             {props.open && <CourseSettingsDialogContent {...props} />}
         </Dialog>
     );
-}
+});
 
 function CourseSettingsDialogContent(props: Props) {
     const context = useContext(CourseOverviewContext);
@@ -31,28 +32,28 @@ function CourseSettingsDialogContent(props: Props) {
     const [syllabusUrl, setSyllabusUrl] = useState(courseData?.syllabusUrl ?? '');
     const [note, setNote] = useState(courseData?.note ?? '');
 
-    function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const handleNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
-    }
-    function handleSetNameToDefault() {
+    }, []);
+    const handleSetNameToDefault = useCallback(() => {
         setName(props.course.name);
-    }
-    function handleSyllabusUrlChange(event: React.ChangeEvent<HTMLInputElement>) {
+    }, [props.course.name]);
+    const handleSyllabusUrlChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setSyllabusUrl(event.target.value);
-    }
-    function handleNoteChange(event: React.ChangeEvent<HTMLInputElement>) {
+    }, []);
+    const handleNoteChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setNote(event.target.value);
-    }
+    }, []);
 
-    function handleCancel() {
+    const handleCancel = useCallback(() => {
         props.onClose();
-    }
-    async function handleOK() {
+    }, [props]);
+    const handleOK = useCallback(async () => {
         await registerCourseData(props.course.id, 'overrideName', name === props.course.name ? undefined : name);
         await registerCourseData(props.course.id, 'syllabusUrl', syllabusUrl === '' ? undefined : syllabusUrl);
         await registerCourseData(props.course.id, 'note', note === '' ? undefined : note);
         props.onClose();
-    }
+    }, [name, note, props, syllabusUrl]);
 
     return (
         <>
@@ -67,13 +68,11 @@ function CourseSettingsDialogContent(props: Props) {
                                     onChange={handleNameChange}
                                     fullWidth
                                     label={browser.i18n.getMessage('courseOverviewSettingsDialogName')}
+                                    variant="standard"
                                 />
                             </Grid>
                             <Grid item>
-                                <Button
-                                    variant="outlined"
-                                    onClick={handleSetNameToDefault}
-                                >
+                                <Button variant="outlined" onClick={handleSetNameToDefault}>
                                     {browser.i18n.getMessage('courseOverviewSettingsDialogSetNameToDefault')}
                                 </Button>
                             </Grid>
@@ -85,6 +84,7 @@ function CourseSettingsDialogContent(props: Props) {
                             onChange={handleSyllabusUrlChange}
                             fullWidth
                             label={browser.i18n.getMessage('courseOverviewSettingsDialogSyllabusUrl')}
+                            variant="standard"
                         />
                     </Grid>
                     <Grid item>

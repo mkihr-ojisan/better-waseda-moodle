@@ -1,12 +1,12 @@
 # Better Waseda Moodle
 
-<img src="https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/app/res/images/icon-256.png" alt="Better Waseda Moodle" width="128">
+<img src="https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/develop/app/res/images/icon.svg" alt="Better Waseda Moodle" width="128">
 
 Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 
 ## インストール
 
-- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.4.2/better-waseda-moodle-v0.4.2-firefox.xpi)
+- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.5.0/better-waseda-moodle-v0.5.0-firefox.xpi)
 - [Chrome](https://chrome.google.com/webstore/detail/better-waseda-moodle/omijfabnmlifcmmghegpbmoieibfbmmj)
 
 
@@ -24,6 +24,8 @@ Waseda Moodleの使い勝手を多少良くするブラウザ拡張機能。
 - 小テストで未回答の問題があるときに警告
 - シラバス検索結果のリンクを修正する
 - 設定の同期
+- ToDoリスト
+- 小テスト・課題・フォーラムの提出前にセッションを確認
 
 
 ## スクリーンショット

@@ -1,24 +1,25 @@
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import MoreVert from '@material-ui/icons/MoreVert';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import IconButton from '@mui/material/IconButton';
+import makeStyles from '@mui/styles/makeStyles';
+import Typography from '@mui/material/Typography';
+import MoreVert from '@mui/icons-material/MoreVert';
 import React, { ReactElement, useContext, useState } from 'react';
 import { CourseListItem } from '../../../common/waseda/course/course';
 import { useMediaQuery } from '../../../common/polyfills/useMediaQuery';
 import { CourseOverviewContext } from '../CourseOverview';
 import CourseImage from '../course-card/CourseImage';
 import CourseMenu from '../course-card/CourseMenu';
-import NoteIcon from '@material-ui/icons/Note';
-import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
+import NoteIcon from '@mui/icons-material/Note';
+import Grid from '@mui/material/Grid';
+import Tooltip from '@mui/material/Tooltip';
+import { useCallback } from 'react';
 
 type Props = {
     course: CourseListItem;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         height: '100%',
     },
@@ -30,24 +31,24 @@ const useStyles = makeStyles(theme => ({
     },
     cardHeaderRoot: {
         alignItems: 'flex-start',
-        [theme.breakpoints.between('sm', 'lg')]: {
+        [theme.breakpoints.between('sm', 'xl')]: {
             padding: theme.spacing(1),
         },
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'block',
-            padding: theme.spacing(1) / 2,
+            padding: theme.spacing(1 / 2),
         },
     },
     cardHeaderTypographyRoot: {
         wordBreak: 'break-all',
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('md')]: {
             fontSize: '0.8rem',
             lineHeight: '1.2em',
         },
     },
     cardHeaderAction: {
         marginTop: -4,
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
     },
@@ -59,39 +60,38 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
-export default function CourseCard(props: Props): ReactElement {
+export default React.memo(function CourseCard(props: Props): ReactElement {
     const classes = useStyles();
     const [menuOpen, setMenuOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
     const context = useContext(CourseOverviewContext);
 
-    const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('xs'));
+    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     const courseData = context.courseData[props.course.id];
     const courseName = courseData?.overrideName ?? props.course.name;
 
-    const handleOpenMenuButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleOpenMenuButtonClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
         setMenuOpen(true);
-    };
-    const closeMenu = () => {
+    }, []);
+    const closeMenu = useCallback(() => {
         setMenuOpen(false);
-    };
-    const handleContextMenu: React.MouseEventHandler = event => {
-        if (!menuOpen) {
-            event.preventDefault();
-            setAnchorPosition({ top: event.clientY, left: event.clientX });
-            setMenuOpen(true);
-        }
-    };
+    }, []);
+    const handleContextMenu: React.MouseEventHandler = useCallback(
+        (event) => {
+            if (!menuOpen) {
+                event.preventDefault();
+                setAnchorPosition({ top: event.clientY, left: event.clientX });
+                setMenuOpen(true);
+            }
+        },
+        [menuOpen]
+    );
 
     return (
-        <Card
-            className={classes.root}
-            onContextMenu={isSmallScreen ? handleContextMenu : undefined}
-        >
+        <Card className={classes.root} onContextMenu={isSmallScreen ? handleContextMenu : undefined}>
             <CourseImage
                 alt={courseName}
                 height="8"
@@ -107,7 +107,12 @@ export default function CourseCard(props: Props): ReactElement {
                 }}
                 title={
                     <Typography variant="body1" classes={{ root: classes.cardHeaderTypographyRoot }}>
-                        <a className={classes.title} href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}>{courseName}</a>
+                        <a
+                            className={classes.title}
+                            href={`https://wsdmoodle.waseda.jp/course/view.php?id=${props.course.id}`}
+                        >
+                            {courseName}
+                        </a>
                     </Typography>
                 }
                 action={
@@ -117,19 +122,18 @@ export default function CourseCard(props: Props): ReactElement {
                                 <MoreVert />
                             </IconButton>
                         </Grid>
-                        {
-                            courseData?.note ?
-                                <Grid item>
-                                    <Tooltip classes={{ tooltip: classes.noteTooltip }} title={
-                                        <Typography variant="body1">{courseData?.note}</Typography>
-                                    }>
-                                        <IconButton edge={false} size="small">
-                                            <NoteIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Grid> :
-                                null
-                        }
+                        {courseData?.note ? (
+                            <Grid item>
+                                <Tooltip
+                                    classes={{ tooltip: classes.noteTooltip }}
+                                    title={<Typography variant="body1">{courseData?.note}</Typography>}
+                                >
+                                    <IconButton edge={false} size="small">
+                                        <NoteIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </Grid>
+                        ) : null}
                     </Grid>
                 }
             />
@@ -143,4 +147,4 @@ export default function CourseCard(props: Props): ReactElement {
             />
         </Card>
     );
-}
+});

@@ -1,24 +1,24 @@
-import Grid from '@material-ui/core/Grid';
 import React, { ReactElement } from 'react';
-import { SectionComponentProps } from '../../Options';
-import Section from '../../Section';
-import OptionBackupConfig from './OptionBackupConfig';
+import SettingsIcon from '@mui/icons-material/Settings';
 import OptionConfigSync from './OptionConfigSync';
+import OptionBackupConfig from './OptionBackupConfig';
 import OptionRestoreConfig from './OptionRestoreConfig';
+import Divider from '@mui/material/Divider';
+import NoPaddingList from '../../NoPaddingList';
 
-export default function SectionGeneral(props: SectionComponentProps): ReactElement | null {
-    return (
-        <Section titleMessageName="optionsSectionGeneral" {...props}>
-            <OptionConfigSync />
-
-            <Grid container spacing={1}>
-                <Grid item>
-                    <OptionBackupConfig />
-                </Grid>
-                <Grid item>
-                    <OptionRestoreConfig />
-                </Grid>
-            </Grid>
-        </Section>
-    );
-}
+export default {
+    name: 'SectionGeneral',
+    title: 'optionsSectionGeneral',
+    Icon: SettingsIcon,
+    Component: function SectionGeneral(): ReactElement {
+        return (
+            <NoPaddingList>
+                <OptionConfigSync />
+                <Divider />
+                <OptionBackupConfig />
+                <Divider />
+                <OptionRestoreConfig />
+            </NoPaddingList>
+        );
+    },
+};

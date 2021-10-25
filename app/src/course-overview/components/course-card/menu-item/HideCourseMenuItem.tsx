@@ -1,5 +1,6 @@
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import React, { ReactElement, useContext, Ref } from 'react';
+import { useCallback } from 'react';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import { CourseOverviewContext } from '../../CourseOverview';
 import CourseMenuItem from './CourseMenuItem';
@@ -9,16 +10,18 @@ type Props = {
     onCloseMenu: () => void;
 };
 
-export default React.forwardRef(function HideCourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
-    const context = useContext(CourseOverviewContext);
+export default React.memo(
+    React.forwardRef(function HideCourseMenuItem(props: Props, ref: Ref<any>): ReactElement {
+        const context = useContext(CourseOverviewContext);
 
-    function handleClick() {
-        context.hideCourse(props.course);
-    }
+        const handleClick = useCallback(() => {
+            context.hideCourse(props.course);
+        }, [context, props.course]);
 
-    return (
-        <CourseMenuItem icon={<VisibilityOff />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
-            {browser.i18n.getMessage('courseOverviewHide')}
-        </CourseMenuItem>
-    );
-});
+        return (
+            <CourseMenuItem icon={<VisibilityOff />} onClick={handleClick} onCloseMenu={props.onCloseMenu} ref={ref}>
+                {browser.i18n.getMessage('courseOverviewHide')}
+            </CourseMenuItem>
+        );
+    })
+);

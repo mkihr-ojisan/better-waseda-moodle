@@ -31,6 +31,10 @@
     "message": "通常のログインページに移動する",
     "description": "自動ログインに失敗したときに、MyWasedaのログインページに移動するボタンに表示する文字列"
   },
+  "optionsPageTitle": {
+    "message": "Better Waseda Moodleの設定",
+    "description": "設定ページのタイトル"
+  },
   "optionsSectionGeneral": {
     "message": "一般",
     "description": "設定ページの「一般」セクションの見出し"
@@ -40,7 +44,7 @@
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
   "optionsSyncConfigDescription": {
-    "message": "ブラウザの同期機能を使用して、同じFirefoxアカウントやGoogleアカウントにログインしているブラウザ間でBetter Waseda Moodleの設定を同期します。この設定を変更すると拡張機能が再読み込みされます。",
+    "message": "ブラウザの同期機能を使用して、同じFirefoxアカウントやGoogleアカウントにログインしているブラウザ間でBetter Waseda Moodleの設定を同期します。",
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
   "optionsSyncEnableModeSelectionDialogMessage": {
@@ -63,8 +67,24 @@
     "message": "設定のバックアップ",
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
+  "optionsBackupConfigDescription": {
+    "message": "Better Waseda Moodleの設定をJSONファイルとして出力します。自動ログインの設定は出力されません。",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsBackupConfigButton": {
+    "message": "バックアップ",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
   "optionsRestoreConfig": {
     "message": "設定の復元",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsRestoreConfigDescription": {
+    "message": "バックアップした設定ファイルを読み込んで設定を復元します。",
+    "description": "設定ページの「一般」セクションに表示するメッセージ"
+  },
+  "optionsRestoreConfigButton": {
+    "message": "ファイルを選択",
     "description": "設定ページの「一般」セクションに表示するメッセージ"
   },
   "optionsRestoreConfigSuccess": {
@@ -77,6 +97,10 @@
   },
   "optionsEnableAutoLogin": {
     "message": "自動ログインを有効にする",
+    "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
+  },
+  "optionsEnableAutoLoginDescription": {
+    "message": "ログインが必要なページを開いたときに自動でログイン処理を行います。",
     "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
   },
   "optionsLoginId": {
@@ -93,6 +117,10 @@
   },
   "optionsEnableCourseOverview": {
     "message": "コース概要を置き換える",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
+  "optionsEnableCourseOverviewDescription": {
+    "message": "ダッシュボードのコース概要をBetter Waseda Moodleのものに置き換えます。時間割表などを使用するにはこのオプションを有効にする必要があります。",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
   "optionsCourseOverviewTypeLabel": {
@@ -115,6 +143,14 @@
     "message": "コース一覧のキャッシュを削除する",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
+  "optionsClearCourseListCacheDescription": {
+    "message": "コース一覧の表示を高速化するためのキャッシュを削除します。",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
+  "optionsClearCourseListCacheButton": {
+    "message": "削除",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
   "optionsClearCourseListCacheMessage": {
     "message": "コース一覧のキャッシュを削除しました",
     "description": "コース一覧のキャッシュを削除したときに表示するスナックバーのメッセージ"
@@ -123,13 +159,17 @@
     "message": "時間割とシラバスのURLを取得する",
     "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsFetchTimetableDataAndSyllabusUrlMessage": {
-    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。既存の設定は上書きされます。履修登録ページがメンテナンス中の場合は取得できません。また、Moodleのコース名と科目名が一致していないなど特殊な科目の情報は取得できないことがあります。",
-    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+  "optionsFetchTimetableDataAndSyllabusUrlDescription": {
+    "message": "履修登録のページから時間割の情報とシラバスのURLを取得します。取得した時間割が既存の設定と重複する場合は上書きされます。",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
   },
-  "optionsFetchTimetableDataAndSyllabusUrlMessageOK": {
-    "message": "続行",
-    "description": "「時間割とシラバスのURLを取得する」をクリックしたときに表示するメッセージ"
+  "optionsFetchTimetableDataAndSyllabusUrlButton": {
+    "message": "取得",
+    "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+  },
+  "optionsFetchTimetableDataAndSyllabusUrlProcessing": {
+    "message": "取得しています…",
+    "description": "時間割とシラバスのURLの取得中に表示するメッセージ"
   },
   "optionsFetchTimetableDataAndSyllabusUrlDoneMessage": {
     "message": "時間割とシラバスのURLを取得しました",
@@ -151,24 +191,76 @@
     "message": "前のページに戻れない小テストのみ",
     "description": "設定ページの「小テスト」セクションに表示するメッセージ"
   },
+  "optionsSectionToDoList": {
+    "message": "ToDoリスト",
+    "description": "設定ページの「ToDoリスト」セクションのタイトル"
+  },
+  "optionsToDoListEnabled": {
+    "message": "ToDoリストを有効にする",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsToDoListEnabledDescription": {
+    "message": "有効にするとブラウザのツールバーにあるBetter Waseda MoodleのアイコンをクリックしたときにToDoリストを表示します。",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItems": {
+    "message": "非表示のToDo項目",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemsButton": {
+    "message": "一覧",
+    "description": "設定ページの「ToDoリスト」セクションに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogTitle": {
+    "message": "非表示のToDo項目",
+    "description": "非表示のToDo項目ダイアログのタイトル"
+  },
+  "optionsHiddenToDoItemDialogIdsTab": {
+    "message": "項目",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogCoursesTab": {
+    "message": "科目",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogModulesTab": {
+    "message": "種類",
+    "description": "非表示のToDo項目ダイアログのタブのラベル"
+  },
+  "optionsHiddenToDoItemDialogUnhide": {
+    "message": "再表示",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogIdsEmpty": {
+    "message": "非表示の項目はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogCoursesEmpty": {
+    "message": "非表示の科目はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
+  "optionsHiddenToDoItemDialogModulesEmpty": {
+    "message": "非表示の種類はありません",
+    "description": "非表示のToDo項目ダイアログに表示するメッセージ"
+  },
   "optionsSectionOthers": {
     "message": "その他",
     "description": "設定ページの「その他」セクションの見出し"
   },
   "optionsViewInBrowserEnabled": {
-    "message": "PDF、画像等をブラウザで開く",
+    "message": "PDF・画像・動画等をブラウザで開く",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsViewInBrowserDescription": {
-    "message": "PDF、画像等を保存せずに直接ブラウザで開けるようにします。",
+    "message": "ブラウザで開くことができるファイルを、保存せずに直接ブラウザで開けるようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsRemoveLoadingVideo": {
-    "message": "動画コンテンツの読み込み中に再生される動画を削除する",
+    "message": "動画コンテンツの読み込み中に再生される動画をスキップする",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsRemoveLoadingVideoDescription": {
-    "message": "この動画が再生されないようにします。",
+    "message": "[この動画](https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?)が再生されないようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsCheckNotesOnSubmitting": {
@@ -208,8 +300,40 @@
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
   "optionsSyllabusLinkFixEnabledDescription": {
-    "message": "新しいウィンドウで開き、右クリック禁止という前時代的な挙動を修正します。",
+    "message": "右クリック禁止を解除し、リンク先を同じタブで開くようにします。",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionEnabled": {
+    "message": "提出前にセッションを確認する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionEnabledDescription": {
+    "message": "小テスト・課題・フォーラムの提出前にセッションがタイムアウトしていないか確認します。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionQuiz": {
+    "message": "小テスト",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionAssignment": {
+    "message": "課題",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsCheckSessionForum": {
+    "message": "フォーラム",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsAboutTitle": {
+    "message": "Better Waseda Moodleについて",
+    "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"
+  },
+  "optionsAboutDisclaimer": {
+    "message": "Better Waseda MoodleはMITライセンスの下で公開されているフリーソフトウェアです。特に早稲田大学の許可を得るということはせずに公開しているので、自己責任で使用してください。作者はBetter Waseda Moodleの開発を引き継いでくれる学生をいつでも募集しています。",
+    "description": "設定ページの「Better Waseda Moodleについて」セクションに表示するメッセージ"
+  },
+  "optionsAboutSourceCode": {
+    "message": "ソースコード",
+    "description": "設定ページの「Better Waseda Moodleについて」セクションに表示するメッセージ"
   },
   "courseOverviewHide": {
     "message": "非表示",
@@ -369,6 +493,86 @@
     "message": "解答に戻る",
     "description": "未回答の問題があるときに表示するメッセージ"
   },
+  "checkSessionCheckingMessage": {
+    "message": "セッションを確認しています…",
+    "description": "小テストの解答などの送信前にセッションを確認しているときに表示するメッセージ"
+  },
+  "checkSessionExpiredMessage": {
+    "message": "セッションがタイムアウトしたようです。このまま提出することはできないので、**提出する内容を控えた上で**リロードするなどして提出してください。",
+    "description": "セッションがタイムアウトしている状態で送信しようとしたときに表示するメッセージ"
+  },
+  "popupSettingsButtonTitle": {
+    "message": "Better Waseda Moodleの設定",
+    "description": "ポップアップの設定ボタンのタイトル"
+  },
+  "popupRefreshList": {
+    "message": "リストを更新",
+    "description": "ポップアップの更新ボタンのタイトル"
+  },
+  "popupAddButtonTitle": {
+    "message": "ToDo項目を追加",
+    "description": "ポップアップの追加ボタンのタイトル"
+  },
+  "popupIndefinite": {
+    "message": "無期限",
+    "description": "ポップアップ内で無期限の課題の対して表示するメッセージ"
+  },
+  "popupEmptyMessageLoading": {
+    "message": "取得しています…",
+    "description": "ポップアップのリストが空で、取得中のときに表示するメッセージ"
+  },
+  "popupEmptyMessage": {
+    "message": "ToDoリストは空です。",
+    "description": "ポップアップのリストが空のときに表示するメッセージ"
+  },
+  "popupHideItem": {
+    "message": "非表示",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupHideCourse": {
+    "message": "この科目を非表示",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupHideType": {
+    "message": "この種類を非表示",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupHideNotice": {
+    "message": "非表示にした項目は設定から再表示できます。",
+    "description": "初めてToDo項目を非表示にしたときに表示するメッセージ"
+  },
+  "popupEditItem": {
+    "message": "編集",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "popupRemoveItem": {
+    "message": "削除",
+    "description": "ToDo項目のメニューに表示するメッセージ"
+  },
+  "addToDoItemPageTitle": {
+    "message": "ToDo項目の追加・編集",
+    "description": "ToDo項目の追加ダイアログのタイトル"
+  },
+  "addToDoItemTitle": {
+    "message": "タイトル",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemIconUrl": {
+    "message": "アイコンのURL",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemCategory": {
+    "message": "科目",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemTitleHref": {
+    "message": "リンク先",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
+  "addToDoItemOK": {
+    "message": "決定",
+    "description": "ToDo項目の追加ダイアログに表示するメッセージ"
+  },
   "sundayShort": {
     "message": "日"
   },
@@ -459,7 +663,28 @@
   "underMaintenanceError": {
     "message": "メンテナンス中です。"
   },
+  "timetableConflictError": {
+    "message": "時間割が重複しているため設定できません。"
+  },
   "otherError": {
     "message": "エラーが発生しました: $1"
+  },
+  "version": {
+    "message": "バージョン $1"
+  },
+  "dateFormatMonthDateDay": {
+    "message": "M/d(EEEEE)"
+  },
+  "moodleModule_zoom": {
+    "message": "Zoom ミーティング"
+  },
+  "moodleModule_questionnaire": {
+    "message": "アンケート"
+  },
+  "moodleModule_assign": {
+    "message": "課題"
+  },
+  "moodleModule_quiz": {
+    "message": "小テスト"
   }
 }

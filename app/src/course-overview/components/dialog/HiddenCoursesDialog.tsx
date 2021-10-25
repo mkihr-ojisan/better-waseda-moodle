@@ -1,10 +1,10 @@
-import { makeStyles } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
+import makeStyles from '@mui/styles/makeStyles';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import Close from '@mui/icons-material/Close';
 import React, { ReactElement, useContext } from 'react';
 import { useMediaQuery } from '../../../common/polyfills/useMediaQuery';
 import CourseListView from '../CourseListView';
@@ -15,7 +15,7 @@ type Props = {
     onClose?: () => void;
 };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     closeButton: {
         position: 'absolute',
         right: theme.spacing(1),
@@ -24,23 +24,23 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function HiddenCoursesDialog(props: Props): ReactElement {
+export default React.memo(function HiddenCoursesDialog(props: Props): ReactElement {
     const classes = useStyles();
     const context = useContext(CourseOverviewContext);
 
-    const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     return (
         <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="md" fullScreen={isSmallScreen}>
             <DialogTitle>
                 {browser.i18n.getMessage('courseOverviewHiddenCoursesDialogTitle')}
-                <IconButton classes={{ root: classes.closeButton }} onClick={props.onClose}>
+                <IconButton classes={{ root: classes.closeButton }} onClick={props.onClose} size="large">
                     <Close />
                 </IconButton>
             </DialogTitle>
             <DialogContent>
                 <CourseListView
-                    courses={context.courseList.filter(c => c.isHidden)}
+                    courses={context.courseList.filter((c) => c.isHidden)}
                     cardWidth={isSmallScreen ? undefined : 4}
                     emptyView={
                         <DialogContentText>
@@ -51,4 +51,4 @@ export default function HiddenCoursesDialog(props: Props): ReactElement {
             </DialogContent>
         </Dialog>
     );
-}
+});

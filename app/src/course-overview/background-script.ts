@@ -1,23 +1,9 @@
-import { onConfigChange } from '../common/config/config';
-
-let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
+import registerContentScript from '../common/config/registerContentScript';
 
 export function initCourseOverview(): void {
-    onConfigChange('courseOverview.enabled', (_, newValue) => {
-        if (newValue)
-            register();
-        else
-            unregister();
-    }, true);
-}
-
-async function register() {
-    registeredContentScript = browser.contentScripts.register({
+    registerContentScript('courseOverview.enabled', {
         matches: ['https://wsdmoodle.waseda.jp/my/*'],
         js: [{ file: 'src/course-overview/content-script.js' }],
-        runAt: 'document_start',
+        runAt: 'document_end',
     });
-}
-async function unregister() {
-    (await registeredContentScript)?.unregister();
 }

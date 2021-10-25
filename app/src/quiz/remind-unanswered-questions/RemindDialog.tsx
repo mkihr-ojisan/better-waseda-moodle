@@ -1,10 +1,11 @@
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 import React, { ReactElement } from 'react';
-import BWMThemeDarkReader from '../../common/react/theme/BWMThemeDarkReader';
+import { useCallback } from 'react';
+import BWMRoot from '../../common/react/BWMRoot';
 import { Question } from './questions';
 
 type Props = {
@@ -14,30 +15,25 @@ type Props = {
     unansweredQuestions: Question[];
 };
 
-export default function RemindDialog(props: Props): ReactElement {
-
-    function handleClickBack() {
+export default React.memo(function RemindDialog(props: Props): ReactElement {
+    const handleClickBack = useCallback(() => {
         props.onClose();
-    }
+    }, [props]);
 
-    function handleClickContinue() {
+    const handleClickContinue = useCallback(() => {
         props.onClose();
         props.onContinue();
-    }
+    }, [props]);
 
     return (
-        <BWMThemeDarkReader>
+        <BWMRoot>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogContent>
-                    <Box mb={1}>
-                        {browser.i18n.getMessage('quizRemindUnansweredQuestionsDialogMessage')}
-                    </Box>
+                    <Box mb={1}>{browser.i18n.getMessage('quizRemindUnansweredQuestionsDialogMessage')}</Box>
                     <ul>
-                        {
-                            props.unansweredQuestions.map(q => (
-                                <li key={q.name}>{q.name}</li>
-                            ))
-                        }
+                        {props.unansweredQuestions.map((q) => (
+                            <li key={q.name}>{q.name}</li>
+                        ))}
                     </ul>
                 </DialogContent>
                 <DialogActions>
@@ -49,6 +45,6 @@ export default function RemindDialog(props: Props): ReactElement {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </BWMThemeDarkReader>
+        </BWMRoot>
     );
-}
+});

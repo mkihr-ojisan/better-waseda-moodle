@@ -6,14 +6,12 @@ import ReactDOM from 'react-dom';
 import { MessengerClient } from '../common/util/messenger';
 import CourseOverview from './components/CourseOverview';
 import { CourseListItem } from '../common/waseda/course/course';
-import { getConfig } from '../common/config/config';
+import { initConfigCache } from '../common/config/config';
 
-export const messengerClient = new MessengerClient();
+export const courseList = MessengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>;
+const initConfigCachePromise = initConfigCache();
 
-export const courseList = messengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>;
-export const courseData = getConfig('courseData');
-
-window.addEventListener('DOMContentLoaded', async () => {
+(async () => {
     // 本来のコース概要を隠す
     const elem = document.getElementsByClassName('block-myoverview')[0];
     if (elem instanceof HTMLElement) {
@@ -24,8 +22,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     rootElement.id = 'bwmCourseOverviewRoot';
     elem.insertAdjacentElement('afterend', rootElement);
 
-    ReactDOM.render(
-        <CourseOverview />,
-        rootElement,
-    );
-});
+    await initConfigCachePromise;
+
+    ReactDOM.render(<CourseOverview />, rootElement);
+})();

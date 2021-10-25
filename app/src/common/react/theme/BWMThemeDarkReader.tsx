@@ -1,23 +1,32 @@
-import { createMuiTheme, Theme } from '@material-ui/core';
-import { ThemeProvider } from '@material-ui/core/styles';
-import { PaletteOptions } from '@material-ui/core/styles/createPalette';
+import { PaletteOptions, ThemeProvider } from '@mui/material/styles';
+import { StyledEngineProvider, createTheme, Theme } from '@mui/material/styles';
 import React, { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react';
 import { bwmThemeOptions } from './BWMTheme';
 
+declare module '@mui/styles/defaultTheme' {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {}
+}
+
 // DarkReaderで設定された背景色と文字色を取得する
-function useDarkReaderColor(): { bgR: number, bgG: number, bgB: number, fgR: number, fgG: number, fgB: number; } | null {
+function useDarkReaderColor(): { bgR: number; bgG: number; bgB: number; fgR: number; fgG: number; fgB: number } | null {
     const style = getComputedStyle(document.documentElement);
     const [bgColor, setBgColor] = useState(style.getPropertyValue('--darkreader-neutral-background').trim());
     const [fgColor, setFgColor] = useState(style.getPropertyValue('--darkreader-neutral-text').trim());
 
     useEffect(() => {
         //darkreaderによるstyleの変更を監視する
-        const observer = new MutationObserver(records => {
+        const observer = new MutationObserver((records) => {
             for (const record of records) {
                 if (
-                    Array.from(record.addedNodes).some(node => node instanceof HTMLStyleElement && node.classList.contains('darkreader')) ||
-                    Array.from(record.removedNodes).some(node => node instanceof HTMLStyleElement && node.classList.contains('darkreader')) ||
-                    record.target.parentNode instanceof HTMLStyleElement && record.target.parentNode.classList.contains('darkreader')
+                    Array.from(record.addedNodes).some(
+                        (node) => node instanceof HTMLStyleElement && node.classList.contains('darkreader')
+                    ) ||
+                    Array.from(record.removedNodes).some(
+                        (node) => node instanceof HTMLStyleElement && node.classList.contains('darkreader')
+                    ) ||
+                    (record.target.parentNode instanceof HTMLStyleElement &&
+                        record.target.parentNode.classList.contains('darkreader'))
                 ) {
                     const style = getComputedStyle(document.documentElement);
                     setBgColor(style.getPropertyValue('--darkreader-neutral-background').trim());
@@ -29,7 +38,6 @@ function useDarkReaderColor(): { bgR: number, bgG: number, bgB: number, fgR: num
         observer.observe(document.head, { subtree: true, characterData: true, childList: true });
         return () => observer.disconnect();
     }, []);
-
 
     return useMemo(() => {
         if (!bgColor || !fgColor) return null;
@@ -50,7 +58,7 @@ function useDarkReaderTheme(): Theme {
 
     return useMemo(() => {
         if (!darkReaderColor) {
-            return createMuiTheme(bwmThemeOptions);
+            return createTheme(bwmThemeOptions);
         }
 
         const { bgR, bgG, bgB, fgR, fgG, fgB } = darkReaderColor;
@@ -60,7 +68,7 @@ function useDarkReaderTheme(): Theme {
         let palette: PaletteOptions;
         if (isDark) {
             palette = {
-                type: 'dark',
+                mode: 'dark',
                 text: {
                     primary: rgba(fgR, fgG, fgB, 1),
                     secondary: rgba(fgR, fgG, fgB, 0.7),
@@ -68,12 +76,13 @@ function useDarkReaderTheme(): Theme {
                 },
                 background: {
                     default: rgba(bgR, bgG, bgB, 1),
-                    paper: rgba(bgR + 20, bgG + 20, bgB + 20, 1),
+                    paper: rgba(bgR + 10, bgG + 10, bgB + 10, 1),
                 },
+                divider: rgba(fgR, fgG, fgB, 0.12),
             };
         } else {
             palette = {
-                type: 'light',
+                mode: 'light',
                 text: {
                     primary: rgba(fgR, fgG, fgB, 0.87),
                     secondary: rgba(fgR, fgG, fgB, 0.54),
@@ -86,7 +95,7 @@ function useDarkReaderTheme(): Theme {
             };
         }
 
-        const newTheme = createMuiTheme({
+        const newTheme = createTheme({
             ...bwmThemeOptions,
             palette: {
                 ...bwmThemeOptions.palette,
@@ -98,10 +107,10 @@ function useDarkReaderTheme(): Theme {
     }, [darkReaderColor]);
 }
 
-export default function BWMThemeDarkReader(props: { children: ReactNode; }): ReactElement {
+export default React.memo(function BWMThemeDarkReader(props: { children?: ReactNode }): ReactElement {
     return (
-        <ThemeProvider theme={useDarkReaderTheme()}>
-            {props.children}
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={useDarkReaderTheme()}>{props.children}</ThemeProvider>
+        </StyledEngineProvider>
     );
-}
+});

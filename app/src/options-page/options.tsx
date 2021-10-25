@@ -3,6 +3,13 @@ import 'react-devtools';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Options from './components/Options';
+import { initConfigCache } from '../common/config/config';
+import OptionsPage from './components/OptionsPage';
 
-ReactDOM.render(<Options />, document.getElementById('container'));
+document.title = browser.i18n.getMessage('optionsPageTitle');
+
+(async () => {
+    await initConfigCache();
+
+    ReactDOM.render(<OptionsPage />, document.getElementById('container'));
+})();

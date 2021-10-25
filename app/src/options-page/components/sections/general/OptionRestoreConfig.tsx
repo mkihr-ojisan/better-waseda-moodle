@@ -1,14 +1,15 @@
-import Button from '@material-ui/core/Button';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import React, { ReactElement, useState } from 'react';
-import { getStorage } from '../../../../common/config/config';
-import { CONFIG_SYNC_ENABLED_CONFIG_KEY, isConfigSyncEnabled } from '../../../../common/config/sync';
-import AutoCloseAlert from '../../../../common/react/AutoCloseAlert';
+import { useCallback } from 'react';
+import { importConfig } from '../../../../common/config/config';
+import Action from '../../options/Action';
 
 export default function OptionRestoreConfig(): ReactElement {
     const [configRestoredMessageOpen, setConfigRestoredMessageOpen] = useState(false);
     const [configRestoreError, setConfigRestoreError] = useState<string | null>(null);
 
-    function handleRestoreConfig() {
+    const handleRestoreConfig = useCallback(() => {
         const input = document.createElement('input');
         input.type = 'file';
         input.click();
@@ -22,34 +23,40 @@ export default function OptionRestoreConfig(): ReactElement {
                 config = JSON.parse(await file.text());
             } catch (ex) {
                 setConfigRestoredMessageOpen(true);
-                setConfigRestoreError(browser.i18n.getMessage('otherError', ex.message));
+                setConfigRestoreError(browser.i18n.getMessage('otherError', `${ex}`));
                 return;
             }
 
-            const configSyncEnabled = await isConfigSyncEnabled();
-            const storage = await getStorage();
-            await storage.clear();
-            await storage.set(config);
-            browser.storage.local.set({ [CONFIG_SYNC_ENABLED_CONFIG_KEY]: configSyncEnabled });
+            await importConfig(config);
 
             setConfigRestoredMessageOpen(true);
             setConfigRestoreError(null);
         };
-    }
+    }, []);
+    const handleConfigRestoredMessageClose = useCallback(() => setConfigRestoredMessageOpen(false), []);
 
     return (
         <>
-            <Button variant="outlined" onClick={handleRestoreConfig}>
-                {browser.i18n.getMessage('optionsRestoreConfig')}
-            </Button>
+            <Action
+                message="optionsRestoreConfig"
+                description="optionsRestoreConfigDescription"
+                buttonMessage="optionsRestoreConfigButton"
+                onClick={handleRestoreConfig}
+            />
 
-            <AutoCloseAlert
+            <Snackbar
                 open={configRestoredMessageOpen}
-                onClose={() => setConfigRestoredMessageOpen(false)}
-                severity={configRestoreError ? 'error' : 'success'}
+                onClose={handleConfigRestoredMessageClose}
+                autoHideDuration={5000}
             >
-                {configRestoreError ?? browser.i18n.getMessage('optionsRestoreConfigSuccess')}
-            </AutoCloseAlert>
+                <Alert
+                    severity={configRestoreError ? 'error' : 'success'}
+                    onClose={handleConfigRestoredMessageClose}
+                    variant="filled"
+                >
+                    {configRestoreError ?? browser.i18n.getMessage('optionsRestoreConfigSuccess')}
+                </Alert>
+            </Snackbar>
         </>
     );
 }
