@@ -7,8 +7,8 @@ import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useCallback } from 'react';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import AddIcon from '@mui/icons-material/Add';
-import { openAddToDoItemPage } from '../../common/todo-list/todo';
+/*import AddIcon from '@mui/icons-material/Add';
+import { openAddToDoItemPage } from '../../common/todo-list/todo';*/
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -47,9 +47,9 @@ export default React.memo(function Header(props: HeaderProps) {
         window.close();
     }, []);
 
-    const handleAddButtonClick = useCallback(() => {
+    /*const handleAddButtonClick = useCallback(() => {
         openAddToDoItemPage();
-    }, []);
+    }, []);*/
 
     return (
         <Paper square elevation={5} className={classes.root}>
@@ -67,7 +67,7 @@ export default React.memo(function Header(props: HeaderProps) {
                         <RefreshIcon />
                     </IconButton>
                 )}
-                <Grid item>
+                {/*<Grid item>
                     <IconButton
                         title={browser.i18n.getMessage('popupAddButtonTitle')}
                         onClick={handleAddButtonClick}
@@ -75,7 +75,7 @@ export default React.memo(function Header(props: HeaderProps) {
                     >
                         <AddIcon />
                     </IconButton>
-                </Grid>
+                </Grid>*/}
                 <Grid item className={classes.spacer}></Grid>
                 <Grid item>
                     <IconButton
