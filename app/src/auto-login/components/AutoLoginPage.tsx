@@ -1,7 +1,6 @@
 import makeStyles from '@mui/styles/makeStyles';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CircularProgress, { CircularProgressProps } from '@mui/material/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -63,7 +62,7 @@ const AutoLoginPageContent = React.memo(function AutoLoginPageContent(props: Aut
                 ) : (
                     <Grid container alignItems="center" spacing={2}>
                         <Grid item>
-                            <CircularProgressWithLabel value={props.progress * 100} />
+                            <CircularProgress />
                         </Grid>
                         <Grid item>
                             <Typography variant="body1">{browser.i18n.getMessage('autoLoginPageMessage')}</Typography>
@@ -81,25 +80,3 @@ const AutoLoginPageContent = React.memo(function AutoLoginPageContent(props: Aut
         </Dialog>
     );
 });
-
-function CircularProgressWithLabel(props: CircularProgressProps) {
-    return (
-        <Box position="relative" display="inline-flex">
-            <CircularProgress variant="determinate" {...props} />
-            <Box
-                top={0}
-                left={0}
-                bottom={0}
-                right={0}
-                position="absolute"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-            >
-                <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(
-                    props.value ?? 0
-                )}%`}</Typography>
-            </Box>
-        </Box>
-    );
-}
