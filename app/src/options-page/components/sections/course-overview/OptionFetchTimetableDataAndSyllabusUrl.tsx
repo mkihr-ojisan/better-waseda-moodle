@@ -72,8 +72,8 @@ export default React.memo(function OptionFetchTimetableDataAndSyllabusUrl() {
 
 async function fetchTimetableDataAndSyllabusUrl(): Promise<void> {
     const [list, infos]: [CourseListItem[], CourseRegistrationInfo[]] = await Promise.all([
-        MessengerClient.exec('fetchCourseList'),
-        MessengerClient.exec('fetchCourseRegistrationInfo'),
+        MessengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>,
+        MessengerClient.exec('fetchCourseRegistrationInfo') as Promise<CourseRegistrationInfo[]>,
     ]);
 
     for (const course of list) {

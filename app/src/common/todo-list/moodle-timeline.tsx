@@ -1,7 +1,6 @@
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 import { ReactElement } from 'react';
-import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 import { MessengerClient } from '../util/messenger';
 import { ActionEvent } from '../waseda/calendar';
 import { ToDoItem, ToDoItemAction, ToDoItemIconProps } from './todo';
@@ -9,15 +8,16 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { getConfig, setConfig } from '../config/config';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-export function getToDoItemsFromMoodleTimeline(forceUpdate?: boolean): CachedPromise<ToDoItem<ActionEvent>[]> {
-    return createCachedPromise(async (resolveCache) => {
-        const promise: CachedPromise<ActionEvent[]> = MessengerClient.exec('fetchActionEventsByTimeSort', {
-            forceUpdate,
-        });
-        resolveCache(promise.cachedValue.then((items) => filterOutHiddenEvents(items).map(actionEventToToDoItem)));
+export async function* getToDoItemsFromMoodleTimeline(
+    forceUpdate?: boolean
+): AsyncGenerator<ToDoItem<ActionEvent>[], void, undefined> {
+    const generator = (await MessengerClient.exec('fetchActionEventsByTimeSort', {
+        forceUpdate,
+    })) as AsyncGenerator<ActionEvent[]>;
 
-        return filterOutHiddenEvents(await promise).map(actionEventToToDoItem);
-    });
+    for await (const items of generator) {
+        yield filterOutHiddenEvents(items).map(actionEventToToDoItem);
+    }
 }
 
 function filterOutHiddenEvents(events: ActionEvent[]): ActionEvent[] {

@@ -2,7 +2,6 @@ import SvgIcon from '@mui/material/SvgIcon';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import React from 'react';
 import { getConfig, setConfig } from '../config/config';
-import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 import { openAddToDoItemPage, ToDoItem } from './todo';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -39,50 +38,49 @@ export function removeToDoItem(itemId: string): void {
     setConfig('todo.userItems', newValue);
 }
 
-export function getUserAddedToDoItems(): CachedPromise<ToDoItem<UserAddedToDoItem>[]> {
-    return createCachedPromise((resolveCache) => {
-        const items = getConfig('todo.userItems').map((item) => ({
-            id: item.id,
-            Icon,
-            category: item.category,
-            categoryHref:
-                item.courseId !== undefined
-                    ? `https://wsdmoodle.waseda.jp/course/view.php?id=${item.courseId}`
-                    : undefined,
-            title: item.title,
-            titleHref: item.titleHref,
-            actions: [
-                {
-                    Icon: EditIcon,
-                    title: browser.i18n.getMessage('popupEditItem'),
-                    onAction: (item: ToDoItem<UserAddedToDoItem>) => {
-                        openAddToDoItemPage({
-                            id: item.data.id,
-                            defaultIconUrl: item.data.iconUrl,
-                            defaultCategory: item.data.category,
-                            defaultCourseId: item.data.courseId,
-                            defaultTitle: item.data.title,
-                            defaultTitleHref: item.data.titleHref,
-                            defaultDueDate: item.data.dueDate,
-                        });
-                        return { closePopup: true };
-                    },
+export async function* getUserAddedToDoItems(): AsyncGenerator<
+    ToDoItem<UserAddedToDoItem>[],
+    ToDoItem<UserAddedToDoItem>[],
+    undefined
+> {
+    const items = getConfig('todo.userItems').map((item) => ({
+        id: item.id,
+        Icon,
+        category: item.category,
+        categoryHref:
+            item.courseId !== undefined ? `https://wsdmoodle.waseda.jp/course/view.php?id=${item.courseId}` : undefined,
+        title: item.title,
+        titleHref: item.titleHref,
+        actions: [
+            {
+                Icon: EditIcon,
+                title: browser.i18n.getMessage('popupEditItem'),
+                onAction: (item: ToDoItem<UserAddedToDoItem>) => {
+                    openAddToDoItemPage({
+                        id: item.data.id,
+                        defaultIconUrl: item.data.iconUrl,
+                        defaultCategory: item.data.category,
+                        defaultCourseId: item.data.courseId,
+                        defaultTitle: item.data.title,
+                        defaultTitleHref: item.data.titleHref,
+                        defaultDueDate: item.data.dueDate,
+                    });
+                    return { closePopup: true };
                 },
-                {
-                    Icon: DeleteIcon,
-                    title: browser.i18n.getMessage('popupRemoveItem'),
-                    onAction: (item: ToDoItem<UserAddedToDoItem>) => {
-                        removeToDoItem(item.data.id);
-                        return { refreshList: true };
-                    },
+            },
+            {
+                Icon: DeleteIcon,
+                title: browser.i18n.getMessage('popupRemoveItem'),
+                onAction: (item: ToDoItem<UserAddedToDoItem>) => {
+                    removeToDoItem(item.data.id);
+                    return { refreshList: true };
                 },
-            ],
-            dueDate: item.dueDate !== undefined ? new Date(item.dueDate) : undefined,
-            data: item,
-        }));
-        resolveCache(items);
-        return items;
-    });
+            },
+        ],
+        dueDate: item.dueDate !== undefined ? new Date(item.dueDate) : undefined,
+        data: item,
+    }));
+    return items;
 }
 
 const useStyles = makeStyles(() => ({

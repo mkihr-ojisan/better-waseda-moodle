@@ -1,61 +1,68 @@
-import { ExPromise, PromiseProgressEvent } from './ExPromise';
-
 export class MessengerServer {
     private static instructions: { [key: string]: Function } = {};
-    private static pendingExPromises: { [key: number]: ExPromise<unknown, unknown, unknown> } = {};
     static init(): void {
         browser.runtime.onConnect.addListener((port) => {
+            let isDisconnected = false;
+            port.onDisconnect.addListener(() => {
+                isDisconnected = true;
+            });
+
             port.onMessage.addListener((message: any) => {
                 (async () => {
                     const inst = message.inst;
                     const args = message.args;
                     const id = message.id;
 
-                    switch (inst) {
-                        case '__cancel':
-                            this.pendingExPromises[id]?.cancel(args);
-                            break;
-                        default:
-                            try {
-                                const value = this.instructions[inst].apply(undefined, args);
-                                if (value instanceof ExPromise) {
-                                    this.pendingExPromises[id] = value;
-                                    value.addEventListener('progress', (event) => {
-                                        port.postMessage({
-                                            inst: '__retProgress',
-                                            value: (event as PromiseProgressEvent<any>).progress,
-                                            id,
-                                        });
-                                    });
-                                    value.cachedValue.then((cachedValue) => {
-                                        port.postMessage({
-                                            inst: '__retCache',
-                                            value: cachedValue,
-                                            id,
-                                        });
-                                    });
-                                    port.postMessage({
-                                        inst: '__retOk',
-                                        value: await value,
-                                        id,
-                                    });
-                                    delete this.pendingExPromises[id];
-                                } else {
-                                    port.postMessage({
-                                        inst: '__retOk',
-                                        value: await value,
-                                        id,
-                                    });
+                    try {
+                        const value = await this.instructions[inst].apply(undefined, args);
+
+                        if (
+                            typeof value === 'object' &&
+                            (Symbol.iterator in value || Symbol.asyncIterator in value) &&
+                            'next' in value
+                        ) {
+                            port.postMessage({
+                                inst: '__retGenerator',
+                                id,
+                            });
+
+                            while (!isDisconnected) {
+                                const next = await value.next();
+                                port.postMessage({
+                                    inst: '__retGeneratorNext',
+                                    id,
+                                    value: {
+                                        done: next.done,
+                                        value: next.value,
+                                    },
+                                });
+                                if (next.done) {
+                                    break;
                                 }
-                            } catch (error) {
-                                console.error(`Error while executing instruction '${inst}'`, error);
+                            }
+                        } else {
+                            if (!isDisconnected) {
+                                port.postMessage({
+                                    inst: '__retOk',
+                                    value,
+                                    id,
+                                });
+                            }
+                        }
+                    } catch (error) {
+                        console.error(`Error while executing instruction '${inst}'`, error);
+
+                        try {
+                            if (!isDisconnected) {
                                 port.postMessage({
                                     inst: '__retErr',
                                     value: `${error}`,
                                     id,
                                 });
                             }
-                            break;
+                        } catch (error) {
+                            // たぶんポートが閉じられている
+                        }
                     }
                 })();
             });
@@ -76,9 +83,12 @@ export class MessengerClient {
         [key: number]: {
             resolve: (value: any) => void;
             reject: (reason: any) => void;
-            resolveCache?: (value: any) => void;
-            checkCancelled?: (handler: ((reason: any) => boolean) | undefined) => void;
-            reportProgress?: (progress: any) => void;
+        };
+    } = {};
+    private static generators: {
+        [key: number]: {
+            resolve: (value: any) => void;
+            reject: (reason: any) => void;
         };
     } = {};
     private static port: browser.runtime.Port;
@@ -98,11 +108,33 @@ export class MessengerClient {
                     this.promises[id].reject(Error(message.value));
                     delete this.promises[id];
                     break;
-                case '__retProgress':
-                    this.promises[id].reportProgress?.(message.value);
+                case '__retGenerator': {
+                    let promise = new Promise((resolve, reject) => {
+                        MessengerClient.generators[id] = { resolve, reject };
+                    });
+
+                    const generator = async function* () {
+                        for (;;) {
+                            const { value, done } = (await promise) as { value: any; done: boolean };
+                            if (done) {
+                                return value;
+                            } else {
+                                yield value;
+                            }
+                            promise = new Promise((resolve, reject) => {
+                                MessengerClient.generators[id] = { resolve, reject };
+                            });
+                        }
+                    };
+                    this.promises[id].resolve(generator());
+                    delete this.promises[id];
                     break;
-                case '__retCache':
-                    this.promises[id].resolveCache?.(message.value);
+                }
+                case '__retGeneratorNext':
+                    this.generators[id].resolve(message.value);
+                    if (message.value.done) {
+                        delete this.generators[id];
+                    }
                     break;
                 default:
                     throw new Error(`unknown instruction '${inst}'`);
@@ -112,21 +144,11 @@ export class MessengerClient {
         this.initialized = true;
     }
 
-    static exec(inst: string, ...args: any[]): ExPromise<any, any, any> {
+    static exec(inst: string, ...args: any[]): Promise<unknown> {
         if (!this.initialized) this.init();
 
         const id = Math.random();
-        const promise = new ExPromise(
-            (resolve, reject, resolveCache, checkCancelled, reportProgress) =>
-                (this.promises[id] = { resolve, reject, resolveCache, checkCancelled, reportProgress })
-        );
-        promise.cancel = (reason) => {
-            this.port.postMessage({
-                inst: '__cancel',
-                args: reason,
-                id,
-            });
-        };
+        const promise = new Promise((resolve, reject) => (this.promises[id] = { resolve, reject }));
 
         this.port.postMessage({
             inst,
