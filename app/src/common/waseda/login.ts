@@ -1,24 +1,21 @@
 import { InvalidResponseError } from '../error';
-import { createProgressPromise, ProgressPromise } from '../util/ExPromise';
 import { assertCurrentContextType, postForm } from '../util/util';
 
 assertCurrentContextType('background_script');
 
-let loginPromise: ProgressPromise<string, number> | null = null;
-export function login(userId: string, password: string): ProgressPromise<string, number> {
+let loginPromise: Promise<string> | null = null;
+export function login(userId: string, password: string): Promise<string> {
     if (loginPromise) {
         return loginPromise;
     }
 
-    loginPromise = createProgressPromise(async (reportProgress) => {
+    loginPromise = (async () => {
         try {
             const response = await fetch(
                 'https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https://wsdmoodle.waseda.jp/&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off',
                 { credentials: 'include', mode: 'cors' }
             );
             let page = new DOMParser().parseFromString(await response.text(), 'text/html');
-
-            reportProgress(1 / 4);
 
             if (response.url !== 'https://wsdmoodle.waseda.jp/my/') {
                 if (page.getElementsByTagName('script')[0]?.textContent?.startsWith('//<![CDATA[\n$Config={')) {
@@ -68,8 +65,6 @@ export function login(userId: string, password: string): ProgressPromise<string,
                         ).text(),
                         'text/html'
                     );
-
-                    reportProgress(2 / 4);
                 }
 
                 if (
@@ -87,8 +82,6 @@ export function login(userId: string, password: string): ProgressPromise<string,
                         ).text(),
                         'text/html'
                     );
-
-                    reportProgress(3 / 4);
                 }
 
                 if (
@@ -122,12 +115,11 @@ export function login(userId: string, password: string): ProgressPromise<string,
             const sessionKeyExpire = new Date();
             sessionKeyExpire.setHours(sessionKeyExpire.getDate() + 1);
 
-            reportProgress(4 / 4);
             return sessionKey;
         } finally {
             loginPromise = null;
         }
-    });
+    })();
 
     return loginPromise;
 }

@@ -44,7 +44,10 @@ const AddToDoItemPageContent = React.memo(function AddToDoItemPageContent(props:
     const [titleHref, setTitleHref] = useState(props.defaultTitle ?? '');
     //const [dueDate, setDueDate] = useState(props.defaultDueDate ? new Date(props.defaultDueDate) : new Date());
 
-    const courseList = usePromise<CourseListItem[]>(() => MessengerClient.exec('fetchCourseList'), []);
+    const courseList = usePromise<CourseListItem[]>(
+        () => MessengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>,
+        []
+    );
 
     const handleTitleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);

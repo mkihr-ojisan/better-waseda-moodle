@@ -28,7 +28,6 @@ const useStyles = makeStyles(() => ({
 
 export type AutoLoginPageProps = {
     error?: string;
-    progress: number;
 };
 
 export default React.memo(function AutoLoginPage(props: AutoLoginPageProps) {

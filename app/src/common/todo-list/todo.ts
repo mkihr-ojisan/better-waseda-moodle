@@ -1,5 +1,4 @@
 import React from 'react';
-import { CachedPromise, createCachedPromise } from '../util/ExPromise';
 import { AlertColor } from '../util/types';
 import { getToDoItemsFromMoodleTimeline } from './moodle-timeline';
 import { getUserAddedToDoItems } from './user-added-items';
@@ -41,16 +40,30 @@ export type ToDoItemActionIconProps<T> = {
     action: ToDoItemAction<T>;
 };
 
-export function getToDoItems(forceUpdate?: boolean): CachedPromise<ToDoItem<any>[]> {
-    return createCachedPromise(async (resolveCache) => {
-        const promises: CachedPromise<ToDoItem<any>[]>[] = [
-            getToDoItemsFromMoodleTimeline(forceUpdate),
-            getUserAddedToDoItems(),
-        ];
-        resolveCache(sortToDoItems((await Promise.all(promises.map((p) => p.cachedValue))).flat()));
+export async function* getToDoItems(forceUpdate?: boolean): AsyncGenerator<ToDoItem<any>[], void, undefined> {
+    const generators: (AsyncGenerator<ToDoItem<any>[], ToDoItem<any>[] | void, undefined> | undefined)[] = [
+        getToDoItemsFromMoodleTimeline(forceUpdate),
+        getUserAddedToDoItems(),
+    ];
+    const values: ToDoItem<any>[][] = new Array(generators.length).map(() => []);
 
-        return sortToDoItems((await Promise.all(promises)).flat());
-    });
+    for (;;) {
+        const next = await Promise.all(generators.map((g) => g?.next()));
+        for (let i = next.length - 1; i >= 0; i--) {
+            const n = next[i];
+            if (!n) continue;
+            if (n.done) {
+                generators[i] = undefined;
+            }
+            if (n.value) {
+                values[i] = n.value;
+            }
+        }
+        yield values.flat();
+        if (generators.every((g) => g === undefined)) {
+            break;
+        }
+    }
 }
 
 export function sortToDoItems<T>(items: ToDoItem<T>[]): ToDoItem<T>[] {

@@ -9,7 +9,6 @@ import {
 } from '../common/waseda/session-key';
 import { assertCurrentContextType } from '../common/util/util';
 import { MessengerServer } from '../common/util/messenger';
-import { createProgressPromise, pipeProgress, ProgressPromise } from '../common/util/ExPromise';
 
 assertCurrentContextType('background_script');
 
@@ -71,18 +70,16 @@ function onBeforeRequestListener(details: browser.webRequest._OnBeforeRequestDet
     };
 }
 
-export function doLogin(): ProgressPromise<boolean, number> {
-    return createProgressPromise(async (reportProgress) => {
-        if (getConfig('autoLogin.enabled')) {
-            const userId = getConfig('autoLogin.loginId');
-            const password = getConfig('autoLogin.password');
-            setSessionKeyCache(await pipeProgress(reportProgress, login(userId, password)));
-            lastEnsureLogin = Date.now();
-            return true;
-        } else {
-            return false;
-        }
-    });
+export async function doLogin(): Promise<boolean> {
+    if (getConfig('autoLogin.enabled')) {
+        const userId = getConfig('autoLogin.loginId');
+        const password = getConfig('autoLogin.password');
+        setSessionKeyCache(await login(userId, password));
+        lastEnsureLogin = Date.now();
+        return true;
+    } else {
+        return false;
+    }
 }
 
 let logoutPromise: Promise<void> | null = null;
