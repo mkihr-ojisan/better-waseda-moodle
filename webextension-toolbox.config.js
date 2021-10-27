@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
-const { readFileSync } = require('fs');
 const webpack = require('webpack');
 
 module.exports = {
@@ -62,7 +61,17 @@ module.exports = {
 };
 
 function generateWebpackEntry() {
-    const entryPoints = getEntryPoints();
+    const entryPoints = [
+        'app/src/auto-login/auto-login-page.tsx',
+        'app/src/course-overview/content-script.tsx',
+        'app/src/others/syllabus-link-fix/content-script.ts',
+        'app/src/options-page/options.tsx',
+        'app/src/quiz/remind-unanswered-questions/content-script.tsx',
+        'app/src/others/check-session/content-script.tsx',
+        'app/src/others/check-notes-on-submitting/content-script.ts',
+        'app/src/browser-action-popup/popup.tsx',
+        'app/src/common/todo-list/add-todo-item-page/add-todo-item-page.tsx',
+    ].map((f) => resolve(f));
 
     const regex = new RegExp(`^${resolve('app')}/(.*).tsx?$`);
 
@@ -74,16 +83,4 @@ function generateWebpackEntry() {
             return [outputFile, entryPoint];
         })
     );
-}
-
-function getEntryPoints() {
-    const entryPoints = [];
-    entryPoints.push(resolve('app/src/background.ts'));
-    entryPoints.push(...getEntryPointsFromJson());
-    return entryPoints;
-}
-
-function getEntryPointsFromJson() {
-    const entryPoints = JSON.parse(readFileSync('entry-points.json', { encoding: 'utf-8' }));
-    return entryPoints.map((f) => resolve('app', f));
 }
