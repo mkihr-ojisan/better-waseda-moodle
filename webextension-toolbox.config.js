@@ -62,6 +62,7 @@ module.exports = {
 
 function generateWebpackEntry() {
     const entryPoints = [
+        'app/src/background.ts',
         'app/src/auto-login/auto-login-page.tsx',
         'app/src/course-overview/content-script.tsx',
         'app/src/others/syllabus-link-fix/content-script.ts',
