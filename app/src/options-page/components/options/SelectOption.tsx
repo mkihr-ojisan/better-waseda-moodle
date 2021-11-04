@@ -7,7 +7,6 @@ import makeStyles from '@mui/styles/makeStyles';
 import React, { useCallback } from 'react';
 import { useContext } from 'react';
 import { ConfigKey } from '../../../common/config/config';
-import { InternalError } from '../../../common/error';
 import useConfig from '../../../common/react/useConfig';
 import { DisabledOptionsContext } from './DisableOptions';
 
@@ -36,7 +35,7 @@ const useStyles = makeStyles(() => ({
 export default React.memo(SelectOption) as typeof SelectOption;
 function SelectOption<T extends string>(props: Props<T>) {
     const [value, setValue] = useConfig(props.configKey);
-    if (typeof value !== 'string') throw new InternalError('`value` must be string.');
+    if (typeof value !== 'string') throw Error('`value` must be string.');
 
     const disabled = useContext(DisabledOptionsContext);
     const classes = useStyles();

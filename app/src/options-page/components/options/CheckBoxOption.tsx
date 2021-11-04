@@ -9,7 +9,6 @@ import CustomizedReactMarkdown from '../OptionsPageReactMarkdown';
 import useConfig from '../../../common/react/useConfig';
 import { DisabledOptionsContext } from './DisableOptions';
 import { ConfigKey } from '../../../common/config/config';
-import { InternalError } from '../../../common/error';
 
 type Props = {
     configKey: ConfigKey;
@@ -29,7 +28,7 @@ const useStyles = makeStyles(() => ({
 
 export default React.memo(function ToggleOption(props: Props) {
     const [value, setValue] = useConfig(props.configKey);
-    if (typeof value !== 'boolean') throw new InternalError('`value` must be boolean.');
+    if (typeof value !== 'boolean') throw Error('`value` must be boolean.');
 
     const disabled = useContext(DisabledOptionsContext);
     const classes = useStyles();

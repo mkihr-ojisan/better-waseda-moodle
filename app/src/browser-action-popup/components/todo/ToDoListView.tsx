@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Snackbar from '@mui/material/Snackbar';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
 import { useMemo } from 'react';
@@ -12,6 +12,7 @@ import { ToDoItem } from '../../../common/todo-list/todo';
 import { AlertColor } from '../../../common/util/types';
 import ToDoListViewDate from './ToDoListViewDate';
 import Box from '@mui/system/Box';
+import { getErrorMessage } from '../../../common/util/util';
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -20,12 +21,13 @@ const useStyles = makeStyles(() => ({
         margin: 0,
     },
     snackbar: {
-        bottom: 48,
+        bottom: 56,
     },
 }));
 
 export type ToDoListViewProps = {
     items: ToDoItem[] | undefined;
+    error: unknown | undefined;
     loading: boolean;
     onRefreshListRequest: () => void;
 };
@@ -45,6 +47,11 @@ export default React.memo(function ToDoListView(props: ToDoListViewProps) {
     const handleCloseSnackbar = useCallback(() => {
         setSnackbarOpen(false);
     }, []);
+    useEffect(() => {
+        if (props.error) {
+            handleShowSnackbar(getErrorMessage(props.error), 'error');
+        }
+    }, [handleShowSnackbar, props.error]);
 
     const { dates, indefiniteItems } = useMemo(() => {
         if (!props.items) return { dates: [], indefiniteItems: [] };
@@ -75,45 +82,45 @@ export default React.memo(function ToDoListView(props: ToDoListViewProps) {
         return { dates, indefiniteItems };
     }, [props.items]);
 
-    if (props.items && props.items.length > 0) {
-        return (
-            <Grid container direction="column" spacing={1} className={classes.root} wrap="nowrap">
-                {indefiniteItems.length > 0 && (
-                    <ToDoListViewDate
-                        items={indefiniteItems}
-                        onRefreshListRequest={props.onRefreshListRequest}
-                        handleShowSnackbar={handleShowSnackbar}
-                    />
-                )}
-                {dates?.map(({ date, items }) => (
-                    <ToDoListViewDate
-                        key={date.getFullYear() * 366 + date.getMonth() * 31 + date.getDate()}
-                        date={date}
-                        items={items}
-                        onRefreshListRequest={props.onRefreshListRequest}
-                        handleShowSnackbar={handleShowSnackbar}
-                    />
-                ))}
-                <Box pb={1} />
-                <Snackbar
-                    open={snackbarOpen}
-                    onClose={handleCloseSnackbar}
-                    autoHideDuration={5000}
-                    className={classes.snackbar}
-                >
-                    <Alert severity={snackbarSeverity} onClose={handleCloseSnackbar} variant="filled">
-                        {snackbarMessage}
-                    </Alert>
-                </Snackbar>
-            </Grid>
-        );
-    } else {
-        return (
-            <Center>
-                <Typography variant="body2" color="textSecondary">
-                    {browser.i18n.getMessage(props.loading ? 'popupEmptyMessageLoading' : 'popupEmptyMessage')}
-                </Typography>
-            </Center>
-        );
-    }
+    return (
+        <>
+            {props.items && props.items.length > 0 ? (
+                <Grid container direction="column" spacing={1} className={classes.root} wrap="nowrap">
+                    {indefiniteItems.length > 0 && (
+                        <ToDoListViewDate
+                            items={indefiniteItems}
+                            onRefreshListRequest={props.onRefreshListRequest}
+                            handleShowSnackbar={handleShowSnackbar}
+                        />
+                    )}
+                    {dates?.map(({ date, items }) => (
+                        <ToDoListViewDate
+                            key={date.getFullYear() * 366 + date.getMonth() * 31 + date.getDate()}
+                            date={date}
+                            items={items}
+                            onRefreshListRequest={props.onRefreshListRequest}
+                            handleShowSnackbar={handleShowSnackbar}
+                        />
+                    ))}
+                    <Box pb={1} />
+                </Grid>
+            ) : (
+                <Center>
+                    <Typography variant="body2" color="textSecondary">
+                        {browser.i18n.getMessage(props.loading ? 'popupEmptyMessageLoading' : 'popupEmptyMessage')}
+                    </Typography>
+                </Center>
+            )}
+            <Snackbar
+                open={snackbarOpen}
+                onClose={handleCloseSnackbar}
+                autoHideDuration={5000}
+                className={classes.snackbar}
+            >
+                <Alert severity={snackbarSeverity} onClose={handleCloseSnackbar} variant="filled">
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+        </>
+    );
 });

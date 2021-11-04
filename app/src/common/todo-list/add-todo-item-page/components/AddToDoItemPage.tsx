@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import { addOrUpdateToDoItem } from '../../user-added-items';
 import { v4 as uuidv4 } from 'uuid';
 import BWMRoot from '../../../react/BWMRoot';
+import AlertSnackbar from '../../../react/AlertSnackbar';
 
 const useStyles = makeStyles(() => ({
     fill: {
@@ -44,7 +45,7 @@ const AddToDoItemPageContent = React.memo(function AddToDoItemPageContent(props:
     const [titleHref, setTitleHref] = useState(props.defaultTitle ?? '');
     //const [dueDate, setDueDate] = useState(props.defaultDueDate ? new Date(props.defaultDueDate) : new Date());
 
-    const courseList = usePromise<CourseListItem[]>(
+    const [courseList, courseListError] = usePromise<CourseListItem[]>(
         () => MessengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>,
         []
     );
@@ -156,6 +157,7 @@ const AddToDoItemPageContent = React.memo(function AddToDoItemPageContent(props:
                     </Grid>
                 </Grid>
             </Grid>
+            <AlertSnackbar error={courseListError} />
         </Box>
     );
 });

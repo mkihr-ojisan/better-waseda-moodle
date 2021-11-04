@@ -1,3 +1,5 @@
+import { BWMError } from '../error';
+
 export class MessengerServer {
     private static instructions: { [key: string]: Function } = {};
     static init(): void {
@@ -27,16 +29,25 @@ export class MessengerServer {
                             });
 
                             while (!isDisconnected) {
-                                const next = await value.next();
-                                port.postMessage({
-                                    inst: '__retGeneratorNext',
-                                    id,
-                                    value: {
-                                        done: next.done,
-                                        value: next.value,
-                                    },
-                                });
-                                if (next.done) {
+                                try {
+                                    const next = await value.next();
+                                    port.postMessage({
+                                        inst: '__retGeneratorNext',
+                                        id,
+                                        value: {
+                                            done: next.done,
+                                            value: next.value,
+                                        },
+                                    });
+                                    if (next.done) {
+                                        break;
+                                    }
+                                } catch (error) {
+                                    port.postMessage({
+                                        inst: '__retGeneratorError',
+                                        id,
+                                        value: serializeError(error),
+                                    });
                                     break;
                                 }
                             }
@@ -56,7 +67,7 @@ export class MessengerServer {
                             if (!isDisconnected) {
                                 port.postMessage({
                                     inst: '__retErr',
-                                    value: `${error}`,
+                                    value: serializeError(error),
                                     id,
                                 });
                             }
@@ -105,7 +116,7 @@ export class MessengerClient {
                     delete this.promises[id];
                     break;
                 case '__retErr':
-                    this.promises[id].reject(Error(message.value));
+                    this.promises[id].reject(deserializeError(message.value));
                     delete this.promises[id];
                     break;
                 case '__retGenerator': {
@@ -132,9 +143,11 @@ export class MessengerClient {
                 }
                 case '__retGeneratorNext':
                     this.generators[id].resolve(message.value);
-                    if (message.value.done) {
-                        delete this.generators[id];
-                    }
+                    delete this.generators[id];
+                    break;
+                case '__retGeneratorError':
+                    this.generators[id].reject(deserializeError(message.value));
+                    delete this.generators[id];
                     break;
                 default:
                     throw new Error(`unknown instruction '${inst}'`);
@@ -157,5 +170,34 @@ export class MessengerClient {
         });
 
         return promise;
+    }
+}
+
+function serializeError(error: unknown) {
+    if (error instanceof BWMError) {
+        return {
+            type: 'BWMError',
+            message: error.message,
+        };
+    } else if (error instanceof Error) {
+        return {
+            type: 'Error',
+            message: error.message,
+        };
+    } else {
+        return error;
+    }
+}
+
+function deserializeError(error: any) {
+    if (error && typeof error === 'object' && 'type' in error && 'message' in error) {
+        switch (error.type) {
+            case 'BWMError':
+                return new BWMError(error.message);
+            case 'Error':
+                return new Error(error.message);
+        }
+    } else {
+        return error;
     }
 }
