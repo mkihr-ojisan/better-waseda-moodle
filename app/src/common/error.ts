@@ -1,35 +1,78 @@
-export class InternalError extends Error {
-    constructor(message?: string) {
-        super(browser.i18n.getMessage('internalError') + (message ? ': ' + message : ''));
+export class BWMError extends Error {
+    innerError?: unknown;
+
+    constructor(message: string, innerError?: unknown) {
+        let innerErrorMessage;
+        if (!innerError) {
+            innerErrorMessage = '';
+        } else if (innerError instanceof BWMError) {
+            innerErrorMessage = innerError.message;
+        } else if (innerError instanceof Error) {
+            innerErrorMessage = `${browser.i18n.getMessage('unknownError')} (${innerError.message})`;
+        } else {
+            innerErrorMessage = String(innerError);
+        }
+        super(message + (innerErrorMessage ? ': ' + innerErrorMessage : ''));
+        this.innerError = innerError;
     }
 }
 
-export class LoginRequiredError extends Error {
-    constructor() {
-        super(browser.i18n.getMessage('loginRequiredError'));
+export class TimetableConflictError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('timetableConflictError'), innerError);
     }
 }
 
-export class InvalidResponseError extends Error {
-    constructor(description?: string) {
-        super(browser.i18n.getMessage('invalidResponseError') + (description ? ': ' + description : ''));
+export class InvalidResponseError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('invalidResponseError'), innerError);
     }
 }
 
-export class UserIdOrPasswordNotSetError extends Error {
-    constructor() {
-        super(browser.i18n.getMessage('userIdOrPasswordNotSetError'));
+export class FetchCourseListError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('fetchCourseListError'), innerError);
     }
 }
 
-export class UnderMaintenanceError extends Error {
-    constructor() {
-        super(browser.i18n.getMessage('underMaintenanceError'));
+export class LoginRequiredError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('loginRequiredError'), innerError);
     }
 }
 
-export class TimetableConflictError extends Error {
-    constructor() {
-        super(browser.i18n.getMessage('timetableConflictError'));
+export class FetchCourseRegistrationInfoError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('fetchCourseRegistrationInfoError'), innerError);
+    }
+}
+
+export class CourseRegistrationPageUnderMaintenance extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('courseRegistrationPageUnderMaintenance'), innerError);
+    }
+}
+
+export class FetchActionEventsByTimeSortError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('fetchActionEventsByTimeSortError'), innerError);
+    }
+}
+
+export class LoginError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('loginError'), innerError);
+    }
+}
+
+export class FetchCourseContentError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('fetchCourseContentError'), innerError);
+    }
+}
+
+export class FetchCalendarEventByIdError extends BWMError {
+    constructor(innerError?: unknown) {
+        super(browser.i18n.getMessage('fetchCalendarEventByIdError'), innerError);
     }
 }

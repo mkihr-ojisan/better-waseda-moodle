@@ -648,26 +648,41 @@
   "cancel": {
     "message": "キャンセル"
   },
-  "internalError": {
-    "message": "内部エラー"
+  "errorOccurred": {
+    "message": "エラー！$1"
   },
-  "loginRequiredError": {
-    "message": "この操作にはログインが必要です。ログインするか、自動ログインを有効にしてください。"
-  },
-  "invalidResponseError": {
-    "message": "無効なデータを受信しました。"
-  },
-  "userIdOrPasswordNotSetError": {
-    "message": "ユーザーIDまだはパスワードが設定されていません。"
-  },
-  "underMaintenanceError": {
-    "message": "メンテナンス中です。"
+  "unknownError": {
+    "message": "よくわからないエラーが発生しました…($1)"
   },
   "timetableConflictError": {
-    "message": "時間割が重複しているため設定できません。"
+    "message": "時間割が重複してるため設定できません"
   },
-  "otherError": {
-    "message": "エラーが発生しました: $1"
+  "invalidResponseError": {
+    "message": "予期しないデータを受信しました(もしかして: メンテナンス中)"
+  },
+  "fetchCourseListError": {
+    "message": "コース一覧の取得に失敗しました"
+  },
+  "fetchCourseRegistrationInfoError": {
+    "message": "科目登録情報の取得に失敗しました"
+  },
+  "courseRegistrationPageUnderMaintenance": {
+    "message": "履修申請ページの定期メンテナンス中です"
+  },
+  "loginRequiredError": {
+    "message": "ログインが必要です"
+  },
+  "fetchActionEventsByTimeSortError": {
+    "message": "Moodleのタイムラインの取得に失敗しました"
+  },
+  "loginError": {
+    "message": "自動ログインに失敗しました"
+  },
+  "fetchCourseContentError": {
+    "message": "コースの取得に失敗しました"
+  },
+  "fetchCalendarEventByIdError": {
+    "message": "Moodleのカレンダー情報の取得に失敗しました"
   },
   "version": {
     "message": "バージョン $1"

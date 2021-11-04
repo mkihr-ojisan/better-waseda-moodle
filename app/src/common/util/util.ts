@@ -1,5 +1,5 @@
 import copy from 'fast-copy';
-import { InternalError } from '../error';
+import { BWMError } from '../error';
 import { DeepReadonly } from './types';
 
 export async function fetchHtml(url: string, init: RequestInit = {}): Promise<Document> {
@@ -64,12 +64,20 @@ export function getCurrentContextType(): ContextType {
 
 export function assertCurrentContextType(type: ContextType): void {
     if (__DEBUG__ && type !== getCurrentContextType()) {
-        throw new InternalError(
-            `assertion failed: current context must be '${type}', but it is '${getCurrentContextType()}'`
-        );
+        throw Error(`assertion failed: current context must be '${type}', but it is '${getCurrentContextType()}'`);
     }
 }
 
 export function clone<T, S extends DeepReadonly<T>>(obj: S): T {
     return copy(obj) as T;
+}
+
+export function getErrorMessage(error: unknown): string {
+    if (error instanceof BWMError) {
+        return browser.i18n.getMessage('errorOccurred', error.message);
+    } else if (error instanceof Error) {
+        return browser.i18n.getMessage('errorOccurred', browser.i18n.getMessage('unknownError', error.message));
+    } else {
+        return browser.i18n.getMessage('errorOccurred', String(error));
+    }
 }

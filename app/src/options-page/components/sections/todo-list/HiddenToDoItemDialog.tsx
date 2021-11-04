@@ -22,6 +22,7 @@ import Typography from '@mui/material/Typography';
 import useConfig from '../../../../common/react/useConfig';
 import { CourseListItem } from '../../../../common/waseda/course/course';
 import Center from '../../../../common/react/Center';
+import AlertSnackbar from '../../../../common/react/AlertSnackbar';
 
 export type HiddenToDoItemDialogProps = {
     open: boolean;
@@ -143,7 +144,7 @@ function HiddenIds(props: Props) {
 }
 function HiddenId(props: { id: number }) {
     const classes = useStyles();
-    const event = usePromise(
+    const [event, fetchEventError] = usePromise(
         async () =>
             limit(() => MessengerClient.exec('fetchCalendarEventById', props.id.toString()) as Promise<ActionEvent>),
         []
@@ -179,13 +180,14 @@ function HiddenId(props: { id: number }) {
             <Button variant="outlined" onClick={handleClick}>
                 {browser.i18n.getMessage('optionsHiddenToDoItemDialogUnhide')}
             </Button>
+            <AlertSnackbar error={fetchEventError} />
         </div>
     );
 }
 
 function HiddenCourses(props: Props) {
     const classes = useStyles();
-    const courses = usePromise(
+    const [courses, fetchCourseListError] = usePromise(
         () => limit(() => MessengerClient.exec('fetchCourseList') as Promise<CourseListItem[]>),
         []
     );
@@ -199,43 +201,48 @@ function HiddenCourses(props: Props) {
         setConfig('todo.hiddenItems', newValue);
     };
 
-    return props.hiddenItems.courses.length > 0 ? (
-        <List className={clsx(props.selectedTab !== 'courses' && classes.hidden)}>
-            {props.hiddenItems.courses.map((id) => {
-                const course = courses?.find((course) => course.id === id);
-                return (
-                    <ListItem key={id}>
-                        <div className={classes.itemRoot}>
-                            <Grid container alignItems="center" className={classes.itemTitleContainer}>
-                                {course ? (
-                                    <Typography
-                                        variant="body1"
-                                        component="a"
-                                        color="textPrimary"
-                                        href={`https://wsdmoodle.waseda.jp/course/view.php?id=${id}`}
-                                        target="_blank"
-                                        className={classes.itemTitle}
-                                    >
-                                        {course.name}
-                                    </Typography>
-                                ) : (
-                                    <CircularProgress size="1.5em" />
-                                )}
-                            </Grid>
-                            <Button variant="outlined" onClick={() => handleClick(id)}>
-                                {browser.i18n.getMessage('optionsHiddenToDoItemDialogUnhide')}
-                            </Button>
-                        </div>
-                    </ListItem>
-                );
-            })}
-        </List>
-    ) : (
-        <Center className={clsx(props.selectedTab !== 'courses' && classes.hidden, classes.empty)}>
-            <Typography variant="body1" color="textSecondary">
-                {browser.i18n.getMessage('optionsHiddenToDoItemDialogCoursesEmpty')}
-            </Typography>
-        </Center>
+    return (
+        <>
+            {props.hiddenItems.courses.length > 0 ? (
+                <List className={clsx(props.selectedTab !== 'courses' && classes.hidden)}>
+                    {props.hiddenItems.courses.map((id) => {
+                        const course = courses?.find((course) => course.id === id);
+                        return (
+                            <ListItem key={id}>
+                                <div className={classes.itemRoot}>
+                                    <Grid container alignItems="center" className={classes.itemTitleContainer}>
+                                        {course ? (
+                                            <Typography
+                                                variant="body1"
+                                                component="a"
+                                                color="textPrimary"
+                                                href={`https://wsdmoodle.waseda.jp/course/view.php?id=${id}`}
+                                                target="_blank"
+                                                className={classes.itemTitle}
+                                            >
+                                                {course.name}
+                                            </Typography>
+                                        ) : (
+                                            <CircularProgress size="1.5em" />
+                                        )}
+                                    </Grid>
+                                    <Button variant="outlined" onClick={() => handleClick(id)}>
+                                        {browser.i18n.getMessage('optionsHiddenToDoItemDialogUnhide')}
+                                    </Button>
+                                </div>
+                            </ListItem>
+                        );
+                    })}
+                </List>
+            ) : (
+                <Center className={clsx(props.selectedTab !== 'courses' && classes.hidden, classes.empty)}>
+                    <Typography variant="body1" color="textSecondary">
+                        {browser.i18n.getMessage('optionsHiddenToDoItemDialogCoursesEmpty')}
+                    </Typography>
+                </Center>
+            )}
+            <AlertSnackbar error={fetchCourseListError} />
+        </>
     );
 }
 

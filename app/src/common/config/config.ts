@@ -1,6 +1,5 @@
 import equal from 'fast-deep-equal';
 import { CourseOverviewType } from '../../course-overview/components/CourseOverview';
-import { InternalError } from '../error';
 import { ObjectValuesDeepReadonly } from '../util/types';
 import { YearTerm } from '../waseda/course/course';
 import { CourseDataEntry } from '../waseda/course/course-data';
@@ -75,7 +74,7 @@ export async function getConfigAsync<T extends ConfigKey>(key: T): Promise<Confi
     return (await browser.storage[(await getIsConfigSyncEnabled()) ? 'sync' : 'local'].get(key))[key];
 }
 export async function setConfigAsync<T extends ConfigKey>(key: T, value: ConfigValue<T>): Promise<void> {
-    if (key === 'config.sync.enabled') throw new InternalError('use `enableConfigSync` or `disableConfigSync` instead');
+    if (key === 'config.sync.enabled') throw Error('use `enableConfigSync` or `disableConfigSync` instead');
 
     return await browser.storage[(await getIsConfigSyncEnabled()) ? 'sync' : 'local'].set({ [key]: value });
 }
@@ -96,7 +95,7 @@ async function getIsConfigSyncEnabled(): Promise<boolean> {
 }
 
 export function isConfigSyncEnabled(): boolean {
-    if (syncEnabled === undefined) throw new InternalError('config cache not initialized');
+    if (syncEnabled === undefined) throw Error('config cache not initialized');
     return syncEnabled;
 }
 
@@ -118,7 +117,7 @@ async function onStorageChanged(
     areaName: string
 ): Promise<void> {
     lock.acquire('config', async () => {
-        if (!cache) throw new InternalError('unreachable');
+        if (!cache) throw Error('unreachable');
 
         if (
             areaName === 'local' &&
@@ -153,7 +152,7 @@ async function onStorageChanged(
 }
 
 export function getConfig<T extends ConfigKey>(key: T): ConfigValue<T> {
-    if (!cache) throw new InternalError('config cache not initialized');
+    if (!cache) throw Error('config cache not initialized');
 
     if (key === 'config.sync.enabled') return syncEnabled as ConfigValue<T>;
 
@@ -161,8 +160,8 @@ export function getConfig<T extends ConfigKey>(key: T): ConfigValue<T> {
     return cacheValue === undefined ? defaultValue[key] : cacheValue;
 }
 export function setConfig<T extends ConfigKey>(key: T, value: ConfigValue<T>): void {
-    if (!cache) throw new InternalError('config cache not initialized');
-    if (key === 'config.sync.enabled') throw new InternalError('use `enableConfigSync` or `disableConfigSync` instead');
+    if (!cache) throw Error('config cache not initialized');
+    if (key === 'config.sync.enabled') throw Error('use `enableConfigSync` or `disableConfigSync` instead');
 
     const oldValue = cache[key] === undefined ? defaultValue[key] : cache[key];
 
@@ -180,8 +179,8 @@ export function setConfig<T extends ConfigKey>(key: T, value: ConfigValue<T>): v
     }
 }
 export function removeConfig<T extends ConfigKey>(key: T): void {
-    if (!cache) throw new InternalError('config cache not initialized');
-    if (key === 'config.sync.enabled') throw new InternalError('use `enableConfigSync` or `disableConfigSync` instead');
+    if (!cache) throw Error('config cache not initialized');
+    if (key === 'config.sync.enabled') throw Error('use `enableConfigSync` or `disableConfigSync` instead');
 
     const oldValue = cache[key] === undefined ? defaultValue[key] : cache[key];
     const newValue = defaultValue[key];
@@ -216,7 +215,7 @@ export function removeConfigChangeListener<T extends ConfigKey>(
 }
 
 export function exportConfig(): Partial<Config> {
-    if (!cache) throw new InternalError('config cache not initialized');
+    if (!cache) throw Error('config cache not initialized');
 
     const config: Partial<Config> = { ...cache };
     delete config['autoLogin.enabled'];
@@ -230,7 +229,7 @@ export function exportConfig(): Partial<Config> {
 
 export async function importConfig(config: Partial<Config>): Promise<void> {
     lock.acquire('config', async () => {
-        if (!cache) throw new InternalError('config cache not initialized');
+        if (!cache) throw Error('config cache not initialized');
 
         browser.storage.onChanged.removeListener(onStorageChanged);
 
@@ -264,7 +263,7 @@ export async function importConfig(config: Partial<Config>): Promise<void> {
 export async function enableConfigSync(mode: 'discard_local' | 'force_upload'): Promise<void> {
     lock.acquire('config', async () => {
         if (syncEnabled) return;
-        if (!cache) throw new InternalError('config cache not initialized');
+        if (!cache) throw Error('config cache not initialized');
 
         browser.storage.onChanged.removeListener(onStorageChanged);
 
@@ -295,7 +294,7 @@ export async function enableConfigSync(mode: 'discard_local' | 'force_upload'): 
 export async function disableConfigSync(): Promise<void> {
     lock.acquire('config', async () => {
         if (!syncEnabled) return;
-        if (!cache) throw new InternalError('config cache not initialized');
+        if (!cache) throw Error('config cache not initialized');
 
         browser.storage.onChanged.removeListener(onStorageChanged);
 

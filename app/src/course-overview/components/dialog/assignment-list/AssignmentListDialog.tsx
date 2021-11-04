@@ -20,6 +20,7 @@ import Assignment from './Assignment';
 import pLimit, { LimitFunction } from 'p-limit';
 import CenteredCircularProgress from '../../../../common/react/CenteredCircularProgress';
 import { useCallback } from 'react';
+import AlertSnackbar from '../../../../common/react/AlertSnackbar';
 
 type Props = {
     open: boolean;
@@ -56,7 +57,7 @@ export default React.memo(function AssignmentListDialog(props: Props): ReactElem
 function AssignmentListDialogContent(props: Props & { limit: LimitFunction }): ReactElement {
     const classes = useStyles();
 
-    const courseContent = usePromise(() => fetchCourseContent(props.course), [props.course]);
+    const [courseContent, courseContentError] = usePromise(() => fetchCourseContent(props.course), [props.course]);
     const assignments: [CourseSection, CourseModule<'assign'>][] | undefined = useMemo(
         () =>
             courseContent?.sections?.flatMap((section) =>
@@ -102,6 +103,7 @@ function AssignmentListDialogContent(props: Props & { limit: LimitFunction }): R
                     <CenteredCircularProgress />
                 )}
             </DialogContent>
+            <AlertSnackbar error={courseContentError} />
         </>
     );
 }

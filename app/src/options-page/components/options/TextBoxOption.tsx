@@ -8,7 +8,6 @@ import { useContext } from 'react';
 import useConfig from '../../../common/react/useConfig';
 import { DisabledOptionsContext } from './DisableOptions';
 import { ConfigKey } from '../../../common/config/config';
-import { InternalError } from '../../../common/error';
 
 type Props = {
     configKey: ConfigKey;
@@ -27,7 +26,7 @@ const useStyles = makeStyles(() => ({
 
 export default React.memo(function TextBoxOption(props: Props) {
     const [value, setValue] = useConfig(props.configKey);
-    if (typeof value !== 'string') throw new InternalError('`value` must be string.');
+    if (typeof value !== 'string') throw Error('`value` must be string.');
 
     const disabled = useContext(DisabledOptionsContext);
     const classes = useStyles();

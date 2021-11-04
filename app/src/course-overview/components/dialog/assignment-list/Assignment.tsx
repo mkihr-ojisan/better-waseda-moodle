@@ -7,6 +7,7 @@ import { CourseSection } from '../../../../common/waseda/course/content/course-s
 import { fetchCourseModuleAssignContent } from '../../../../common/waseda/course/content/module/assign';
 import { CourseModule } from '../../../../common/waseda/course/content/module/course-module';
 import { LimitFunction } from 'p-limit';
+import AlertSnackbar from '../../../../common/react/AlertSnackbar';
 
 type Props = {
     section: CourseSection;
@@ -15,7 +16,7 @@ type Props = {
 };
 
 export default React.memo(function Assignment(props: Props): ReactElement | null {
-    const assignment = usePromise(
+    const [assignment, fetchAssignmentError] = usePromise(
         () => props.pLimit(() => fetchCourseModuleAssignContent(props.module)),
         [props.module]
     );
@@ -34,6 +35,8 @@ export default React.memo(function Assignment(props: Props): ReactElement | null
             </TableCell>
             <TableCell>{assignment ? assignment.submissionSummary.gradingStatus : null}</TableCell>
             <TableCell>{assignment ? assignment.feedback.grade : null}</TableCell>
+
+            <AlertSnackbar error={fetchAssignmentError} />
         </TableRow>
     );
 });

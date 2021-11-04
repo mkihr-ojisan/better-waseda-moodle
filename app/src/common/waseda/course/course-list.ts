@@ -3,20 +3,24 @@ import { assertCurrentContextType, postJson } from '../../util/util';
 import { fetchSessionKey } from '../session-key';
 import * as idb from 'idb-keyval';
 import parseEntities from 'parse-entities';
-import { InvalidResponseError } from '../../error';
 import { MessengerServer } from '../../util/messenger';
+import { FetchCourseListError, InvalidResponseError } from '../../error';
 
 assertCurrentContextType('background_script');
 
 const cacheStore = idb.createStore('courseListCache', 'courseListCache');
 
 export async function fetchCourseList(options: FetchCourseListOptions = {}): Promise<CourseListItem[]> {
-    const cache: CourseListItem[] | undefined = await idb.get('cache', cacheStore);
-    if (!options.forceFetch && cache) {
-        doFetchCourseList(); //update cache
-        return cache;
-    } else {
-        return await doFetchCourseList();
+    try {
+        const cache: CourseListItem[] | undefined = await idb.get('cache', cacheStore);
+        if (!options.forceFetch && cache) {
+            doFetchCourseList(); //update cache
+            return cache;
+        } else {
+            return await doFetchCourseList();
+        }
+    } catch (error) {
+        throw new FetchCourseListError(error);
     }
 }
 MessengerServer.addInstruction({ fetchCourseList });

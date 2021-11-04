@@ -28,7 +28,7 @@ const PopupContent = React.memo(function Popup() {
     const classes = useStyles();
 
     const [refreshCounter, setRefreshCounter] = useState(0); //これをインクリメントすることでリストを更新する
-    const items = useAsyncGenerator(() => getToDoItems(refreshCounter !== 0), [refreshCounter]);
+    const { value: items, done, error } = useAsyncGenerator(() => getToDoItems(refreshCounter !== 0), [refreshCounter]);
 
     const handleRefresh = useCallback(() => {
         setRefreshCounter((prev) => prev + 1);
@@ -37,11 +37,12 @@ const PopupContent = React.memo(function Popup() {
     return (
         <div className={classes.root}>
             <ToDoListView
-                loading={items.state === 'not_yielded'}
-                items={items.value}
+                loading={items === undefined}
+                items={items}
                 onRefreshListRequest={handleRefresh}
+                error={error}
             />
-            <Header loading={!items.done} onRefreshListRequest={handleRefresh} />
+            <Header loading={!done} onRefreshListRequest={handleRefresh} />
         </div>
     );
 });

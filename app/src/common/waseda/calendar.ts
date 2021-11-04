@@ -1,9 +1,10 @@
-import { InternalError, InvalidResponseError } from '../error';
+import { FetchActionEventsByTimeSortError, FetchCalendarEventByIdError, InvalidResponseError } from '../error';
 import { assertCurrentContextType, postJson } from '../util/util';
 import { fetchSessionKey } from './session-key';
 import * as idb from 'idb-keyval';
 import AsyncLock from 'async-lock';
 import { MessengerServer } from '../util/messenger';
+import { ensureLogin } from '../../auto-login/auto-login';
 
 assertCurrentContextType('background_script');
 
@@ -125,57 +126,64 @@ export async function* fetchActionEventsByTimeSort(
 ): AsyncGenerator<ActionEvent[], void, undefined> {
     yield* await lock.acquire('fetchActionEventsByTimeSort', async function* (): AsyncGenerator<
         ActionEvent[],
-        ActionEvent[],
+        void,
         undefined
     > {
-        const timesortfrom = Math.floor(
-            (options?.fromTimeSort?.getTime() ?? Date.now() - 14 * 24 * 60 * 60 * 1000) / 1000
-        );
+        try {
+            await ensureLogin();
 
-        const cache: ActionEvent[] | undefined = await idb.get('cache', cacheDB);
-        const lastUpdate: Date | undefined = await idb.get('lastUpdate', cacheDB);
-
-        if (cache) {
-            const filteredCache = cache.filter((event) => event.timesort > timesortfrom);
-            yield filteredCache;
-
-            if (!options?.forceUpdate && Date.now() - (lastUpdate?.getTime() ?? 0) < UPDATE_INTERVAL) {
-                return cache.filter((event) => event.timesort > timesortfrom);
-            }
-        }
-
-        const events: ActionEvent[] = [];
-        const limit = 50;
-
-        for (;;) {
-            const request: Request = [
-                {
-                    args: {
-                        aftereventid: events[events.length - 1]?.id,
-                        limitnum: limit, //max: 50 (https://github.com/moodle/moodle/blob/511a87f5fc357f18a4c53911f6e6c7f7b526246e/calendar/classes/local/api.php#L120)
-                        limittononsuspendedevents: true,
-                        timesortfrom,
-                    },
-                    index: 0,
-                    methodname: 'core_calendar_get_action_events_by_timesort',
-                },
-            ];
-
-            const response: Response = await postJson(
-                `https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}`,
-                request
+            const timesortfrom = Math.floor(
+                (options?.fromTimeSort?.getTime() ?? Date.now() - 14 * 24 * 60 * 60 * 1000) / 1000
             );
 
-            if (response[0].error) throw new InvalidResponseError(response[0].exception.message);
+            const cache: ActionEvent[] | undefined = await idb.get('cache', cacheDB);
+            const lastUpdate: Date | undefined = await idb.get('lastUpdate', cacheDB);
 
-            events.push(...response[0].data.events);
+            if (cache) {
+                const filteredCache = cache.filter((event) => event.timesort > timesortfrom);
+                yield filteredCache;
 
-            if (response[0].data.events.length < limit) break;
+                if (!options?.forceUpdate && Date.now() - (lastUpdate?.getTime() ?? 0) < UPDATE_INTERVAL) {
+                    yield cache.filter((event) => event.timesort > timesortfrom);
+                    return;
+                }
+            }
+
+            const events: ActionEvent[] = [];
+            const limit = 50;
+
+            for (;;) {
+                const request: Request = [
+                    {
+                        args: {
+                            aftereventid: events[events.length - 1]?.id,
+                            limitnum: limit, //max: 50 (https://github.com/moodle/moodle/blob/511a87f5fc357f18a4c53911f6e6c7f7b526246e/calendar/classes/local/api.php#L120)
+                            limittononsuspendedevents: true,
+                            timesortfrom,
+                        },
+                        index: 0,
+                        methodname: 'core_calendar_get_action_events_by_timesort',
+                    },
+                ];
+
+                const response: Response = await postJson(
+                    `https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}`,
+                    request
+                );
+
+                if (response[0].error) throw new InvalidResponseError(response[0].exception.message);
+
+                events.push(...response[0].data.events);
+
+                if (response[0].data.events.length < limit) break;
+            }
+
+            await Promise.all([idb.set('cache', events, cacheDB), idb.set('lastUpdate', new Date(), cacheDB)]);
+
+            yield events;
+        } catch (error) {
+            throw new FetchActionEventsByTimeSortError(error);
         }
-
-        await Promise.all([idb.set('cache', events, cacheDB), idb.set('lastUpdate', new Date(), cacheDB)]);
-
-        return events;
     });
 }
 
@@ -212,16 +220,20 @@ export async function fetchCalendarEventById(id: string): Promise<ActionEvent> {
         { index: 0, methodname: 'core_calendar_get_calendar_event_by_id', args: { eventid: id } },
     ];
 
-    const response: Response = await postJson(
-        `https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}`,
-        request
-    );
+    try {
+        const response: Response = await postJson(
+            `https://wsdmoodle.waseda.jp/lib/ajax/service.php?sesskey=${await fetchSessionKey()}`,
+            request
+        );
 
-    if (response[0]?.error) {
-        throw new InternalError(response[0].exception.message);
+        if (response[0]?.error) {
+            throw Error(response[0].exception.message);
+        }
+
+        return response[0].data.event;
+    } catch (error) {
+        throw new FetchCalendarEventByIdError(error);
     }
-
-    return response[0].data.event;
 }
 
 MessengerServer.addInstruction({ fetchActionEventsByTimeSort, fetchCalendarEventById });

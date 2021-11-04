@@ -1,4 +1,4 @@
-import { InvalidResponseError } from '../error';
+import { InvalidResponseError, LoginError } from '../error';
 import { assertCurrentContextType, postForm } from '../util/util';
 
 assertCurrentContextType('background_script');
@@ -116,6 +116,8 @@ export function login(userId: string, password: string): Promise<string> {
             sessionKeyExpire.setHours(sessionKeyExpire.getDate() + 1);
 
             return sessionKey;
+        } catch (error) {
+            throw new LoginError(error);
         } finally {
             loginPromise = null;
         }

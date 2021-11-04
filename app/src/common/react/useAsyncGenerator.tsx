@@ -3,17 +3,12 @@ import { useEffect, useState } from 'react';
 export function useAsyncGenerator<T>(
     fn: () => AsyncGenerator<T, T | undefined | void, undefined>,
     deps: any[] = []
-):
-    | { state: 'not_yielded'; value: undefined; done: false }
-    | { state: 'yielded'; value: T; done: boolean }
-    | { state: 'error'; error: unknown; value: undefined; done: true } {
-    const [state, setState] = useState<'not_yielded' | 'yielded' | 'error'>('not_yielded');
+): { error: unknown; value: T | undefined; done: boolean } {
     const [error, setError] = useState<unknown>();
     const [value, setValue] = useState<T>();
     const [done, setDone] = useState<boolean>(false);
 
     useEffect(() => {
-        setState('not_yielded');
         setError(undefined);
         setValue(undefined);
         setDone(false);
@@ -25,7 +20,6 @@ export function useAsyncGenerator<T>(
             for (;;) {
                 try {
                     const { value: nextValue, done: nextDone } = await generator.next();
-                    setState('yielded');
 
                     if (isCancelled) {
                         return;
@@ -41,7 +35,6 @@ export function useAsyncGenerator<T>(
                     if (isCancelled) {
                         return;
                     }
-                    setState('error');
                     setError(e);
                 }
             }
@@ -53,11 +46,5 @@ export function useAsyncGenerator<T>(
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, deps);
 
-    if (state === 'not_yielded') {
-        return { state, value: undefined, done: false };
-    } else if (state === 'yielded') {
-        return { state, value: value!, done };
-    } else {
-        return { state, error, value: undefined, done: true };
-    }
+    return { error, value, done };
 }
