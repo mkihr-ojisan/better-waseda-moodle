@@ -40,10 +40,6 @@ export function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export type Vendor = 'firefox' | 'chrome' | 'opera' | 'edge';
-export declare const __VENDOR__: Vendor;
-export declare const __DEBUG__: boolean;
-
 export function range(start: number, endExclusive: number, step = 1): number[] {
     return Array.from({ length: Math.ceil((endExclusive - start) / step) }, (_, k) => start + step * k);
 }
@@ -63,7 +59,7 @@ export function getCurrentContextType(): ContextType {
 }
 
 export function assertCurrentContextType(type: ContextType): void {
-    if (__DEBUG__ && type !== getCurrentContextType()) {
+    if (process.env.NODE_ENV === 'development' && type !== getCurrentContextType()) {
         throw Error(`assertion failed: current context must be '${type}', but it is '${getCurrentContextType()}'`);
     }
 }

@@ -1,6 +1,3 @@
-// #!blink_only
-import './common/polyfills/content-script-register';
-
 import { initAutoLogin } from './auto-login/auto-login';
 import { MessengerServer } from './common/util/messenger';
 import { initRemoveLoadingVideo } from './others/remove-loading-video/remove-loading-video';
@@ -27,6 +24,10 @@ assertCurrentContextType('background_script');
 MessengerServer.init();
 
 (async () => {
+    if (process.env.VENDOR !== 'firefox') {
+        await import('./common/polyfills/content-script-register');
+    }
+
     await initConfigCache();
     await enableConfigSyncIfFirstRun();
 

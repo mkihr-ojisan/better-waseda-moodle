@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { resolve } = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
-const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-    webpack: (config, { dev, vendor }) => {
+    webpack: (config, { dev }) => {
         config.resolve.extensions.push('.ts');
         config.resolve.extensions.push('.tsx');
 
@@ -29,28 +29,11 @@ module.exports = {
 
         config.module.rules.push({
             test: /\.tsx?$/,
-            use: [
-                'ts-loader',
-                {
-                    loader: require.resolve('webpack-preprocessor-loader'),
-                    options: {
-                        debug: dev,
-                        directives: {
-                            blink_only: vendor !== 'firefox',
-                            firefox_only: vendor === 'firefox',
-                        },
-                    },
-                },
-            ],
+            use: ['ts-loader'],
             exclude: [/node_modules/],
         });
 
-        config.plugins.push(
-            new webpack.DefinePlugin({
-                __VENDOR__: JSON.stringify(vendor),
-                __DEBUG__: JSON.stringify(dev),
-            })
-        );
+        config.plugins.push(new Dotenv());
 
         config.plugins.find((p) => p.constructor.name === 'WebextensionPlugin').autoreload = false;
 
