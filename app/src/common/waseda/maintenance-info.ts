@@ -1,5 +1,3 @@
-import { fetchJson } from '../util/util';
-
 export const MAINTENANCE_INFO_ORIGIN = 'https://data.better-waseda-moodle.tk/*';
 export const MAINTENANCE_INFO_URL = 'https://data.better-waseda-moodle.tk/maintenance-info.json';
 
@@ -24,7 +22,7 @@ type MaintenanceInfoJson = {
 };
 
 export async function fetchMaintenanceInfo(): Promise<MaintenanceInfo[]> {
-    const json: MaintenanceInfoJson[] = await fetchJson(MAINTENANCE_INFO_URL);
+    const json: MaintenanceInfoJson[] = await (await fetch(MAINTENANCE_INFO_URL)).json();
 
     return json.map((item) => ({
         message: item.message,
