@@ -23,6 +23,9 @@
     "webRequestBlocking",
     "cookies"
   ],
+  "optional_permissions": [
+    "https://data.better-waseda-moodle.tk/*"
+  ],
   "web_accessible_resources": [
     "src/auto-login/auto-login-page.html",
     "res/videos/dummy-video.mp4"

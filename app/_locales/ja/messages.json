@@ -323,6 +323,14 @@
     "message": "フォーラム",
     "description": "設定ページの「その他」セクションに表示するメッセージ"
   },
+  "optionsMaintenanceInfo": {
+    "message": "ダッシュボードにメンテナンス情報を表示する",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
+  "optionsMaintenanceInfoDescription": {
+    "message": "ダッシュボードに1週間以内に行われるメンテナンスの情報を表示します。この機能を利用するには、Better Waseda Moodleに\"$1\"へのアクセスを許可する必要があります。",
+    "description": "設定ページの「その他」セクションに表示するメッセージ"
+  },
   "optionsAboutTitle": {
     "message": "Better Waseda Moodleについて",
     "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"

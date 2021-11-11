@@ -3,6 +3,7 @@ import ToggleOption from '../../options/ToggleOption';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Divider from '@mui/material/Divider';
 import NoPaddingList from '../../NoPaddingList';
+import OptionMaintenanceInfo from './OptionMaintenanceInfo';
 
 export default {
     name: 'SectionOthers',
@@ -64,6 +65,8 @@ export default {
                         <CheckBoxOption configKey="checkSession.forum" message="optionsCheckSessionForum" dense />
                     </DisableOptions>
                 </Indent>*/}
+                <Divider />
+                <OptionMaintenanceInfo />
             </NoPaddingList>
         );
     },
