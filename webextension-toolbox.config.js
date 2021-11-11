@@ -55,6 +55,7 @@ function generateWebpackEntry() {
         'app/src/others/check-notes-on-submitting/content-script.ts',
         'app/src/browser-action-popup/popup.tsx',
         'app/src/common/todo-list/add-todo-item-page/add-todo-item-page.tsx',
+        'app/src/others/maintenance-info/content-script.tsx',
     ].map((f) => resolve(f));
 
     const regex = new RegExp(`^${resolve('app')}/(.*).tsx?$`);

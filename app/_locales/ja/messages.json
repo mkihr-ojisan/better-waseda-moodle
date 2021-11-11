@@ -581,6 +581,25 @@
     "message": "決定",
     "description": "ToDo項目の追加ダイアログに表示するメッセージ"
   },
+  "maintenanceInfo": {
+    "message": "メンテナンス情報",
+    "description": "メンテナンス情報のタイトル"
+  },
+  "maintenanceSpan": {
+    "message": "期間: $1 〜 $2",
+    "description": "メンテナンス情報に表示するメッセージ"
+  },
+  "maintenanceSpanFormat": {
+    "message": "yyyy/MM/dd (EEEEE) HH:mm"
+  },
+  "maintenanceDetail": {
+    "message": "詳細",
+    "description": "メンテナンス情報に表示するメッセージ"
+  },
+  "maintenanceWasedaMoodle": {
+    "message": "Waseda Moodle全般を対象とするメンテナンスが行われます。",
+    "description": "メンテナンス情報に表示するメッセージ"
+  },
   "sundayShort": {
     "message": "日"
   },
@@ -709,5 +728,8 @@
   },
   "moodleModule_quiz": {
     "message": "小テスト"
+  },
+  "any": {
+    "message": "$1"
   }
 }

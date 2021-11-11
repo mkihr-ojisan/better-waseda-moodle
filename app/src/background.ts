@@ -18,6 +18,7 @@ import './options-page/background-script';
 import './others/check-notes-on-submitting/background-script';
 import './common/waseda/calendar';
 import { initToDoList } from './common/todo-list/background-script';
+import { initMaintenanceInfo } from './others/maintenance-info/background-script';
 
 assertCurrentContextType('background_script');
 
@@ -43,4 +44,5 @@ MessengerServer.init();
     initCheckSession();
     initCheckNotesOnSubmitting();
     initToDoList();
+    initMaintenanceInfo();
 })();
