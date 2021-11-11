@@ -35,6 +35,7 @@ export type Config = ObjectValuesDeepReadonly<{
     'todo.hiddenItems': { courses: number[]; ids: number[]; modules: string[] };
     'todo.hideItemNoticeShown': boolean;
     'todo.userItems': UserAddedToDoItem[];
+    'maintenanceInfo.enabled': boolean;
 }>;
 
 export const defaultValue: Config = {
@@ -64,6 +65,7 @@ export const defaultValue: Config = {
     'todo.hiddenItems': { courses: [], ids: [], modules: [] },
     'todo.hideItemNoticeShown': false,
     'todo.userItems': [],
+    'maintenanceInfo.enabled': false,
 };
 
 export async function getConfigAsync<T extends ConfigKey>(key: T): Promise<ConfigValue<T>> {
