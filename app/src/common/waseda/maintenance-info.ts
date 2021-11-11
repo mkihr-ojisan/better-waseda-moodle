@@ -10,6 +10,7 @@ export type MaintenanceInfo = {
     };
     startTime: Date;
     endTime: Date | undefined;
+    detailUrl: string | undefined;
 };
 
 type MaintenanceInfoJson = {
@@ -19,6 +20,7 @@ type MaintenanceInfoJson = {
     };
     startTime: string;
     endTime?: string;
+    detailUrl?: string;
 };
 
 export async function fetchMaintenanceInfo(): Promise<MaintenanceInfo[]> {
@@ -28,5 +30,6 @@ export async function fetchMaintenanceInfo(): Promise<MaintenanceInfo[]> {
         message: item.message,
         startTime: new Date(item.startTime),
         endTime: item.endTime ? new Date(item.endTime) : undefined,
+        detailUrl: item.detailUrl,
     }));
 }
