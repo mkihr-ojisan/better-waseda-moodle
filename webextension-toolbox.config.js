@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-    webpack: (config, { dev }) => {
+    webpack: (config, { dev, vendor }) => {
         config.resolve.extensions.push('.ts');
         config.resolve.extensions.push('.tsx');
 
@@ -36,6 +36,12 @@ module.exports = {
         config.plugins.push(new Dotenv());
 
         config.plugins.find((p) => p.constructor.name === 'WebextensionPlugin').autoreload = false;
+
+        // 何かのライブラリがpublic class fieldsを使っているが、AMOの addons-linterがそれに対応していないため
+        // 暫定的にnode_modules以下にもBabelを適用する
+        if (vendor === 'firefox') {
+            delete config.module.rules[0].exclude;
+        }
 
         // Important: return the modified config
         return config;
