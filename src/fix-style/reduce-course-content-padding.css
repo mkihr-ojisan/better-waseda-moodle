@@ -1,0 +1,94 @@
+.activity-item:not(.activityinline) {
+    border: none !important;
+}
+
+.format-topcoll .section li.activity {
+    margin-bottom: 0 !important;
+}
+
+.activity-item {
+    padding: 0 !important;
+}
+
+.activitytitle .text-uppercase.small {
+    color: gray !important;
+    margin-left: 8px !important;
+    white-space: nowrap !important;
+}
+
+.activityiconcontainer.activityiconcontainer {
+    width: 32px !important;
+    height: 32px !important;
+    align-self: center !important;
+    margin-right: 8px !important;
+}
+
+.activity-info {
+    align-self: center !important;
+}
+
+.description .course-description-item:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 40px !important;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+.format-topcoll .ct-activity-mod-feedback,
+.format-topcoll .ct-activity-meta-container {
+    padding: 0 !important;
+}
+
+.activity-item .afterlink {
+    align-self: center !important;
+    display: inline !important;
+}
+
+.activity-item .activity-info {
+    float: right !important;
+    padding: 0 !important;
+}
+
+.activity-item .media-body {
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: row-reverse !important;
+    justify-content: flex-start !important;
+}
+
+body:not(.theme_snap) li.modtype_hsuforum .afterlink {
+    margin: 0 !important;
+}
+
+.sectionbody {
+    padding-left: 32px !important;
+}
+
+.tertiary-navigation {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.tertiary-navigation .navitem {
+    margin-bottom: 0 !important;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.activity-item:not(.activityinline) {
+    padding: 0 !important;
+}
+
+.description .course-description-item {
+    background-color: unset !important;
+}
+
+.ct-activity-mod-feedback {
+    margin-left: 40px !important;
+}

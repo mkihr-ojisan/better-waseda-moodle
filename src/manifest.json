@@ -1,0 +1,63 @@
+{
+    "name": "__MSG_extension_name__",
+    "short_name": "__MSG_extension_shortname__",
+    "description": "__MSG_extension_description__",
+    "version": "0.6.0",
+    "author": "mkihr-ojisan",
+    "homepage_url": "https://github.com/mkihr-ojisan/better-waseda-moodle",
+    "manifest_version": 2,
+    "default_locale": "ja",
+    "incognito": "not_allowed",
+    "icons": {
+        "__firefox__256": "res/images/icon.svg",
+        "__chrome__48": "res/images/icon-48.png",
+        "__chrome__128": "res/images/icon-128.png"
+    },
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://wsdmoodle.waseda.jp/*"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "*://*.waseda.jp/*",
+        "https://login.microsoftonline.com/*",
+        "storage",
+        "webRequest",
+        "webRequestBlocking",
+        "cookies",
+        "contextMenus"
+    ],
+    "web_accessible_resources": [
+        "common/auto-login/auto-login-page.html",
+        "res/videos/dummy-video.mp4",
+        "block-xhr-requests/inject.js",
+        "fix-syllabus-link/inject.js",
+        "assignment-filename/inject.js"
+    ],
+    "__firefox__browser_specific_settings": {
+        "gecko": {
+            "id": "better-waseda-moodle@mkihr-ojisan.com",
+            "strict_min_version": "78.0",
+            "update_url": "https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/main/firefox-updates.json"
+        }
+    },
+    "__firefox__options_ui": {
+        "page": "options-page/options-page.html",
+        "open_in_tab": true
+    },
+    "__chrome__options_page": "options-page/options-page.html",
+    "browser_action": {
+        "default_icon": {
+            "__firefox__256": "res/images/icon.svg",
+            "__chrome|opera|edge__48": "res/images/icon-48.png",
+            "__chrome|opera|edge__128": "res/images/icon-128.png"
+        },
+        "default_title": "__MSG_extension_name__",
+        "default_popup": "popup/popup.html"
+    }
+}
