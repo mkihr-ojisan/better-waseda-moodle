@@ -1,0 +1,4 @@
+.floating-button,
+.btn-footer-popover {
+    display: none !important;
+}
