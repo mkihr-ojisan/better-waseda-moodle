@@ -1,0 +1,7 @@
+#nav-notification-popover-container .count-container {
+    display: none;
+}
+
+#nav-notification-popover-container:hover .count-container {
+    display: block;
+}
