@@ -1,6 +1,6 @@
 import equal from "fast-deep-equal";
 import { assertExtensionContext } from "../util/context";
-import { compressObject } from "../util/object-compression";
+import { compressObject, decompressObject } from "../util/object-compression";
 import { compareVersion } from "../util/version";
 import { ConfigKey, CONFIG_VALUE_TYPE_DEF, CONFIG_DEFAULT_VALUES } from "./config";
 
@@ -133,6 +133,18 @@ export async function migrateConfig(): Promise<void> {
         };
 
         console.info("Migrated config from under v0.5.0 to v0.6.0", { oldConfig, newConfig });
+    } else {
+        newConfig = {
+            ...newConfig,
+            ...Object.fromEntries(
+                Object.entries(await browser.storage.sync.get())
+                    .filter(([key]) => key !== ConfigKey.LastVersion.toString())
+                    .map(([key, value]) => [
+                        key,
+                        decompressObject(CONFIG_VALUE_TYPE_DEF[key as unknown as ConfigKey], value as any),
+                    ])
+            ),
+        };
     }
 
     await browser.storage.local.clear();
