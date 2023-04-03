@@ -29,7 +29,6 @@
         "storage",
         "webRequest",
         "webRequestBlocking",
-        "cookies",
         "contextMenus"
     ],
     "web_accessible_resources": [
