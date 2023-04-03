@@ -8,7 +8,7 @@ export type ExtensionContext = "background" | "content_script" | "extension_page
 export function getCurrentExtensionContext(): ExtensionContext {
     if (location.pathname === "/_generated_background_page.html") {
         return "background";
-    } else if ("cookies" in browser) {
+    } else if ("permissions" in browser) {
         return "extension_page";
     } else {
         return "content_script";
