@@ -5,13 +5,16 @@ initConfig();
 const CHECKBOX_ID = "bwm-auto-login-checkbox";
 
 const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-        if (!(mutation.target instanceof HTMLElement)) continue;
-        if (mutation.target.id === "idSIButton9") {
-            addListenerToSignInButton(mutation.target);
-        } else if (mutation.target.classList.contains("boilerplate-button-bottom")) {
-            if (document.getElementById(CHECKBOX_ID)) return;
-            insertCheckbox(mutation.target);
+    // メールアドレス入力画面では0、パスワード入力画面では1になる
+    if (history.state === 1) {
+        for (const mutation of mutations) {
+            if (!(mutation.target instanceof HTMLElement)) continue;
+            if (mutation.target.id === "idSIButton9") {
+                addListenerToSignInButton(mutation.target);
+            } else if (mutation.target.classList.contains("boilerplate-button-bottom")) {
+                if (document.getElementById(CHECKBOX_ID)) return;
+                insertCheckbox(mutation.target);
+            }
         }
     }
 });
