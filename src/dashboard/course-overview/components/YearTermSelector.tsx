@@ -155,7 +155,7 @@ function makeYearTermList(
     // 時間割情報が設定されていない科目については、Moodle上でコースに設定された期間から選択肢を作成する
     const years: number[] = [];
     for (const course of courses) {
-        if (course.id in timetableData) continue;
+        if (course.id in timetableData || timetableData[course.id]?.length === 0) continue;
         if (!course.date) continue;
 
         const startYear = getSchoolYear(course.date.start);
