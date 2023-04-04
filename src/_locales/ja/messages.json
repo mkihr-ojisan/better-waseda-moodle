@@ -149,6 +149,10 @@
         "message": "自動ログイン中…",
         "description": "自動ログインページのタイトル"
     },
+    "auto_login_checkbox": {
+        "message": "Better Waseda Moodleの自動ログインを有効にする",
+        "description": "ログインページに表示される自動ログインのチェックボックスのラベル"
+    },
     "options_page_title": {
         "message": "Better Waseda Moodleの設定",
         "description": "設定ページのタイトル"

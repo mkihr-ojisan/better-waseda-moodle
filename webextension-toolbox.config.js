@@ -89,6 +89,7 @@ module.exports = {
                 "src/launcher/launcher.ts",
                 "src/assignment-filename/content.ts",
                 "src/assignment-filename/inject.ts",
+                "src/common/auto-login/auto-login-checkbox.ts",
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })

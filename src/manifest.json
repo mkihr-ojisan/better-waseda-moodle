@@ -21,6 +21,11 @@
             "matches": ["https://wsdmoodle.waseda.jp/*"],
             "js": ["content.js"],
             "run_at": "document_end"
+        },
+        {
+            "matches": ["https://login.microsoftonline.com/b3865172-9887-4b3a-89ff-95a35b92f4c3/*"],
+            "js": ["common/auto-login/auto-login-checkbox.js"],
+            "run_at": "document_end"
         }
     ],
     "permissions": [
