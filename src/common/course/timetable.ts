@@ -2,6 +2,7 @@ import { useCallback, useMemo } from "react";
 import { ConfigKey, ConfigValue, getConfig, setConfig } from "../config/config";
 import { useConfig } from "../config/useConfig";
 import { DateTimeFormat } from "../util/intl";
+import { getSchoolYear } from "../util/school-year";
 
 const longWeekdayFormat = new DateTimeFormat({ weekday: "long" });
 const shortWeekdayFormat = new DateTimeFormat({ weekday: "short" });
@@ -283,6 +284,94 @@ export class YearTerm {
                 break;
         }
         return { start, end };
+    }
+
+    /**
+     * 指定した期間を網羅するような`YearTerm`の配列を返す。
+     *
+     * @param interval - 期間
+     * @param precision - 学期単位か、クォーター単位かを指定する。デフォルトはクォーター単位。
+     * @returns 指定した期間を網羅するような`YearTerm`の配列
+     */
+    static fromInterval(interval: Interval, precision: "semester" | "quarter" = "quarter"): YearTerm[] {
+        if (interval.start > interval.end) {
+            throw new Error("Invalid interval");
+        }
+
+        const yearTerms: YearTerm[] = [];
+
+        const start = new Date(interval.start);
+        const end = new Date(interval.end);
+
+        const startYear = getSchoolYear(start);
+        const endYear = getSchoolYear(end);
+        const startMonth = start.getMonth();
+        const endMonth = end.getMonth();
+
+        for (let year = startYear; year <= endYear; year++) {
+            if (year !== startYear || (3 <= startMonth && startMonth <= 4)) {
+                if (year !== endYear || 11 <= endMonth || endMonth <= 2) {
+                    yearTerms.push(new YearTerm(year, Term.FULL_YEAR));
+                } else if (3 <= endMonth && endMonth <= 4) {
+                    if (precision === "quarter") {
+                        yearTerms.push(new YearTerm(year, Term.SPRING_QUARTER));
+                    } else if (precision === "semester") {
+                        yearTerms.push(new YearTerm(year, Term.SPRING_SEMESTER));
+                    }
+                } else if (5 <= endMonth && endMonth <= 8) {
+                    yearTerms.push(new YearTerm(year, Term.SPRING_SEMESTER));
+                } else if (9 <= endMonth && endMonth <= 10) {
+                    if (precision === "quarter") {
+                        yearTerms.push(new YearTerm(year, Term.SPRING_SEMESTER));
+                        yearTerms.push(new YearTerm(year, Term.FALL_QUARTER));
+                    } else if (precision === "semester") {
+                        yearTerms.push(new YearTerm(year, Term.FULL_YEAR));
+                    }
+                }
+            } else if (5 <= startMonth && startMonth <= 6) {
+                if (year !== endYear || 11 <= endMonth || endMonth <= 2) {
+                    if (precision === "quarter") {
+                        yearTerms.push(new YearTerm(year, Term.SUMMER_QUARTER));
+                        yearTerms.push(new YearTerm(year, Term.FALL_SEMESTER));
+                    } else if (precision === "semester") {
+                        yearTerms.push(new YearTerm(year, Term.FULL_YEAR));
+                    }
+                } else if (5 <= endMonth && endMonth <= 8) {
+                    if (precision === "quarter") {
+                        yearTerms.push(new YearTerm(year, Term.SUMMER_QUARTER));
+                    } else if (precision === "semester") {
+                        yearTerms.push(new YearTerm(year, Term.SPRING_SEMESTER));
+                    }
+                } else if (9 <= endMonth && endMonth <= 10) {
+                    if (precision === "quarter") {
+                        yearTerms.push(new YearTerm(year, Term.SUMMER_QUARTER));
+                        yearTerms.push(new YearTerm(year, Term.FALL_QUARTER));
+                    } else if (precision === "semester") {
+                        yearTerms.push(new YearTerm(year, Term.FULL_YEAR));
+                    }
+                }
+            } else if (7 <= startMonth && startMonth <= 10) {
+                if (year !== endYear || 11 <= endMonth || endMonth <= 2) {
+                    yearTerms.push(new YearTerm(year, Term.FALL_SEMESTER));
+                } else if (9 <= endMonth && endMonth <= 10) {
+                    if (precision === "quarter") {
+                        yearTerms.push(new YearTerm(year, Term.FALL_QUARTER));
+                    } else if (precision === "semester") {
+                        yearTerms.push(new YearTerm(year, Term.FALL_SEMESTER));
+                    }
+                }
+            } else if (11 <= startMonth || startMonth <= 2) {
+                if (year !== endYear || 11 <= endMonth || endMonth <= 2) {
+                    if (precision === "quarter") {
+                        yearTerms.push(new YearTerm(year, Term.WINTER_QUARTER));
+                    } else if (precision === "semester") {
+                        yearTerms.push(new YearTerm(year, Term.FALL_SEMESTER));
+                    }
+                }
+            }
+        }
+
+        return yearTerms;
     }
 
     /**

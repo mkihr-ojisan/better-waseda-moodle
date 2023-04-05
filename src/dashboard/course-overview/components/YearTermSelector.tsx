@@ -82,38 +82,48 @@ function makeYearTermList(
 
     for (const course of courses) {
         const timetable = timetableData[course.id];
-        if (timetable) {
-            for (const { year, term } of timetable) {
-                termFlags[year] ??= {};
-                switch (term.toString()) {
-                    case "spring_quarter":
-                        termFlags[year].spring_quarter = true;
-                        break;
-                    case "summer_quarter":
-                        termFlags[year].summer_quarter = true;
-                        break;
-                    case "fall_quarter":
-                        termFlags[year].fall_quarter = true;
-                        break;
-                    case "winter_quarter":
-                        termFlags[year].winter_quarter = true;
-                        break;
-                    case "spring_semester":
-                        termFlags[year].spring_semester = true;
-                        break;
-                    case "fall_semester":
-                        termFlags[year].fall_semester = true;
-                        break;
-                    case "full_year":
-                        termFlags[year].full_year = true;
-                        break;
-                }
+
+        let yearTerms;
+        if (timetable && timetable.length > 0) {
+            yearTerms = timetable;
+        } else if (course.date) {
+            // 時間割情報が設定されていない科目については、Moodle上でコースに設定された期間から選択肢を作成する
+            const currentYear = getSchoolYear(new Date());
+            yearTerms = YearTerm.fromInterval(course.date, "semester").filter(({ year }) => year <= currentYear); // 未来の分は表示しない
+            console.log({ course, yearTerms });
+        } else {
+            continue;
+        }
+        for (const { year, term } of yearTerms) {
+            termFlags[year] ??= {};
+            switch (term.toString()) {
+                case "spring_quarter":
+                    termFlags[year].spring_quarter = true;
+                    break;
+                case "summer_quarter":
+                    termFlags[year].summer_quarter = true;
+                    break;
+                case "fall_quarter":
+                    termFlags[year].fall_quarter = true;
+                    break;
+                case "winter_quarter":
+                    termFlags[year].winter_quarter = true;
+                    break;
+                case "spring_semester":
+                    termFlags[year].spring_semester = true;
+                    break;
+                case "fall_semester":
+                    termFlags[year].fall_semester = true;
+                    break;
+                case "full_year":
+                    termFlags[year].full_year = true;
+                    break;
             }
         }
     }
 
     const yearTerms: YearTerm[] = [];
-    for (const [year, flags] of Object.entries(termFlags)) {
+    for (const [year, flags] of Object.entries(termFlags).sort((a, b) => parseInt(a[0]) - parseInt(b[0]))) {
         if (
             flags.full_year &&
             !flags.spring_quarter &&
@@ -151,26 +161,6 @@ function makeYearTermList(
             }
         }
     }
-
-    // 時間割情報が設定されていない科目については、Moodle上でコースに設定された期間から選択肢を作成する
-    const years: number[] = [];
-    for (const course of courses) {
-        if (course.id in timetableData || timetableData[course.id]?.length === 0) continue;
-        if (!course.date) continue;
-
-        const startYear = getSchoolYear(course.date.start);
-        const endYear = Math.min(getSchoolYear(course.date.end), getSchoolYear(new Date())); // 未来の分は表示しない
-        for (let year = startYear; year <= endYear; year++) {
-            if (!years.includes(year)) years.push(year);
-        }
-    }
-    for (const year of years) {
-        if (yearTerms.every((yt) => yt.year !== year)) {
-            yearTerms.push(new YearTerm(year, Term.FULL_YEAR));
-        }
-    }
-
-    yearTerms.sort(YearTerm.compare);
 
     return yearTerms;
 }
