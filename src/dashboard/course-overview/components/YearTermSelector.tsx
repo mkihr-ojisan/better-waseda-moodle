@@ -90,7 +90,6 @@ function makeYearTermList(
             // 時間割情報が設定されていない科目については、Moodle上でコースに設定された期間から選択肢を作成する
             const currentYear = getSchoolYear(new Date());
             yearTerms = YearTerm.fromInterval(course.date, "semester").filter(({ year }) => year <= currentYear); // 未来の分は表示しない
-            console.log({ course, yearTerms });
         } else {
             continue;
         }

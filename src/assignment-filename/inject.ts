@@ -47,7 +47,6 @@ import format from "string-format";
 
     // コンテンツスクリプトからtemplateとformatArgsを受け取る
     window.addEventListener("message", (event) => {
-        console.log(event);
         if (typeof event.data === "object" && "assignment-filename-template" in event.data) {
             template = event.data["assignment-filename-template"];
         }
