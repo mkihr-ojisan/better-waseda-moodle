@@ -360,7 +360,7 @@ export class YearTerm {
                         yearTerms.push(new YearTerm(year, Term.FALL_SEMESTER));
                     }
                 }
-            } else if (11 <= startMonth || startMonth <= 2) {
+            } else if (11 <= startMonth || startMonth <= 0) {
                 if (year !== endYear || 11 <= endMonth || endMonth <= 2) {
                     if (precision === "quarter") {
                         yearTerms.push(new YearTerm(year, Term.WINTER_QUARTER));
