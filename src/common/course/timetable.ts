@@ -99,9 +99,17 @@ export class Term {
             case "winter_quarter":
                 return other.value === "winter_quarter";
             case "spring_semester":
-                return other.value === "spring_semester" || other.value === "spring_quarter";
+                return (
+                    other.value === "spring_semester" ||
+                    other.value === "spring_quarter" ||
+                    other.value === "summer_quarter"
+                );
             case "fall_semester":
-                return other.value === "fall_semester" || other.value === "fall_quarter";
+                return (
+                    other.value === "fall_semester" ||
+                    other.value === "fall_quarter" ||
+                    other.value === "winter_quarter"
+                );
             case "full_year":
                 return true;
         }
@@ -360,7 +368,7 @@ export class YearTerm {
                         yearTerms.push(new YearTerm(year, Term.FALL_SEMESTER));
                     }
                 }
-            } else if (11 <= startMonth || startMonth <= 2) {
+            } else if (11 <= startMonth || startMonth <= 0) {
                 if (year !== endYear || 11 <= endMonth || endMonth <= 2) {
                     if (precision === "quarter") {
                         yearTerms.push(new YearTerm(year, Term.WINTER_QUARTER));

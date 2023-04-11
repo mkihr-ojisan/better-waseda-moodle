@@ -90,7 +90,6 @@ function makeYearTermList(
             // 時間割情報が設定されていない科目については、Moodle上でコースに設定された期間から選択肢を作成する
             const currentYear = getSchoolYear(new Date());
             yearTerms = YearTerm.fromInterval(course.date, "semester").filter(({ year }) => year <= currentYear); // 未来の分は表示しない
-            console.log({ course, yearTerms });
         } else {
             continue;
         }
@@ -123,44 +122,78 @@ function makeYearTermList(
     }
 
     const yearTerms: YearTerm[] = [];
-    for (const [year, flags] of Object.entries(termFlags).sort((a, b) => parseInt(a[0]) - parseInt(b[0]))) {
-        if (
-            flags.full_year &&
-            !flags.spring_quarter &&
-            !flags.summer_quarter &&
-            !flags.fall_quarter &&
-            !flags.winter_quarter &&
-            !flags.spring_semester &&
-            !flags.fall_semester
-        ) {
-            yearTerms.push(new YearTerm(Number(year), Term.FULL_YEAR));
-        } else {
-            if (flags.spring_semester) {
-                if (flags.spring_quarter || flags.summer_quarter) {
-                    yearTerms.push(new YearTerm(Number(year), Term.SPRING_QUARTER));
-                    yearTerms.push(new YearTerm(Number(year), Term.SUMMER_QUARTER));
-                } else {
-                    yearTerms.push(new YearTerm(Number(year), Term.SPRING_SEMESTER));
-                }
-            } else if (flags.spring_quarter) {
-                yearTerms.push(new YearTerm(Number(year), Term.SPRING_QUARTER));
-            } else if (flags.summer_quarter) {
-                yearTerms.push(new YearTerm(Number(year), Term.SUMMER_QUARTER));
+    for (const [year, flags] of Object.entries(termFlags)) {
+        const terms: Term[] = [];
+        if (flags.spring_quarter) {
+            terms.push(Term.SPRING_QUARTER);
+        }
+        if (flags.summer_quarter) {
+            terms.push(Term.SUMMER_QUARTER);
+        }
+        if (flags.fall_quarter) {
+            terms.push(Term.FALL_QUARTER);
+        }
+        if (flags.winter_quarter) {
+            terms.push(Term.WINTER_QUARTER);
+        }
+        if (flags.spring_semester) {
+            if (flags.spring_quarter && !terms.includes(Term.SUMMER_QUARTER)) {
+                terms.push(Term.SUMMER_QUARTER);
             }
-            if (flags.fall_semester) {
-                if (flags.fall_quarter || flags.winter_quarter) {
-                    yearTerms.push(new YearTerm(Number(year), Term.FALL_QUARTER));
-                    yearTerms.push(new YearTerm(Number(year), Term.WINTER_QUARTER));
-                } else {
-                    yearTerms.push(new YearTerm(Number(year), Term.FALL_SEMESTER));
-                }
-            } else if (flags.fall_quarter) {
-                yearTerms.push(new YearTerm(Number(year), Term.FALL_QUARTER));
-            } else if (flags.winter_quarter) {
-                yearTerms.push(new YearTerm(Number(year), Term.WINTER_QUARTER));
+            if (flags.summer_quarter && !terms.includes(Term.FALL_QUARTER)) {
+                terms.push(Term.FALL_QUARTER);
+            }
+            if (!flags.spring_quarter && !flags.summer_quarter) {
+                terms.push(Term.SPRING_SEMESTER);
             }
         }
+        if (flags.fall_semester) {
+            if (flags.fall_quarter && !terms.includes(Term.WINTER_QUARTER)) {
+                terms.push(Term.WINTER_QUARTER);
+            }
+            if (flags.winter_quarter && !terms.includes(Term.SPRING_QUARTER)) {
+                terms.push(Term.SPRING_QUARTER);
+            }
+            if (!flags.fall_quarter && !flags.winter_quarter) {
+                terms.push(Term.FALL_SEMESTER);
+            }
+        }
+        if (flags.full_year) {
+            if (flags.spring_semester && !terms.includes(Term.FALL_SEMESTER)) {
+                if (flags.fall_quarter && !terms.includes(Term.WINTER_QUARTER)) {
+                    terms.push(Term.WINTER_QUARTER);
+                }
+                if (flags.winter_quarter && !terms.includes(Term.SPRING_QUARTER)) {
+                    terms.push(Term.SPRING_QUARTER);
+                }
+                if (!flags.fall_quarter && !flags.winter_quarter) {
+                    terms.push(Term.FALL_SEMESTER);
+                }
+            }
+            if (flags.fall_semester && !terms.includes(Term.SPRING_SEMESTER)) {
+                if (flags.spring_quarter && !terms.includes(Term.SUMMER_QUARTER)) {
+                    terms.push(Term.SUMMER_QUARTER);
+                }
+                if (flags.summer_quarter && !terms.includes(Term.FALL_QUARTER)) {
+                    terms.push(Term.FALL_QUARTER);
+                }
+                if (!flags.spring_quarter && !flags.summer_quarter) {
+                    terms.push(Term.SPRING_SEMESTER);
+                }
+            }
+            if (
+                !flags.spring_semester &&
+                !flags.fall_semester &&
+                !flags.spring_quarter &&
+                !flags.summer_quarter &&
+                !flags.fall_quarter &&
+                !flags.winter_quarter
+            ) {
+                terms.push(Term.FULL_YEAR);
+            }
+        }
+        yearTerms.push(...terms.map((term) => new YearTerm(parseInt(year), term)));
     }
 
-    return yearTerms;
+    return yearTerms.sort(YearTerm.compare);
 }
