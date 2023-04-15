@@ -55,6 +55,13 @@ export function withCache<T>(
     func.promise = async () => {
         const cache = await storage.get(cacheName);
         if (cache) {
+            if (Date.now() - cache.timestamp.getTime() >= callIntervalMs) {
+                (async () => {
+                    const value = await f();
+                    storage.set(cacheName, value);
+                })();
+            }
+
             return cache.value;
         }
 
