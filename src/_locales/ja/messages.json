@@ -569,6 +569,10 @@
         "message": "時間割が設定されていないため、時間割表が表示されていません。各科目のメニューから手動で設定するか、右上のメニューの「科目情報を自動取得」で自動取得してください。",
         "description": "コース概要に表示するメッセージ"
     },
+    "course_overview_loading_message": {
+        "message": "科目一覧を読み込んでいます。しばらくお待ちください。",
+        "description": "コース概要に表示するメッセージ"
+    },
     "course_overview_course_face_to_face": {
         "message": "対面",
         "description": "コース概要に表示するメッセージ"

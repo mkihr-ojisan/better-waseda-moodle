@@ -58,9 +58,9 @@ export const Timetable: FC<TimetableViewProps> = (props) => {
     const columns = hasSunday ? 7 : hasSaturday ? 6 : 5;
 
     const cells = useMemo(() => {
-        const cells: ({ course: CourseWithSetHidden; rowSpan: number } | null | undefined)[][] = [...Array(rows)].map(
-            () => Array(columns).fill(null)
-        );
+        const cells: ({ course: CourseWithSetHidden; rowSpan: number; classroom: string } | null | undefined)[][] = [
+            ...Array(rows),
+        ].map(() => Array(columns).fill(null));
 
         if (!props.selectedYearTerm) return cells;
 
@@ -74,6 +74,7 @@ export const Timetable: FC<TimetableViewProps> = (props) => {
                 cells[timetable.period.from - 1][timetable.day.toInteger()] = {
                     course,
                     rowSpan: timetable.period.toInclusive - timetable.period.from + 1,
+                    classroom: timetable.classroom,
                 };
                 for (let period = timetable.period.from + 1; period <= timetable.period.toInclusive; period++) {
                     cells[period - 1][timetable.day.toInteger()] = undefined;
@@ -209,7 +210,13 @@ export const Timetable: FC<TimetableViewProps> = (props) => {
                                                 `calc(max(7em, calc((clamp(30em, calc(100vh - 30em), 100em) - 2em) / ${rows})) * ${cell?.rowSpan})`,
                                         }}
                                     >
-                                        {cell?.course && <CourseCard course={cell?.course} height="fill-parent" />}
+                                        {cell?.course && (
+                                            <CourseCard
+                                                course={cell?.course}
+                                                height="fill-parent"
+                                                classroom={cell?.classroom}
+                                            />
+                                        )}
                                     </Box>
                                 ))}
                         </tr>

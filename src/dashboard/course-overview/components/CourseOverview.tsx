@@ -1,8 +1,7 @@
 import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
 import { Term, TimetableData, useTimetableData, YearTerm } from "@/common/course/timetable";
 import { useCourses } from "@/common/course/useCourses";
-import { CenteredCircularProgress } from "@/common/react/CenteredCircularProgress";
-import { AppBar, Box, Grid, Toolbar } from "@mui/material";
+import { AppBar, Box, CircularProgress, Grid, Toolbar, Typography } from "@mui/material";
 import { areIntervalsOverlapping } from "date-fns";
 import React, { ContextType, createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { CourseCard } from "./CourseCard";
@@ -90,7 +89,13 @@ export const CourseOverview: FC = () => {
     }, [hiddenTips, setHiddenTips]);
 
     const context = useMemo(
-        () => ({ showHiddenCourses, setShowHiddenCourses, reloadCourses, selectedYearTerm, timetableData }),
+        () => ({
+            showHiddenCourses,
+            setShowHiddenCourses,
+            selectedYearTerm,
+            timetableData,
+            reloadCourses,
+        }),
         [reloadCourses, selectedYearTerm, showHiddenCourses, timetableData]
     );
 
@@ -136,7 +141,12 @@ export const CourseOverview: FC = () => {
                     </Grid>
                 </CourseOverviewContext.Provider>
             ) : (
-                <CenteredCircularProgress />
+                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <CircularProgress />
+                    <Typography variant="body2" color="text.secondary" mt={1}>
+                        {browser.i18n.getMessage("course_overview_loading_message")}
+                    </Typography>
+                </Box>
             )}
         </>
     );

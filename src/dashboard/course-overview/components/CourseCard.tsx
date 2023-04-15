@@ -4,7 +4,6 @@ import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { CourseCardMenu } from "./CourseCardMenu";
 import { useCourseOverviewContext } from "./CourseOverview";
-import { YearTerm } from "@/common/course/timetable";
 import { unique } from "@/common/util/array";
 import { useConfig } from "@/common/config/useConfig";
 import { ConfigKey } from "@/common/config/config";
@@ -17,6 +16,8 @@ import NoteIcon from "@mui/icons-material/Note";
 export type CourseCardProps = {
     course: CourseWithSetHidden;
     tags?: string[];
+    /** 指定した場合はこの教室が表示される。指定しない場合は科目に設定されたすべての教室がカンマ区切りで表示される */
+    classroom?: string;
     height: "fixed" | "fill-parent";
 };
 
@@ -32,17 +33,11 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
     const courseName = courseNameOverride ?? props.course.name;
 
     const classroom = useMemo(() => {
+        if (props.classroom) return props.classroom;
         const timetable = context.timetableData[props.course.id];
         if (!timetable) return undefined;
-        if (context.selectedYearTerm) {
-            const timetableEntry = timetable.find(
-                (t) => context.selectedYearTerm && new YearTerm(t.year, t.term).contains(context.selectedYearTerm)
-            );
-            return timetableEntry?.classroom;
-        } else {
-            return unique(timetable.map((t) => t.classroom)).join(", ");
-        }
-    }, [context.selectedYearTerm, context.timetableData, props.course.id]);
+        return unique(timetable.map((t) => t.classroom)).join(", ");
+    }, [context.timetableData, props.classroom, props.course.id]);
 
     const streamingURL = useConfig(ConfigKey.CourseStreamingURLs)[0][props.course.id];
 

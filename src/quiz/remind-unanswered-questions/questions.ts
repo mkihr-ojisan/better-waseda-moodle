@@ -143,7 +143,7 @@ function checkIfAnswered(elem: Element, type: QuestionType): boolean {
                         return true;
                 } else {
                     const textArea = elem.querySelector(".qtype_essay_response");
-                    if (textArea && textArea.textContent !== "") return true;
+                    if (textArea instanceof HTMLTextAreaElement && textArea.value !== "") return true;
                 }
                 const filePicker = elem.querySelector(".filemanager");
                 if (filePicker) {

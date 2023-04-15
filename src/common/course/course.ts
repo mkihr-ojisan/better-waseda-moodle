@@ -23,7 +23,7 @@ export type Course = {
 };
 
 /** 履修している科目のリストを取得する。このAsyncGeneratorはまずキャッシュをyieldし、その後取得したデータをyieldする。 */
-export const fetchCourses = withCache<readonly Course[]>("courses", async () => {
+export const fetchCourses = withCache<readonly Course[]>("courses", 603, async () => {
     const courses = (await core_course_get_enrolled_courses_by_timeline_classification()).map((c) => ({
         id: c.id,
         wasedaId: c.idnumber,

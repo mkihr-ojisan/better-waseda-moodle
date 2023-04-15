@@ -17,15 +17,21 @@ export type WithCache<T> = (() => AsyncGenerator<T>) & {
  * キャッシュをyieldする非同期ジェネレーターを返す
  *
  * @param cacheName - キャッシュストレージの名前
+ * @param dbVersion - キャッシュストレージのバージョン。`f`が返す値が変わったらバージョンを上げる
  * @param f - 値を生成する関数
  * @param options - オプション
  * @returns 非同期ジェネレーター
  */
-export function withCache<T>(cacheName: string, f: () => Promise<T>, options?: WithCacheOptions): WithCache<T> {
+export function withCache<T>(
+    cacheName: string,
+    dbVersion: number,
+    f: () => Promise<T>,
+    options?: WithCacheOptions
+): WithCache<T> {
     const cacheTtlMs = options?.cacheTtlMs ?? 1000 * 60 * 60 * 24 * 30;
     const callIntervalMs = options?.callIntervalMs ?? 1000 * 60 * 60;
 
-    const storage = new IDBCacheStorage<T>(cacheName, cacheTtlMs, 1);
+    const storage = new IDBCacheStorage<T>(cacheName, cacheTtlMs, dbVersion, 1);
 
     const func = async function* () {
         const cache = await storage.get(cacheName);
@@ -49,6 +55,13 @@ export function withCache<T>(cacheName: string, f: () => Promise<T>, options?: W
     func.promise = async () => {
         const cache = await storage.get(cacheName);
         if (cache) {
+            if (Date.now() - cache.timestamp.getTime() >= callIntervalMs) {
+                (async () => {
+                    const value = await f();
+                    storage.set(cacheName, value);
+                })();
+            }
+
             return cache.value;
         }
 

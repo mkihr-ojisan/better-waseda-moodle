@@ -3,18 +3,6 @@ import { assertExtensionContext } from "./context";
 
 assertExtensionContext("background");
 
-/**
- * キャッシュ用のIndexedDBのバージョンを拡張機能のバージョンから生成する。
- *
- * @returns IndexedDBのバージョン
- */
-function dbVersion(): number {
-    const extensionVersion = chrome.runtime.getManifest().version;
-    const split = extensionVersion.split(".");
-    const version = parseInt(split[0], 10) * 10000 + parseInt(split[1], 10) * 100 + parseInt(split[2], 10);
-    return version;
-}
-
 /** キャッシュ用のストレージを管理するクラス。 */
 export class IDBCacheStorage<T> {
     /**
@@ -32,11 +20,13 @@ export class IDBCacheStorage<T> {
     /**
      * @param storageId - ストレージを識別する識別子。
      * @param ttlMs - キャッシュの有効期限（ミリ秒）。
+     * @param dbVersion - データベースのバージョン。
      * @param maxEntries - キャッシュの最大数。undefined なら無制限。
      */
     constructor(
         public readonly storageId: string,
         public readonly ttlMs: number,
+        public readonly dbVersion: number,
         public readonly maxEntries?: number
     ) {}
 
@@ -48,7 +38,7 @@ export class IDBCacheStorage<T> {
                     return;
                 }
 
-                const openRequest = indexedDB.open(this.storageId, dbVersion());
+                const openRequest = indexedDB.open(this.storageId, this.dbVersion);
                 openRequest.onupgradeneeded = (ev) => {
                     // バージョンが変わったらキャッシュを削除する
                     const db = openRequest.result;

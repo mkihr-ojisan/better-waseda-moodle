@@ -104,7 +104,7 @@ export function getFaculties(): readonly Faculty[] {
  * @returns 定数
  */
 export async function getConstants(): Promise<Constants> {
-    const userProfile = await fetchUserProfile();
+    const userProfile = await fetchUserProfile.promise();
 
     const constants = [
         ...(
