@@ -28,7 +28,7 @@ export type UserProfile = {
 /**
  * ユーザープロファイルのページ(https://wsdmoodle.waseda.jp/user/profile.php)からユーザー情報を取得する
  */
-export const fetchUserProfile = cached("userProfile", async () => {
+export const fetchUserProfile = cached("userProfile", 603, async () => {
     await ensureLogin();
 
     const doc = await fetchHTML("https://wsdmoodle.waseda.jp/user/profile.php");
