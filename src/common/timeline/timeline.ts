@@ -13,7 +13,7 @@ const cached_core_calendar_get_action_events_by_timesort = withCache(
         return core_calendar_get_action_events_by_timesort(Math.floor(Date.now() / 1000) - backwardDays * 24 * 60 * 60);
     },
     {
-        cacheTtlMs: 24 * 60 * 60 * 1000,
+        cacheTtlMs: 7 * 24 * 60 * 60 * 1000,
         callIntervalMs: 60 * 1000,
     }
 );
