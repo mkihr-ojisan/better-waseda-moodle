@@ -28,53 +28,60 @@ export type UserProfile = {
 /**
  * ユーザープロファイルのページ(https://wsdmoodle.waseda.jp/user/profile.php)からユーザー情報を取得する
  */
-export const fetchUserProfile = withCache("userProfile", 603, async () => {
-    await ensureLogin();
+export const fetchUserProfile = withCache(
+    "userProfile",
+    603,
+    async () => {
+        await ensureLogin();
 
-    const doc = await fetchHTML("https://wsdmoodle.waseda.jp/user/profile.php");
+        const doc = await fetchHTML("https://wsdmoodle.waseda.jp/user/profile.php");
 
-    const ul = doc.getElementsByClassName("card-body")[0]?.getElementsByTagName("ul")?.[0];
-    if (!ul) throw new InvalidResponseError("ul is not found");
+        const ul = doc.getElementsByClassName("card-body")[0]?.getElementsByTagName("ul")?.[0];
+        if (!ul) throw new InvalidResponseError("ul is not found");
 
-    const userProfile: UserProfile = {};
+        const userProfile: UserProfile = {};
 
-    for (const li of Array.from(ul.getElementsByTagName("li"))) {
-        const dt = li.getElementsByTagName("dt")[0];
-        const dd = li.getElementsByTagName("dd")[0];
-        if (!dt || !dd) continue;
+        for (const li of Array.from(ul.getElementsByTagName("li"))) {
+            const dt = li.getElementsByTagName("dt")[0];
+            const dd = li.getElementsByTagName("dd")[0];
+            if (!dt || !dd) continue;
 
-        const value = dd.textContent?.trim();
+            const value = dd.textContent?.trim();
 
-        switch (dt.textContent?.trim()) {
-            case "氏名":
-                userProfile.japaneseName = value;
-                break;
-            case "Name":
-                userProfile.englishName = value;
-                break;
-            case "カナ氏名":
-                userProfile.katakanaName = value;
-                break;
-            case "履修学年/Year":
-                userProfile.year = value;
-                break;
-            case "所属":
-                userProfile.japaneseAffiliation = value;
-                break;
-            case "学科":
-                userProfile.japaneseDepartment = value;
-                break;
-            case "コース":
-                userProfile.course = value;
-                break;
-            case "Affiliation":
-                userProfile.englishAffiliation = value;
-                break;
-            case "Department":
-                userProfile.englishDepartment = value;
-                break;
+            switch (dt.textContent?.trim()) {
+                case "氏名":
+                    userProfile.japaneseName = value;
+                    break;
+                case "Name":
+                    userProfile.englishName = value;
+                    break;
+                case "カナ氏名":
+                    userProfile.katakanaName = value;
+                    break;
+                case "履修学年/Year":
+                    userProfile.year = value;
+                    break;
+                case "所属":
+                    userProfile.japaneseAffiliation = value;
+                    break;
+                case "学科":
+                    userProfile.japaneseDepartment = value;
+                    break;
+                case "コース":
+                    userProfile.course = value;
+                    break;
+                case "Affiliation":
+                    userProfile.englishAffiliation = value;
+                    break;
+                case "Department":
+                    userProfile.englishDepartment = value;
+                    break;
+            }
         }
-    }
 
-    return userProfile;
-});
+        return userProfile;
+    },
+    {
+        callIntervalMs: 7 * 24 * 60 * 60 * 1000,
+    }
+);
