@@ -1,7 +1,7 @@
 import { ensureLogin } from "@/common/auto-login/auto-login";
 import { InvalidResponseError } from "@/common/error";
-import { cached } from "@/common/util/cached";
 import { fetchHTML } from "@/common/util/fetch";
+import { withCache } from "@/common/util/withCache";
 
 /** ユーザープロファイルのページ(https://wsdmoodle.waseda.jp/user/profile.php)から取得されたユーザー情報 */
 export type UserProfile = {
@@ -28,7 +28,7 @@ export type UserProfile = {
 /**
  * ユーザープロファイルのページ(https://wsdmoodle.waseda.jp/user/profile.php)からユーザー情報を取得する
  */
-export const fetchUserProfile = cached("userProfile", 603, async () => {
+export const fetchUserProfile = withCache("userProfile", 603, async () => {
     await ensureLogin();
 
     const doc = await fetchHTML("https://wsdmoodle.waseda.jp/user/profile.php");
