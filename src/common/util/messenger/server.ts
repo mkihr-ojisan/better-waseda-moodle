@@ -6,6 +6,7 @@ import { getConstants } from "@/common/constants/constants";
 import { core_session_touch } from "@/common/api/moodle/touch";
 import { fetchMoodleTimeline } from "@/common/timeline/timeline";
 import { serializeError } from "@/common/error";
+import { setSessionKeyCache } from "@/common/auto-login/session-key-cache";
 
 assertExtensionContext("background");
 
@@ -23,6 +24,7 @@ export const messengerCommands = {
     core_session_touch,
     fetchMoodleTimeline,
     invalidateMoodleTimelineCache: fetchMoodleTimeline.invalidateCache,
+    setSessionKeyCache,
 } as const satisfies Record<string, (...args: any[]) => any>;
 
 /** `MessengerServer`を初期化する。バックグラウンドスクリプト上で実行する。 */
