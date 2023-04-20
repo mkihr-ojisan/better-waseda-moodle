@@ -7,7 +7,7 @@ document.title = browser.i18n.getMessage("auto_login_page_title");
 
 (async (): Promise<void> => {
     try {
-        await call("doAutoLogin");
+        await call("doAutoLogin", { skipCheck: true, skipSessionKey: true });
 
         const redirectUrl = new URLSearchParams(location.search).get("redirectUrl");
         location.replace(redirectUrl ?? "https://wsdmoodle.waseda.jp/");

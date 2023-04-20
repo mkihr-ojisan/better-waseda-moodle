@@ -1,4 +1,5 @@
 import { assertExtensionContext } from "./common/util/context";
+import { call } from "./common/util/messenger/client";
 
 assertExtensionContext(["content_script", "extension_page"]);
 
@@ -6,7 +7,16 @@ assertExtensionContext(["content_script", "extension_page"]);
 // A. エントリポイントが増えると、それぞれにReactなどのライブラリがバンドルされてクソデカ拡張機能になってしまうため
 // Q. Webpackのcode splittingを使えばいいじゃん
 // A. コンテンツスクリプト上ではWebpackのchunkをロードする機能が動かなくて……
-(() => {
+(async () => {
+    const sessionKey = document
+        .querySelector('a[href^="https://wsdmoodle.waseda.jp/login/logout.php?sesskey="]')
+        ?.getAttribute("href")
+        ?.match(/sesskey=(.*)$/)?.[1];
+    if (sessionKey) {
+        // セッションキーが要る機能もあると思うのでawaitする
+        await call("setSessionKeyCache", sessionKey);
+    }
+
     if (location.host === "wsdmoodle.waseda.jp") {
         if (location.pathname === "/my/" || location.pathname === "/my/index.php") {
             import("./dashboard/course-overview/course-overview");
