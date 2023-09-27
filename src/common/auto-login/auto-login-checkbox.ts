@@ -1,24 +1,29 @@
-import { ConfigKey, initConfig, setConfig } from "../config/config";
-
-initConfig();
+import { ConfigKey, getConfig, initConfig, setConfig } from "../config/config";
 
 const CHECKBOX_ID = "bwm-auto-login-checkbox";
 
-const observer = new MutationObserver((mutations) => {
-    // メールアドレス入力画面では0、パスワード入力画面では1になる
-    if (history.state === 1) {
-        for (const mutation of mutations) {
-            if (!(mutation.target instanceof HTMLElement)) continue;
-            if (mutation.target.id === "idSIButton9") {
-                addListenerToSignInButton(mutation.target);
-            } else if (mutation.target.classList.contains("boilerplate-button-bottom")) {
-                if (document.getElementById(CHECKBOX_ID)) return;
-                insertCheckbox(mutation.target);
+(async () => {
+    await initConfig();
+
+    // 自動ログインが無効の場合のみチェックボックスを挿入する
+    if (getConfig(ConfigKey.AutoLoginEnabled)) return;
+
+    const observer = new MutationObserver((mutations) => {
+        // メールアドレス入力画面では0、パスワード入力画面では1になる
+        if (history.state === 1) {
+            for (const mutation of mutations) {
+                if (!(mutation.target instanceof HTMLElement)) continue;
+                if (mutation.target.id === "idSIButton9") {
+                    addListenerToSignInButton(mutation.target);
+                } else if (mutation.target.classList.contains("boilerplate-button-bottom")) {
+                    if (document.getElementById(CHECKBOX_ID)) return;
+                    insertCheckbox(mutation.target);
+                }
             }
         }
-    }
-});
-observer.observe(document.body, { attributes: true, subtree: true });
+    });
+    observer.observe(document.body, { attributes: true, subtree: true });
+})();
 
 /**
  * 自動ログインを有効にするチェックボックスを挿入する
