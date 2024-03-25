@@ -1,4 +1,5 @@
 import { WithCache, concatWithCache } from "../util/withCache";
+import { CustomCourse } from "./provider/custom";
 import { MoodleCourse, moodleCourseProvider } from "./provider/moodle";
 
 export type Course<P extends string = string> = {
@@ -15,7 +16,7 @@ export type Course<P extends string = string> = {
     /** 非表示かどうか */
     readonly hidden: boolean;
     /** 追加情報 */
-    readonly extra: P extends "moodle" ? MoodleCourse : unknown;
+    readonly extra: P extends "moodle" ? MoodleCourse : P extends "custom" ? CustomCourse : unknown;
 };
 
 export interface CourseProvider {

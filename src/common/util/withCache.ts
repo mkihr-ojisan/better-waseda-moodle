@@ -118,3 +118,24 @@ export function concatWithCache<T>(withCaches: WithCache<readonly T[]>[]): WithC
 
     return func;
 }
+
+/**
+ * キャッシュを持たないWithCacheを返す
+ *
+ * @param f - 値を生成する関数
+ * @returns WithCache
+ */
+export function noopWithCache<T>(f: () => Promise<T>): WithCache<T> {
+    const func = async function* () {
+        yield await f();
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    func.invalidateCache = async () => {};
+
+    func.promise = f;
+
+    func.storage = undefined as IDBCacheStorage<T> | undefined;
+
+    return func;
+}

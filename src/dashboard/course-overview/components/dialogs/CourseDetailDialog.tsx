@@ -28,7 +28,7 @@ import { TimetableSettingsDialog } from "./TimetableSettingsDialog";
 import { getURLFromKey } from "@/common/api/waseda/syllabus";
 import { DEFAULT_COURSE_COLOR, getCourseColor } from "@/common/course/course-color";
 import { DateTimeFormat } from "@/common/util/intl";
-import { isMoodleCourse } from "@/common/course/isMoodleCourse";
+import { isMoodleCourse } from "@/common/course/course-provider-type-guard";
 
 export type CourseDetailDialogProps = {
     open: boolean;

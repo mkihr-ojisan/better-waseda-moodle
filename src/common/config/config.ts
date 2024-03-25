@@ -39,6 +39,8 @@ export enum ConfigKey {
     CourseOverviewAppearanceOptions = 28,
     /** コースのメモ */
     CourseNotes = 30,
+    /** ユーザーが追加したコース */
+    CustomCourses = 37,
 
     // ========小テスト========
     /** 小テストの残り時間を見やすくする機能が有効かどうか */
@@ -201,6 +203,16 @@ export const CONFIG_VALUE_TYPE_DEF = {
     [ConfigKey.CourseNotes]: {
         recordValues: "string",
     },
+    [ConfigKey.CustomCourses]: {
+        arrayElements: {
+            objectEntries: [
+                ["id", "string"],
+                ["name", "string"],
+                ["url", "string"],
+                ["hidden", "boolean"],
+            ],
+        },
+    },
     [ConfigKey.MoreVisibleRemainingTimeEnabled]: "boolean",
     [ConfigKey.RemindUnansweredQuestionsEnabled]: "boolean",
     [ConfigKey.RemindUnansweredQuestionsOnlySequentialQuiz]: "boolean",
@@ -258,6 +270,7 @@ export const CONFIG_DEFAULT_VALUES = {
         showCourseMenu: true,
     },
     [ConfigKey.CourseNotes]: {},
+    [ConfigKey.CustomCourses]: [],
     [ConfigKey.MoreVisibleRemainingTimeEnabled]: true,
     [ConfigKey.RemindUnansweredQuestionsEnabled]: true,
     [ConfigKey.RemindUnansweredQuestionsOnlySequentialQuiz]: true,
