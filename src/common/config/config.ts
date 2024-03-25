@@ -214,7 +214,7 @@ export const CONFIG_VALUE_TYPE_DEF = {
         arrayElements: "number",
     },
     [ConfigKey.TimelineHiddenCourses]: {
-        arrayElements: "number",
+        arrayElements: "string",
     },
     [ConfigKey.TimelineHiddenModuleNames]: {
         arrayElements: "string",

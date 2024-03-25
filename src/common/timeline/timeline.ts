@@ -42,7 +42,7 @@ export async function* fetchMoodleTimeline(includeHidden?: boolean): AsyncGenera
                     event.id &&
                     !hiddenEventIds.includes(event.id) &&
                     event.course?.id &&
-                    !hiddenCourses.includes(event.course.id) &&
+                    !hiddenCourses.includes(event.course.id.toString()) &&
                     event.modulename &&
                     !hiddenModuleNames.includes(event.modulename)
             );

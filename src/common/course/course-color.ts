@@ -1,5 +1,5 @@
 import { assertExtensionContext } from "../util/context";
-import { Course } from "./course";
+import { MoodleCourse } from "./provider/moodle";
 
 export const DEFAULT_COURSE_COLOR = "#808080";
 
@@ -10,7 +10,7 @@ export const DEFAULT_COURSE_COLOR = "#808080";
  * @param course - 色を取得する科目
  * @returns 色 (#RRGGBB)
  */
-export async function getCourseColor(course: Course): Promise<string> {
+export async function getCourseColor(course: MoodleCourse): Promise<string> {
     assertExtensionContext(["content_script", "extension_page"]); // DOM APIを使っているので
 
     if (!course.courseImageUrl) {
