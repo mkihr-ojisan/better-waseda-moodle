@@ -45,7 +45,7 @@ export const moodleCourseProvider: CourseProvider = {
     }),
 
     async setHidden(courseId, hidden) {
-        await set_block_myoverview_hidden_course(courseId, hidden);
+        await set_block_myoverview_hidden_course(parseInt(courseId), hidden);
 
         // キャッシュを更新する
         const cache = await moodleCourseProvider.getCourses.storage!.get("courses");
