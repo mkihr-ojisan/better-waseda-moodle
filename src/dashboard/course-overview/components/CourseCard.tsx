@@ -97,7 +97,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                 <div>
                     <Typography
                         component="a"
-                        href={props.course.moodleUrl}
+                        href={props.course.url}
                         sx={{
                             display: "-webkit-box",
                             WebkitLineClamp: courseTitleLineClamp,

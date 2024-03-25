@@ -67,7 +67,7 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
         if (!props.event.course?.id) return;
         await setConfig(ConfigKey.TimelineHiddenCourses, [
             ...getConfig(ConfigKey.TimelineHiddenCourses),
-            props.event.course.id,
+            props.event.course.id.toString(),
         ]);
         handleCloseMenu();
         props.reloadTimeline();

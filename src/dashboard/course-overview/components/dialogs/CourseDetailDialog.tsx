@@ -26,8 +26,9 @@ import { useCourseOverviewContext } from "../CourseOverview";
 import { unique } from "@/common/util/array";
 import { TimetableSettingsDialog } from "./TimetableSettingsDialog";
 import { getURLFromKey } from "@/common/api/waseda/syllabus";
-import { getCourseColor } from "@/common/course/course-color";
+import { DEFAULT_COURSE_COLOR, getCourseColor } from "@/common/course/course-color";
 import { DateTimeFormat } from "@/common/util/intl";
+import { isMoodleCourse } from "@/common/course/isMoodleCourse";
 
 export type CourseDetailDialogProps = {
     open: boolean;
@@ -94,7 +95,7 @@ const CourseDetailDialogContent: FC<CourseDetailDialogProps> = (props) => {
             } else {
                 const url = new URL(value);
                 const params = new URLSearchParams(url.search);
-                const pKey = params.get("pKey");
+                const pKey = params.get("pKey") ?? "";
                 setSyllabusKeys({
                     ...syllabusKeys,
                     [props.course.id]: pKey,
@@ -127,7 +128,7 @@ const CourseDetailDialogContent: FC<CourseDetailDialogProps> = (props) => {
             } else {
                 setDeliveryMethod({
                     ...deliveryMethod,
-                    [props.course.id]: event.target.value,
+                    [props.course.id]: event.target.value as "face_to_face" | "realtime_streaming" | "on_demand",
                 });
             }
         },
@@ -169,7 +170,11 @@ const CourseDetailDialogContent: FC<CourseDetailDialogProps> = (props) => {
 
     const handleResetColor = useCallback(async () => {
         const newColors = { ...colors };
-        newColors[props.course.id] = await getCourseColor(props.course);
+        if (isMoodleCourse(props.course)) {
+            newColors[props.course.id] = await getCourseColor(props.course.extra);
+        } else {
+            newColors[props.course.id] = DEFAULT_COURSE_COLOR;
+        }
         setColors(newColors);
     }, [colors, props.course, setColors]);
 
@@ -364,21 +369,6 @@ const CourseDetailDialogContent: FC<CourseDetailDialogProps> = (props) => {
                         </TableRow>
                         <TableRow>
                             <TableCell variant="head">
-                                {browser.i18n.getMessage("course_detail_dialog_image")}
-                            </TableCell>
-                            <TableCell>
-                                {props.course.courseImageUrl && (
-                                    <Box
-                                        component="img"
-                                        src={props.course.courseImageUrl}
-                                        alt={props.course.name}
-                                        sx={{ maxHeight: "8em" }}
-                                    />
-                                )}
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell variant="head">
                                 {browser.i18n.getMessage("course_detail_dialog_hidden")}
                             </TableCell>
                             <TableCell>
@@ -389,9 +379,7 @@ const CourseDetailDialogContent: FC<CourseDetailDialogProps> = (props) => {
                         </TableRow>
                         <TableRow>
                             <TableCell variant="head">{browser.i18n.getMessage("course_detail_dialog_id")}</TableCell>
-                            <TableCell>
-                                {props.course.id}, {props.course.wasedaId}
-                            </TableCell>
+                            <TableCell>{props.course.id}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>

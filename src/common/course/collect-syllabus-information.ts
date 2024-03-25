@@ -10,7 +10,7 @@ import { ConfigKey, ConfigValue, getConfig, setConfig } from "../config/config";
 import { assertExtensionContext } from "../util/context";
 import { sleep } from "../util/sleep";
 import { zenkaku2hankaku } from "../util/zenkaku";
-import { Course, fetchCourses } from "./course";
+import { MoodleCourse, fetchMoodleCourses } from "./provider/moodle";
 import { TimetableData, getTimetableData, mergeTimetableData, setTimetableData } from "./timetable";
 
 assertExtensionContext("background");
@@ -31,9 +31,9 @@ export type CollectSyllabusInformationProgress = {
 
 export type CollectSyllabusInformationResult = {
     /** 取得に成功した科目のリスト */
-    succeededCourses: Course[];
+    succeededCourses: MoodleCourse[];
     /** 取得に失敗した科目のリスト */
-    failedCourses: Course[];
+    failedCourses: MoodleCourse[];
 };
 
 /**
@@ -51,8 +51,7 @@ export async function* collectSyllabusInformation(
         message: browser.i18n.getMessage("collect_syllabus_information_progress_fetching_courses"),
     };
 
-    await fetchCourses.invalidateCache();
-    let courses = await fetchCourses.promise();
+    let courses = await fetchMoodleCourses();
     if (options?.onlyCoursesWithoutTimetableInfo) {
         const timetableData = getConfig(ConfigKey.TimetableData);
         courses = courses.filter((course) => {
@@ -68,8 +67,8 @@ export async function* collectSyllabusInformation(
 
     const language = browser.i18n.getUILanguage() === "ja" ? "jp" : "en";
 
-    const succeededCourses: Course[] = [];
-    const failedCourses: Course[] = [];
+    const succeededCourses: MoodleCourse[] = [];
+    const failedCourses: MoodleCourse[] = [];
     const syllabuses: Record<number, Syllabus> = {};
 
     courses: for (const [i, course] of courses.entries()) {

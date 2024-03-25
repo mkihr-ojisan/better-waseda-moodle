@@ -147,6 +147,12 @@ export async function migrateConfig(): Promise<void> {
         };
     }
 
+    if (compareVersion(configVersion, "0.7.0") < 0) {
+        newConfig[ConfigKey.TimelineHiddenCourses] = (
+            newConfig[ConfigKey.TimelineHiddenCourses] as number[] | undefined
+        )?.map((x) => x.toString());
+    }
+
     await browser.storage.local.clear();
     await browser.storage.sync.clear();
     const compressedNewConfig: Record<string, unknown> = {};

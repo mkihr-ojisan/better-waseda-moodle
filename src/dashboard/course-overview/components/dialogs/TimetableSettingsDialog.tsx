@@ -368,15 +368,15 @@ const TimetableSettingsDialogContent: FC<TimetableSettingsDialogProps> = (props)
  */
 function checkConflict(
     timetableData: Partial<Record<string, TimetableData>>,
-    courseId: number,
+    courseId: string,
     newTimetableData: TimetableData
-): { index: number; conflictWith: { courseId: number; index: number } }[] {
-    const conflicts: { index: number; conflictWith: { courseId: number; index: number } }[] = [];
+): { index: number; conflictWith: { courseId: string; index: number } }[] {
+    const conflicts: { index: number; conflictWith: { courseId: string; index: number } }[] = [];
 
     // 他の科目との重複をチェック
     for (const [index, entry] of newTimetableData.entries()) {
         for (const [otherCourseId, otherTimetableData] of Object.entries(timetableData)) {
-            if (parseInt(otherCourseId) === courseId) {
+            if (otherCourseId === courseId) {
                 continue;
             }
             for (const [otherIndex, otherEntry] of otherTimetableData?.entries() ?? []) {
@@ -390,7 +390,7 @@ function checkConflict(
                     conflicts.push({
                         index,
                         conflictWith: {
-                            courseId: parseInt(otherCourseId),
+                            courseId: otherCourseId,
                             index: otherIndex,
                         },
                     });

@@ -1,48 +1,33 @@
-import { decode } from "html-entities";
-import { core_course_get_enrolled_courses_by_timeline_classification } from "../api/moodle/courses";
-import { withCache } from "../util/withCache";
-import { set_block_myoverview_hidden_course } from "../api/moodle/user_prefs";
+import { WithCache, concatWithCache } from "../util/withCache";
+import { MoodleCourse, moodleCourseProvider } from "./provider/moodle";
 
-export type Course = {
-    /** Moodle上でのID */
-    readonly id: number;
-    /** シラバスとかに使われているっぽいID */
-    readonly wasedaId: string | undefined;
+export type Course<P extends string = string> = {
+    /** この科目を提供しているCourseProviderのid */
+    readonly provider: P;
+    /** 科目の識別子 */
+    readonly id: string;
     /** 科目名 */
-    readonly name: string | undefined;
+    readonly name?: string;
     /** 開講期間 */
-    readonly date: Interval | undefined;
-    /** MoodleのコースのURL */
-    readonly moodleUrl: string | undefined;
-    /** Moodleのコース画像 */
-    readonly courseImageUrl: string | undefined;
-    /** 開講年度 */
-    readonly year: number | undefined;
+    readonly date?: Interval;
+    /** この科目に関連付けられたURL */
+    readonly url?: string;
     /** 非表示かどうか */
     readonly hidden: boolean;
+    /** 追加情報 */
+    readonly extra: P extends "moodle" ? MoodleCourse : unknown;
 };
 
-/** 履修している科目のリストを取得する。このAsyncGeneratorはまずキャッシュをyieldし、その後取得したデータをyieldする。 */
-export const fetchCourses = withCache<readonly Course[]>("courses", 603, async () => {
-    const courses = (await core_course_get_enrolled_courses_by_timeline_classification()).map((c) => ({
-        id: c.id,
-        wasedaId: c.idnumber,
-        name: decode(c.fullname),
-        date:
-            typeof c.startdate === "number" && typeof c.enddate === "number"
-                ? {
-                      start: c.startdate * 1000,
-                      end: c.enddate * 1000,
-                  }
-                : undefined,
-        moodleUrl: c?.viewurl,
-        courseImageUrl: c?.courseimage,
-        year: parseInt(c?.coursecategory ?? "") || undefined,
-        hidden: c.hidden ?? false,
-    }));
+export interface CourseProvider {
+    id: string;
+    getCourses: WithCache<readonly Course[]>;
+    setHidden(courseId: number, hidden: boolean): Promise<void>;
+}
 
-    return courses;
-});
+const courseProviders = [moodleCourseProvider /*customCourseProvider*/];
+
+/** 科目のリストを取得する。このAsyncGeneratorはまずキャッシュをyieldし、その後取得したデータをyieldする。 */
+export const fetchCourses = concatWithCache<Course>(courseProviders.map((p) => p.getCourses));
 
 export type CourseWithSetHidden = Course & {
     /** 科目の非表示状態を変更する。このメソッドはキャッシュも更新する */
@@ -52,19 +37,13 @@ export type CourseWithSetHidden = Course & {
 /**
  * 指定した科目の非表示状態を変更する。
  *
- * @param courseId - 科目のID
- * @param hidden - 非表示にするかどうか
+ * @param course - 非表示状態を変更する科目
+ * @param course.provider - 非表示状態を変更する科目のCourseProvider
+ * @param course.id - 非表示状態を変更する科目の識別子
+ * @param hidden - 非表示かどうか
  */
-export async function setCourseHidden(courseId: number, hidden: boolean): Promise<void> {
-    await set_block_myoverview_hidden_course(courseId, hidden);
-
-    // キャッシュを更新する
-    const cache = await fetchCourses.storage.get("courses");
-    if (cache) {
-        await fetchCourses.storage.set(
-            "courses",
-            cache.value.map((c) => (c.id === courseId ? { ...c, hidden } : c)),
-            cache.timestamp
-        );
-    }
+export async function setCourseHidden(course: { provider: string; id: string }, hidden: boolean): Promise<void> {
+    const provider = courseProviders.find((p) => p.id === course.provider);
+    if (!provider) throw new Error(`Provider not found: ${course.provider}`);
+    await provider.setHidden(Number(course.id), hidden);
 }

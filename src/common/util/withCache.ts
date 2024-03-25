@@ -10,7 +10,7 @@ export type WithCacheOptions = {
 export type WithCache<T> = (() => AsyncGenerator<T>) & {
     invalidateCache: () => Promise<void>;
     promise: () => Promise<T>;
-    storage: IDBCacheStorage<T>;
+    storage: IDBCacheStorage<T> | undefined;
 };
 
 /**
@@ -71,6 +71,50 @@ export function withCache<T>(
     };
 
     func.storage = storage;
+
+    return func;
+}
+
+/**
+ * 配列を返すWithCacheの返り値を連結する
+ *
+ * @param withCaches - 連結するWithCache
+ * @returns 連結したWithCache
+ */
+export function concatWithCache<T>(withCaches: WithCache<readonly T[]>[]): WithCache<readonly T[]> {
+    const func = async function* () {
+        const generators = withCaches.map((w) => w());
+        const isFinished = new Array(withCaches.length).fill(false);
+        const values = new Array(withCaches.length);
+
+        const next = async (i: number) => {
+            const result = await generators[i].next();
+            if (result.done) {
+                isFinished[i] = true;
+                promises[i] = undefined;
+            } else {
+                values[i] = result.value;
+                promises[i] = next(i);
+            }
+        };
+
+        const promises: (Promise<void> | undefined)[] = generators.map((_, i) => next(i));
+
+        while (isFinished.some((v) => !v)) {
+            await Promise.race(promises.filter((p) => p !== undefined));
+            yield values.flat();
+        }
+    };
+
+    func.invalidateCache = async () => {
+        await Promise.all(withCaches.map((w) => w.invalidateCache()));
+    };
+
+    func.promise = async () => {
+        return (await Promise.all(withCaches.map((w) => w.promise()))).flat();
+    };
+
+    func.storage = undefined as IDBCacheStorage<T[]> | undefined;
 
     return func;
 }

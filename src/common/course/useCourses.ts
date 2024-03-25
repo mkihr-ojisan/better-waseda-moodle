@@ -5,6 +5,7 @@ import { CourseWithSetHidden } from "./course";
 import { ConfigKey, getConfig, setConfig } from "../config/config";
 import { getCourseColor } from "./course-color";
 import { useNotifyError } from "../react/notification";
+import { isMoodleCourse } from "./isMoodleCourse";
 
 export type UseCourses = {
     /** 科目のリスト */
@@ -21,7 +22,7 @@ export type UseCourses = {
 export function useCourses(): UseCourses {
     const { value: fetchedCourses, reload, error } = useAsyncGenerator(() => call("fetchCourses"), []);
 
-    const [hiddenOverrides, setHiddenOverrides] = useState<Record<number, boolean>>({});
+    const [hiddenOverrides, setHiddenOverrides] = useState<Record<string, boolean>>({});
 
     const courses: readonly CourseWithSetHidden[] | undefined = useMemo(() => {
         const courses = fetchedCourses?.map((c) => ({
@@ -29,7 +30,7 @@ export function useCourses(): UseCourses {
             hidden: hiddenOverrides[c.id] ?? c.hidden,
             setHidden: async (hidden: boolean) => {
                 setHiddenOverrides((overrides) => ({ ...overrides, [c.id]: hidden }));
-                await call("setCourseHidden", c.id, hidden);
+                await call("setCourseHidden", c, hidden);
             },
         }));
 
@@ -40,7 +41,8 @@ export function useCourses(): UseCourses {
                 let isChanged = false;
                 for (const course of courses) {
                     if (colors[course.id]) continue;
-                    colors[course.id] = await getCourseColor(course);
+                    if (!isMoodleCourse(course)) continue;
+                    colors[course.id] = await getCourseColor(course.extra);
                     isChanged = true;
                 }
                 if (isChanged) {
