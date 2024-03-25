@@ -20,7 +20,6 @@ let lastEnsureLogin: number | null = null;
  */
 export const doAutoLogin = combinePromise(
     synchronized(async (options?: LoginOptions) => {
-        console.time("login");
         const sessionKey = await login(
             {
                 get: () => {
@@ -31,7 +30,6 @@ export const doAutoLogin = combinePromise(
             },
             options
         );
-        console.timeEnd("login");
 
         if (sessionKey) setSessionKeyCache(sessionKey);
         lastEnsureLogin = Date.now();
