@@ -21,7 +21,7 @@ export type Course<P extends string = string> = {
 export interface CourseProvider {
     id: string;
     getCourses: WithCache<readonly Course[]>;
-    setHidden(courseId: number, hidden: boolean): Promise<void>;
+    setHidden(courseId: string, hidden: boolean): Promise<void>;
 }
 
 const courseProviders = [moodleCourseProvider /*customCourseProvider*/];
@@ -45,5 +45,5 @@ export type CourseWithSetHidden = Course & {
 export async function setCourseHidden(course: { provider: string; id: string }, hidden: boolean): Promise<void> {
     const provider = courseProviders.find((p) => p.id === course.provider);
     if (!provider) throw new Error(`Provider not found: ${course.provider}`);
-    await provider.setHidden(Number(course.id), hidden);
+    await provider.setHidden(course.id, hidden);
 }
