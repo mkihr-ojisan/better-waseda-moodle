@@ -5,7 +5,7 @@ import { CourseWithSetHidden } from "./course";
 import { ConfigKey, getConfig, setConfig } from "../config/config";
 import { getCourseColor } from "./course-color";
 import { useNotifyError } from "../react/notification";
-import { isMoodleCourse } from "./isMoodleCourse";
+import { isMoodleCourse } from "./course-provider-type-guard";
 
 export type UseCourses = {
     /** 科目のリスト */
