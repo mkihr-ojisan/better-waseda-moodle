@@ -5,6 +5,8 @@ import Refresh from "@mui/icons-material/Refresh";
 import { useCourseOverviewContext } from "./CourseOverview";
 import AutoAwesome from "@mui/icons-material/AutoAwesome";
 import { CollectCourseInformationDialog } from "./dialogs/CollectCourseInformationDialog";
+import { AddCustomCourseDialog } from "./dialogs/AddCustomCourseDialog";
+import AddIcon from "@mui/icons-material/Add";
 
 export const CourseOverviewMenu: FC = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -33,6 +35,15 @@ export const CourseOverviewMenu: FC = () => {
         setCollectCourseInformationDialogOpen(false);
     }, []);
 
+    const [addCustomCourseDialogOpen, setAddCustomCourseDialogOpen] = useState(false);
+    const handleAddCustomCourse = useCallback(() => {
+        setAddCustomCourseDialogOpen(true);
+        handleCloseMenu();
+    }, [handleCloseMenu]);
+    const handleCloseAddCustomCourseDialog = useCallback(() => {
+        setAddCustomCourseDialogOpen(false);
+    }, []);
+
     return (
         <>
             <IconButton size="large" onClick={handleOpenMenu}>
@@ -53,7 +64,7 @@ export const CourseOverviewMenu: FC = () => {
                     </ListItemIcon>
                     <ListItemText>{browser.i18n.getMessage("course_overview_show_hidden_courses")}</ListItemText>
                 </MenuItem>
-                <MenuItem onClick={context.reloadCourses}>
+                <MenuItem onClick={() => context.reloadCourses()}>
                     <ListItemIcon>
                         <Refresh />
                     </ListItemIcon>
@@ -65,12 +76,19 @@ export const CourseOverviewMenu: FC = () => {
                     </ListItemIcon>
                     <ListItemText>{browser.i18n.getMessage("course_overview_collect_course_information")}</ListItemText>
                 </MenuItem>
+                <MenuItem onClick={handleAddCustomCourse}>
+                    <ListItemIcon>
+                        <AddIcon />
+                    </ListItemIcon>
+                    <ListItemText>{browser.i18n.getMessage("course_overview_add_custom_course")}</ListItemText>
+                </MenuItem>
             </Menu>
 
             <CollectCourseInformationDialog
                 open={collectCourseInformationDialogOpen}
                 onClose={handleCloseCollectCourseInformationDialog}
             />
+            <AddCustomCourseDialog open={addCustomCourseDialogOpen} onClose={handleCloseAddCustomCourseDialog} />
         </>
     );
 };

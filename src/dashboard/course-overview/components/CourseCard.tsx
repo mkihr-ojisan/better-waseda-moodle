@@ -96,7 +96,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
             >
                 <div>
                     <Typography
-                        component="a"
+                        component={props.course.url ? "a" : "span"}
                         href={props.course.url}
                         sx={{
                             display: "-webkit-box",

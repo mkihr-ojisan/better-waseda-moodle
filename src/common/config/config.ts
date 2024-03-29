@@ -208,7 +208,7 @@ export const CONFIG_VALUE_TYPE_DEF = {
             objectEntries: [
                 ["id", "string"],
                 ["name", "string"],
-                ["url", "string"],
+                ["url", { nullable: "string" }],
                 ["hidden", "boolean"],
             ],
         },

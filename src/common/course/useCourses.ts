@@ -10,8 +10,8 @@ import { isMoodleCourse } from "./course-provider-type-guard";
 export type UseCourses = {
     /** 科目のリスト */
     courses: readonly CourseWithSetHidden[] | undefined;
-    /** キャッシュを削除し、科目リストを再読み込みする。 */
-    reloadCourses: () => void;
+    /** 科目リストを再読み込みする。 */
+    reloadCourses: (useCache?: boolean) => void;
 };
 
 /**
@@ -54,9 +54,15 @@ export function useCourses(): UseCourses {
         return courses;
     }, [fetchedCourses, hiddenOverrides]);
 
-    const reloadCourses = useCallback(() => {
-        call("invalidateCourseCache").then(reload);
-    }, [reload]);
+    const reloadCourses = useCallback(
+        (useCache?: boolean) => {
+            (async () => {
+                if (!useCache) await call("invalidateCourseCache");
+                reload();
+            })();
+        },
+        [reload]
+    );
 
     useNotifyError(error);
 

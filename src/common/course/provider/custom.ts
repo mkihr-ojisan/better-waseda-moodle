@@ -5,7 +5,7 @@ import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
 export type CustomCourse = {
     readonly id: string;
     readonly name: string;
-    readonly url: string;
+    readonly url: string | null;
     readonly hidden: boolean;
 };
 
@@ -18,7 +18,7 @@ export const customCourseProvider: CourseProvider = {
                 provider: "custom",
                 id: course.id,
                 name: course.name,
-                url: course.url,
+                url: course.url ?? undefined,
                 hidden: course.hidden,
                 extra: course,
             }))
@@ -32,3 +32,20 @@ export const customCourseProvider: CourseProvider = {
         await setConfig(ConfigKey.CustomCourses, courses);
     },
 };
+
+/**
+ * カスタム科目を追加する。
+ *
+ * @param course 追加するカスタム科目
+ */
+export function addCustomCourse(course: Omit<CustomCourse, "id">): void {
+    const courses = getConfig(ConfigKey.CustomCourses);
+
+    const id = Math.max(0, ...courses.map((c) => parseInt(c.id.replace(/^custom-/, ""), 10))) + 1;
+    courses.push({
+        id: `custom-${id}`,
+        ...course,
+    });
+
+    setConfig(ConfigKey.CustomCourses, courses);
+}
