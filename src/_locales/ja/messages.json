@@ -565,6 +565,10 @@
         "message": "科目情報を自動取得",
         "description": "コース概要のメニューに表示するメッセージ"
     },
+    "course_overview_add_custom_course": {
+        "message": "科目を追加",
+        "description": "コース概要のメニューに表示するメッセージ"
+    },
     "course_overview_no_timetable_data_tip": {
         "message": "時間割が設定されていないため、時間割表が表示されていません。各科目のメニューから手動で設定するか、右上のメニューの「科目情報を自動取得」で自動取得してください。",
         "description": "コース概要に表示するメッセージ"
@@ -890,5 +894,21 @@
     "timeline_empty": {
         "message": "イベントはありません",
         "description": "タイムラインに表示するメッセージ"
+    },
+    "add_custom_course_dialog_title": {
+        "message": "科目を追加",
+        "description": "カスタム科目追加ダイアログのタイトル"
+    },
+    "add_custom_course_dialog_course_name": {
+        "message": "科目名",
+        "description": "カスタム科目追加ダイアログに表示するメッセージ"
+    },
+    "add_custom_course_dialog_course_url": {
+        "message": "URL",
+        "description": "カスタム科目追加ダイアログに表示するメッセージ"
+    },
+    "add_custom_course_dialog_course_name_button_add": {
+        "message": "追加",
+        "description": "カスタム科目追加ダイアログに表示するメッセージ"
     }
 }

@@ -84,25 +84,38 @@ export function withCache<T>(
 export function concatWithCache<T>(withCaches: WithCache<readonly T[]>[]): WithCache<readonly T[]> {
     const func = async function* () {
         const generators = withCaches.map((w) => w());
-        const isFinished = new Array(withCaches.length).fill(false);
         const values = new Array(withCaches.length);
+        const yielded = new Array(withCaches.length).fill(false);
 
-        const next = async (i: number) => {
-            const result = await generators[i].next();
-            if (result.done) {
-                isFinished[i] = true;
+        const nextFn = async (i: number) => ({
+            i,
+            next: await generators[i].next(),
+        });
+
+        const promises: (
+            | Promise<{
+                  i: number;
+                  next: IteratorResult<readonly T[]>;
+              }>
+            | undefined
+        )[] = generators.map((_, i) => nextFn(i));
+
+        while (promises.some((v) => !!v)) {
+            const { i, next } = await Promise.race(
+                promises.filter((p): p is Promise<{ i: number; next: IteratorResult<readonly T[]> }> => !!p)
+            );
+
+            if (next.done) {
                 promises[i] = undefined;
             } else {
-                values[i] = result.value;
-                promises[i] = next(i);
+                values[i] = next.value;
+                promises[i] = nextFn(i);
+                yielded[i] = true;
+
+                if (yielded.every((v) => v)) {
+                    yield values.flat();
+                }
             }
-        };
-
-        const promises: (Promise<void> | undefined)[] = generators.map((_, i) => next(i));
-
-        while (isFinished.some((v) => !v)) {
-            await Promise.race(promises.filter((p) => p !== undefined));
-            yield values.flat();
         }
     };
 

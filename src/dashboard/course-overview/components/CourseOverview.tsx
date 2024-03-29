@@ -15,7 +15,7 @@ export const CourseOverviewContext = createContext<
     | {
           showHiddenCourses: boolean;
           setShowHiddenCourses: (showHiddenCourses: boolean) => void;
-          reloadCourses: () => void;
+          reloadCourses: (useCache?: boolean) => void;
           selectedYearTerm: YearTerm | null;
           timetableData: Partial<Record<string, TimetableData>>;
       }
@@ -67,7 +67,8 @@ export const CourseOverview: FC = () => {
             // 年度・学期が選択されている場合は、Moodle上でコースに設定されている期間から年度・学期を計算し、それが一致する科目を表示する
             const selectedYearTermInterval = selectedYearTerm.toApproximateInterval();
             coursesNotInTimetable = visibleCourses?.filter((course) => {
-                if (!course.date || (timetableData[course.id]?.length ?? 0) > 0) return false;
+                if (!course.date) return true; // 期間が設定されていないコースは常に表示する
+                if ((timetableData[course.id]?.length ?? 0) > 0) return false; // 時間割表に登録されているコースは表示しない
                 const courseInterval = course.date;
                 return areIntervalsOverlapping(selectedYearTermInterval, courseInterval);
             });

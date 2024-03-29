@@ -1,5 +1,5 @@
 import { WithCache, concatWithCache } from "../util/withCache";
-import { CustomCourse } from "./provider/custom";
+import { CustomCourse, customCourseProvider } from "./provider/custom";
 import { MoodleCourse, moodleCourseProvider } from "./provider/moodle";
 
 export type Course<P extends string = string> = {
@@ -25,7 +25,7 @@ export interface CourseProvider {
     setHidden(courseId: string, hidden: boolean): Promise<void>;
 }
 
-const courseProviders = [moodleCourseProvider /*customCourseProvider*/];
+const courseProviders = [moodleCourseProvider, customCourseProvider];
 
 /** 科目のリストを取得する。このAsyncGeneratorはまずキャッシュをyieldし、その後取得したデータをyieldする。 */
 export const fetchCourses = concatWithCache<Course>(courseProviders.map((p) => p.getCourses));
