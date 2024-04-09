@@ -23,6 +23,7 @@ import { initLauncher } from "./launcher/background";
 import { initAssignmentFilename } from "./assignment-filename/background";
 import { initAddSyllabusToTimetable } from "./add-syllabus-to-timetable/background";
 import { DayOfWeek, Term, getTimetableData, setTimetableData } from "./common/course/timetable";
+import { callMoodleMobileAPI, getWebServiceToken } from "./common/api/moodle/mobileAPI";
 
 assertExtensionContext("background");
 
@@ -71,5 +72,7 @@ function debug() {
         DayOfWeek,
         getTimetableData,
         setTimetableData,
+        getWebServiceToken,
+        callMoodleMobileAPI,
     });
 }
