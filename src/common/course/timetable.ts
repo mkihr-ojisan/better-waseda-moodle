@@ -470,11 +470,11 @@ export function setTimetableData(timetableData: Partial<Record<string, Timetable
 export function checkTimetableConflict(timetableData: Partial<Record<string, TimetableData>>): boolean {
     for (const [a_id, a_t] of Object.entries(timetableData)) {
         if (!a_t) continue;
-        for (const a_tt of a_t) {
+        for (const [a_ti, a_tt] of a_t.entries()) {
             for (const [b_id, b_t] of Object.entries(timetableData)) {
-                if (a_id === b_id) continue;
                 if (!b_t) continue;
-                for (const b_tt of b_t) {
+                for (const [b_ti, b_tt] of b_t.entries()) {
+                    if (a_id === b_id && a_ti === b_ti) continue;
                     if (
                         a_tt.year === b_tt.year &&
                         (a_tt.term.contains(b_tt.term) || b_tt.term.contains(a_tt.term)) &&
