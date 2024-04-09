@@ -143,6 +143,10 @@
         "message": "閉じる",
         "description": "閉じるボタンのテキスト"
     },
+    "continue": {
+        "message": "続行",
+        "description": "続行ボタンのテキスト"
+    },
     "version": {
         "message": "バージョン $version$",
         "description": "バージョン",
@@ -705,6 +709,10 @@
         "message": "他の科目と重複しています。",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
+    "course_settings_dialog_delete": {
+        "message": "この科目を削除",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
     "course_settings_dialog_set": {
         "message": "設定",
         "description": "科目設定ダイアログに表示するメッセージ"
@@ -715,6 +723,10 @@
     },
     "course_settings_dialog_error_invalid_syllabus_url": {
         "message": "シラバスのURLが正しくありません。",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_confirm_delete_message": {
+        "message": "本当に科目「$1」を削除しますか？",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_title": {

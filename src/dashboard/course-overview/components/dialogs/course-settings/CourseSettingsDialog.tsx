@@ -1,16 +1,17 @@
 import { Course } from "@/common/course/course";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tab } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tab } from "@mui/material";
 import React, { FC, useState } from "react";
 import { TabGeneral, TabGeneralValues } from "./TabGeneral";
 import { useConfig } from "@/common/config/useConfig";
 import { ConfigKey } from "@/common/config/config";
 import { getURLFromKey } from "@/common/api/waseda/syllabus";
-import { isMoodleCourse } from "@/common/course/course-provider-type-guard";
+import { isCustomCourse, isMoodleCourse } from "@/common/course/course-provider-type-guard";
 import { usePromise } from "@/common/react/hooks/usePromise";
 import { DEFAULT_COURSE_COLOR, getCourseColor } from "@/common/course/course-color";
 import { TabTimetable } from "./TabTimetable";
 import { checkTimetableConflict, getTimetableData, setTimetableData } from "@/common/course/timetable";
+import { call } from "@/common/util/messenger/client";
 
 export type CourseSettingsDialogProps = {
     open: boolean;
@@ -102,6 +103,12 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
         onClose();
     };
 
+    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+    const handleConfirmDelete = async () => {
+        await call("deleteCustomCourse", course.id);
+        onClose();
+    };
+
     return (
         <>
             <DialogTitle>{browser.i18n.getMessage("course_settings_dialog_title", course.name)}</DialogTitle>
@@ -127,6 +134,14 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
                 </TabPanel>
             </TabContext>
             <DialogActions>
+                {isCustomCourse(course) && (
+                    <Button onClick={() => setConfirmDeleteOpen(true)} color="primary">
+                        {browser.i18n.getMessage("course_settings_dialog_delete")}
+                    </Button>
+                )}
+
+                <Box flexGrow={1} />
+
                 <Button onClick={onClose} color="primary">
                     {browser.i18n.getMessage("cancel")}
                 </Button>
@@ -142,6 +157,22 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
                 <DialogActions>
                     <Button onClick={() => setErrorDialogOpen(false)} color="primary">
                         {browser.i18n.getMessage("close")}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={confirmDeleteOpen} onClose={() => setConfirmDeleteOpen(false)}>
+                <DialogContent>
+                    <DialogContentText>
+                        {browser.i18n.getMessage("course_settings_dialog_confirm_delete_message", course.name)}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setConfirmDeleteOpen(false)} color="primary">
+                        {browser.i18n.getMessage("cancel")}
+                    </Button>
+                    <Button onClick={handleConfirmDelete} color="primary">
+                        {browser.i18n.getMessage("continue")}
                     </Button>
                 </DialogActions>
             </Dialog>
