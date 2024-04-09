@@ -2,16 +2,14 @@ import { CourseWithSetHidden } from "@/common/course/course";
 import MoreVert from "@mui/icons-material/MoreVert";
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
-import { TimetableSettingsDialog } from "./dialogs/TimetableSettingsDialog";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import { CourseDetailDialog } from "./dialogs/CourseDetailDialog";
-import DescriptionIcon from "@mui/icons-material/Description";
 import { useConfig } from "@/common/config/useConfig";
 import { ConfigKey } from "@/common/config/config";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { getURLFromKey } from "@/common/api/waseda/syllabus";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { CourseSettingsDialog } from "./dialogs/course-settings/CourseSettingsDialog";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 export type CourseCardMenuProps = {
     course: CourseWithSetHidden;
@@ -34,22 +32,13 @@ export const CourseCardMenu: FC<CourseCardMenuProps> = (props) => {
         handleCloseMenu();
     }, [syllabusKey, handleCloseMenu]);
 
-    const [timetableSettingsDialogOpen, setTimetableSettingsDialogOpen] = useState(false);
-    const handleOpenTimetableSettingsDialog = useCallback(() => {
-        setTimetableSettingsDialogOpen(true);
+    const [courseSettingsDialogOpen, setCourseSettingsDialogOpen] = useState(false);
+    const handleOpenCourseSettingsDialog = useCallback(() => {
+        setCourseSettingsDialogOpen(true);
         handleCloseMenu();
     }, [handleCloseMenu]);
-    const handleCloseTimetableSettingsDialog = useCallback(() => {
-        setTimetableSettingsDialogOpen(false);
-    }, []);
-
-    const [courseDetailDialogOpen, setCourseDetailDialogOpen] = useState(false);
-    const handleOpenCourseDetailDialog = useCallback(() => {
-        setCourseDetailDialogOpen(true);
-        handleCloseMenu();
-    }, [handleCloseMenu]);
-    const handleCloseCourseDetailDialog = useCallback(() => {
-        setCourseDetailDialogOpen(false);
+    const handleCloseCourseSettingsDialog = useCallback(() => {
+        setCourseSettingsDialogOpen(false);
     }, []);
 
     const handleHideCourse = useCallback(() => {
@@ -91,29 +80,17 @@ export const CourseCardMenu: FC<CourseCardMenuProps> = (props) => {
                         <ListItemText>{browser.i18n.getMessage("course_overview_hide_course")}</ListItemText>
                     </MenuItem>
                 )}
-                <MenuItem onClick={handleOpenTimetableSettingsDialog}>
+                <MenuItem onClick={handleOpenCourseSettingsDialog}>
                     <ListItemIcon>
-                        <CalendarMonthIcon />
+                        <SettingsIcon />
                     </ListItemIcon>
-                    <ListItemText>{browser.i18n.getMessage("course_overview_timetable_settings")}</ListItemText>
-                </MenuItem>
-                <MenuItem onClick={handleOpenCourseDetailDialog}>
-                    <ListItemIcon>
-                        <DescriptionIcon />
-                    </ListItemIcon>
-                    <ListItemText>{browser.i18n.getMessage("course_overview_course_detail")}</ListItemText>
+                    <ListItemText>{browser.i18n.getMessage("course_overview_course_settings")}</ListItemText>
                 </MenuItem>
             </Menu>
 
-            <TimetableSettingsDialog
-                open={timetableSettingsDialogOpen}
-                onClose={handleCloseTimetableSettingsDialog}
-                course={props.course}
-            />
-
-            <CourseDetailDialog
-                open={courseDetailDialogOpen}
-                onClose={handleCloseCourseDetailDialog}
+            <CourseSettingsDialog
+                open={courseSettingsDialogOpen}
+                onClose={handleCloseCourseSettingsDialog}
                 course={props.course}
             />
         </>
