@@ -125,7 +125,10 @@ export const TabGeneral: FC<TabGeneralProps> = ({ value, setValue, defaultName, 
                     horizontal: "left",
                 }}
             >
-                <SketchPicker color={value.color} onChange={(color) => setValue({ ...value, color: color.hex })} />
+                <SketchPicker
+                    color={value.color ?? DEFAULT_COURSE_COLOR}
+                    onChange={(color) => setValue({ ...value, color: color.hex })}
+                />
             </Popover>
 
             <TextField
