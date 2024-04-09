@@ -24,6 +24,7 @@ import { initAssignmentFilename } from "./assignment-filename/background";
 import { initAddSyllabusToTimetable } from "./add-syllabus-to-timetable/background";
 import { DayOfWeek, Term, getTimetableData, setTimetableData } from "./common/course/timetable";
 import { callMoodleMobileAPI, getWebServiceToken } from "./common/api/moodle/mobileAPI";
+import { initBlockTracking } from "./block-tracking/background";
 
 assertExtensionContext("background");
 
@@ -45,6 +46,7 @@ assertExtensionContext("background");
     initLauncher();
     initAssignmentFilename();
     initAddSyllabusToTimetable();
+    initBlockTracking();
 
     if (process.env.NODE_ENV === "development") {
         debug();
