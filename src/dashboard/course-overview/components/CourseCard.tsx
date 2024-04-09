@@ -33,7 +33,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
     const courseName = courseNameOverride ?? props.course.name;
 
     const classroom = useMemo(() => {
-        if (props.classroom) return props.classroom;
+        if (props.classroom !== undefined) return props.classroom;
         const timetable = context.timetableData[props.course.id];
         if (!timetable) return undefined;
         return unique(timetable.map((t) => t.classroom)).join(", ");
@@ -125,7 +125,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                 display: "flex",
                                 alignItems: "center",
                             }}
-                            title={classroom || browser.i18n.getMessage("course_overview_course_face_to_face")}
+                            title={classroom ? browser.i18n.getMessage("course_overview_course_face_to_face") + " " + classroom : browser.i18n.getMessage("course_overview_course_face_to_face")}
                         >
                             <PeopleAltIcon />
                             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
