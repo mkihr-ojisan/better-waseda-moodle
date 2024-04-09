@@ -45,14 +45,21 @@ function useDarkReaderColor(): { bgR: number; bgG: number; bgB: number; fgR: num
     return useMemo(() => {
         if (!bgColor || !fgColor) return null;
 
-        const [bgR, bgG, bgB] = bgColor
-            .substring(4, bgColor.length - 1)
-            .split(",")
-            .map((s) => parseInt(s.trim()));
-        const [fgR, fgG, fgB] = fgColor
-            .substring(4, fgColor.length - 1)
-            .split(",")
-            .map((s) => parseInt(s.trim()));
+        const bg = bgColor.split(/[(),]/).filter((s) => !!s);
+        const fg = fgColor.split(/[(),]/).filter((s) => !!s);
+
+        let bgR, bgG, bgB, fgR, fgG, fgB;
+        if (bg[0] === "rbg") {
+            [bgR, bgG, bgB] = bg.slice(1).map((s) => parseInt(s));
+        } else {
+            return null;
+        }
+
+        if (fg[0] === "rbg") {
+            [fgR, fgG, fgB] = fg.slice(1).map((s) => parseInt(s));
+        } else {
+            return null;
+        }
 
         return { bgR, bgG, bgB, fgR, fgG, fgB };
     }, [bgColor, fgColor]);
