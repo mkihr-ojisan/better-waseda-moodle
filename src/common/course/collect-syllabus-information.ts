@@ -1,15 +1,15 @@
 import {
     Syllabus,
-    SyllabusClassModalityCategory,
     fetchOldSyllabusSearchYearList,
     fetchSyllabus,
+    getCourseDeliveryMethodFromSyllabus,
+    getTimetableDataFromSyllabus,
     searchOldSyllabus,
     searchSyllabus,
 } from "../api/waseda/syllabus";
 import { ConfigKey, ConfigValue, getConfig, setConfig } from "../config/config";
 import { assertExtensionContext } from "../util/context";
 import { sleep } from "../util/sleep";
-import { zenkaku2hankaku } from "../util/zenkaku";
 import { MoodleCourse, fetchMoodleCourses } from "./provider/moodle";
 import { TimetableData, getTimetableData, mergeTimetableData, setTimetableData } from "./timetable";
 
@@ -148,46 +148,16 @@ export async function* collectSyllabusInformation(
     const newCourseSyllabusKeys: Record<string, ConfigValue<ConfigKey.CourseSyllabusKeys>[string]> = {};
     const newCourseDeliveryMethods: Record<string, ConfigValue<ConfigKey.CourseDeliveryMethods>[string]> = {};
     for (const [courseId, syllabus] of Object.entries(syllabuses)) {
-        if (
-            syllabus.courseInformation.dayPeriods &&
-            syllabus.courseInformation.dayPeriods.length > 0 &&
-            syllabus.courseInformation.year &&
-            syllabus.courseInformation.term
-        ) {
-            const year = syllabus.courseInformation.year;
-            const term = syllabus.courseInformation.term;
-
-            newTimetableData[courseId] = syllabus.courseInformation.dayPeriods.map((dayPeriod, i) => ({
-                year,
-                term,
-                day: dayPeriod.day,
-                period: dayPeriod.period,
-                classroom: zenkaku2hankaku(syllabus.courseInformation.classroom?.[i] ?? "")
-                    .replace(/教室$/, "")
-                    .replace(/室$/, ""),
-            }));
+        const timetableData = getTimetableDataFromSyllabus(syllabus);
+        if (timetableData) {
+            newTimetableData[courseId] = timetableData;
         }
+
         newCourseSyllabusKeys[courseId] = syllabus.key;
 
-        switch (syllabus.courseInformation.classModalityCategories) {
-            case SyllabusClassModalityCategory.OnCampus:
-            case SyllabusClassModalityCategory.OnCampusHybridOver50Percent:
-            case SyllabusClassModalityCategory.OnlineHybridUnder50Percent:
-            case SyllabusClassModalityCategory.EmergencyHybrid:
-            case SyllabusClassModalityCategory.Hybrid:
-                newCourseDeliveryMethods[courseId] = "face_to_face";
-                break;
-            case SyllabusClassModalityCategory.OnlineFullOnDemand:
-            case SyllabusClassModalityCategory.EmergencyFullOnDemand:
-            case SyllabusClassModalityCategory.FullOnDemand:
-            case SyllabusClassModalityCategory.OnDemand:
-                newCourseDeliveryMethods[courseId] = "on_demand";
-                break;
-            case SyllabusClassModalityCategory.OnlineRealtimeStreaming:
-            case SyllabusClassModalityCategory.EmergencyRealtimeStreaming:
-            case SyllabusClassModalityCategory.RealtimeStreaming:
-                newCourseDeliveryMethods[courseId] = "realtime_streaming";
-                break;
+        const classDeliveryMethod = getCourseDeliveryMethodFromSyllabus(syllabus);
+        if (classDeliveryMethod) {
+            newCourseDeliveryMethods[courseId] = classDeliveryMethod;
         }
     }
 

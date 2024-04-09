@@ -30,3 +30,20 @@ export function useConfig<T extends ConfigKey>(key: T): [ConfigValue<T>, (value:
 
     return [value, setConfigValue];
 }
+
+/**
+ * 指定したキーのconfigの変更を検知し、変化する値を返す。
+ *
+ * @param key - 監視するconfigのキー
+ * @returns configの値が変更された回数
+ */
+export function useConfigChangeSignal<T extends ConfigKey>(key: T): number {
+    const [value, setValue] = useState(0);
+    useEffect(() => {
+        const listener = () => setValue((v) => v + 1);
+        addOnConfigChangeListener(key, listener);
+        return () => removeOnConfigChangeListener(key, listener);
+    }, [key]);
+
+    return value;
+}

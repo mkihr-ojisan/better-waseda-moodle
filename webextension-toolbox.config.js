@@ -90,6 +90,7 @@ module.exports = {
                 "src/assignment-filename/content.ts",
                 "src/assignment-filename/inject.ts",
                 "src/common/auto-login/auto-login-checkbox.ts",
+                "src/add-syllabus-to-timetable/content.tsx",
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })

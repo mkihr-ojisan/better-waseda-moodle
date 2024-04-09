@@ -21,6 +21,7 @@ import { initTimeline } from "./popup/background";
 import { initAutoSessionExtension } from "./auto-session-extension/background";
 import { initLauncher } from "./launcher/background";
 import { initAssignmentFilename } from "./assignment-filename/background";
+import { initAddSyllabusToTimetable } from "./add-syllabus-to-timetable/background";
 
 assertExtensionContext("background");
 
@@ -41,6 +42,7 @@ assertExtensionContext("background");
     initAutoSessionExtension();
     initLauncher();
     initAssignmentFilename();
+    initAddSyllabusToTimetable();
 
     if (process.env.NODE_ENV === "development") {
         debug();

@@ -17,11 +17,11 @@ export type TypeOfTypeDef<T extends TypeDef> = T extends "string"
     : T extends { readonly objectEntries: readonly (readonly [string, TypeDef])[] }
     ? ObjectEntries<T["objectEntries"]>
     : T extends { readonly arrayElements: TypeDef }
-    ? TypeOfTypeDef<T["arrayElements"]>[]
+    ? readonly TypeOfTypeDef<T["arrayElements"]>[]
     : T extends { readonly enumItems: readonly string[] }
     ? T["enumItems"][number]
     : T extends { readonly recordValues: TypeDef }
-    ? Partial<Record<string, TypeOfTypeDef<T["recordValues"]>>>
+    ? Readonly<Partial<Record<string, TypeOfTypeDef<T["recordValues"]>>>>
     : T extends { readonly nullable: TypeDef }
     ? TypeOfTypeDef<T["nullable"]> | null
     : never;

@@ -10,7 +10,7 @@ export type UseAsyncGenerator<T> = {
     /** `AsyncGenerator`が例外をスローした場合、そのエラー */
     error: unknown;
     /** `AsyncGenerator`を再度呼び出す */
-    reload: () => void;
+    reload: (noRemoveCurrentValue?: boolean) => void;
 };
 
 /**
@@ -55,11 +55,15 @@ export function useAsyncGenerator<T>(
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [...deps, refreshSignal]);
 
-    const reload = useCallback(() => {
+    const reload = useCallback((noRemoveCurrentValue?: boolean) => {
         setRefreshSignal((s) => s + 1);
-        setState("pending");
-        setValue(undefined);
-        setError(undefined);
+        if (noRemoveCurrentValue) {
+            setState("yielded");
+        } else {
+            setState("pending");
+            setValue(undefined);
+            setError(undefined);
+        }
     }, []);
 
     return { state, value, error, reload };

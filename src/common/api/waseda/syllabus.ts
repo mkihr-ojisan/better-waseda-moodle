@@ -1,6 +1,7 @@
-import { DayOfWeek, Term } from "@/common/course/timetable";
+import { DayOfWeek, Term, TimetableData } from "@/common/course/timetable";
 import { InvalidResponseError } from "@/common/error";
 import { fetchHTML, postMultipartFormData } from "@/common/util/fetch";
+import { zenkaku2hankaku } from "@/common/util/zenkaku";
 
 /** シラバスの検索クエリ */
 export type SyllabusSearchQuery = {
@@ -492,6 +493,17 @@ export type Syllabus = {
  */
 export async function fetchSyllabus(key: string, language: "jp" | "en"): Promise<Syllabus> {
     const doc = await fetchHTML(`https://www.wsl.waseda.jp/syllabus/JAA104.php?pKey=${key}&pLng=${language}`);
+    return parseSyllabus(key, doc);
+}
+
+/**
+ * シラバスのHTMLからシラバス情報を取得する。
+ *
+ * @param key - シラバスのキー
+ * @param doc - シラバスのHTML
+ * @returns シラバス
+ */
+export function parseSyllabus(key: string, doc: Document): Syllabus {
     const courseInfoTable = doc.getElementsByClassName("ct-common")[0];
 
     const courseInformation: Syllabus["courseInformation"] = {};
@@ -765,4 +777,60 @@ export function getURLFromKey(key: string, language?: "jp" | "en"): string {
         url += `&pLng=${language}`;
     }
     return url;
+}
+
+/**
+ * シラバスから時間割データを取得する
+ *
+ * @param syllabus - シラバス
+ * @returns 時間割データ
+ */
+export function getTimetableDataFromSyllabus(syllabus: Syllabus): TimetableData | undefined {
+    if (
+        syllabus.courseInformation.dayPeriods &&
+        syllabus.courseInformation.dayPeriods.length > 0 &&
+        syllabus.courseInformation.year &&
+        syllabus.courseInformation.term
+    ) {
+        const year = syllabus.courseInformation.year;
+        const term = syllabus.courseInformation.term;
+
+        return syllabus.courseInformation.dayPeriods.map((dayPeriod, i) => ({
+            year,
+            term,
+            day: dayPeriod.day,
+            period: dayPeriod.period,
+            classroom: zenkaku2hankaku(syllabus.courseInformation.classroom?.[i] ?? "")
+                .replace(/教室$/, "")
+                .replace(/室$/, ""),
+        }));
+    }
+}
+
+/**
+ * シラバスから授業方法を取得する
+ *
+ * @param syllabus - シラバス
+ * @returns 授業方法
+ */
+export function getCourseDeliveryMethodFromSyllabus(
+    syllabus: Syllabus
+): "face_to_face" | "realtime_streaming" | "on_demand" | undefined {
+    switch (syllabus.courseInformation.classModalityCategories) {
+        case SyllabusClassModalityCategory.OnCampus:
+        case SyllabusClassModalityCategory.OnCampusHybridOver50Percent:
+        case SyllabusClassModalityCategory.OnlineHybridUnder50Percent:
+        case SyllabusClassModalityCategory.EmergencyHybrid:
+        case SyllabusClassModalityCategory.Hybrid:
+            return "face_to_face";
+        case SyllabusClassModalityCategory.OnlineFullOnDemand:
+        case SyllabusClassModalityCategory.EmergencyFullOnDemand:
+        case SyllabusClassModalityCategory.FullOnDemand:
+        case SyllabusClassModalityCategory.OnDemand:
+            return "on_demand";
+        case SyllabusClassModalityCategory.OnlineRealtimeStreaming:
+        case SyllabusClassModalityCategory.EmergencyRealtimeStreaming:
+        case SyllabusClassModalityCategory.RealtimeStreaming:
+            return "realtime_streaming";
+    }
 }

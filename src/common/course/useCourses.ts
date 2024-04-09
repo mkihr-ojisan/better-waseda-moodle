@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAsyncGenerator } from "../react/hooks/useAsyncGenerator";
 import { call } from "../util/messenger/client";
 import { CourseWithSetHidden } from "./course";
@@ -6,6 +6,7 @@ import { ConfigKey, getConfig, setConfig } from "../config/config";
 import { getCourseColor } from "./course-color";
 import { useNotifyError } from "../react/notification";
 import { isMoodleCourse } from "./course-provider-type-guard";
+import { useConfigChangeSignal } from "../config/useConfig";
 
 export type UseCourses = {
     /** 科目のリスト */
@@ -58,13 +59,18 @@ export function useCourses(): UseCourses {
         (useCache?: boolean) => {
             (async () => {
                 if (!useCache) await call("invalidateCourseCache");
-                reload();
+                reload(useCache);
             })();
         },
         [reload]
     );
 
     useNotifyError(error);
+
+    const customCourseChangeSignal = useConfigChangeSignal(ConfigKey.CustomCourses);
+    useEffect(() => {
+        reloadCourses(true);
+    }, [customCourseChangeSignal, reloadCourses]);
 
     return { courses, reloadCourses };
 }
