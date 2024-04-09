@@ -1,4 +1,4 @@
-import { Alert, AlertColor, AlertTitle, Snackbar } from "@mui/material";
+import { Alert, AlertColor, AlertTitle, Snackbar, SnackbarCloseReason } from "@mui/material";
 import React, { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
 import { errorToString } from "../error";
 
@@ -19,7 +19,10 @@ export const NotificationContextProvider: FC<NotificationContextProviderProps> =
     const [notification, setNotification] = useState<Notification>();
     const [open, setOpen] = useState(false);
 
-    const handleClose = useCallback(() => {
+    const handleClose = useCallback((_: unknown, reason: SnackbarCloseReason) => {
+        if (reason === "clickaway") {
+            return;
+        }
         setOpen(false);
     }, []);
 
