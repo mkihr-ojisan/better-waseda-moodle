@@ -915,6 +915,10 @@
         "message": "この科目を時間割表に追加",
         "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
     },
+    "add_syllabus_to_timetable_button_adding": {
+        "message": "追加しています…",
+        "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
+    },
     "add_syllabus_to_timetable_button_added": {
         "message": "追加しました",
         "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
@@ -922,5 +926,13 @@
     "add_syllabus_to_timetable_button_already_added": {
         "message": "時間割表に追加済み",
         "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
+    },
+    "add_syllabus_to_timetable_conflict_dialog_message": {
+        "message": "この時間帯には既に他の科目が登録されています。このまま追加しますか？",
+        "description": "時間割表に追加しようとしたときに他の科目と時間が重複しているときに表示するメッセージ"
+    },
+    "add_syllabus_to_timetable_conflict_dialog_continue": {
+        "message": "このまま追加",
+        "description": "時間割表に追加しようとしたときに他の科目と時間が重複しているときに表示するメッセージ"
     }
 }
