@@ -135,6 +135,14 @@
         "message": "キャンセル",
         "description": "キャンセルボタンのテキスト"
     },
+    "set_default": {
+        "message": "デフォルトに戻す",
+        "description": "デフォルトに戻すボタンのテキスト"
+    },
+    "close": {
+        "message": "閉じる",
+        "description": "閉じるボタンのテキスト"
+    },
     "version": {
         "message": "バージョン $version$",
         "description": "バージョン",
@@ -601,88 +609,12 @@
         "message": "非表示",
         "description": "科目のメニューに表示するメッセージ"
     },
-    "course_overview_timetable_settings": {
-        "message": "時間割の設定",
-        "description": "科目のメニューに表示するメッセージ"
-    },
-    "course_overview_course_detail": {
-        "message": "詳細",
-        "description": "科目のメニューに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_title": {
-        "message": "「$course_name$」の時間割設定",
-        "description": "時間割の設定ダイアログのタイトル",
-        "placeholders": {
-            "course_name": {
-                "content": "$1",
-                "example": "Communication Strategies 2"
-            }
-        }
-    },
-    "course_overview_timetable_settings_description": {
-        "message": "時間割の設定を行います。",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_header_year": {
-        "message": "年度",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_header_term": {
-        "message": "学期",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_header_day": {
-        "message": "曜日",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_header_period_start": {
-        "message": "開始時限",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_header_period_end": {
-        "message": "終了時限",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_header_classroom": {
-        "message": "教室",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_header_delete_entry": {
-        "message": "削除",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_add_entry": {
-        "message": "項目を追加",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_no_entries": {
-        "message": "時間割の設定はありません",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_conflict_with_nth_entry": {
-        "message": "$nth$番目の項目と重複しています。",
-        "description": "時間割の設定ダイアログに表示するメッセージ",
-        "placeholders": {
-            "nth": {
-                "content": "$1",
-                "example": "1"
-            }
-        }
-    },
-    "course_overview_timetable_settings_conflict_with_other_course": {
-        "message": "他の科目と重複しています。",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_overview_timetable_settings_save_button": {
+    "course_overview_course_settings": {
         "message": "設定",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
+        "description": "科目のメニューに表示するメッセージ"
     },
-    "course_overview_timetable_settings_cancel_button": {
-        "message": "キャンセル",
-        "description": "時間割の設定ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_title": {
-        "message": "「$course_name$」の詳細",
+    "course_settings_dialog_title": {
+        "message": "「$course_name$」の設定",
         "description": "科目詳細ダイアログのタイトル",
         "placeholders": {
             "course_name": {
@@ -691,77 +623,99 @@
             }
         }
     },
-    "course_detail_dialog_course_name": {
+    "course_settings_dialog_general_tab": {
+        "message": "一般",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_timetable_tab": {
+        "message": "時間割",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_general_course_name": {
         "message": "科目名",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_classroom": {
-        "message": "教室",
-        "description": "科目詳細ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_streaming_url": {
+    "course_settings_dialog_general_streaming_url": {
         "message": "配信URL",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_color": {
+    "course_settings_dialog_general_color": {
         "message": "色",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_note": {
+    "course_settings_dialog_general_note": {
         "message": "メモ",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_date": {
-        "message": "開講期間",
-        "description": "科目詳細ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_image": {
-        "message": "画像",
-        "description": "科目詳細ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_hidden": {
-        "message": "非表示",
-        "description": "科目詳細ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_hidden_true": {
-        "message": "はい",
-        "description": "科目詳細ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_hidden_false": {
-        "message": "いいえ",
-        "description": "科目詳細ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_id": {
-        "message": "ID",
-        "description": "科目詳細ダイアログに表示するメッセージ"
-    },
-    "course_detail_dialog_syllabus": {
+    "course_settings_dialog_general_syllabus": {
         "message": "シラバス",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_delivery_method": {
+    "course_settings_dialog_general_delivery_method": {
         "message": "授業方式",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_edit": {
-        "message": "編集",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+    "course_settings_dialog_timetable_header_year": {
+        "message": "年度",
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_save": {
-        "message": "保存",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+    "course_settings_dialog_timetable_header_term": {
+        "message": "学期",
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_cancel": {
-        "message": "キャンセル",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+    "course_settings_dialog_timetable_header_day": {
+        "message": "曜日",
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_set_default": {
-        "message": "デフォルトに戻す",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+    "course_settings_dialog_timetable_header_period_start": {
+        "message": "開始時限",
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
-    "course_detail_dialog_unspecified": {
-        "message": "指定なし",
-        "description": "科目詳細ダイアログに表示するメッセージ"
+    "course_settings_dialog_timetable_header_period_end": {
+        "message": "終了時限",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_timetable_header_classroom": {
+        "message": "教室",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_timetable_header_delete_entry": {
+        "message": "削除",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_timetable_add_entry": {
+        "message": "項目を追加",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_timetable_no_entries": {
+        "message": "時間割の設定はありません",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_timetable_conflict_with_nth_entry": {
+        "message": "$nth$番目の項目と重複しています。",
+        "description": "科目設定ダイアログに表示するメッセージ",
+        "placeholders": {
+            "nth": {
+                "content": "$1",
+                "example": "1"
+            }
+        }
+    },
+    "course_settings_dialog_timetable_conflict_with_other_course": {
+        "message": "他の科目と重複しています。",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_set": {
+        "message": "設定",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_error_timetable_conflict": {
+        "message": "時間割が重複しているため設定できません。",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_error_invalid_syllabus_url": {
+        "message": "シラバスのURLが正しくありません。",
+        "description": "科目設定ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_title": {
         "message": "科目情報の自動取得",
