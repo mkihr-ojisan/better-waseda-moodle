@@ -49,6 +49,19 @@ export const TimelineEventIcon: FC<TimelineEventIconProps> = (props) => {
         }
     }, [props.event.purpose, theme.palette.mode]);
 
+    const invert = useMemo(() => {
+        if (theme.palette.mode === "light") {
+            return false;
+        }
+        if (props.event.purpose === "none") {
+            return false;
+        }
+        if (props.event.icon?.component === "questionnaire") {
+            return false;
+        }
+        return true;
+    }, [props.event.icon?.component, props.event.purpose, theme.palette.mode]);
+
     return (
         <Box
             component="div"
@@ -67,7 +80,7 @@ export const TimelineEventIcon: FC<TimelineEventIconProps> = (props) => {
                     sx={{
                         width: "100%",
                         height: "100%",
-                        filter: props.event.purpose !== "none" ? "invert(1)" : "none",
+                        filter: invert ? "invert(1)" : "none",
                     }}
                 />
             ) : (
