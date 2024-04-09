@@ -438,6 +438,11 @@ export function getTimetableData(): Partial<Record<string, TimetableData>> {
  * @param timetableData - 時間割情報
  */
 export function setTimetableData(timetableData: Partial<Record<string, TimetableData>>): void {
+    // 重複がないかチェック
+    if (checkTimetableConflict(timetableData)) {
+        throw new Error("Timetable conflict");
+    }
+
     const value = Object.fromEntries(
         Object.entries(timetableData).map(([id, data]) => [
             id,
@@ -454,6 +459,36 @@ export function setTimetableData(timetableData: Partial<Record<string, Timetable
         ])
     );
     setConfig(ConfigKey.TimetableData, value);
+}
+
+/**
+ * 時間割情報に重複があるかどうかをチェックする。
+ *
+ * @param timetableData - 時間割情報
+ * @returns 重複がある場合は `true`、そうでない場合は `false`
+ */
+export function checkTimetableConflict(timetableData: Partial<Record<string, TimetableData>>): boolean {
+    for (const [a_id, a_t] of Object.entries(timetableData)) {
+        if (!a_t) continue;
+        for (const a_tt of a_t) {
+            for (const [b_id, b_t] of Object.entries(timetableData)) {
+                if (a_id === b_id) continue;
+                if (!b_t) continue;
+                for (const b_tt of b_t) {
+                    if (
+                        a_tt.year === b_tt.year &&
+                        (a_tt.term.contains(b_tt.term) || b_tt.term.contains(a_tt.term)) &&
+                        a_tt.day === b_tt.day &&
+                        a_tt.period.from <= b_tt.period.toInclusive &&
+                        b_tt.period.from <= a_tt.period.toInclusive
+                    ) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    return false;
 }
 
 /**

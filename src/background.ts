@@ -22,6 +22,7 @@ import { initAutoSessionExtension } from "./auto-session-extension/background";
 import { initLauncher } from "./launcher/background";
 import { initAssignmentFilename } from "./assignment-filename/background";
 import { initAddSyllabusToTimetable } from "./add-syllabus-to-timetable/background";
+import { DayOfWeek, Term, getTimetableData, setTimetableData } from "./common/course/timetable";
 
 assertExtensionContext("background");
 
@@ -66,5 +67,9 @@ function debug() {
         getCourseColor,
         getConstants,
         core_calendar_get_action_events_by_timesort,
+        Term,
+        DayOfWeek,
+        getTimetableData,
+        setTimetableData,
     });
 }
