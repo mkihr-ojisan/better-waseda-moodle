@@ -910,5 +910,17 @@
     "add_custom_course_dialog_course_name_button_add": {
         "message": "追加",
         "description": "カスタム科目追加ダイアログに表示するメッセージ"
+    },
+    "add_syllabus_to_timetable_button_not_added": {
+        "message": "この科目を時間割表に追加",
+        "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
+    },
+    "add_syllabus_to_timetable_button_added": {
+        "message": "追加しました",
+        "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
+    },
+    "add_syllabus_to_timetable_button_already_added": {
+        "message": "時間割表に追加済み",
+        "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
     }
 }

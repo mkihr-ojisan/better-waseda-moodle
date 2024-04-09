@@ -37,15 +37,14 @@ export const customCourseProvider: CourseProvider = {
  * カスタム科目を追加する。
  *
  * @param course 追加するカスタム科目
+ * @returns 追加したカスタム科目のID
  */
-export function addCustomCourse(course: Omit<CustomCourse, "id">): void {
+export async function addCustomCourse(course: Omit<CustomCourse, "id">): Promise<string> {
     const courses = getConfig(ConfigKey.CustomCourses);
 
-    const id = Math.max(0, ...courses.map((c) => parseInt(c.id.replace(/^custom-/, ""), 10))) + 1;
-    courses.push({
-        id: `custom-${id}`,
-        ...course,
-    });
+    const id = "custom-" + (Math.max(0, ...courses.map((c) => parseInt(c.id.replace(/^custom-/, ""), 10))) + 1);
 
-    setConfig(ConfigKey.CustomCourses, courses);
+    await setConfig(ConfigKey.CustomCourses, [...courses, { id, ...course }]);
+
+    return id;
 }
