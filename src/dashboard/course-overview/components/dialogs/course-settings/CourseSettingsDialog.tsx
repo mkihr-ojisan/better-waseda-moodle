@@ -26,7 +26,7 @@ export const CourseSettingsDialog: FC<CourseSettingsDialogProps> = (props) => {
     };
 
     return (
-        <Dialog open={props.open} onClose={handleClose} maxWidth={false} PaperProps={{ style: { width: 750 } }}>
+        <Dialog open={props.open} onClose={handleClose} maxWidth={false}>
             <CourseSettingsDialogContent {...props} />
         </Dialog>
     );
@@ -117,21 +117,23 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
                     <Tab label={browser.i18n.getMessage("course_settings_dialog_general_tab")} value="general" />
                     <Tab label={browser.i18n.getMessage("course_settings_dialog_timetable_tab")} value="timetable" />
                 </TabList>
-                <TabPanel value="general">
-                    <TabGeneral
-                        defaultName={course.name}
-                        value={generalValues}
-                        setValue={setGeneralValues}
-                        defaultColor={defaultColor}
-                    />
-                </TabPanel>
-                <TabPanel value="timetable">
-                    <TabTimetable
-                        timetableData={newTimetableData}
-                        setTimetableData={setNewTimetableData}
-                        courseId={course.id}
-                    />
-                </TabPanel>
+                <div style={{ width: 750, height: 450, overflow: "scroll" }}>
+                    <TabPanel value="general">
+                        <TabGeneral
+                            defaultName={course.name}
+                            value={generalValues}
+                            setValue={setGeneralValues}
+                            defaultColor={defaultColor}
+                        />
+                    </TabPanel>
+                    <TabPanel value="timetable">
+                        <TabTimetable
+                            timetableData={newTimetableData}
+                            setTimetableData={setNewTimetableData}
+                            courseId={course.id}
+                        />
+                    </TabPanel>
+                </div>
             </TabContext>
             <DialogActions>
                 {isCustomCourse(course) && (
