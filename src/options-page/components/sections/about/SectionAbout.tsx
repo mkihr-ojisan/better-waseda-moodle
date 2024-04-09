@@ -1,14 +1,27 @@
-import { Box, Divider, List, Typography } from "@mui/material";
-import { OptionsPageSection } from "../../OptionsPage";
+import { Box, ButtonBase, Divider, List, Typography } from "@mui/material";
+import { OptionsPageSection, useOptionsPageContext } from "../../OptionsPage";
 import InfoIcon from "@mui/icons-material/Info";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "../../items/Link";
+import { useNotify } from "@/common/react/notification";
 
 export default {
     id: "about",
     title: "options_page_section_about_title",
     Icon: InfoIcon,
     Component: () => {
+        const context = useOptionsPageContext();
+        const notify = useNotify();
+
+        const [clickCount, setClickCount] = useState(0);
+        const handleClickVersion = () => {
+            setClickCount(clickCount + 1);
+            if (clickCount === 10 && !context.devMode) {
+                context.setDevMode(true);
+                notify({ message: "Dev mode enabled.", type: "info" });
+            }
+        };
+
         return (
             <Box sx={{ textAlign: "center" }}>
                 <Box py={3}>
@@ -16,9 +29,9 @@ export default {
                 </Box>
                 <Box pb={3}>
                     <Typography variant="h6">{browser.i18n.getMessage("extension_name")}</Typography>
-                    <Typography variant="caption" color="text.secondary" component="div">
+                    <ButtonBase sx={{ padding: 0, color: "text.secondary" }} onClick={handleClickVersion}>
                         {browser.i18n.getMessage("version", browser.runtime.getManifest().version)}
-                    </Typography>
+                    </ButtonBase>
                 </Box>
                 <Box pb={3} px={3}>
                     <Typography variant="body2" color="text.secondary" component="div" sx={{ textAlign: "initial" }}>

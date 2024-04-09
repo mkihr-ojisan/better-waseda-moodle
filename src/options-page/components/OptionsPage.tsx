@@ -42,6 +42,8 @@ const OptionsPageContext = createContext<
           userSelectedSection: string | null;
           setUserSelectedSection: (section: string | null) => void;
           setCurrentSection: (section: string) => void;
+          devMode: boolean;
+          setDevMode: (devMode: boolean) => void;
       }
     | undefined
 >(undefined);
@@ -51,6 +53,8 @@ export const OptionsPage: FC = () => {
     const [currentSection, setCurrentSection] = useState(sections[0].id);
     const [userSelectedSection, setUserSelectedSection] = useState<string | null>(null);
 
+    const [devMode, setDevMode] = useState(process.env.NODE_ENV === "development");
+
     const context = useMemo(
         () => ({
             drawerOpen,
@@ -59,8 +63,10 @@ export const OptionsPage: FC = () => {
             userSelectedSection,
             setCurrentSection,
             setUserSelectedSection,
+            devMode,
+            setDevMode,
         }),
-        [drawerOpen, currentSection, userSelectedSection]
+        [drawerOpen, currentSection, userSelectedSection, devMode]
     );
 
     return (
