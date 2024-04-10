@@ -1,9 +1,10 @@
-import React, { FC, createContext, useState } from "react";
+import React, { FC, createContext, useEffect, useState } from "react";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import * as styles from "./MoodleAPIClient.module.css";
 import { RequestPanel } from "./RequestPanel";
 import { call } from "@/common/util/messenger/client";
 import { ResponsePanel } from "./ResponsePanel";
+import { useNotify } from "@/common/react/notification";
 
 export type MoodleAPIClientContextValue = {
     endpoint: Endpoint;
@@ -22,6 +23,8 @@ export type Endpoint = "webservice" | "ajax";
 export const MoodleAPIClientContext = createContext<MoodleAPIClientContextValue | null>(null);
 
 export const MoodleAPIClient: FC = () => {
+    const notify = useNotify();
+
     const [endpoint, setEndpoint] = useState<Endpoint>("webservice");
     const [functionName, setFunctionName] = useState<string>("");
     const [args, setArgs] = useState<string>("{\n\n}");
@@ -60,6 +63,25 @@ export const MoodleAPIClient: FC = () => {
         result,
         error,
     };
+
+    // 選択されたテキストが日付っぽい場合はその日付を通知する
+    useEffect(() => {
+        const listener = () => {
+            const selection = document.getSelection()?.toString() ?? "";
+            const num = parseInt(selection);
+            if (isNaN(num)) return;
+            const date = new Date(num * 1000);
+            if (date.getFullYear() > 2000 && date.getFullYear() < 3000) {
+                notify({ message: date.toLocaleString(), type: "info" });
+            }
+        };
+
+        document.addEventListener("selectionchange", listener);
+
+        return () => {
+            document.removeEventListener("selectionchange", listener);
+        };
+    }, [notify]);
 
     return (
         <MoodleAPIClientContext.Provider value={context}>
