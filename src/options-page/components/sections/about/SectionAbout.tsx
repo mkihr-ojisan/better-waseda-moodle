@@ -57,6 +57,11 @@ export default {
                                 }
                             />
                             <Divider />
+                            <Launch
+                                text="Config Editor"
+                                onClick={() => window.open(browser.runtime.getURL("/config-editor/config-editor.html"))}
+                            />
+                            <Divider />
                         </DevModeOnly>
                     </List>
                 </Box>

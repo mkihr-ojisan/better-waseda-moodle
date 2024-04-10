@@ -121,6 +121,7 @@ module.exports = {
                 "src/common/auto-login/auto-login-checkbox.ts",
                 "src/add-syllabus-to-timetable/content.tsx",
                 "src/moodle-api-client/moodle-api-client.tsx",
+                "src/config-editor/config-editor.tsx",
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })
