@@ -9,6 +9,9 @@ import { serializeError } from "@/common/error";
 import { setSessionKeyCache } from "@/common/auto-login/session-key-cache";
 import { fetchMoodleCourses } from "@/common/course/provider/moodle";
 import { addCustomCourse, deleteCustomCourse } from "@/common/course/provider/custom";
+import { core_webservice_get_site_info } from "@/common/api/moodle/core_webservice";
+import { callMoodleAPI } from "@/common/api/moodle/moodle";
+import { callMoodleMobileAPI } from "@/common/api/moodle/mobileAPI";
 
 assertExtensionContext("background");
 
@@ -30,6 +33,9 @@ export const messengerCommands = {
     fetchMoodleCourses,
     addCustomCourse,
     deleteCustomCourse,
+    core_webservice_get_site_info,
+    callMoodleAPI,
+    callMoodleMobileAPI,
 } as const satisfies Record<string, (...args: any[]) => any>;
 
 /** `MessengerServer`を初期化する。バックグラウンドスクリプト上で実行する。 */

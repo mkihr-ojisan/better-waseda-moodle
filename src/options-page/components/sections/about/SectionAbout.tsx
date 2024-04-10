@@ -4,6 +4,8 @@ import InfoIcon from "@mui/icons-material/Info";
 import React, { useState } from "react";
 import { Link } from "../../items/Link";
 import { useNotify } from "@/common/react/notification";
+import { DevModeOnly } from "../../items/DevMode";
+import { Launch } from "../../items/Launch";
 
 export default {
     id: "about",
@@ -46,6 +48,16 @@ export default {
                             href="https://github.com/mkihr-ojisan/better-waseda-moodle"
                         />
                         <Divider />
+
+                        <DevModeOnly>
+                            <Launch
+                                text="Moodle API Client"
+                                onClick={() =>
+                                    window.open(browser.runtime.getURL("/moodle-api-client/moodle-api-client.html"))
+                                }
+                            />
+                            <Divider />
+                        </DevModeOnly>
                     </List>
                 </Box>
             </Box>
