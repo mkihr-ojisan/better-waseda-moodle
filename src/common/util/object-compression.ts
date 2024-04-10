@@ -44,21 +44,32 @@ type ObjectEntries<T extends readonly (readonly [string, TypeDef])[]> = T extend
 export function compressObject<T extends TypeDef>(typeDef: T, obj: TypeOfTypeDef<T>): unknown {
     if (typeDef === "string") {
         // @ts-expect-error - Type instantiation is excessively deep and possibly infinite.
+        if (typeof obj !== "string") throw Error("invalid obj");
         return obj;
     } else if (typeDef === "number") {
+        if (typeof obj !== "number") throw Error("invalid obj");
         return obj;
     } else if (typeDef === "boolean") {
+        if (typeof obj !== "boolean") throw Error("invalid obj");
         return obj ? 1 : 0;
     } else if (typeof typeDef === "object") {
         if ("objectEntries" in typeDef) {
+            if (typeof obj !== "object" || !obj || !typeDef.objectEntries.every(([key]) => key in obj))
+                throw Error("invalid obj");
             return typeDef.objectEntries.map(([key, typeDef]) => compressObject(typeDef, (obj as any)[key]));
         } else if ("arrayElements" in typeDef) {
+            if (!Array.isArray(obj)) throw Error("invalid obj");
             return (obj as any[]).map((item) => compressObject(typeDef.arrayElements, item));
         } else if ("enumItems" in typeDef) {
+            if (!typeDef.enumItems.includes(obj as any)) throw Error("invalid obj");
             return typeDef.enumItems.indexOf(obj as any);
         } else if ("recordValues" in typeDef) {
-            return Object.entries(obj as any).map(([key, value]) => [key, compressObject(typeDef.recordValues, value)]);
+            if (typeof obj !== "object" || !obj) throw Error("invalid obj");
+            return Object.entries(obj)
+                .filter(([, value]) => value !== undefined)
+                .map(([key, value]) => [key, compressObject(typeDef.recordValues, value)]);
         } else if ("nullable" in typeDef) {
+            if (obj === undefined) throw Error("invalid obj");
             return obj === null ? null : compressObject(typeDef.nullable, obj);
         }
     }
