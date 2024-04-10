@@ -47,6 +47,35 @@ module.exports = {
             })
         );
 
+        // CSS
+        config.module.rules.push({
+            test: /\.css$/i,
+            exclude: /\.module\.css$/i,
+            use: [
+                "style-loader",
+                {
+                    loader: "css-loader",
+                    options: {
+                        importLoaders: 1,
+                    },
+                },
+            ],
+        });
+
+        // CSS Modules
+        config.module.rules.push({
+            test: /\.module\.css$/i,
+            use: [
+                "style-loader",
+                {
+                    loader: "css-loader",
+                    options: {
+                        modules: true,
+                    },
+                },
+            ],
+        });
+
         if (dev) {
             config.devtool = "inline-source-map";
             // config.plugins.push(new ESLintPlugin({ extensions: ["ts", "tsx", "js", "jsx"] }));
@@ -91,6 +120,7 @@ module.exports = {
                 "src/assignment-filename/inject.ts",
                 "src/common/auto-login/auto-login-checkbox.ts",
                 "src/add-syllabus-to-timetable/content.tsx",
+                "src/moodle-api-client/moodle-api-client.tsx",
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })
