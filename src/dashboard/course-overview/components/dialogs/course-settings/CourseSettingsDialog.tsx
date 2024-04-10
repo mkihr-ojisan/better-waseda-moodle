@@ -4,7 +4,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, D
 import React, { FC, useState } from "react";
 import { TabGeneral, TabGeneralValues } from "./TabGeneral";
 import { useConfig } from "@/common/config/useConfig";
-import { ConfigKey } from "@/common/config/config";
+import { ConfigKey, getConfig } from "@/common/config/config";
 import { getURLFromKey } from "@/common/api/waseda/syllabus";
 import { isCustomCourse, isMoodleCourse } from "@/common/course/course-provider-type-guard";
 import { usePromise } from "@/common/react/hooks/usePromise";
@@ -41,6 +41,9 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
     const [colors, setColors] = useConfig(ConfigKey.CourseColor);
     const [notes, setNotes] = useConfig(ConfigKey.CourseNotes);
     const [nameOverrides, setNameOverrides] = useConfig(ConfigKey.CourseNameOverrides);
+    const [assignmentFilenameTemplates, setAssignmentFilenameTemplates] = useConfig(
+        ConfigKey.AssignmentFilenameTemplateCourse
+    );
     const [generalValues, setGeneralValues] = useState<TabGeneralValues>(() => {
         const syllabusKey = syllabusKeys[course.id];
         return {
@@ -50,6 +53,8 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
             streamingURL: streamingURLs[course.id] ?? "",
             color: colors[course.id],
             note: notes[course.id] ?? "",
+            assignmentFilenameTemplate:
+                assignmentFilenameTemplates[course.id] ?? getConfig(ConfigKey.AssignmentFilenameTemplate),
         };
     });
 
@@ -101,6 +106,13 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
         });
         setColors({ ...colors, [course.id]: generalValues.color || undefined });
         setNotes({ ...notes, [course.id]: generalValues.note || undefined });
+        setAssignmentFilenameTemplates({
+            ...assignmentFilenameTemplates,
+            [course.id]:
+                generalValues.assignmentFilenameTemplate === getConfig(ConfigKey.AssignmentFilenameTemplate)
+                    ? undefined
+                    : generalValues.assignmentFilenameTemplate,
+        });
         setTimetableData(mergedTimetableData);
 
         onClose();

@@ -7,19 +7,19 @@ window.addEventListener("DOMContentLoaded", () => {
     const promise = (async () => {
         await initConfig();
 
-        const template = getConfig(ConfigKey.AssignmentFilenameTemplate);
-
         const courseLink = document.querySelector(
             '.breadcrumb a[href^="https://wsdmoodle.waseda.jp/course/view.php?id="]'
         ) as HTMLAnchorElement | null;
 
         const courseId = new URL(courseLink?.href ?? "").searchParams.get("id");
+        if (!courseId) throw new Error("Failed to get course ID");
+
+        const template =
+            getConfig(ConfigKey.AssignmentFilenameTemplateCourse)[courseId] ??
+            getConfig(ConfigKey.AssignmentFilenameTemplate);
 
         // 上書きされた科目名、または元の科目名
-        let course;
-        if (courseId) {
-            course = getConfig(ConfigKey.CourseNameOverrides)[courseId] ?? courseLink?.title;
-        }
+        const course = getConfig(ConfigKey.CourseNameOverrides)[courseId] ?? courseLink?.title;
 
         return {
             template,

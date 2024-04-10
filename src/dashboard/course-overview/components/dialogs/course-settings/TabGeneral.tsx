@@ -12,6 +12,8 @@ import React, { FC, useRef, useState } from "react";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { SketchPicker } from "react-color";
 import { DEFAULT_COURSE_COLOR } from "@/common/course/course-color";
+import { useConfig } from "@/common/config/useConfig";
+import { ConfigKey, getConfig } from "@/common/config/config";
 
 export type TabGeneralProps = {
     value: TabGeneralValues;
@@ -27,11 +29,14 @@ export type TabGeneralValues = {
     streamingURL: string;
     color: string | undefined;
     note: string;
+    assignmentFilenameTemplate: string;
 };
 
 export const TabGeneral: FC<TabGeneralProps> = ({ value, setValue, defaultName, defaultColor }) => {
     const [colorPickerOpen, setColorPickerOpen] = useState(false);
     const colorPickerAnchor = useRef<HTMLDivElement>(null);
+
+    const [assignmentFilenameEnabled] = useConfig(ConfigKey.AssignmentFilenameEnabled);
 
     return (
         <>
@@ -130,6 +135,28 @@ export const TabGeneral: FC<TabGeneralProps> = ({ value, setValue, defaultName, 
                     onChange={(color) => setValue({ ...value, color: color.hex })}
                 />
             </Popover>
+
+            {assignmentFilenameEnabled && (
+                <TextField
+                    label={browser.i18n.getMessage("course_settings_dialog_filename_template")}
+                    fullWidth
+                    margin="dense"
+                    value={value.assignmentFilenameTemplate}
+                    onChange={(e) => setValue({ ...value, assignmentFilenameTemplate: e.target.value })}
+                    InputProps={{
+                        endAdornment: (
+                            <SetToDefaultButton
+                                onClick={() =>
+                                    setValue({
+                                        ...value,
+                                        assignmentFilenameTemplate: getConfig(ConfigKey.AssignmentFilenameTemplate),
+                                    })
+                                }
+                            />
+                        ),
+                    }}
+                />
+            )}
 
             <TextField
                 label={browser.i18n.getMessage("course_settings_dialog_general_note")}
