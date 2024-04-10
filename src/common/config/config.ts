@@ -93,6 +93,8 @@ export enum ConfigKey {
     AssignmentFilenameEnabled = 35,
     /** 課題提出時にファイル名を自動的に変更する機能で使用するファイル名のパターン */
     AssignmentFilenameTemplate = 36,
+    /** 課題提出時にファイル名を自動的に変更する機能で使用するファイル名のパターン(科目ごと) */
+    AssignmentFilenameTemplateCourse = 39,
     /** IntelliBoardのトラッキングをブロックする */
     BlockTracking = 38,
 }
@@ -243,6 +245,9 @@ export const CONFIG_VALUE_TYPE_DEF = {
     [ConfigKey.AutoSessionExtensionEnabled]: "boolean",
     [ConfigKey.AssignmentFilenameEnabled]: "boolean",
     [ConfigKey.AssignmentFilenameTemplate]: "string",
+    [ConfigKey.AssignmentFilenameTemplateCourse]: {
+        recordValues: "string",
+    },
     [ConfigKey.BlockTracking]: "boolean",
 } as const satisfies Record<ConfigKey, TypeDef>;
 
@@ -296,6 +301,7 @@ export const CONFIG_DEFAULT_VALUES = {
     [ConfigKey.AutoSessionExtensionEnabled]: true,
     [ConfigKey.AssignmentFilenameEnabled]: false,
     [ConfigKey.AssignmentFilenameTemplate]: "1X999999_早稲田太郎_{course}_{assignment}{extension}",
+    [ConfigKey.AssignmentFilenameTemplateCourse]: {},
     [ConfigKey.BlockTracking]: false,
 } satisfies { [K in ConfigKey]: ConfigValue<K> };
 

@@ -506,7 +506,7 @@
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_assignment_filename_enabled_description": {
-        "message": "課題提出ページでファイルをアップロードしたときに、ファイル名を指定した形式に変更します。ファイル名の形式中の以下の文字列は、それぞれ以下のように置換されます。\n- `{course}`: 科目名\n- `{assignment}`: 課題名\n- `{filename}`: 拡張子を除いたファイル名\n- `{extension}`: ピリオドを含む拡張子",
+        "message": "課題提出ページでファイルをアップロードしたときに、ファイル名を指定した形式に変更します。科目の設定画面で個別設定できます。ファイル名の形式中の以下の文字列は、それぞれ以下のように置換されます。\n- `{course}`: 科目名\n- `{assignment}`: 課題名\n- `{filename}`: 拡張子を除いたファイル名\n- `{extension}`: ピリオドを含む拡張子",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_assignment_filename_template": {
@@ -645,6 +645,10 @@
     },
     "course_settings_dialog_general_color": {
         "message": "色",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
+    "course_settings_dialog_filename_template": {
+        "message": "課題のファイル名の形式",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_note": {
