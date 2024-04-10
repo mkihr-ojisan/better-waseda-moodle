@@ -79,7 +79,10 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
             return;
         }
 
-        setNameOverrides({ ...nameOverrides, [course.id]: generalValues.name || undefined });
+        setNameOverrides({
+            ...nameOverrides,
+            [course.id]: generalValues.name === course.name ? undefined : generalValues.name,
+        });
         setSyllabusKeys({
             ...syllabusKeys,
             [course.id]: (() => {
