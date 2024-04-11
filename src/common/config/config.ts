@@ -7,6 +7,8 @@ export enum ConfigKey {
     LastVersion = 0,
     /** 非表示にしたヒント */
     HiddenTips = 13,
+    /** 開発者モード */
+    DevMode = 40,
 
     // ========自動ログイン========
     /** ログインID・パスワード */
@@ -107,6 +109,7 @@ export const CONFIG_VALUE_TYPE_DEF = {
             enumItems: ["no_timetable_data"],
         },
     },
+    [ConfigKey.DevMode]: "boolean",
     [ConfigKey.LoginInfo]: {
         objectEntries: [
             ["userId", "string"],
@@ -257,6 +260,7 @@ export type ConfigValue<T extends ConfigKey> = TypeOfTypeDef<(typeof CONFIG_VALU
 export const CONFIG_DEFAULT_VALUES = {
     [ConfigKey.LastVersion]: "0",
     [ConfigKey.HiddenTips]: [],
+    [ConfigKey.DevMode]: process.env.NODE_ENV === "development",
     [ConfigKey.LoginInfo]: { userId: "", password: "" },
     [ConfigKey.AutoLoginEnabled]: false,
     [ConfigKey.TimetableData]: {},

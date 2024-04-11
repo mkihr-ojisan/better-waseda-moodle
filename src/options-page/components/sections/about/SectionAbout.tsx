@@ -1,25 +1,27 @@
 import { Box, ButtonBase, Divider, List, Typography } from "@mui/material";
-import { OptionsPageSection, useOptionsPageContext } from "../../OptionsPage";
+import { OptionsPageSection } from "../../OptionsPage";
 import InfoIcon from "@mui/icons-material/Info";
 import React, { useState } from "react";
 import { Link } from "../../items/Link";
 import { useNotify } from "@/common/react/notification";
 import { DevModeOnly } from "../../items/DevMode";
 import { Launch } from "../../items/Launch";
+import { useConfig } from "@/common/config/useConfig";
+import { ConfigKey } from "@/common/config/config";
 
 export default {
     id: "about",
     title: "options_page_section_about_title",
     Icon: InfoIcon,
     Component: () => {
-        const context = useOptionsPageContext();
         const notify = useNotify();
 
+        const [, setDevMode] = useConfig(ConfigKey.DevMode);
         const [clickCount, setClickCount] = useState(0);
         const handleClickVersion = () => {
             setClickCount(clickCount + 1);
-            if (clickCount === 10 && !context.devMode) {
-                context.setDevMode(true);
+            if (clickCount === 10) {
+                setDevMode(true);
                 notify({ message: "Dev mode enabled.", type: "info" });
             }
         };
@@ -50,6 +52,8 @@ export default {
                         <Divider />
 
                         <DevModeOnly>
+                            <Launch text="Turn off Dev Mode" onClick={() => setDevMode(false)} />
+                            <Divider />
                             <Launch
                                 text="Moodle API Client"
                                 onClick={() =>

@@ -1,7 +1,8 @@
 import { FC, PropsWithChildren } from "react";
-import { useOptionsPageContext } from "../OptionsPage";
+import { useConfig } from "@/common/config/useConfig";
+import { ConfigKey } from "@/common/config/config";
 
 export const DevModeOnly: FC<PropsWithChildren> = (props: { children?: React.ReactNode }) => {
-    const context = useOptionsPageContext();
-    return context.devMode ? props.children : null;
+    const [devMode] = useConfig(ConfigKey.DevMode);
+    return devMode ? props.children : null;
 };
