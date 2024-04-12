@@ -95,27 +95,20 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
         <Paper
             sx={{
                 borderLeft: appearanceOptions.showCourseColor ? `${theme.spacing(1)} solid ${color}` : "none",
-                display: "grid",
-
-                gridTemplateRows: "1fr",
+                display: "flex",
+                flexDirection: "column",
+                flexShrink: 2,
+                alignItems: "flex-start",
                 width: "100%",
                 height: props.height === "fixed" ? "9em" : "100%",
                 minHeight: 56,
+                textAlign: "left",
                 [theme.breakpoints.up("md")]: {
-                    gridTemplateColumns:
-                        (appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact
-                            ? "minmax(0, 1fr) 32px"
-                            : "minmax(0, 1fr)",
                     padding: theme.spacing(1),
                 },
                 [theme.breakpoints.down("lg")]: {
-                    gridTemplateColumns:
-                        (appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact
-                            ? "minmax(0, 1fr) " + (props.inTimetable ? "24px" : "32px")
-                            : "minmax(0, 1fr)",
                     padding: theme.spacing(props.inTimetable ? 0.5 : 1),
                 },
-                textAlign: "left",
             }}
             ref={rootElem}
             onContextMenu={appearanceOptions.showCourseNote && veryCompact ? handleContextMenu : undefined}
@@ -123,10 +116,21 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
             <Box
                 sx={{
                     width: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    flexShrink: 2,
-                    alignItems: "flex-start",
+                    display: "grid",
+                    gridTemplateRows: "1fr",
+
+                    [theme.breakpoints.up("md")]: {
+                        gridTemplateColumns:
+                            (appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact
+                                ? "minmax(0, 1fr) 32px"
+                                : "minmax(0, 1fr)",
+                    },
+                    [theme.breakpoints.down("lg")]: {
+                        gridTemplateColumns:
+                            (appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact
+                                ? "minmax(0, 1fr) " + (props.inTimetable ? "24px" : "32px")
+                                : "minmax(0, 1fr)",
+                    },
                 }}
             >
                 <div>
@@ -150,174 +154,173 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                         {courseName}
                     </Typography>
                 </div>
-
-                <Box sx={{ flexGrow: "1" }} />
-
-                {showDeliveryMethod &&
-                    (deliveryMethod === "face_to_face" ? (
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{
-                                width: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                [theme.breakpoints.down("lg")]: {
-                                    fontSize: props.inTimetable ? "0.8em" : "1em",
-                                },
-                            }}
-                            title={
-                                classroom
-                                    ? browser.i18n.getMessage("course_overview_course_face_to_face") + " " + classroom
-                                    : browser.i18n.getMessage("course_overview_course_face_to_face")
-                            }
-                        >
-                            <PeopleAltIcon fontSize={compact ? "small" : "medium"} />
-                            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                {classroom || browser.i18n.getMessage("course_overview_course_face_to_face")}
-                            </span>
-                        </Typography>
-                    ) : deliveryMethod === "realtime_streaming" ? (
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{
-                                width: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                [theme.breakpoints.down("lg")]: {
-                                    fontSize: props.inTimetable ? "0.8em" : "1em",
-                                },
-                            }}
-                            title={browser.i18n.getMessage("course_overview_course_realtime_streaming")}
-                        >
-                            <VideocamIcon fontSize={compact ? "small" : "medium"} />
-                            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                {streamingURL ? (
-                                    <Box
-                                        component="a"
-                                        href={streamingURL}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        sx={{ color: "text.secondary" }}
+                <div>
+                    {(appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact && (
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                            {appearanceOptions.showCourseMenu && (
+                                <>
+                                    <IconButton
+                                        size="small"
+                                        onClick={(event) => {
+                                            setMenuOpen(true);
+                                            setMenuAnchorEl(event.currentTarget);
+                                        }}
+                                        sx={{
+                                            [theme.breakpoints.down("lg")]: props.inTimetable
+                                                ? { width: 24, height: 24 }
+                                                : undefined,
+                                        }}
                                     >
-                                        {browser.i18n.getMessage("course_overview_course_realtime_streaming")}
-                                    </Box>
-                                ) : (
-                                    browser.i18n.getMessage("course_overview_course_realtime_streaming")
-                                )}
-                            </span>
-                        </Typography>
-                    ) : deliveryMethod === "on_demand" ? (
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{
-                                width: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                [theme.breakpoints.down("lg")]: {
-                                    fontSize: props.inTimetable ? "0.8em" : "1em",
-                                },
-                            }}
-                            title={browser.i18n.getMessage("course_overview_course_on_demand")}
-                        >
-                            <OndemandVideoIcon fontSize={compact ? "small" : "medium"} />
-                            <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                                {browser.i18n.getMessage("course_overview_course_on_demand")}
-                            </span>
-                        </Typography>
-                    ) : null)}
+                                        <MoreVert fontSize="small" />
+                                    </IconButton>
+                                    <CourseCardMenu
+                                        course={props.course}
+                                        inTimetable={props.inTimetable}
+                                        open={menuOpen}
+                                        onClose={() => setMenuOpen(false)}
+                                        anchorEl={menuAnchorEl}
+                                    />
+                                </>
+                            )}
+                            {appearanceOptions.showCourseNote && note && (
+                                <Tooltip
+                                    title={
+                                        <Typography variant="body1" sx={{ whiteSpace: "break-spaces" }}>
+                                            {note}
+                                        </Typography>
+                                    }
+                                >
+                                    <IconButton
+                                        size="small"
+                                        sx={{
+                                            [theme.breakpoints.down("lg")]: props.inTimetable
+                                                ? { width: 24, height: 24 }
+                                                : undefined,
+                                        }}
+                                    >
+                                        <NoteIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            )}
+                        </Box>
+                    )}
+                    {appearanceOptions.showCourseNote && veryCompact && (
+                        <CourseCardMenu
+                            course={props.course}
+                            inTimetable={props.inTimetable}
+                            open={menuOpen}
+                            onClose={() => setMenuOpen(false)}
+                            anchorReference="anchorPosition"
+                            anchorPosition={menuAnchorPosition}
+                        />
+                    )}
+                </div>
+            </Box>
 
-                {showTags && (
-                    <Stack
-                        direction="row"
-                        spacing={0.5}
+            <Box sx={{ flexGrow: "1" }} />
+
+            {showDeliveryMethod &&
+                (deliveryMethod === "face_to_face" ? (
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
                         sx={{
-                            overflow: "hidden",
-                            position: "relative",
                             width: "100%",
-                            ":after": {
-                                content: '""',
-                                background: `linear-gradient(90deg, ${alpha(
-                                    theme.palette.background.paper,
-                                    0
-                                )} 0%, ${alpha(theme.palette.background.paper, 0)} 90%, ${alpha(
-                                    theme.palette.background.paper,
-                                    1
-                                )} 100%)`,
-                                width: "100%",
-                                height: "1.5em",
-                                display: "block",
-                                position: "absolute",
-                                pointerEvents: "none",
+                            display: "flex",
+                            alignItems: "center",
+                            [theme.breakpoints.down("lg")]: {
+                                fontSize: props.inTimetable ? "0.8em" : "1em",
                             },
                         }}
+                        title={
+                            classroom
+                                ? browser.i18n.getMessage("course_overview_course_face_to_face") + " " + classroom
+                                : browser.i18n.getMessage("course_overview_course_face_to_face")
+                        }
                     >
-                        {props.tags?.map((tag) => (
-                            <Chip key={tag} label={tag} size="small" />
-                        ))}
-                    </Stack>
-                )}
-            </Box>
-            {(appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact && (
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    {appearanceOptions.showCourseMenu && (
-                        <>
-                            <IconButton
-                                size="small"
-                                onClick={(event) => {
-                                    setMenuOpen(true);
-                                    setMenuAnchorEl(event.currentTarget);
-                                }}
-                                sx={{
-                                    [theme.breakpoints.down("lg")]: props.inTimetable
-                                        ? { width: 24, height: 24 }
-                                        : undefined,
-                                }}
-                            >
-                                <MoreVert fontSize="small" />
-                            </IconButton>
-                            <CourseCardMenu
-                                course={props.course}
-                                inTimetable={props.inTimetable}
-                                open={menuOpen}
-                                onClose={() => setMenuOpen(false)}
-                                anchorEl={menuAnchorEl}
-                            />
-                        </>
-                    )}
-                    {appearanceOptions.showCourseNote && note && (
-                        <Tooltip
-                            title={
-                                <Typography variant="body1" sx={{ whiteSpace: "break-spaces" }}>
-                                    {note}
-                                </Typography>
-                            }
-                        >
-                            <IconButton
-                                size="small"
-                                sx={{
-                                    [theme.breakpoints.down("lg")]: props.inTimetable
-                                        ? { width: 24, height: 24 }
-                                        : undefined,
-                                }}
-                            >
-                                <NoteIcon />
-                            </IconButton>
-                        </Tooltip>
-                    )}
-                </Box>
-            )}
-            {appearanceOptions.showCourseNote && veryCompact && (
-                <CourseCardMenu
-                    course={props.course}
-                    inTimetable={props.inTimetable}
-                    open={menuOpen}
-                    onClose={() => setMenuOpen(false)}
-                    anchorReference="anchorPosition"
-                    anchorPosition={menuAnchorPosition}
-                />
+                        <PeopleAltIcon fontSize={compact ? "small" : "medium"} />
+                        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {classroom || browser.i18n.getMessage("course_overview_course_face_to_face")}
+                        </span>
+                    </Typography>
+                ) : deliveryMethod === "realtime_streaming" ? (
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            [theme.breakpoints.down("lg")]: {
+                                fontSize: props.inTimetable ? "0.8em" : "1em",
+                            },
+                        }}
+                        title={browser.i18n.getMessage("course_overview_course_realtime_streaming")}
+                    >
+                        <VideocamIcon fontSize={compact ? "small" : "medium"} />
+                        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {streamingURL ? (
+                                <Box
+                                    component="a"
+                                    href={streamingURL}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    sx={{ color: "text.secondary" }}
+                                >
+                                    {browser.i18n.getMessage("course_overview_course_realtime_streaming")}
+                                </Box>
+                            ) : (
+                                browser.i18n.getMessage("course_overview_course_realtime_streaming")
+                            )}
+                        </span>
+                    </Typography>
+                ) : deliveryMethod === "on_demand" ? (
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            [theme.breakpoints.down("lg")]: {
+                                fontSize: props.inTimetable ? "0.8em" : "1em",
+                            },
+                        }}
+                        title={browser.i18n.getMessage("course_overview_course_on_demand")}
+                    >
+                        <OndemandVideoIcon fontSize={compact ? "small" : "medium"} />
+                        <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            {browser.i18n.getMessage("course_overview_course_on_demand")}
+                        </span>
+                    </Typography>
+                ) : null)}
+
+            {showTags && (
+                <Stack
+                    direction="row"
+                    spacing={0.5}
+                    sx={{
+                        overflow: "hidden",
+                        position: "relative",
+                        width: "100%",
+                        ":after": {
+                            content: '""',
+                            background: `linear-gradient(90deg, ${alpha(theme.palette.background.paper, 0)} 0%, ${alpha(
+                                theme.palette.background.paper,
+                                0
+                            )} 90%, ${alpha(theme.palette.background.paper, 1)} 100%)`,
+                            width: "100%",
+                            height: "1.5em",
+                            display: "block",
+                            position: "absolute",
+                            pointerEvents: "none",
+                        },
+                    }}
+                >
+                    {props.tags?.map((tag) => (
+                        <Chip key={tag} label={tag} size="small" />
+                    ))}
+                </Stack>
             )}
         </Paper>
     );
