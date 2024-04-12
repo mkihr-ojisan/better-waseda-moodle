@@ -49,13 +49,13 @@ function useDarkReaderColor(): { bgR: number; bgG: number; bgB: number; fgR: num
         const fg = fgColor.split(/[(),]/).filter((s) => !!s);
 
         let bgR, bgG, bgB, fgR, fgG, fgB;
-        if (bg[0] === "rbg") {
+        if (bg[0] === "rgb") {
             [bgR, bgG, bgB] = bg.slice(1).map((s) => parseInt(s));
         } else {
             return null;
         }
 
-        if (fg[0] === "rbg") {
+        if (fg[0] === "rgb") {
             [fgR, fgG, fgB] = fg.slice(1).map((s) => parseInt(s));
         } else {
             return null;
