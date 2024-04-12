@@ -1,6 +1,5 @@
 import { CourseWithSetHidden } from "@/common/course/course";
-import MoreVert from "@mui/icons-material/MoreVert";
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
+import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
 import { useConfig } from "@/common/config/useConfig";
 import { ConfigKey } from "@/common/config/config";
@@ -13,50 +12,50 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 export type CourseCardMenuProps = {
     course: CourseWithSetHidden;
+    inTimetable?: boolean;
+    anchorEl?: HTMLElement | null;
+    anchorReference?: "anchorEl" | "anchorPosition" | "none";
+    anchorPosition?: { top: number; left: number };
+    open: boolean;
+    onClose: () => void;
 };
 
 export const CourseCardMenu: FC<CourseCardMenuProps> = (props) => {
     const syllabusKey = useConfig(ConfigKey.CourseSyllabusKeys)[0][props.course.id];
 
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const handleOpenMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    }, []);
-    const handleCloseMenu = useCallback(() => {
-        setAnchorEl(null);
-    }, []);
-
     const handleOpenSyllabus = useCallback(() => {
         if (!syllabusKey) return;
         window.open(getURLFromKey(syllabusKey), "_blank");
-        handleCloseMenu();
-    }, [syllabusKey, handleCloseMenu]);
+        props.onClose();
+    }, [syllabusKey, props]);
 
     const [courseSettingsDialogOpen, setCourseSettingsDialogOpen] = useState(false);
     const handleOpenCourseSettingsDialog = useCallback(() => {
         setCourseSettingsDialogOpen(true);
-        handleCloseMenu();
-    }, [handleCloseMenu]);
+        props.onClose();
+    }, [props]);
     const handleCloseCourseSettingsDialog = useCallback(() => {
         setCourseSettingsDialogOpen(false);
     }, []);
 
     const handleHideCourse = useCallback(() => {
         props.course.setHidden(true);
-        handleCloseMenu();
-    }, [props.course, handleCloseMenu]);
+        props.onClose();
+    }, [props]);
     const handleUnhideCourse = useCallback(() => {
         props.course.setHidden(false);
-        handleCloseMenu();
-    }, [props.course, handleCloseMenu]);
+        props.onClose();
+    }, [props]);
 
     return (
         <>
-            <IconButton size="small" onClick={handleOpenMenu}>
-                <MoreVert fontSize="small" />
-            </IconButton>
-
-            <Menu open={Boolean(anchorEl)} onClose={handleCloseMenu} anchorEl={anchorEl}>
+            <Menu
+                open={props.open}
+                onClose={props.onClose}
+                anchorEl={props.anchorEl}
+                anchorReference={props.anchorReference}
+                anchorPosition={props.anchorPosition}
+            >
                 {syllabusKey && (
                     <MenuItem onClick={handleOpenSyllabus}>
                         <ListItemIcon>
