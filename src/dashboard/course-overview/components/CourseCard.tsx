@@ -154,7 +154,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                         {courseName}
                     </Typography>
                 </div>
-                <div>
+                <div style={{ height: 0 /* 授業方式が下に追い出されないように */ }}>
                     {appearanceOptions.showCourseMenu && (
                         <CourseCardMenu
                             course={props.course}

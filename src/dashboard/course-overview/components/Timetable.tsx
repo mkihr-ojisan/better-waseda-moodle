@@ -201,13 +201,18 @@ export const Timetable: FC<TimetableViewProps> = (props) => {
                                 .map((cell, j) => (
                                     <Box
                                         component="td"
-                                        p={0.5}
                                         key={j}
                                         rowSpan={cell?.rowSpan}
                                         sx={{
                                             height:
                                                 cell &&
                                                 `calc(max(7em, calc((clamp(30em, calc(100vh - 30em), 100em) - 2em) / ${rows})) * ${cell?.rowSpan})`,
+                                            [theme.breakpoints.up("lg")]: {
+                                                padding: 1,
+                                            },
+                                            [theme.breakpoints.between("sm", "lg")]: {
+                                                padding: 0.5,
+                                            },
                                         }}
                                     >
                                         {cell?.course && (
