@@ -155,6 +155,21 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                     </Typography>
                 </div>
                 <div>
+                    {appearanceOptions.showCourseMenu && (
+                        <CourseCardMenu
+                            course={props.course}
+                            inTimetable={props.inTimetable}
+                            open={menuOpen}
+                            onClose={() => setMenuOpen(false)}
+                            {...(veryCompact
+                                ? {
+                                      anchorReference: "anchorPosition",
+                                      anchorPosition: menuAnchorPosition,
+                                  }
+                                : { anchorEl: menuAnchorEl })}
+                        />
+                    )}
+
                     {(appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact && (
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                             {appearanceOptions.showCourseMenu && (
@@ -173,13 +188,6 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                     >
                                         <MoreVert fontSize="small" />
                                     </IconButton>
-                                    <CourseCardMenu
-                                        course={props.course}
-                                        inTimetable={props.inTimetable}
-                                        open={menuOpen}
-                                        onClose={() => setMenuOpen(false)}
-                                        anchorEl={menuAnchorEl}
-                                    />
                                 </>
                             )}
                             {appearanceOptions.showCourseNote && note && (
@@ -203,16 +211,6 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                 </Tooltip>
                             )}
                         </Box>
-                    )}
-                    {appearanceOptions.showCourseNote && veryCompact && (
-                        <CourseCardMenu
-                            course={props.course}
-                            inTimetable={props.inTimetable}
-                            open={menuOpen}
-                            onClose={() => setMenuOpen(false)}
-                            anchorReference="anchorPosition"
-                            anchorPosition={menuAnchorPosition}
-                        />
                     )}
                 </div>
             </Box>
