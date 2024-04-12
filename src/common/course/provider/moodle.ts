@@ -3,7 +3,7 @@ import { Course, CourseProvider } from "../course";
 import {
     EnrolledCourse,
     core_course_get_enrolled_courses_by_timeline_classification,
-} from "@/common/api/moodle/courses";
+} from "@/common/api/moodle/core_course";
 import { set_block_myoverview_hidden_course } from "@/common/api/moodle/user_prefs";
 import { withCache } from "@/common/util/withCache";
 

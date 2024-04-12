@@ -12,6 +12,7 @@ import { addCustomCourse, deleteCustomCourse } from "@/common/course/provider/cu
 import { core_webservice_get_site_info } from "@/common/api/moodle/core_webservice";
 import { callMoodleAPI } from "@/common/api/moodle/moodle";
 import { callMoodleMobileAPI } from "@/common/api/moodle/mobileAPI";
+import { core_course_get_contents } from "@/common/api/moodle/core_course";
 
 assertExtensionContext("background");
 
@@ -36,6 +37,7 @@ export const messengerCommands = {
     core_webservice_get_site_info,
     callMoodleAPI,
     callMoodleMobileAPI,
+    core_course_get_contents,
 } as const satisfies Record<string, (...args: any[]) => any>;
 
 /** `MessengerServer`を初期化する。バックグラウンドスクリプト上で実行する。 */
