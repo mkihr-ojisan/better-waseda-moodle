@@ -1,5 +1,16 @@
 import { CourseWithSetHidden } from "@/common/course/course";
-import { Box, Chip, IconButton, Paper, Stack, Tooltip, Typography, alpha, useTheme } from "@mui/material";
+import {
+    Box,
+    Chip,
+    IconButton,
+    Paper,
+    Stack,
+    Tooltip,
+    Typography,
+    alpha,
+    useMediaQuery,
+    useTheme,
+} from "@mui/material";
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { CourseCardMenu } from "./CourseCardMenu";
@@ -12,6 +23,7 @@ import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { DEFAULT_COURSE_COLOR } from "@/common/course/course-color";
 import NoteIcon from "@mui/icons-material/Note";
+import MoreVert from "@mui/icons-material/MoreVert";
 
 export type CourseCardProps = {
     course: CourseWithSetHidden;
@@ -19,10 +31,13 @@ export type CourseCardProps = {
     /** 指定した場合はこの教室が表示される。指定しない場合は科目に設定されたすべての教室がカンマ区切りで表示される */
     classroom?: string;
     height: "fixed" | "fill-parent";
+    inTimetable?: boolean;
 };
 
 export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
     const theme = useTheme();
+    const compact = useMediaQuery(theme.breakpoints.down("lg")) && props.inTimetable;
+    const veryCompact = useMediaQuery(theme.breakpoints.down("sm")) && props.inTimetable;
     const context = useCourseOverviewContext();
     const [appearanceOptions] = useConfig(ConfigKey.CourseOverviewAppearanceOptions);
 
@@ -55,7 +70,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
         const observer = new ResizeObserver(() => {
             if (!rootElem.current) return;
             const rootHeight = rootElem.current.getBoundingClientRect().height;
-            let lines = Math.floor((rootHeight - 16) / 24);
+            let lines = Math.floor((rootHeight - 16) / (24 * (compact ? 0.8 : 1)));
             if (showDeliveryMethod) lines--;
             if (showTags) lines--;
             setCourseTitleLineClamp(Math.max(1, Math.floor(lines)));
@@ -65,25 +80,45 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
         return () => {
             observer.disconnect();
         };
-    }, [showDeliveryMethod, showTags]);
+    }, [showDeliveryMethod, showTags, compact]);
+
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
+    const [menuAnchorPosition, setMenuAnchorPosition] = useState<{ top: number; left: number }>();
+    const handleContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        setMenuOpen(true);
+        setMenuAnchorPosition({ top: event.clientY, left: event.clientX });
+    };
 
     return (
         <Paper
             sx={{
                 borderLeft: appearanceOptions.showCourseColor ? `${theme.spacing(1)} solid ${color}` : "none",
                 display: "grid",
-                gridTemplateColumns:
-                    appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote
-                        ? "minmax(0, 1fr) 32px"
-                        : "minmax(0, 1fr)",
+
                 gridTemplateRows: "1fr",
                 width: "100%",
                 height: props.height === "fixed" ? "9em" : "100%",
                 minHeight: 56,
-                padding: theme.spacing(1),
+                [theme.breakpoints.up("md")]: {
+                    gridTemplateColumns:
+                        (appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact
+                            ? "minmax(0, 1fr) 32px"
+                            : "minmax(0, 1fr)",
+                    padding: theme.spacing(1),
+                },
+                [theme.breakpoints.down("lg")]: {
+                    gridTemplateColumns:
+                        (appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact
+                            ? "minmax(0, 1fr) " + (props.inTimetable ? "24px" : "32px")
+                            : "minmax(0, 1fr)",
+                    padding: theme.spacing(props.inTimetable ? 0.5 : 1),
+                },
                 textAlign: "left",
             }}
             ref={rootElem}
+            onContextMenu={appearanceOptions.showCourseNote && veryCompact ? handleContextMenu : undefined}
         >
             <Box
                 sx={{
@@ -104,6 +139,9 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                             WebkitBoxOrient: "vertical",
                             overflow: "hidden",
                             minHeight: 0,
+                            [theme.breakpoints.down("lg")]: {
+                                fontSize: props.inTimetable ? "0.8em" : "1em",
+                            },
                         }}
                         color="text.primary"
                         title={courseName}
@@ -124,10 +162,17 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                 width: "100%",
                                 display: "flex",
                                 alignItems: "center",
+                                [theme.breakpoints.down("lg")]: {
+                                    fontSize: props.inTimetable ? "0.8em" : "1em",
+                                },
                             }}
-                            title={classroom ? browser.i18n.getMessage("course_overview_course_face_to_face") + " " + classroom : browser.i18n.getMessage("course_overview_course_face_to_face")}
+                            title={
+                                classroom
+                                    ? browser.i18n.getMessage("course_overview_course_face_to_face") + " " + classroom
+                                    : browser.i18n.getMessage("course_overview_course_face_to_face")
+                            }
                         >
-                            <PeopleAltIcon />
+                            <PeopleAltIcon fontSize={compact ? "small" : "medium"} />
                             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                 {classroom || browser.i18n.getMessage("course_overview_course_face_to_face")}
                             </span>
@@ -140,10 +185,13 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                 width: "100%",
                                 display: "flex",
                                 alignItems: "center",
+                                [theme.breakpoints.down("lg")]: {
+                                    fontSize: props.inTimetable ? "0.8em" : "1em",
+                                },
                             }}
                             title={browser.i18n.getMessage("course_overview_course_realtime_streaming")}
                         >
-                            <VideocamIcon />
+                            <VideocamIcon fontSize={compact ? "small" : "medium"} />
                             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                 {streamingURL ? (
                                     <Box
@@ -168,10 +216,13 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                 width: "100%",
                                 display: "flex",
                                 alignItems: "center",
+                                [theme.breakpoints.down("lg")]: {
+                                    fontSize: props.inTimetable ? "0.8em" : "1em",
+                                },
                             }}
                             title={browser.i18n.getMessage("course_overview_course_on_demand")}
                         >
-                            <OndemandVideoIcon />
+                            <OndemandVideoIcon fontSize={compact ? "small" : "medium"} />
                             <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                 {browser.i18n.getMessage("course_overview_course_on_demand")}
                             </span>
@@ -209,9 +260,33 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                     </Stack>
                 )}
             </Box>
-            {(appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && (
+            {(appearanceOptions.showCourseMenu || appearanceOptions.showCourseNote) && !veryCompact && (
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    {appearanceOptions.showCourseMenu && <CourseCardMenu course={props.course} />}
+                    {appearanceOptions.showCourseMenu && (
+                        <>
+                            <IconButton
+                                size="small"
+                                onClick={(event) => {
+                                    setMenuOpen(true);
+                                    setMenuAnchorEl(event.currentTarget);
+                                }}
+                                sx={{
+                                    [theme.breakpoints.down("lg")]: props.inTimetable
+                                        ? { width: 24, height: 24 }
+                                        : undefined,
+                                }}
+                            >
+                                <MoreVert fontSize="small" />
+                            </IconButton>
+                            <CourseCardMenu
+                                course={props.course}
+                                inTimetable={props.inTimetable}
+                                open={menuOpen}
+                                onClose={() => setMenuOpen(false)}
+                                anchorEl={menuAnchorEl}
+                            />
+                        </>
+                    )}
                     {appearanceOptions.showCourseNote && note && (
                         <Tooltip
                             title={
@@ -220,12 +295,29 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                 </Typography>
                             }
                         >
-                            <IconButton size="small">
+                            <IconButton
+                                size="small"
+                                sx={{
+                                    [theme.breakpoints.down("lg")]: props.inTimetable
+                                        ? { width: 24, height: 24 }
+                                        : undefined,
+                                }}
+                            >
                                 <NoteIcon />
                             </IconButton>
                         </Tooltip>
                     )}
                 </Box>
+            )}
+            {appearanceOptions.showCourseNote && veryCompact && (
+                <CourseCardMenu
+                    course={props.course}
+                    inTimetable={props.inTimetable}
+                    open={menuOpen}
+                    onClose={() => setMenuOpen(false)}
+                    anchorReference="anchorPosition"
+                    anchorPosition={menuAnchorPosition}
+                />
             )}
         </Paper>
     );

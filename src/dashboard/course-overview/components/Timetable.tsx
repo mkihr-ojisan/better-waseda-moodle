@@ -201,7 +201,7 @@ export const Timetable: FC<TimetableViewProps> = (props) => {
                                 .map((cell, j) => (
                                     <Box
                                         component="td"
-                                        p={1}
+                                        p={0.5}
                                         key={j}
                                         rowSpan={cell?.rowSpan}
                                         sx={{
@@ -215,6 +215,7 @@ export const Timetable: FC<TimetableViewProps> = (props) => {
                                                 course={cell?.course}
                                                 height="fill-parent"
                                                 classroom={cell?.classroom}
+                                                inTimetable
                                             />
                                         )}
                                     </Box>

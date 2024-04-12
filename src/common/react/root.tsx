@@ -1,5 +1,5 @@
 import { CssBaseline, ScopedCssBaseline } from "@mui/material";
-import React, { useMemo, FC, PropsWithChildren, StrictMode } from "react";
+import React, { useMemo, FC, PropsWithChildren, StrictMode, useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { getCurrentExtensionContext } from "../util/context";
 import { ErrorFallback } from "./error-fallback";
@@ -8,6 +8,13 @@ import { BWMThemePrefersColorScheme } from "./theme/BWMThemePrefersColorScheme";
 
 export const BWMRoot: FC<PropsWithChildren> = (props) => {
     const context = useMemo(() => getCurrentExtensionContext(), []);
+
+    useEffect(() => {
+        if (process.env.VENDOR === "firefox") {
+            // これがないとuseMediaQueryが動かない
+            window.matchMedia = window.matchMedia.bind(window);
+        }
+    }, []);
 
     switch (context) {
         case "content_script":
