@@ -639,6 +639,10 @@
         "message": "科目名",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
+    "course_settings_dialog_general_custom_course_url": {
+        "message": "URL",
+        "description": "科目設定ダイアログに表示するメッセージ"
+    },
     "course_settings_dialog_general_streaming_url": {
         "message": "配信URL",
         "description": "科目設定ダイアログに表示するメッセージ"

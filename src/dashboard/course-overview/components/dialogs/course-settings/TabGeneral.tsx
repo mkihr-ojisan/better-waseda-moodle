@@ -30,6 +30,7 @@ export type TabGeneralValues = {
     color: string | undefined;
     note: string;
     assignmentFilenameTemplate: string;
+    customCourseUrl?: string;
 };
 
 export const TabGeneral: FC<TabGeneralProps> = ({ value, setValue, defaultName, defaultColor }) => {
@@ -52,6 +53,16 @@ export const TabGeneral: FC<TabGeneralProps> = ({ value, setValue, defaultName, 
                     ) : undefined,
                 }}
             />
+
+            {value.customCourseUrl !== undefined && (
+                <TextField
+                    label={browser.i18n.getMessage("course_settings_dialog_general_custom_course_url")}
+                    fullWidth
+                    margin="dense"
+                    value={value.customCourseUrl}
+                    onChange={(e) => setValue({ ...value, customCourseUrl: e.target.value })}
+                />
+            )}
 
             <TextField
                 label={browser.i18n.getMessage("course_settings_dialog_general_syllabus")}
