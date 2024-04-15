@@ -15,12 +15,20 @@
             height: 500px;
             user-select: none;
         }
+
+        /* ポップアップではなくタブで表示している場合は100%にする */
+        html.tab,
+        .tab body,
+        .tab #container {
+            width: 100%;
+            height: 100%;
+        }
     </style>
-    <script src="./popup.js" defer></script>
 </head>
 
 <body>
     <div id="container"></div>
+    <script src="./popup.js" defer></script>
 </body>
 
 </html>

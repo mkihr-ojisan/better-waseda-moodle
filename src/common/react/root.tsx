@@ -22,7 +22,7 @@ export const BWMRoot: FC<PropsWithChildren> = (props) => {
             return (
                 <StrictMode>
                     <BWMThemeDarkReader>
-                        <ScopedCssBaseline>
+                        <ScopedCssBaseline enableColorScheme>
                             <ErrorBoundary FallbackComponent={ErrorFallback}>{props.children}</ErrorBoundary>
                         </ScopedCssBaseline>
                     </BWMThemeDarkReader>
@@ -33,7 +33,7 @@ export const BWMRoot: FC<PropsWithChildren> = (props) => {
             return (
                 <StrictMode>
                     <BWMThemePrefersColorScheme>
-                        <CssBaseline />
+                        <CssBaseline enableColorScheme />
                         <ErrorBoundary FallbackComponent={ErrorFallback}>{props.children}</ErrorBoundary>
                     </BWMThemePrefersColorScheme>
                 </StrictMode>

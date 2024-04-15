@@ -1,6 +1,18 @@
 import { Course } from "@/common/course/course";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tab } from "@mui/material";
+import {
+    Box,
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    IconButton,
+    Tab,
+    Theme,
+    useMediaQuery,
+} from "@mui/material";
 import React, { FC, useState } from "react";
 import { TabGeneral, TabGeneralValues } from "./TabGeneral";
 import { useConfig } from "@/common/config/useConfig";
@@ -12,6 +24,7 @@ import { DEFAULT_COURSE_COLOR, getCourseColor } from "@/common/course/course-col
 import { TabTimetable } from "./TabTimetable";
 import { checkTimetableConflict, getTimetableData, setTimetableData } from "@/common/course/timetable";
 import { call } from "@/common/util/messenger/client";
+import CloseIcon from "@mui/icons-material/Close";
 
 export type CourseSettingsDialogProps = {
     open: boolean;
@@ -25,14 +38,20 @@ export const CourseSettingsDialog: FC<CourseSettingsDialogProps> = (props) => {
         props.onClose();
     };
 
+    const fullScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
+
     return (
-        <Dialog open={props.open} onClose={handleClose} maxWidth={false}>
-            <CourseSettingsDialogContent {...props} />
+        <Dialog open={props.open} onClose={handleClose} maxWidth={false} fullScreen={fullScreen}>
+            <CourseSettingsDialogContent {...props} fullscreen={fullScreen} />
         </Dialog>
     );
 };
 
-const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, onClose }) => {
+type CourseSettingsDialogContentProps = CourseSettingsDialogProps & {
+    fullscreen: boolean;
+};
+
+const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ course, onClose, ...props }) => {
     const [tab, setTab] = useState("general");
 
     const [syllabusKeys, setSyllabusKeys] = useConfig(ConfigKey.CourseSyllabusKeys);
@@ -126,13 +145,35 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
 
     return (
         <>
-            <DialogTitle>{browser.i18n.getMessage("course_settings_dialog_title", course.name)}</DialogTitle>
+            <DialogTitle sx={{ paddingRight: "64px" }}>
+                {browser.i18n.getMessage("course_settings_dialog_title", course.name)}
+            </DialogTitle>
+            <IconButton
+                aria-label="close"
+                onClick={onClose}
+                sx={{
+                    position: "absolute",
+                    right: 12,
+                    top: 12,
+                    color: (theme) => theme.palette.grey[500],
+                }}
+            >
+                <CloseIcon />
+            </IconButton>
+
             <TabContext value={tab}>
-                <TabList onChange={(e, value) => setTab(value)}>
+                <TabList onChange={(e, value) => setTab(value)} sx={{ borderBottom: "1px solid #e8e8e8" }}>
                     <Tab label={browser.i18n.getMessage("course_settings_dialog_general_tab")} value="general" />
                     <Tab label={browser.i18n.getMessage("course_settings_dialog_timetable_tab")} value="timetable" />
                 </TabList>
-                <div style={{ width: 750, height: 450, overflow: "scroll" }}>
+                <div
+                    style={{
+                        maxWidth: 750,
+                        height: props.fullscreen ? undefined : 450,
+                        flexGrow: props.fullscreen ? 1 : 0,
+                        overflow: "scroll",
+                    }}
+                >
                     <TabPanel value="general">
                         <TabGeneral
                             defaultName={course.name}
@@ -141,7 +182,7 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogProps> = ({ course, on
                             defaultColor={defaultColor}
                         />
                     </TabPanel>
-                    <TabPanel value="timetable">
+                    <TabPanel value="timetable" sx={{ paddingX: 1 }}>
                         <TabTimetable
                             timetableData={newTimetableData}
                             setTimetableData={setNewTimetableData}

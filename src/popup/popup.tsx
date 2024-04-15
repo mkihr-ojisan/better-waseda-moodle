@@ -5,6 +5,11 @@ import React from "react";
 import { BWMRoot } from "@/common/react/root";
 import { NotificationContextProvider } from "@/common/react/notification";
 
+/* ポップアップではなくタブで表示している場合は100%にする */
+if (window.innerWidth !== 387 || window.innerHeight !== 500) {
+    document.documentElement.classList.add("tab");
+}
+
 (async () => {
     await initConfig();
 

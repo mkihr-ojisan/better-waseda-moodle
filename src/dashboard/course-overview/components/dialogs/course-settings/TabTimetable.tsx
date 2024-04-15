@@ -3,20 +3,26 @@ import { getSchoolYear } from "@/common/util/school-year";
 import {
     Box,
     Button,
+    FormControl,
     IconButton,
+    InputLabel,
     MenuItem,
+    Paper,
     Select,
     SelectChangeEvent,
+    Stack,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
     TextField,
+    Theme,
     Typography,
+    useMediaQuery,
 } from "@mui/material";
 import React, { ChangeEvent, FC, useMemo } from "react";
-import ClearIcon from "@mui/icons-material/Clear";
+import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import ErrorIcon from "@mui/icons-material/Error";
 
@@ -27,6 +33,7 @@ export type TabTimetableProps = {
 };
 
 export const TabTimetable: FC<TabTimetableProps> = ({ timetableData, setTimetableData, courseId }) => {
+    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
     const [currentTimetable] = useTimetableData();
 
     const conflicts = useMemo(
@@ -107,6 +114,50 @@ export const TabTimetable: FC<TabTimetableProps> = ({ timetableData, setTimetabl
         });
     };
 
+    const props = {
+        timetableData,
+        courseId,
+        conflicts,
+        handleChangeYear,
+        handleChangeTerm,
+        handleChangeDay,
+        handleChangePeriodStart,
+        handleChangePeriodEnd,
+        handleChangeClassroom,
+        handleDeleteEntry,
+        handleAddEntry,
+    };
+
+    return isMobile ? <TabTimetableContentMobile {...props} /> : <TabTimetableContentDesktop {...props} />;
+};
+
+type TabTimetableContentProps = {
+    timetableData: TimetableData;
+    courseId: string;
+    conflicts: { index: number; conflictWith: { courseId: string; index: number } }[];
+    handleChangeYear: (i: number) => (event: ChangeEvent<HTMLInputElement>) => void;
+    handleChangeTerm: (i: number) => (event: SelectChangeEvent<TermString>) => void;
+    handleChangeDay: (i: number) => (event: SelectChangeEvent<DayString>) => void;
+    handleChangePeriodStart: (i: number) => (event: SelectChangeEvent<number>) => void;
+    handleChangePeriodEnd: (i: number) => (event: SelectChangeEvent<number>) => void;
+    handleChangeClassroom: (i: number) => (event: ChangeEvent<HTMLInputElement>) => void;
+    handleDeleteEntry: (i: number) => () => void;
+    handleAddEntry: () => void;
+};
+
+const TabTimetableContentDesktop: FC<TabTimetableContentProps> = ({
+    timetableData,
+    courseId,
+    conflicts,
+    handleChangeYear,
+    handleChangeTerm,
+    handleChangeDay,
+    handleChangePeriodStart,
+    handleChangePeriodEnd,
+    handleChangeClassroom,
+    handleDeleteEntry,
+    handleAddEntry,
+}) => {
     return (
         <>
             <Table
@@ -285,7 +336,7 @@ export const TabTimetable: FC<TabTimetableProps> = ({ timetableData, setTimetabl
                                     )}
                                     onClick={handleDeleteEntry(index)}
                                 >
-                                    <ClearIcon />
+                                    <DeleteIcon />
                                 </IconButton>
                             </TableCell>
                         </TableRow>
@@ -298,6 +349,184 @@ export const TabTimetable: FC<TabTimetableProps> = ({ timetableData, setTimetabl
                 </Button>
             </Box>
         </>
+    );
+};
+
+const TabTimetableContentMobile: FC<TabTimetableContentProps> = ({
+    timetableData,
+    courseId,
+    conflicts,
+    handleChangeYear,
+    handleChangeTerm,
+    handleChangeDay,
+    handleChangePeriodStart,
+    handleChangePeriodEnd,
+    handleChangeClassroom,
+    handleDeleteEntry,
+    handleAddEntry,
+}) => {
+    return (
+        <Stack spacing={1} p={0}>
+            {timetableData.length === 0 && (
+                <Typography align="center">
+                    {browser.i18n.getMessage("course_settings_dialog_timetable_no_entries")}
+                </Typography>
+            )}
+            {timetableData.map((entry, index) => (
+                <Paper key={index} sx={{ padding: 2, borderColor: "text.primary" }} variant="outlined">
+                    <Stack spacing={1}>
+                        <TextField
+                            label={browser.i18n.getMessage("course_settings_dialog_timetable_header_year")}
+                            type="number"
+                            variant="outlined"
+                            value={entry.year}
+                            onChange={handleChangeYear(index)}
+                        />
+                        <FormControl>
+                            <InputLabel id={`term-${index}-label`}>
+                                {browser.i18n.getMessage("course_settings_dialog_timetable_header_term")}
+                            </InputLabel>
+                            <Select
+                                labelId={`term-${index}-label`}
+                                value={entry.term.toString()}
+                                onChange={handleChangeTerm(index)}
+                                label={browser.i18n.getMessage("course_settings_dialog_timetable_header_term")}
+                            >
+                                <MenuItem value={Term.FULL_YEAR.toString()}>{Term.FULL_YEAR.toLocaleString()}</MenuItem>
+                                <MenuItem value={Term.SPRING_SEMESTER.toString()}>
+                                    {Term.SPRING_SEMESTER.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={Term.FALL_SEMESTER.toString()}>
+                                    {Term.FALL_SEMESTER.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={Term.SPRING_QUARTER.toString()}>
+                                    {Term.SPRING_QUARTER.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={Term.SUMMER_QUARTER.toString()}>
+                                    {Term.SUMMER_QUARTER.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={Term.FALL_QUARTER.toString()}>
+                                    {Term.FALL_QUARTER.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={Term.WINTER_QUARTER.toString()}>
+                                    {Term.WINTER_QUARTER.toLocaleString()}
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel id={`day-${index}-label`}>
+                                {browser.i18n.getMessage("course_settings_dialog_timetable_header_day")}
+                            </InputLabel>
+                            <Select
+                                labelId={`day-${index}-label`}
+                                value={entry.day.toString()}
+                                onChange={handleChangeDay(index)}
+                                label={browser.i18n.getMessage("course_settings_dialog_timetable_header_day")}
+                            >
+                                <MenuItem value={DayOfWeek.MONDAY.toString()}>
+                                    {DayOfWeek.MONDAY.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={DayOfWeek.TUESDAY.toString()}>
+                                    {DayOfWeek.TUESDAY.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={DayOfWeek.WEDNESDAY.toString()}>
+                                    {DayOfWeek.WEDNESDAY.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={DayOfWeek.THURSDAY.toString()}>
+                                    {DayOfWeek.THURSDAY.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={DayOfWeek.FRIDAY.toString()}>
+                                    {DayOfWeek.FRIDAY.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={DayOfWeek.SATURDAY.toString()}>
+                                    {DayOfWeek.SATURDAY.toLocaleString()}
+                                </MenuItem>
+                                <MenuItem value={DayOfWeek.SUNDAY.toString()}>
+                                    {DayOfWeek.SUNDAY.toLocaleString()}
+                                </MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel id={`period-start-${index}-label`}>
+                                {browser.i18n.getMessage("course_settings_dialog_timetable_header_period_start")}
+                            </InputLabel>
+                            <Select
+                                labelId={`period-start-${index}-label`}
+                                value={entry.period.from}
+                                onChange={handleChangePeriodStart(index)}
+                                label={browser.i18n.getMessage("course_settings_dialog_timetable_header_period_start")}
+                            >
+                                {[1, 2, 3, 4, 5, 6, 7].map((period) => (
+                                    <MenuItem key={period} value={period}>
+                                        {browser.i18n.getMessage(`period_${period}`)}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl>
+                            <InputLabel id={`period-end-${index}-label`}>
+                                {browser.i18n.getMessage("course_settings_dialog_timetable_header_period_end")}
+                            </InputLabel>
+                            <Select
+                                labelId={`period-end-${index}-label`}
+                                value={entry.period.toInclusive}
+                                onChange={handleChangePeriodEnd(index)}
+                                label={browser.i18n.getMessage("course_settings_dialog_timetable_header_period_end")}
+                            >
+                                {[1, 2, 3, 4, 5, 6, 7].map((period) => (
+                                    <MenuItem key={period} value={period}>
+                                        {browser.i18n.getMessage(`period_${period}`)}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <TextField
+                            label={browser.i18n.getMessage("course_settings_dialog_timetable_header_classroom")}
+                            variant="outlined"
+                            value={entry.classroom}
+                            onChange={handleChangeClassroom(index)}
+                        />
+
+                        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                            {(() => {
+                                const conflictWith = conflicts.find(
+                                    (conflict) => conflict.index === index
+                                )?.conflictWith;
+                                if (!conflictWith) return undefined;
+
+                                let title;
+                                if (conflictWith.courseId === courseId) {
+                                    title = browser.i18n.getMessage(
+                                        "course_settings_dialog_timetable_conflict_with_nth_entry",
+                                        conflictWith.index + 1
+                                    );
+                                } else {
+                                    title = browser.i18n.getMessage(
+                                        "course_settings_dialog_timetable_conflict_with_other_course"
+                                    );
+                                }
+                                return (
+                                    <>
+                                        <Typography color="error">
+                                            <ErrorIcon />
+                                            {title}
+                                        </Typography>
+                                    </>
+                                );
+                            })()}
+                            <div style={{ flexGrow: 1 }} />
+                            <Button onClick={handleDeleteEntry(index)} startIcon={<DeleteIcon />} variant="outlined">
+                                {browser.i18n.getMessage("course_settings_dialog_timetable_header_delete_entry")}
+                            </Button>
+                        </div>
+                    </Stack>
+                </Paper>
+            ))}
+
+            <Button variant="outlined" onClick={handleAddEntry} startIcon={<AddIcon />}>
+                {browser.i18n.getMessage("course_settings_dialog_timetable_add_entry")}
+            </Button>
+        </Stack>
     );
 };
 
