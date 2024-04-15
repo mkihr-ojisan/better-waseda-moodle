@@ -74,8 +74,10 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ cou
             note: notes[course.id] ?? "",
             assignmentFilenameTemplate:
                 assignmentFilenameTemplates[course.id] ?? getConfig(ConfigKey.AssignmentFilenameTemplate),
+            customCourseUrl: isCustomCourse(course) ? course.url ?? undefined : undefined,
         };
     });
+    const [customCourses, setCustomCourses] = useConfig(ConfigKey.CustomCourses);
 
     const { value: defaultColor } = usePromise(async () => {
         if (isMoodleCourse(course)) {
@@ -134,6 +136,14 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ cou
         });
         setTimetableData(mergedTimetableData);
 
+        if (isCustomCourse(course)) {
+            setCustomCourses(
+                customCourses.map((c) =>
+                    c.id === course.id ? { ...c, url: generalValues.customCourseUrl || null } : c
+                )
+            );
+        }
+
         onClose();
     };
 
@@ -145,7 +155,7 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ cou
 
     return (
         <>
-            <DialogTitle sx={{ paddingRight: "64px" }}>
+            <DialogTitle sx={{ paddingRight: "64px", maxWidth: "750px" }}>
                 {browser.i18n.getMessage("course_settings_dialog_title", course.name)}
             </DialogTitle>
             <IconButton
