@@ -38,6 +38,8 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
     const theme = useTheme();
     const compact = useMediaQuery(theme.breakpoints.down("lg")) && props.inTimetable;
     const veryCompact = useMediaQuery(theme.breakpoints.down("sm")) && props.inTimetable;
+    const mostCompact = useMediaQuery(theme.breakpoints.only("xs")) && props.inTimetable;
+
     const context = useCourseOverviewContext();
     const [appearanceOptions] = useConfig(ConfigKey.CourseOverviewAppearanceOptions);
 
@@ -70,7 +72,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
         const observer = new ResizeObserver(() => {
             if (!rootElem.current) return;
             const rootHeight = rootElem.current.getBoundingClientRect().height;
-            let lines = Math.floor((rootHeight - 16) / (24 * (compact ? 0.8 : 1)));
+            let lines = Math.floor((rootHeight - 16) / (24 * (mostCompact ? 0.7 : compact ? 0.8 : 1)));
             if (showDeliveryMethod) lines--;
             if (showTags) lines--;
             setCourseTitleLineClamp(Math.max(1, Math.floor(lines)));
@@ -80,7 +82,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
         return () => {
             observer.disconnect();
         };
-    }, [showDeliveryMethod, showTags, compact]);
+    }, [showDeliveryMethod, showTags, compact, mostCompact]);
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [menuAnchorEl, setMenuAnchorEl] = useState<HTMLElement | null>(null);
@@ -94,7 +96,9 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
     return (
         <Paper
             sx={{
-                borderLeft: appearanceOptions.showCourseColor ? `${theme.spacing(1)} solid ${color}` : "none",
+                [veryCompact ? "borderTop" : "borderLeft"]: appearanceOptions.showCourseColor
+                    ? `${theme.spacing(1)} solid ${color}`
+                    : "none",
                 display: "flex",
                 flexDirection: "column",
                 flexShrink: 2,
@@ -143,8 +147,11 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                             WebkitBoxOrient: "vertical",
                             overflow: "hidden",
                             minHeight: 0,
-                            [theme.breakpoints.down("lg")]: {
+                            [theme.breakpoints.between("sm", "lg")]: {
                                 fontSize: props.inTimetable ? "0.8em" : "1em",
+                            },
+                            [theme.breakpoints.down("sm")]: {
+                                fontSize: props.inTimetable ? "0.7em" : "1em",
                             },
                         }}
                         color="text.primary"
@@ -197,6 +204,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                             {note}
                                         </Typography>
                                     }
+                                    enterTouchDelay={0}
                                 >
                                     <IconButton
                                         size="small"
@@ -226,8 +234,11 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                             width: "100%",
                             display: "flex",
                             alignItems: "center",
-                            [theme.breakpoints.down("lg")]: {
+                            [theme.breakpoints.between("sm", "lg")]: {
                                 fontSize: props.inTimetable ? "0.8em" : "1em",
+                            },
+                            [theme.breakpoints.down("sm")]: {
+                                fontSize: props.inTimetable ? "0.7em" : "1em",
                             },
                         }}
                         title={
@@ -236,7 +247,7 @@ export const CourseCard = memo(function CourseCard(props: CourseCardProps) {
                                 : browser.i18n.getMessage("course_overview_course_face_to_face")
                         }
                     >
-                        <PeopleAltIcon fontSize={compact ? "small" : "medium"} />
+                        <PeopleAltIcon sx={{ fontSize: "1.25em" }} />
                         <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {classroom || browser.i18n.getMessage("course_overview_course_face_to_face")}
                         </span>
