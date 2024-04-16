@@ -18,7 +18,7 @@ export const ResponsePanel: FC = () => {
     }, [context.result, query]);
 
     return (
-        <Stack p={1} sx={{ overflow: "scroll", width: "100%", height: "100%" }}>
+        <Stack p={1} sx={{ overflow: "auto", width: "100%", height: "100%" }}>
             <TextField
                 label="Query"
                 fullWidth
