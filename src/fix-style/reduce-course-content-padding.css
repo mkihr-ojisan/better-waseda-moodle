@@ -23,10 +23,6 @@
     margin-right: 8px !important;
 }
 
-.activity-info {
-    align-self: center !important;
-}
-
 .description .course-description-item:first-child {
     margin-top: 0 !important;
     padding-top: 0 !important;
@@ -43,14 +39,46 @@ p {
     padding: 0 !important;
 }
 
-.activity-item .afterlink {
-    align-self: center !important;
-    display: inline !important;
+@media (min-width: 768px) {
+    .activity-item .afterlink {
+        align-self: center !important;
+        display: inline !important;
+        flex-grow: 1 !important;
+    }
+
+    .activity-item > .activity-basis > div {
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+
+    .activity-item:not(:has(.afterlink)) > .activity-basis > div > .activity-instance {
+        flex-grow: 1 !important;
+    }
+
+    .activity-item > .activity-basis > div > .activity-info {
+        margin-top: 0 !important;
+        align-self: center !important;
+    }
+
+    .automatic-completion-conditions {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+    }
+
+    .sectionbody {
+        padding-left: 32px !important;
+    }
+
+    .content {
+        margin-left: 0 !important;
+    }
 }
 
-.activity-item .activity-info {
-    float: right !important;
-    padding: 0 !important;
+@media (max-width: 768px) {
+    .content {
+        margin: 0 !important;
+    }
 }
 
 .activity-item .media-body {
@@ -62,10 +90,6 @@ p {
 
 body:not(.theme_snap) li.modtype_hsuforum .afterlink {
     margin: 0 !important;
-}
-
-.sectionbody {
-    padding-left: 32px !important;
 }
 
 .tertiary-navigation {
@@ -91,4 +115,22 @@ body:not(.theme_snap) li.modtype_hsuforum .afterlink {
 
 .ct-activity-mod-feedback {
     margin-left: 40px !important;
+}
+
+.toggle {
+    border-radius: 0 !important;
+}
+
+.toggle:hover,
+.toggle:focus {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+.format-topcoll .course-content ul.topics,
+#section-0 {
+    background-color: unset !important;
+}
+
+#section-0 > .left.side {
+    width: 0 !important;
 }
