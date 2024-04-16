@@ -66,6 +66,14 @@ export default {
                                 onClick={() => window.open(browser.runtime.getURL("/config-editor/config-editor.html"))}
                             />
                             <Divider />
+                            <Launch
+                                text="Reset Config"
+                                onClick={() => {
+                                    browser.storage.sync.clear();
+                                    browser.runtime.reload();
+                                }}
+                            />
+                            <Divider />
                         </DevModeOnly>
                     </List>
                 </Box>
