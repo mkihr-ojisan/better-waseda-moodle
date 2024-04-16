@@ -57,6 +57,10 @@ export const moodleCourseProvider: CourseProvider = {
             );
         }
     },
+
+    mergeCourses(courses) {
+        return courses;
+    },
 };
 
 /**

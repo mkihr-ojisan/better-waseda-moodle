@@ -43,6 +43,8 @@ export enum ConfigKey {
     CourseNotes = 30,
     /** ユーザーが追加したコース */
     CustomCourses = 37,
+    /** カスタム科目と同じ科目がMoodleに追加されたときに自動的に統合するかどうか */
+    MergeCustomCourses = 41,
 
     // ========小テスト========
     /** 小テストの残り時間を見やすくする機能が有効かどうか */
@@ -217,9 +219,11 @@ export const CONFIG_VALUE_TYPE_DEF = {
                 ["name", "string"],
                 ["url", { nullable: "string" }],
                 ["hidden", "boolean"],
+                ["courseKey", { nullable: "string" }],
             ],
         },
     },
+    [ConfigKey.MergeCustomCourses]: "boolean",
     [ConfigKey.MoreVisibleRemainingTimeEnabled]: "boolean",
     [ConfigKey.RemindUnansweredQuestionsEnabled]: "boolean",
     [ConfigKey.RemindUnansweredQuestionsOnlySequentialQuiz]: "boolean",
@@ -283,6 +287,7 @@ export const CONFIG_DEFAULT_VALUES = {
     },
     [ConfigKey.CourseNotes]: {},
     [ConfigKey.CustomCourses]: [],
+    [ConfigKey.MergeCustomCourses]: true,
     [ConfigKey.MoreVisibleRemainingTimeEnabled]: true,
     [ConfigKey.RemindUnansweredQuestionsEnabled]: true,
     [ConfigKey.RemindUnansweredQuestionsOnlySequentialQuiz]: true,

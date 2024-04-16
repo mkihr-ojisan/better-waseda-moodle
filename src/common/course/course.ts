@@ -1,4 +1,5 @@
-import { WithCache, concatWithCache } from "../util/withCache";
+import { ConfigKey, getConfig } from "../config/config";
+import { WithCache, concatWithCache, mapWithCache } from "../util/withCache";
 import { CustomCourse, customCourseProvider } from "./provider/custom";
 import { MoodleCourse, moodleCourseProvider } from "./provider/moodle";
 
@@ -23,12 +24,25 @@ export interface CourseProvider {
     id: string;
     getCourses: WithCache<readonly Course[]>;
     setHidden(courseId: string, hidden: boolean): Promise<void>;
+    mergeCourses(courses: readonly Course[]): readonly Course[];
 }
 
 const courseProviders = [moodleCourseProvider, customCourseProvider];
 
 /** 科目のリストを取得する。このAsyncGeneratorはまずキャッシュをyieldし、その後取得したデータをyieldする。 */
-export const fetchCourses = concatWithCache<Course>(courseProviders.map((p) => p.getCourses));
+export const fetchCourses = mapWithCache<readonly Course[], readonly Course[]>(
+    concatWithCache<Course>(courseProviders.map((p) => p.getCourses)),
+    (courses) => {
+        if (!getConfig(ConfigKey.MergeCustomCourses)) {
+            return courses;
+        }
+
+        for (const provider of courseProviders) {
+            courses = provider.mergeCourses(courses);
+        }
+        return courses;
+    }
+);
 
 export type CourseWithSetHidden = Course & {
     /** 科目の非表示状態を変更する。このメソッドはキャッシュも更新する */

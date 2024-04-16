@@ -23,7 +23,7 @@ const AddCustomCourseDialogContent: FC<AddCustomCourseDialogProps> = (props) => 
     const [url, setUrl] = useState("");
 
     const handleAdd = async () => {
-        await call("addCustomCourse", { name, url, hidden: false });
+        await call("addCustomCourse", { name, url, hidden: false, courseKey: null });
         props.onClose();
         context.reloadCourses(true);
     };

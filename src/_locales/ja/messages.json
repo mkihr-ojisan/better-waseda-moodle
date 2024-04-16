@@ -325,6 +325,14 @@
         "message": "Waseda Moodle標準のコース概要とタイムラインの取得をブロックすることでサーバー負荷を軽減し、レスポンス速度を向上させます。このオプションを有効にすると、ダッシュボードのタイムラインが表示されなくなります。",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
+    "options_page_section_course_overview_merge_custom_courses": {
+        "message": "カスタム科目を統合する",
+        "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+    },
+    "options_page_section_course_overview_merge_custom_courses_description": {
+        "message": "ユーザーが追加した科目と同じ科目がMoodleに追加されたときに、自動的に統合します。",
+        "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+    },
     "options_page_section_quiz_title": {
         "message": "小テスト",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
