@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Better Waseda Moodle</title>
+        <style>
+            html,
+            body,
+            #container {
+                margin: 0;
+                user-select: none;
+            }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Better Waseda Moodle</title>
-    <style>
-        html,
-        body,
-        #container {
-            margin: 0;
-            /* firefoxでオーバーフローメニューにピン留めしたときの固定幅 */
-            width: 387px;
-            height: 500px;
-            user-select: none;
-        }
+            /* ポップアップではサイズを固定 */
+            html,
+            body,
+            #container {
+                width: 400px;
+                height: 600px;
+            }
 
-        /* ポップアップではなくタブで表示している場合は100%にする */
-        html.tab,
-        .tab body,
-        .tab #container {
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-</head>
+            /* タブで開いている場合は100% */
+            html.tab,
+            html.tab body,
+            html.tab #container {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
 
-<body>
-    <div id="container"></div>
-    <script src="./popup.js" defer></script>
-</body>
-
+    <body>
+        <div id="container"></div>
+        <script src="./popup.js" defer></script>
+    </body>
 </html>

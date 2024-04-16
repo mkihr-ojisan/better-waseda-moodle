@@ -2,7 +2,7 @@ import { useAsyncGenerator } from "@/common/react/hooks/useAsyncGenerator";
 import { call } from "@/common/util/messenger/client";
 import { Box, Typography } from "@mui/material";
 import React, { FC, useCallback, useEffect } from "react";
-import { PopupFooter } from "./PopupFooter";
+import { PopupHeader } from "./PopupHeader";
 import { Center } from "@/common/react/Center";
 import { TimelineEventList } from "./TimelineEventList";
 import { useNotify } from "@/common/react/notification";
@@ -27,11 +27,13 @@ export const Popup: FC = () => {
         <Box
             sx={{
                 display: "grid",
-                gridTemplateRows: "1fr 48px",
+                gridTemplateRows: "48px 1fr",
                 width: "100%",
                 height: "100%",
             }}
         >
+            <PopupHeader forceReloadTimeline={handleForceReloadTimeline} isTimelineLoading={state !== "done"} />
+
             {(!events || events.length === 0) && (
                 <Center>
                     <Typography variant="body2" color="text.secondary">
@@ -39,9 +41,7 @@ export const Popup: FC = () => {
                     </Typography>
                 </Center>
             )}
-
             {events && events.length > 0 && <TimelineEventList events={events} reloadTimeline={reload} />}
-            <PopupFooter forceReloadTimeline={handleForceReloadTimeline} isTimelineLoading={state !== "done"} />
         </Box>
     );
 };
