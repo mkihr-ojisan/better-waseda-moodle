@@ -77,6 +77,10 @@ export enum ConfigKey {
     TimelineHiddenModuleNames = 26,
     /** タイムラインで日付を表示するとき、日付の境界のオフセット(ミリ秒単位) */
     TimelineDateBorderOffset = 27,
+    /** タイムラインに期限が近いイベントがある場合にアイコンにバッジを表示する機能 */
+    TimelineBadgeEnabled = 42,
+    /** バッジに表示する期限の範囲 */
+    TimelineBadgeDeadlineRange = 43,
 
     // ========その他の機能========
     /** ファイルを保存せずにブラウザで表示する機能が有効かどうか */
@@ -243,6 +247,8 @@ export const CONFIG_VALUE_TYPE_DEF = {
         arrayElements: "string",
     },
     [ConfigKey.TimelineDateBorderOffset]: "number",
+    [ConfigKey.TimelineBadgeEnabled]: "boolean",
+    [ConfigKey.TimelineBadgeDeadlineRange]: "number",
     [ConfigKey.RemoveLoadingVideoEnabled]: "boolean",
     [ConfigKey.ViewInBrowserEnabled]: "boolean",
     [ConfigKey.CheckNotesOnSubmittingEnabled]: "boolean",
@@ -301,6 +307,8 @@ export const CONFIG_DEFAULT_VALUES = {
     [ConfigKey.TimelineHiddenCourses]: [],
     [ConfigKey.TimelineHiddenModuleNames]: [],
     [ConfigKey.TimelineDateBorderOffset]: 0,
+    [ConfigKey.TimelineBadgeEnabled]: false,
+    [ConfigKey.TimelineBadgeDeadlineRange]: 7 * 24 * 60 * 60 * 1000,
     [ConfigKey.RemoveLoadingVideoEnabled]: true,
     [ConfigKey.ViewInBrowserEnabled]: false,
     [ConfigKey.CheckNotesOnSubmittingEnabled]: true,
@@ -330,6 +338,7 @@ export async function initConfig(): Promise<void> {
 
         for (const [key, { newValue }] of Object.entries(changes)) {
             const oldValue = cache[key];
+            cache[key] = newValue;
 
             const keyListeners = listeners.get(key);
             if (keyListeners) {
@@ -347,8 +356,6 @@ export async function initConfig(): Promise<void> {
                     listener(decompressedNewValue);
                 }
             }
-
-            cache[key] = newValue;
         }
     });
 }
