@@ -48,7 +48,7 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
     }
 
     return (
-        <Stack p={1} spacing={1} sx={{ overflowY: "scroll" }}>
+        <Stack p={1} spacing={1} sx={{ overflowY: "auto" }}>
             {props.events.map((event, i) => {
                 const eventDate = new Date(event.timesort * 1000);
                 return (

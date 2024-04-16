@@ -181,7 +181,7 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ cou
                         maxWidth: 750,
                         height: props.fullscreen ? undefined : 450,
                         flexGrow: props.fullscreen ? 1 : 0,
-                        overflow: "scroll",
+                        overflow: "auto",
                     }}
                 >
                     <TabPanel value="general">
