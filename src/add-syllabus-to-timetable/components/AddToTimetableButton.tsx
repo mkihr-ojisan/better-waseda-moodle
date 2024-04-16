@@ -68,6 +68,7 @@ export const AddToTimetableButton: FC = () => {
                 name: syllabus.courseInformation.courseTitle ?? "",
                 url: location.href,
                 hidden: false,
+                courseKey: syllabus.courseInformation.courseKey ?? "",
             });
         }
 

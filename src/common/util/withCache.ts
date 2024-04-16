@@ -152,3 +152,26 @@ export function noopWithCache<T>(f: () => Promise<T>): WithCache<T> {
 
     return func;
 }
+
+/**
+ * 関数を適用した結果を返すWithCacheを返す
+ *
+ * @param withCache - WithCache
+ * @param f - 関数
+ * @returns WithCache
+ */
+export function mapWithCache<T, U>(withCache: WithCache<T>, f: (value: T) => U): WithCache<U> {
+    const func = async function* () {
+        for await (const value of withCache()) {
+            yield f(value);
+        }
+    };
+
+    func.invalidateCache = withCache.invalidateCache;
+
+    func.promise = async () => f(await withCache.promise());
+
+    func.storage = undefined as IDBCacheStorage<U> | undefined;
+
+    return func;
+}
