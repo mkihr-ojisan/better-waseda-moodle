@@ -1,5 +1,5 @@
 import { Box, Container, Paper, Stack, Toolbar, Typography } from "@mui/material";
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { OptionsPageSection, useOptionsPageContext } from "./OptionsPage";
 
 const SCROLL_OFFSET = 88; // AppBarと余白の分
@@ -33,16 +33,15 @@ const SectionRoot: FC<{ section: OptionsPageSection }> = (props) => {
         }
     }, [context, props.section.id]);
 
+    const [marginBottom, setMarginBottom] = useState("0");
+    useEffect(() => {
+        if (elem.current && elem.current.parentElement && elem.current.parentElement.lastChild === elem.current) {
+            setMarginBottom(window.innerHeight - elem.current.offsetHeight - 88 + "px");
+        }
+    }, []);
+
     return (
-        <Box
-            id={`section-${props.section.id}`}
-            ref={elem}
-            sx={{
-                "&:last-child > .MuiPaper-root": {
-                    marginBottom: "calc(100vh - 100% - 30px)",
-                },
-            }}
-        >
+        <Box id={`section-${props.section.id}`} ref={elem} sx={{ "&&&&&&": { marginBottom } }}>
             <Typography variant="h6">{browser.i18n.getMessage(props.section.title)}</Typography>
             <Paper>
                 <props.section.Component />
