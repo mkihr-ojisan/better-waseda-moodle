@@ -1,5 +1,3 @@
-import { convert, ConvertArrayOptions } from "encoding-japanese";
-
 /**
  * Cookieを含めてfetchする
  *
@@ -64,30 +62,16 @@ export function postJSON<T>(input: RequestInfo | URL, body: unknown, init: Reque
  * @param input - URL
  * @param form - 送信するフォーム
  * @param init - リクエストのオプション
- * @param encoding - エンコーディング(デフォルトはUTF-8)
  * @returns レスポンス
  */
 export function postForm(
     input: RequestInfo | URL,
     form: Record<string, string>,
-    init: RequestInit = {},
-    encoding?: string
+    init: RequestInit = {}
 ): Promise<Response> {
-    let body;
-    if (encoding) {
-        body = Object.entries(form)
-            .map(
-                ([key, value]) =>
-                    `${key}=${convert(value, { to: encoding, type: "array" } as ConvertArrayOptions)
-                        .map((x) => `%${x.toString(16)}`)
-                        .join("")}`
-            )
-            .join("&");
-    } else {
-        body = Object.entries(form)
-            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-            .join("&");
-    }
+    const body = Object.entries(form)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join("&");
 
     return fetchWithCredentials(input, {
         method: "POST",
@@ -105,30 +89,16 @@ export function postForm(
  * @param input - URL
  * @param form - 送信するフォーム
  * @param init - リクエストのオプション
- * @param encoding - エンコーディング(デフォルトはUTF-8)
  * @returns レスポンス
  */
 export function postFormAndParse(
     input: RequestInfo | URL,
     form: Record<string, string>,
-    init: RequestInit = {},
-    encoding?: string
+    init: RequestInit = {}
 ): Promise<Document> {
-    let body;
-    if (encoding) {
-        body = Object.entries(form)
-            .map(
-                ([key, value]) =>
-                    `${key}=${convert(value, { to: encoding, type: "array" } as ConvertArrayOptions)
-                        .map((x) => `%${x.toString(16).toUpperCase()}`)
-                        .join("")}`
-            )
-            .join("&");
-    } else {
-        body = Object.entries(form)
-            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
-            .join("&");
-    }
+    const body = Object.entries(form)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join("&");
     return fetchHTML(input, {
         method: "POST",
         headers: {
