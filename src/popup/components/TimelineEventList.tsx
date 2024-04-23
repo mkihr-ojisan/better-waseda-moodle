@@ -48,13 +48,18 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
     }
 
     return (
-        <Stack p={1} spacing={1} sx={{ overflowY: "auto" }}>
+        <Stack p={1} sx={{ overflowY: "auto" }}>
             {props.events.map((event, i) => {
                 const eventDate = new Date(event.timesort * 1000);
                 return (
                     <Fragment key={event.id}>
                         {!isSameDay(eventDate, props.events[i - 1]?.timesort * 1000) && (
-                            <Typography variant="body2" color={isPast(eventDate) ? "error.main" : "text.primary"}>
+                            <Typography
+                                variant="body2"
+                                color={isPast(eventDate) ? "error.main" : "text.primary"}
+                                fontWeight="bold"
+                                sx={{ mt: 0.5 }}
+                            >
                                 {isSameYear(eventDate, new Date())
                                     ? dateFormat.format(eventDate)
                                     : dateWithYearFormat.format(eventDate)}

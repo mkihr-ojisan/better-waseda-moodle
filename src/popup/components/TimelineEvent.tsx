@@ -1,24 +1,22 @@
 import { ActionEvent } from "@/common/api/moodle/calendar";
 import {
-    Box,
     Divider,
-    Grid,
     IconButton,
     ListItemIcon,
     ListItemText,
     Menu,
     MenuItem,
-    Paper,
     Typography,
+    alpha,
+    useTheme,
 } from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
 import { TimelineEventIcon } from "./TimelineEventIcon";
-import { Center } from "@/common/react/Center";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import LaunchIcon from "@mui/icons-material/Launch";
 import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { DateTimeFormat } from "@/common/util/intl";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 export type TimelineEventProps = {
     event: ActionEvent;
@@ -31,6 +29,9 @@ const timeFormat = new DateTimeFormat({
 });
 
 export const TimelineEvent: FC<TimelineEventProps> = (props) => {
+    const theme = useTheme();
+    const textPrimaryColor = theme.palette.text.primary;
+
     const handleLinkClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
         const href = (event.target as HTMLAnchorElement).href;
         if (href) {
@@ -83,84 +84,65 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
     }, [handleCloseMenu, props]);
 
     return (
-        <Paper
-            sx={{
-                display: "grid",
-                position: "relative",
+        <div
+            style={{
+                display: "flex",
+                alignItems: "center",
                 height: 48,
-                gridTemplateColumns: "48px 1fr 48px",
+                borderBottom: `1px solid ${alpha(textPrimaryColor, 0.25)}`,
+                gap: 8,
             }}
         >
-            <Box
-                component="div"
-                sx={{
+            <div
+                style={{
                     width: 48,
-                    height: 48,
-                    padding: 1,
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
                 }}
             >
+                <Typography variant="caption">{timeFormat.format(props.event.timesort * 1000)}</Typography>
+            </div>
+            <div style={{ width: 32, height: 32, flexShrink: 0 }}>
                 <TimelineEventIcon event={props.event} />
-            </Box>
-            <Grid
-                container
-                justifyContent="center"
-                alignItems="flex-start"
-                direction="column"
-                sx={{
+            </div>
+
+            <div
+                style={{
+                    flexGrow: 1,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "flex-start",
+                    flexDirection: "column",
                     overflow: "hidden",
-                    width: "100%",
-                    flexWrap: "nowrap",
                 }}
             >
-                <Grid
-                    container
-                    sx={{
-                        overflow: "hidden",
-                        width: "100%",
-                        flexWrap: "nowrap",
-                    }}
-                >
-                    {props.event.course && (
-                        <Typography
-                            variant="caption"
-                            color="text.secondary"
-                            component="a"
-                            href={props.event.course.viewurl}
-                            onClick={handleLinkClick}
-                            title={props.event.course.fullname}
-                            sx={{
-                                display: "inline-block",
-                                maxWidth: "100%",
-                                textOverflow: "ellipsis",
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textDecoration: "none",
-                                "&[href]:hover": {
-                                    textDecoration: "underline",
-                                    color: (theme) => theme.palette.primary.main,
-                                },
-                            }}
-                        >
-                            {props.event.course.fullname}
-                        </Typography>
-                    )}
-                    <Grid item sx={{ flexGrow: 1 }} />
-                    {props.event.timesort && (
-                        <Typography
-                            variant="caption"
-                            color="text.secondary"
-                            sx={{
-                                display: "inline-block",
-                                maxWidth: "100%",
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                flexShrink: 0,
-                            }}
-                        >
-                            {timeFormat.format(props.event.timesort * 1000)}
-                        </Typography>
-                    )}
-                </Grid>
+                {props.event.course && (
+                    <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        component="a"
+                        href={props.event.course.viewurl}
+                        onClick={handleLinkClick}
+                        title={props.event.course.fullname}
+                        sx={{
+                            display: "inline-block",
+                            width: "100%",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                            textDecoration: "none",
+                            "&[href]:hover": {
+                                textDecoration: "underline",
+                                color: (theme) => theme.palette.primary.main,
+                            },
+                        }}
+                    >
+                        {props.event.course.fullname}
+                    </Typography>
+                )}
                 <Typography
                     variant="body2"
                     color="textPrimary"
@@ -170,7 +152,7 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                     title={props.event.name}
                     sx={{
                         display: "inline-block",
-                        maxWidth: "100%",
+                        width: "100%",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
                         whiteSpace: "nowrap",
@@ -183,12 +165,13 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                 >
                     {props.event.name}
                 </Typography>
-            </Grid>
-            <Center>
+            </div>
+
+            <div style={{ flexShrink: 0 }}>
                 <IconButton size="small" onClick={handleOpenMenu}>
                     <MoreVertIcon />
                 </IconButton>
-            </Center>
+            </div>
 
             <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleCloseMenu}>
                 {props.event.action &&
@@ -221,6 +204,6 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                     </MenuItem>
                 )}
             </Menu>
-        </Paper>
+        </div>
     );
 };

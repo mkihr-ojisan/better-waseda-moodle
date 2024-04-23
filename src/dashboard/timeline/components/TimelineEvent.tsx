@@ -9,7 +9,9 @@ import {
     MenuItem,
     Theme,
     Typography,
+    alpha,
     useMediaQuery,
+    useTheme,
 } from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
 import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
@@ -30,7 +32,9 @@ const timeFormat = new DateTimeFormat({
 });
 
 export const TimelineEvent: FC<TimelineEventProps> = (props) => {
+    const theme = useTheme();
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
+    const textPrimaryColor = theme.palette.text.primary;
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleOpenMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,7 +84,7 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                 display: "flex",
                 alignItems: "center",
                 height: 48,
-                borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+                borderBottom: `1px solid ${alpha(textPrimaryColor, 0.25)}`,
                 gap: 8,
             }}
         >
