@@ -15,14 +15,10 @@ export const PopupHeader: FC<PopupHeaderProps> = (props) => {
     }, []);
 
     return (
-        <Paper square sx={{ zIndex: 1 }} elevation={5}>
-            <div style={{ display: "flex", alignItems: "center" }}>
-                <img
-                    src="/res/images/icon.svg"
-                    style={{ width: "48px", height: "48px", boxSizing: "border-box", padding: "8px" }}
-                />
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
-                    {browser.runtime.getManifest().name}
+        <Paper square sx={{ p: 1, zIndex: 1 }} elevation={5}>
+            <div style={{ height: "100%", display: "flex", alignItems: "center" }}>
+                <Typography variant="body1" sx={{ m: 1, flexGrow: 1 }} fontWeight="bold">
+                    {browser.i18n.getMessage("timeline_title")}
                 </Typography>
                 {props.isTimelineLoading ? (
                     <CircularProgress size={24} sx={{ margin: 1 }} />

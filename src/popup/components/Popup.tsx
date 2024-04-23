@@ -3,10 +3,10 @@ import { call } from "@/common/util/messenger/client";
 import { Box, Typography } from "@mui/material";
 import React, { FC, useCallback, useEffect } from "react";
 import { PopupHeader } from "./PopupHeader";
-import { Center } from "@/common/react/Center";
 import { TimelineEventList } from "./TimelineEventList";
 import { useNotify } from "@/common/react/notification";
 import { errorToString } from "@/common/error";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 export const Popup: FC = () => {
     const { value: events, reload, state, error } = useAsyncGenerator(() => call("fetchMoodleTimeline"), []);
@@ -41,11 +41,21 @@ export const Popup: FC = () => {
             <PopupHeader forceReloadTimeline={handleForceReloadTimeline} isTimelineLoading={state !== "done"} />
 
             {(!events || events.length === 0) && (
-                <Center>
-                    <Typography variant="body2" color="text.secondary">
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        gap: 8,
+                        padding: 16,
+                    }}
+                >
+                    {state === "done" && <TaskAltIcon sx={{ fontSize: 48 }} />}
+                    <Typography variant="body1">
                         {browser.i18n.getMessage(state === "done" ? "timeline_empty" : "timeline_loading")}
                     </Typography>
-                </Center>
+                </div>
             )}
             {events && events.length > 0 && <TimelineEventList events={events} reloadTimeline={reload} />}
         </Box>
