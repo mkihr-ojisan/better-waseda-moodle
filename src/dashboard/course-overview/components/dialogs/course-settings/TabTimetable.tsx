@@ -196,7 +196,7 @@ const TabTimetableContentDesktop: FC<TabTimetableContentProps> = ({
                 <TableBody>
                     {timetableData.length === 0 && (
                         <TableRow>
-                            <TableCell colSpan={8} align="center">
+                            <TableCell colSpan={8} align="center" width={1000}>
                                 {browser.i18n.getMessage("course_settings_dialog_timetable_no_entries")}
                             </TableCell>
                         </TableRow>
