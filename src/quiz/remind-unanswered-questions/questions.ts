@@ -109,11 +109,10 @@ function checkIfAnswered(elem: Element, type: QuestionType): boolean {
         case "multichoiceset": {
             const names: Record<string, boolean | undefined> = {};
             for (const radio of Array.from(elem.querySelectorAll("input[type=radio]")) as HTMLInputElement[]) {
-                if (!names[radio.name] && radio.value !== "-1") {
-                    names[radio.name] = radio.checked;
+                if (!names[radio.name] && radio.value !== "-1" && radio.checked) {
+                    return true;
                 }
             }
-            if (Object.values(names).every((checked) => checked)) return true;
 
             return Array.from(elem.querySelectorAll("input[type=checkbox]")).some(
                 (e) => (e as HTMLInputElement).checked
