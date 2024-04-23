@@ -18,7 +18,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://wsdmoodle.waseda.jp/*"],
+            "matches": ["https://wsdmoodle.waseda.jp/*", "https://www.wsl.waseda.jp/syllabus/JAA104.php*"],
             "js": ["content.js"],
             "run_at": "document_end"
         },

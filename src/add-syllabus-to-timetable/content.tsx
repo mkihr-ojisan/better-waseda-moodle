@@ -2,10 +2,11 @@ import { BWMRoot } from "@/common/react/root";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { AddToTimetableButton } from "./components/AddToTimetableButton";
-import { initConfig } from "@/common/config/config";
+import { ConfigKey, getConfig, initConfig } from "@/common/config/config";
 
 (async () => {
     await initConfig();
+    if (!getConfig(ConfigKey.CourseOverviewEnabled)) return;
 
     const elem = document.getElementById("cHonbun");
     if (!elem) return;

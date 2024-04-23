@@ -21,10 +21,10 @@ import { initTimeline } from "./popup/background";
 import { initAutoSessionExtension } from "./auto-session-extension/background";
 import { initLauncher } from "./launcher/background";
 import { initAssignmentFilename } from "./assignment-filename/background";
-import { initAddSyllabusToTimetable } from "./add-syllabus-to-timetable/background";
 import { DayOfWeek, Term, getTimetableData, setTimetableData } from "./common/course/timetable";
 import { callMoodleMobileAPI, getWebServiceToken } from "./common/api/moodle/mobileAPI";
 import { initBlockTracking } from "./block-tracking/background";
+import { initMoreVisibleRemainingTime } from "./quiz/more-visible-remaining-time/background";
 
 assertExtensionContext("background");
 
@@ -45,8 +45,8 @@ assertExtensionContext("background");
     initAutoSessionExtension();
     initLauncher();
     initAssignmentFilename();
-    initAddSyllabusToTimetable();
     initBlockTracking();
+    initMoreVisibleRemainingTime();
 
     if (process.env.NODE_ENV === "development") {
         debug();
