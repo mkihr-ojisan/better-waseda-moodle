@@ -23,6 +23,12 @@ export const Popup: FC = () => {
         }
     }, [error, notify, state]);
 
+    useEffect(() => {
+        if (state === "done") {
+            call("updateBadge");
+        }
+    }, [state]);
+
     return (
         <Box
             sx={{

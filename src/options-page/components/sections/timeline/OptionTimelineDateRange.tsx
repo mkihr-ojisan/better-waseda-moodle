@@ -1,20 +1,29 @@
 import { ConfigKey } from "@/common/config/config";
 import { useConfig } from "@/common/config/useConfig";
 import { NumberFormat } from "@/common/util/intl";
-import { ListItem, ListItemText, TextField } from "@mui/material";
-import React, { FC } from "react";
+import { ListItem, ListItemText, TextField, Typography } from "@mui/material";
+import React, { FC, useContext } from "react";
+import { DisableOptionsContext } from "../../items/DisableOptions";
 
 const numberFormat = new NumberFormat({ style: "unit", unit: "day", useGrouping: false });
 
 export const OptionTimelineDateRange: FC = () => {
+    const disabled = useContext(DisableOptionsContext);
+
     const [backwardDays, setBackwardDays] = useConfig(ConfigKey.TimelineBackwardDays);
     const [forwardDays, setForwardDays] = useConfig(ConfigKey.TimelineForwardDays);
 
+    const color = disabled ? "text.disabled" : "text.primary";
+
     return (
         <ListItem sx={{ flexWrap: "wrap", justifyContent: "end" }}>
-            <ListItemText>{browser.i18n.getMessage("options_page_section_timeline_date_range")}</ListItemText>
+            <ListItemText primaryTypographyProps={{ color }}>
+                {browser.i18n.getMessage("options_page_section_timeline_date_range")}
+            </ListItemText>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "end", width: "auto" }}>
-                <div>{browser.i18n.getMessage("options_page_section_timeline_date_range_from")}</div>
+                <Typography variant="body1" color={color}>
+                    {browser.i18n.getMessage("options_page_section_timeline_date_range_from")}
+                </Typography>
                 {numberFormat.formatToParts(backwardDays).map((part) => {
                     if (part.type === "integer") {
                         return (
@@ -26,13 +35,20 @@ export const OptionTimelineDateRange: FC = () => {
                                 onChange={(e) => setBackwardDays(parseInt(e.target.value))}
                                 sx={{ width: 100 }}
                                 inputProps={{ min: 0 }}
+                                disabled={disabled}
                             />
                         );
                     } else {
-                        return <div key={part.type}>{part.value}</div>;
+                        return (
+                            <Typography variant="body1" color={color} key={part.type}>
+                                {part.value}
+                            </Typography>
+                        );
                     }
                 })}
-                <div>{browser.i18n.getMessage("options_page_section_timeline_date_range_ago_to")}</div>
+                <Typography variant="body1" color={color}>
+                    {browser.i18n.getMessage("options_page_section_timeline_date_range_ago_to")}
+                </Typography>
                 {numberFormat.formatToParts(forwardDays).map((part) => {
                     if (part.type === "integer") {
                         return (
@@ -44,13 +60,20 @@ export const OptionTimelineDateRange: FC = () => {
                                 onChange={(e) => setForwardDays(parseInt(e.target.value))}
                                 sx={{ width: 100 }}
                                 inputProps={{ min: 0 }}
+                                disabled={disabled}
                             />
                         );
                     } else {
-                        return <div key={part.type}>{part.value}</div>;
+                        return (
+                            <Typography variant="body1" color={color} key={part.type}>
+                                {part.value}
+                            </Typography>
+                        );
                     }
                 })}
-                <div>{browser.i18n.getMessage("options_page_section_timeline_date_range_later")}</div>
+                <Typography variant="body1" color={color}>
+                    {browser.i18n.getMessage("options_page_section_timeline_date_range_later")}
+                </Typography>
             </div>
         </ListItem>
     );

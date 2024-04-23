@@ -1,4 +1,5 @@
 import { ConfigKey, addOnConfigChangeListener } from "@/common/config/config";
+import { initBadge } from "./badge";
 
 /**
  * タイムラインの機能を初期化する
@@ -15,4 +16,6 @@ export function initTimeline(): void {
         },
         true
     );
+
+    initBadge();
 }

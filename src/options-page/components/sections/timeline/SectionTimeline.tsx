@@ -1,4 +1,4 @@
-import { List } from "@mui/material";
+import { Divider, List } from "@mui/material";
 import { OptionsPageSection } from "../../OptionsPage";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import React, { useState } from "react";
@@ -7,6 +7,8 @@ import { ConfigKey } from "@/common/config/config";
 import { Action } from "../../items/Action";
 import { HiddenEventsDialog } from "./HiddenEventsDialog";
 import { OptionTimelineDateRange } from "./OptionTimelineDateRange";
+import { OptionTimelineBadgeDeadlineRange } from "./OptionTimelineBadgeDeadlineRange";
+import { ConfigDisableOptions } from "../../items/DisableOptions";
 
 export default {
     id: "timeline",
@@ -24,12 +26,23 @@ export default {
                     message="options_page_section_timeline_enabled"
                     description="options_page_section_timeline_enabled_description"
                 />
-                <Action
-                    message="options_page_section_timeline_hidden_events"
-                    buttonMessage="options_page_section_timeline_hidden_events_button"
-                    onClick={handleHiddenEventsDialogOpen}
-                />
-                <OptionTimelineDateRange />
+                <ConfigDisableOptions configKey={ConfigKey.TimelineEnabled}>
+                    <Action
+                        message="options_page_section_timeline_hidden_events"
+                        buttonMessage="options_page_section_timeline_hidden_events_button"
+                        onClick={handleHiddenEventsDialogOpen}
+                    />
+                    <OptionTimelineDateRange />
+                    <Divider />
+                    <ConfigToggleOption
+                        configKey={ConfigKey.TimelineBadgeEnabled}
+                        message="options_page_section_timeline_badge_enabled"
+                        description="options_page_section_timeline_badge_enabled_description"
+                    />
+                    <ConfigDisableOptions configKey={ConfigKey.TimelineBadgeEnabled}>
+                        <OptionTimelineBadgeDeadlineRange />
+                    </ConfigDisableOptions>
+                </ConfigDisableOptions>
 
                 <HiddenEventsDialog open={hiddenEventsDialogOpen} onClose={handleHiddenEventsDialogClose} />
             </List>

@@ -34,7 +34,8 @@
         "storage",
         "webRequest",
         "webRequestBlocking",
-        "contextMenus"
+        "contextMenus",
+        "alarms"
     ],
     "web_accessible_resources": [
         "common/auto-login/auto-login-page.html",
