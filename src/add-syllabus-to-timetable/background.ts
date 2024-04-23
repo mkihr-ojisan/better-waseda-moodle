@@ -6,7 +6,7 @@ import registerContentScript from "@/common/config/registerContentScript";
  */
 export function initAddSyllabusToTimetable(): void {
     registerContentScript(ConfigKey.CourseOverviewEnabled, {
-        js: [{ file: "add-syllabus-to-timetable/content.js" }],
+        js: [{ file: "content.js" }],
         runAt: "document_end",
         matches: ["https://www.wsl.waseda.jp/syllabus/JAA104.php?*"],
     });

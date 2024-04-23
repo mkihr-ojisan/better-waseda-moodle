@@ -17,26 +17,54 @@ assertExtensionContext(["content_script", "extension_page"]);
         await call("setSessionKeyCache", sessionKey);
     }
 
-    if (location.host === "wsdmoodle.waseda.jp") {
-        if (location.pathname === "/my/" || location.pathname === "/my/index.php") {
-            import("./dashboard/course-overview/course-overview");
-        }
-        if (location.pathname === "/mod/quiz/attempt.php") {
-            import("./quiz/remind-unanswered-questions/content");
-        }
-        if (
-            location.pathname === "/mod/quiz/attempt.php" ||
-            location.pathname === "/mod/assign/view.php" ||
-            location.pathname.startsWith("/mod/forum/")
-        ) {
-            import("./check-session/content");
-        }
-    } else if (
-        (process.env.VENDOR === "firefox" && location.protocol === "moz-extension:") ||
-        (process.env.VENDOR === "chrome" && location.protocol === "chrome-extension:")
-    ) {
-        if (location.pathname === "/options-page/options-page.html") {
-            import("./options-page/options-page");
-        }
+    switch (location.host) {
+        case "wsdmoodle.waseda.jp":
+            switch (location.pathname) {
+                case "/my/":
+                case "/my/index.php":
+                    import("./dashboard/course-overview/course-overview");
+                    break;
+                case "/mod/quiz/attempt.php":
+                    import("./quiz/remind-unanswered-questions/content");
+                    break;
+                case "/mod/assign/view.php":
+                case "/mod/forum/view.php":
+                    import("./check-session/content");
+                    break;
+                default:
+                    if (location.pathname.startsWith("/mod/forum/")) {
+                        import("./check-session/content");
+                    }
+                    break;
+            }
+            break;
+        case "www.wsl.waseda.jp":
+            switch (location.pathname) {
+                case "/syllabus/JAA104.php":
+                    import("./add-syllabus-to-timetable/content");
+                    break;
+            }
+            break;
+        default:
+            if (
+                (process.env.VENDOR === "firefox" && location.protocol === "moz-extension:") ||
+                (process.env.VENDOR === "chrome" && location.protocol === "chrome-extension:")
+            ) {
+                switch (location.pathname) {
+                    case "/popup/popup.html":
+                        import("./popup/popup");
+                        break;
+                    case "/options-page/options-page.html":
+                        import("./options-page/options-page");
+                        break;
+                    case "/config-editor/config-editor.html":
+                        import("./config-editor/config-editor");
+                        break;
+                    case "/moodle-api-client/moodle-api-client.html":
+                        import("./moodle-api-client/moodle-api-client");
+                        break;
+                }
+            }
+            break;
     }
 })();
