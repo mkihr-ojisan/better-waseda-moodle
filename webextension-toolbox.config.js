@@ -113,15 +113,11 @@ module.exports = {
                 "src/check-notes-on-submitting/content.ts",
                 "src/fix-syllabus-link/content.ts",
                 "src/fix-syllabus-link/inject.js",
-                "src/popup/popup.tsx",
                 "src/auto-session-extension/content.ts",
                 "src/launcher/launcher.ts",
                 "src/assignment-filename/content.ts",
                 "src/assignment-filename/inject.ts",
                 "src/common/auto-login/auto-login-checkbox.ts",
-                "src/add-syllabus-to-timetable/content.tsx",
-                "src/moodle-api-client/moodle-api-client.tsx",
-                "src/config-editor/config-editor.tsx",
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })
