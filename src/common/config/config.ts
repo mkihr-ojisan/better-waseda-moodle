@@ -33,7 +33,7 @@ export enum ConfigKey {
     // ========コース概要========
     /** コース概要の機能が有効かどうか */
     CourseOverviewEnabled = 3,
-    /** ダッシュボードからの無駄なリクエストをブロックしてサーバー負荷を低減するオプション */
+    /** （削除済み）ダッシュボードからの無駄なリクエストをブロックしてサーバー負荷を低減するオプション */
     BlockDashboardRequest = 4,
     /** コース概要で最後に選択された年度・学期 */
     CourseOverviewSelectedYearTerm = 7,
