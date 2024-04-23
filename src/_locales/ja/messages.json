@@ -433,6 +433,14 @@
         "message": "日後まで",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
+    "options_page_section_timeline_show_in_dashboard": {
+        "message": "ダッシュボードにタイムラインを表示する",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
+    "options_page_section_timeline_show_in_dashboard_description": {
+        "message": "以前まで標準でタイムラインが表示されていた位置にタイムラインを復元します。",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
     "options_page_section_fix_style_title": {
         "message": "スタイルの修正",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
@@ -864,6 +872,10 @@
     "check_session_expired": {
         "message": "セッションがタイムアウトしたようです。このまま提出することはできないので、**提出する内容を控えた上で**リロードするなどして提出してください。",
         "description": "セッションがタイムアウトしている状態で送信しようとしたときに表示するメッセージ"
+    },
+    "timeline_title": {
+        "message": "タイムライン",
+        "description": "タイムラインに表示するメッセージ"
     },
     "timeline_hide_event": {
         "message": "非表示",

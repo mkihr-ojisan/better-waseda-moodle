@@ -1,4 +1,4 @@
-import { ConfigKey, getConfig, initConfig } from "@/common/config/config";
+import { ConfigKey, getConfig } from "@/common/config/config";
 import { NotificationContextProvider } from "@/common/react/notification";
 import React from "react";
 import { createRoot } from "react-dom/client";
@@ -8,9 +8,10 @@ import { CourseOverview } from "./components/CourseOverview";
 
 assertExtensionContext("content_script");
 
-(async () => {
-    await initConfig();
-
+/**
+ * コース概要の機能を初期化する。
+ */
+export function initCourseOverview(): void {
     if (getConfig(ConfigKey.CourseOverviewEnabled)) {
         const elem = document.getElementsByClassName("block-myoverview")[0]?.parentElement;
         if (!elem) return;
@@ -28,4 +29,4 @@ assertExtensionContext("content_script");
             </BWMRoot>
         );
     }
-})();
+}
