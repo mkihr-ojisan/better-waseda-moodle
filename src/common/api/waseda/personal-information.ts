@@ -1,6 +1,7 @@
 import { ConfigKey, getConfig } from "@/common/config/config";
 import { InvalidResponseError, LoginRequiredError } from "@/common/error";
 import { fetchWithCredentials, postFormAndParse } from "@/common/util/fetch";
+import { postFormWithEncodingAndParse } from "@/common/util/fetchWithEncoding";
 import { sleep } from "@/common/util/sleep";
 
 export type PersonalInformation = {
@@ -170,7 +171,7 @@ export async function fetchPersonalInformation(): Promise<PersonalInformation> {
         });
 
         for (;;) {
-            page = await postFormAndParse(
+            page = await postFormWithEncodingAndParse(
                 "https://www.wnp2.waseda.jp/wisdom/gakusei/application/ab41.html",
                 form,
                 undefined,
