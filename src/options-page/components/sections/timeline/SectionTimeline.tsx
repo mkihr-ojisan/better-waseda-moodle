@@ -43,6 +43,12 @@ export default {
                         <OptionTimelineBadgeDeadlineRange />
                     </ConfigDisableOptions>
                 </ConfigDisableOptions>
+                <Divider />
+                <ConfigToggleOption
+                    configKey={ConfigKey.TimelineShowInDashboard}
+                    message="options_page_section_timeline_show_in_dashboard"
+                    description="options_page_section_timeline_show_in_dashboard_description"
+                />
 
                 <HiddenEventsDialog open={hiddenEventsDialogOpen} onClose={handleHiddenEventsDialogClose} />
             </List>

@@ -50,9 +50,6 @@ export const TimelineEventIcon: FC<TimelineEventIconProps> = (props) => {
     }, [props.event.purpose, theme.palette.mode]);
 
     const invert = useMemo(() => {
-        if (theme.palette.mode === "light") {
-            return false;
-        }
         if (props.event.purpose === "none") {
             return false;
         }
@@ -60,7 +57,7 @@ export const TimelineEventIcon: FC<TimelineEventIconProps> = (props) => {
             return false;
         }
         return true;
-    }, [props.event.icon?.component, props.event.purpose, theme.palette.mode]);
+    }, [props.event.icon?.component, props.event.purpose]);
 
     return (
         <Box

@@ -22,7 +22,7 @@ assertExtensionContext(["content_script", "extension_page"]);
             switch (location.pathname) {
                 case "/my/":
                 case "/my/index.php":
-                    import("./dashboard/course-overview/course-overview");
+                    import("./dashboard/dashboard");
                     break;
                 case "/mod/quiz/attempt.php":
                     import("./quiz/remind-unanswered-questions/content");

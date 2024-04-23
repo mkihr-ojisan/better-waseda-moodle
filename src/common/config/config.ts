@@ -81,6 +81,8 @@ export enum ConfigKey {
     TimelineBadgeEnabled = 42,
     /** バッジに表示する期限の範囲 */
     TimelineBadgeDeadlineRange = 43,
+    /** ダッシュボードにタイムラインを表示するかどうか */
+    TimelineShowInDashboard = 44,
 
     // ========その他の機能========
     /** ファイルを保存せずにブラウザで表示する機能が有効かどうか */
@@ -249,6 +251,7 @@ export const CONFIG_VALUE_TYPE_DEF = {
     [ConfigKey.TimelineDateBorderOffset]: "number",
     [ConfigKey.TimelineBadgeEnabled]: "boolean",
     [ConfigKey.TimelineBadgeDeadlineRange]: "number",
+    [ConfigKey.TimelineShowInDashboard]: "boolean",
     [ConfigKey.RemoveLoadingVideoEnabled]: "boolean",
     [ConfigKey.ViewInBrowserEnabled]: "boolean",
     [ConfigKey.CheckNotesOnSubmittingEnabled]: "boolean",
@@ -309,6 +312,7 @@ export const CONFIG_DEFAULT_VALUES = {
     [ConfigKey.TimelineDateBorderOffset]: 0,
     [ConfigKey.TimelineBadgeEnabled]: false,
     [ConfigKey.TimelineBadgeDeadlineRange]: 7 * 24 * 60 * 60 * 1000,
+    [ConfigKey.TimelineShowInDashboard]: true,
     [ConfigKey.RemoveLoadingVideoEnabled]: true,
     [ConfigKey.ViewInBrowserEnabled]: false,
     [ConfigKey.CheckNotesOnSubmittingEnabled]: true,
