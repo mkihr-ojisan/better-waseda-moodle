@@ -110,12 +110,6 @@ export default {
                     />
                     <Divider />
                     <ConfigToggleOption
-                        configKey={ConfigKey.BlockDashboardRequest}
-                        message="options_page_section_course_overview_block_requests"
-                        description="options_page_section_course_overview_block_requests_description"
-                    />
-                    <Divider />
-                    <ConfigToggleOption
                         configKey={ConfigKey.MergeCustomCourses}
                         message="options_page_section_course_overview_merge_custom_courses"
                         description="options_page_section_course_overview_merge_custom_courses_description"

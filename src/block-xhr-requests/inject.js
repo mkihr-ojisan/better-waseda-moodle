@@ -5,15 +5,11 @@
     let blockedRequests;
     switch (location.href) {
         case "https://wsdmoodle.waseda.jp/my/":
-            // ダッシュボードのコース概要、タイムラインを取得するリクエストをブロックして高速化
+            // ダッシュボードのコース概要を取得するリクエストをブロックして高速化
             blockedRequests = [
                 {
                     condition: "info=core_course_get_enrolled_courses_by_timeline_classification",
                     response: JSON.stringify([{ error: false, data: { courses: [], nextoffset: 0 } }]),
-                },
-                {
-                    condition: "info=core_calendar_get_action_events_by_timesort",
-                    response: JSON.stringify([{ error: false, data: { events: [] } }]),
                 },
                 {
                     condition: "info=local_liquidus_event_definition",

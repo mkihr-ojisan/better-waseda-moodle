@@ -27,12 +27,5 @@ assertExtensionContext("content_script");
                 </NotificationContextProvider>
             </BWMRoot>
         );
-
-        if (getConfig(ConfigKey.BlockDashboardRequest)) {
-            const timelineElem = document.querySelector("section.block_timeline");
-            if (timelineElem) {
-                (timelineElem as HTMLElement).style.display = "none";
-            }
-        }
     }
 })();
