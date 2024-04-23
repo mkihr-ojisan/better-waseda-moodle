@@ -77,7 +77,11 @@ export const ToggleOption: FC<ToggleOptionProps> = (props) => {
     }, [setValue, value]);
 
     return (
-        <ListItemButton sx={{ paddingRight: "100px" }} onClick={handleClick}>
+        <ListItemButton
+            sx={{ paddingRight: "100px", "&&": { opacity: "1" } }}
+            onClick={handleClick}
+            disabled={disabled}
+        >
             <ListItemText
                 disableTypography
                 primary={

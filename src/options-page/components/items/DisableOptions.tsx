@@ -1,6 +1,6 @@
 import { ConfigKey } from "@/common/config/config";
 import { useConfig } from "@/common/config/useConfig";
-import React, { createContext, FC, ReactNode } from "react";
+import React, { createContext, FC, ReactNode, useContext } from "react";
 
 export const DisableOptionsContext = createContext(false);
 
@@ -20,5 +20,11 @@ export type DisableOptionsProps = {
 };
 
 export const DisableOptions: FC<DisableOptionsProps> = (props) => {
-    return <DisableOptionsContext.Provider value={props.disabled}>{props.children}</DisableOptionsContext.Provider>;
+    const parentValue = useContext(DisableOptionsContext);
+
+    return (
+        <DisableOptionsContext.Provider value={parentValue || props.disabled}>
+            {props.children}
+        </DisableOptionsContext.Provider>
+    );
 };
