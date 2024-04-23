@@ -26,6 +26,7 @@ assertExtensionContext(["content_script", "extension_page"]);
                     break;
                 case "/mod/quiz/attempt.php":
                     import("./quiz/remind-unanswered-questions/content");
+                    import("./check-session/content");
                     break;
                 case "/mod/assign/view.php":
                 case "/mod/forum/view.php":
