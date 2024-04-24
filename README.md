@@ -23,25 +23,15 @@ Waseda Moodle の使い勝手を多少良くするブラウザ拡張機能。
 ![ダッシュボード](https://raw.githubusercontent.com/mkihr-ojisan/better-waseda-moodle/main/readme-images/dashboard.png "ダッシュボード")
 
 ## ビルド
+### 要件
+-  Node.js (v19.2.0)
 
 ```console
 $ npm install
 $ npm run build $VENDOR # "firefox" or "chrome"
-$ ls packages
-```
-
-## 開発
-
-```console
-$ npm install
-$ npm run dev $VENDOR # "firefox" or "chrome"
-$ ls dist/$VENDOR
+$ ls packages/better-waseda-moodle.*.zip
 ```
 
 ### 使用ツール
 
 -   [webextension-toolbox](https://github.com/webextension-toolbox/webextension-toolbox)
-
-## 募
-
--   翻訳（英語、中国語など？）
