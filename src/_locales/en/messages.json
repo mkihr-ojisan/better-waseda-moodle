@@ -330,7 +330,7 @@
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_remind_unanswered_questions_enabled": {
-        "message": "Confirm when there are unanswered questions.",
+        "message": "Confirm when there are unanswered questions",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_remind_unanswered_questions_enabled_description": {
