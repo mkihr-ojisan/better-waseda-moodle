@@ -23,7 +23,7 @@ export const StorageUsage: FC = () => {
         <>
             <ListItem>
                 <ListItemText
-                    primary={browser.i18n.getMessage("options_page_section_general_storage_usage")}
+                    primary="Storage Usage"
                     disableTypography
                     secondary={
                         <>
@@ -50,11 +50,13 @@ export const StorageUsage: FC = () => {
                 <ListItemText
                     disableTypography
                     primary={
-                        <Accordion disableGutters sx={{ boxShadow: "none" }} TransitionProps={{ unmountOnExit: true }}>
+                        <Accordion
+                            disableGutters
+                            sx={{ boxShadow: "none" }}
+                            slotProps={{ transition: { unmountOnExit: true } }}
+                        >
                             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                <Typography variant="body2">
-                                    {browser.i18n.getMessage("options_page_section_general_storage_usage_by_key")}
-                                </Typography>
+                                <Typography variant="body2">Usage by Key</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List disablePadding>

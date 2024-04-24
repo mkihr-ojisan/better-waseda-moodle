@@ -205,14 +205,6 @@
         "message": "Failed to restore settings",
         "description": "設定の復元に失敗したときに表示するメッセージ"
     },
-    "options_page_section_general_storage_usage": {
-        "message": "Storage usage",
-        "description": "設定ページの「一般」セクションに表示するメッセージ"
-    },
-    "options_page_section_general_storage_usage_by_key": {
-        "message": "Usage per key",
-        "description": "設定ページの「一般」セクションに表示するメッセージ"
-    },
     "options_page_section_auto_login_title": {
         "message": "Automatic login",
         "description": "設定ページの「自動ログイン」セクションのタイトル"

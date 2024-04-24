@@ -8,6 +8,7 @@ import { DevModeOnly } from "../../items/DevMode";
 import { Launch } from "../../items/Launch";
 import { useConfig } from "@/common/config/useConfig";
 import { ConfigKey } from "@/common/config/config";
+import { StorageUsage } from "./StorageUsage";
 
 export default {
     id: "about",
@@ -74,6 +75,7 @@ export default {
                                 }}
                             />
                             <Divider />
+                            <StorageUsage />
                         </DevModeOnly>
                     </List>
                 </Box>
