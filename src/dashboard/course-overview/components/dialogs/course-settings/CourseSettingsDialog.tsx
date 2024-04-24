@@ -155,7 +155,7 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ cou
 
     return (
         <>
-            <DialogTitle sx={{ paddingRight: "64px", maxWidth: "750px" }}>
+            <DialogTitle sx={{ paddingRight: "64px", maxWidth: "800px" }}>
                 {browser.i18n.getMessage("course_settings_dialog_title", course.name)}
             </DialogTitle>
             <IconButton
@@ -178,7 +178,7 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ cou
                 </TabList>
                 <div
                     style={{
-                        maxWidth: 750,
+                        maxWidth: 800,
                         height: props.fullscreen ? undefined : 450,
                         flexGrow: props.fullscreen ? 1 : 0,
                         overflow: "auto",

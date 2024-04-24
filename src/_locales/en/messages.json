@@ -1,6 +1,6 @@
 {
     "locale": {
-        "message": "ja",
+        "message": "en",
         "description": "この翻訳ファイルのロケール"
     },
     "extension_name": {
@@ -12,119 +12,119 @@
         "description": "この拡張機能の略称"
     },
     "extension_description": {
-        "message": "Waseda Moodleの使い勝手を多少良くします。",
+        "message": "Improve the usability of Waseda Moodle.",
         "description": "この拡張機能の説明文"
     },
     "error_message": {
-        "message": "Better Waseda Moodleでエラーが発生しました。",
+        "message": "An error has occurred in Better Waseda Moodle.",
         "description": "エラーが発生したときにReactコンポーネントに表示するメッセージ"
     },
     "error_unknown": {
-        "message": "予期しないエラーが発生しました ($1)",
+        "message": "An unexpected error has occurred ($1)",
         "description": "不明なエラーが発生したときに表示するメッセージ"
     },
     "error_invalid_response": {
-        "message": "予期しないデータを受信しました。メンテナンス中かもしれません",
+        "message": "Unexpected data received. May be under maintenance.",
         "description": "不正なレスポンスが返ってきたときに表示するメッセージ"
     },
     "error_login": {
-        "message": "ログインに失敗しました。ユーザー名とパスワードを確認してください",
+        "message": "Login failed. Please check your user ID and password.",
         "description": "ログインに失敗したときに表示するメッセージ"
     },
     "error_login_required": {
-        "message": "ログインするか、自動ログインを有効にしてください",
+        "message": "Please log in or enable automatic login",
         "description": "ログインが必要なときに表示するメッセージ"
     },
     "term_spring_quarter": {
-        "message": "春クォーター",
+        "message": "Spring quarter",
         "description": "学期・クォーターを表す文字列"
     },
     "term_summer_quarter": {
-        "message": "夏クォーター",
+        "message": "Summer quarter",
         "description": "学期・クォーターを表す文字列"
     },
     "term_fall_quarter": {
-        "message": "秋クォーター",
+        "message": "Fall quarter",
         "description": "学期・クォーターを表す文字列"
     },
     "term_winter_quarter": {
-        "message": "冬クォーター",
+        "message": "Winter quarter",
         "description": "学期・クォーターを表す文字列"
     },
     "term_spring_semester": {
-        "message": "春学期",
+        "message": "Spring semester",
         "description": "学期・クォーターを表す文字列"
     },
     "term_fall_semester": {
-        "message": "秋学期",
+        "message": "Fall semester",
         "description": "学期・クォーターを表す文字列"
     },
     "term_full_year": {
-        "message": "通年",
+        "message": "Full year",
         "description": "学期・クォーターを表す文字列"
     },
     "period_1": {
-        "message": "1時限",
+        "message": "1st period",
         "description": "時限を表す文字列"
     },
     "period_2": {
-        "message": "2時限",
+        "message": "2nd period",
         "description": "時限を表す文字列"
     },
     "period_3": {
-        "message": "3時限",
+        "message": "3rd period",
         "description": "時限を表す文字列"
     },
     "period_4": {
-        "message": "4時限",
+        "message": "4th period",
         "description": "時限を表す文字列"
     },
     "period_5": {
-        "message": "5時限",
+        "message": "5th period",
         "description": "時限を表す文字列"
     },
     "period_6": {
-        "message": "6時限",
+        "message": "6th period",
         "description": "時限を表す文字列"
     },
     "period_7": {
-        "message": "7時限",
+        "message": "7th period",
         "description": "時限を表す文字列"
     },
     "course_delivery_method_none": {
-        "message": "指定なし",
+        "message": "Not specified",
         "description": "授業の配信方法を表す文字列"
     },
     "course_delivery_method_face_to_face": {
-        "message": "対面",
+        "message": "Face-to-face",
         "description": "授業の配信方法を表す文字列"
     },
     "course_delivery_method_realtime_streaming": {
-        "message": "リアルタイム配信",
+        "message": "Realtime streaming",
         "description": "授業の配信方法を表す文字列"
     },
     "course_delivery_method_on_demand": {
-        "message": "オンデマンド",
+        "message": "On-demand",
         "description": "授業の配信方法を表す文字列"
     },
     "moodle_module_zoom": {
-        "message": "Zoom ミーティング",
+        "message": "Zoom meeting",
         "description": "Moodleのモジュール名"
     },
     "moodle_module_questionnaire": {
-        "message": "アンケート",
+        "message": "Questionnaire",
         "description": "Moodleのモジュール名"
     },
     "moodle_module_assign": {
-        "message": "課題",
+        "message": "Assignment",
         "description": "Moodleのモジュール名"
     },
     "moodle_module_quiz": {
-        "message": "小テスト",
+        "message": "Quiz",
         "description": "Moodleのモジュール名"
     },
     "hide_tip": {
-        "message": "今後表示しない",
+        "message": "Don't show again",
         "description": "ヒントを非表示にするボタンのテキスト"
     },
     "ok": {
@@ -132,23 +132,23 @@
         "description": "OKボタンのテキスト"
     },
     "cancel": {
-        "message": "キャンセル",
+        "message": "Cancel",
         "description": "キャンセルボタンのテキスト"
     },
     "set_default": {
-        "message": "デフォルトに戻す",
+        "message": "Reset to default",
         "description": "デフォルトに戻すボタンのテキスト"
     },
     "close": {
-        "message": "閉じる",
+        "message": "Close",
         "description": "閉じるボタンのテキスト"
     },
     "continue": {
-        "message": "続行",
+        "message": "Continue",
         "description": "続行ボタンのテキスト"
     },
     "version": {
-        "message": "バージョン $version$",
+        "message": "Version $version$",
         "description": "バージョン",
         "placeholders": {
             "version": {
@@ -158,83 +158,83 @@
         }
     },
     "auto_login_page_title": {
-        "message": "自動ログイン中…",
+        "message": "Automatic login in progress...",
         "description": "自動ログインページのタイトル"
     },
     "auto_login_checkbox": {
-        "message": "Better Waseda Moodleの自動ログインを有効にする",
+        "message": "Enable automatic login in Better Waseda Moodle",
         "description": "ログインページに表示される自動ログインのチェックボックスのラベル"
     },
     "options_page_title": {
-        "message": "Better Waseda Moodleの設定",
+        "message": "Better Waseda Moodle Settings",
         "description": "設定ページのタイトル"
     },
     "options_page_section_general_title": {
-        "message": "一般",
+        "message": "General",
         "description": "設定ページの「一般」セクションのタイトル"
     },
     "options_page_section_general_backup_config": {
-        "message": "設定のバックアップ",
+        "message": "Backup settings",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_general_backup_config_description": {
-        "message": "Better Waseda Moodleの設定をJSONファイルとして出力します。ログイン情報は出力されません。",
+        "message": "Output Better Waseda Moodle settings as a JSON file. Login information is not output.",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_general_backup_config_button": {
-        "message": "バックアップ",
+        "message": "Backup",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_general_restore_config": {
-        "message": "設定の復元",
+        "message": "Restore settings",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_general_restore_config_description": {
-        "message": "バックアップした設定ファイルを読み込んで設定を復元します。",
+        "message": "Restore settings by reading the backed up settings file.",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_general_restore_config_button": {
-        "message": "ファイルを選択",
+        "message": "Select File",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_general_restore_config_success": {
-        "message": "設定を復元しました",
+        "message": "Settings restored.",
         "description": "設定の復元に成功したときに表示するメッセージ"
     },
     "options_page_section_general_restore_config_error": {
-        "message": "設定の復元に失敗しました",
+        "message": "Failed to restore settings",
         "description": "設定の復元に失敗したときに表示するメッセージ"
     },
     "options_page_section_general_storage_usage": {
-        "message": "ストレージ使用量",
+        "message": "Storage usage",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_general_storage_usage_by_key": {
-        "message": "キーごとの使用量",
+        "message": "Usage per key",
         "description": "設定ページの「一般」セクションに表示するメッセージ"
     },
     "options_page_section_auto_login_title": {
-        "message": "自動ログイン",
+        "message": "Automatic login",
         "description": "設定ページの「自動ログイン」セクションのタイトル"
     },
     "options_page_section_auto_login_enabled": {
-        "message": "自動ログインを有効にする",
+        "message": "Enable automatic login",
         "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
     },
     "options_page_section_auto_login_enabled_description": {
-        "message": "ログインが必要なページを開いたときに自動でログイン処理を行います。",
+        "message": "Automatic login is performed when a page requiring login is opened.",
         "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
     },
     "options_page_section_auto_login_user_id": {
-        "message": "ユーザーID",
+        "message": "User ID",
         "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
     },
     "options_page_section_auto_login_user_id_placeholder": {
-        "message": "hoge@fuga.waseda.jp",
+        "message": "foo@bar.waseda.jp",
         "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
     },
     "options_page_section_auto_login_password": {
-        "message": "パスワード",
+        "message": "Password",
         "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
     },
     "options_page_section_auto_login_password_placeholder": {
@@ -242,319 +242,319 @@
         "description": "設定ページの「自動ログイン」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_title": {
-        "message": "コース概要",
+        "message": "Course Overview",
         "description": "設定ページの「コース概要」セクションのタイトル"
     },
     "options_page_section_course_overview_enabled": {
-        "message": "コース概要を置き換える",
+        "message": "Replace the course overview",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_enabled_description": {
-        "message": "ダッシュボードのコース概要をBetter Waseda Moodleのものに置き換えます。時間割表などを使用するにはこのオプションを有効にする必要があります。",
+        "message": "Replace the course overview in the dashboard with the Better Waseda Moodle one. This option must be enabled in order to use the timetable, etc.",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_course_list_cache": {
-        "message": "科目一覧のキャッシュをクリアする",
+        "message": "Clear the cache of the list of courses",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_course_list_cache_description": {
-        "message": "科目一覧の表示を高速化するためのキャッシュを削除します。新しく追加された科目が表示されない場合に使用してください。",
+        "message": "Delete cache to speed up the display of the list of courses. Use this function when newly added courses are not displayed.",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_course_list_cache_button": {
-        "message": "削除",
+        "message": "Clear",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_course_list_cache_success": {
-        "message": "キャッシュを削除しました",
+        "message": "Cache deleted.",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_emphasize_current_day_and_period": {
-        "message": "時間割表の現在の曜日と時限を強調する",
+        "message": "Highlight the current day and time in the timetable",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_collect_course_information": {
-        "message": "科目情報の自動取得",
+        "message": "Retrieve course information",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_collect_course_information_button": {
-        "message": "取得",
+        "message": "Retrieve",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_timetable_data": {
-        "message": "時間割情報をクリアする",
+        "message": "Delete timetable information",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_timetable_data_button": {
-        "message": "削除",
+        "message": "Delete",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_timetable_data_confirm_message": {
-        "message": "本当に時間割情報を削除しますか？",
+        "message": "Are you sure you want to delete the timetable information?",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_clear_timetable_data_success": {
-        "message": "時間割情報を削除しました",
+        "message": "Timetable information has been deleted.",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_show_period_time": {
-        "message": "時間割表に授業の開始時間と終了時間を表示する",
+        "message": "Display the start and end times of classes in the timetable",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_show_course_delivery_method": {
-        "message": "科目に授業方法を表示する",
+        "message": "Display class modality category in courses",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_show_course_color": {
-        "message": "科目の色を表示する",
+        "message": "Display courses in a specified color",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_show_note": {
-        "message": "科目にメモを表示する",
+        "message": "Display a note in each course",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_show_menu": {
-        "message": "科目にメニューを表示する",
+        "message": "Display a menu for each course",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_merge_custom_courses": {
-        "message": "自動的に科目を統合する",
+        "message": "Automatically merge courses",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_merge_custom_courses_description": {
-        "message": "シラバスから追加した科目がMoodleに追加されたときに、自動的に統合します。",
+        "message": "Automatically merge courses added from the syllabus when they are added to Moodle.",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_title": {
-        "message": "小テスト",
+        "message": "Quiz",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_remind_unanswered_questions_enabled": {
-        "message": "未解答の問題があるときに確認する",
+        "message": "Confirm when there are unanswered questions.",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_remind_unanswered_questions_enabled_description": {
-        "message": "解答していない問題がある状態で次のページに移動しようとしたときに警告を表示します。",
+        "message": "A warning is displayed when an attempt is made to move to the next page with unanswered questions.",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_remind_unanswered_questions_only_sequential_quiz": {
-        "message": "前のページに戻れない小テストのみ",
+        "message": "Only in quizzes where you cannot go back to the previous page",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_more_visible_remaining_time_enabled": {
-        "message": "小テストの残り時間を見やすくする",
+        "message": "Make it easier to see the time remaining for quizzes",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_more_visible_remaining_time_enabled_description": {
-        "message": "小テストの残り時間を画面の右下に固定します。",
+        "message": "Fix the remaining time display to the lower right corner of the screen.",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_title": {
-        "message": "タイムライン",
+        "message": "Timeline",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_enabled": {
-        "message": "タイムラインを有効にする",
+        "message": "Enable Timeline",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_enabled_description": {
-        "message": "有効にするとブラウザのツールバーにあるBetter Waseda Moodleのアイコンをクリックしたときに課題等の一覧を表示します。",
+        "message": "When enabled, a list of assignments, etc. will be displayed when you click on the Better Waseda Moodle icon in the browser toolbar.",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events": {
-        "message": "非表示の項目",
+        "message": "Hidden items",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_button": {
-        "message": "表示",
+        "message": "Show hidden items",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_dialog_title": {
-        "message": "非表示の項目",
+        "message": "Hidden items",
         "description": "設定ページの「非表示の項目」ダイアログに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_dialog_tab_event_ids": {
-        "message": "項目",
+        "message": "Items",
         "description": "設定ページの「非表示の項目」ダイアログに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_dialog_tab_courses": {
-        "message": "科目",
+        "message": "Courses",
         "description": "設定ページの「非表示の項目」ダイアログに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_dialog_tab_module_names": {
-        "message": "種類",
+        "message": "Types",
         "description": "設定ページの「非表示の項目」ダイアログに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_dialog_empty": {
-        "message": "非表示の項目はありません。",
+        "message": "There are no hidden items.",
         "description": "設定ページの「非表示の項目」ダイアログに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_dialog_unhide_button": {
-        "message": "再表示",
+        "message": "Unhide",
         "description": "設定ページの「非表示の項目」ダイアログに表示するメッセージ"
     },
     "options_page_section_timeline_hidden_events_dialog_unknown_item": {
-        "message": "不明な項目",
+        "message": "Unknown item",
         "description": "設定ページの「非表示の項目」ダイアログに表示するメッセージ"
     },
     "options_page_section_timeline_date_range": {
-        "message": "表示する期間",
+        "message": "Period to be displayed",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_date_range_from": {
-        "message": "",
+        "message": "From ",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_date_range_ago_to": {
-        "message": "日前〜",
+        "message": " days before to ",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_date_range_later": {
-        "message": "日後",
+        "message": " days after",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_badge_enabled": {
-        "message": "期限が近い課題の数を表示する",
+        "message": "Display the number of assignments that are nearing their due dates",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_badge_enabled_description": {
-        "message": "Better Waseda Moodleのアイコン上に、期限が近い課題の数を表示します。",
+        "message": "The number of assignments nearing due date is displayed on the Better Waseda Moodle icon.",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_badge_deadline_range": {
-        "message": "表示する期間",
+        "message": "Period to be displayed",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_badge_deadline_range_before": {
-        "message": "",
+        "message": "Up to ",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_badge_deadline_range_after": {
-        "message": "日後まで",
+        "message": " days later",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_show_in_dashboard": {
-        "message": "ダッシュボードにタイムラインを表示する",
+        "message": "Display a timeline on the dashboard",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_timeline_show_in_dashboard_description": {
-        "message": "以前まで標準でタイムラインが表示されていた位置にタイムラインを復元します。",
+        "message": "Restore the timeline to the position where it was previously displayed in the dashboard",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_title": {
-        "message": "スタイルの修正",
+        "message": "Style Modifications",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_reduce_course_content_padding_enabled": {
-        "message": "余白を減らす",
+        "message": "Reduce the margins",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_reduce_course_content_padding_enabled_description": {
-        "message": "科目のコンテンツの余白を減らします。",
+        "message": "Reduce the margins of the course content.",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_remove_floating_action_buttons_enabled": {
-        "message": "フローティングアクションボタンを削除する",
+        "message": "Delete floating action buttons",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_remove_floating_action_buttons_enabled_description": {
-        "message": "画面の右下にある丸いボタンを削除します。",
+        "message": "Delete the round buttons in the lower right corner of the screen.",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_remove_notification_badge_enabled": {
-        "message": "通知バッジを削除する",
+        "message": "Remove a notification badge",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_remove_notification_badge_enabled_description": {
-        "message": "画面の右上にある未読通知の数を示すバッジを削除します。マウスカーソルを合わせると表示されます。",
+        "message": "Remove the badge in the upper right corner of the screen indicating the number of unread notifications. It appears when you hover the mouse cursor over it.",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_others_title": {
-        "message": "その他",
+        "message": "Others",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_view_in_browser_enabled": {
-        "message": "PDF・画像・動画等をブラウザで開く",
+        "message": "Open PDFs, images, videos, etc. in the browser",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_view_in_browser_enabled_description": {
-        "message": "ブラウザで開くことができるファイルを、保存せずに直接ブラウザで開けるようにします。",
+        "message": "Allow a file to be opened directly in the browser without saving it.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_remove_loading_video_enabled": {
-        "message": "動画コンテンツの再生前に再生される動画をスキップする",
+        "message": "Skip videos that are played before video content is played",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_remove_loading_video_enabled_description": {
-        "message": "[この動画](https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4)が再生されないようにします。",
+        "message": "[This video](https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4) will not be played.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_check_notes_on_submitting_enabled": {
-        "message": "課題提出ページの「レポート・論文等の提出に関する注意」に自動でチェックを入れる",
+        "message": "Automatically check the \"Warning on Submitting Your Reports, Papers and Other Document\" box on the assignment submission page",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_check_notes_on_submitting_enabled_description": {
-        "message": "課題の提出時に毎回チェックを入れる必要があるチェックボックスに自動でチェックを入れます。",
+        "message": "Automatically check a box that needs to be checked each time you submit an assignment.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_fix_portal_link_enabled": {
-        "message": "成績照会・科目登録専用メニューのリンクを修正する",
+        "message": "Modify links in the grade report and course registration menu",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_fix_portal_link_enabled_description": {
-        "message": "成績照会・科目登録専用メニューで「ただいま処理中です。OKボタンを押して、しばらく待ってから再度メニューをクリックしてください。」と表示されて10秒間待たされないようにします。",
+        "message": "When enabled, prevent you from waiting in the grade report and course registration menu.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_fix_syllabus_link_enabled": {
-        "message": "シラバス検索結果のリンクを修正する",
+        "message": "Modify the links in the syllabus search results",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_fix_syllabus_link_enabled_description": {
-        "message": "右クリック禁止を解除し、リンク先を同じタブで開くようにします。",
+        "message": "Remove the right-click prohibition and open the link in the same tab.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_check_session_enabled": {
-        "message": "提出前にセッションを確認する",
+        "message": "Check the session before submitting",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_check_session_enabled_description": {
-        "message": "小テスト・課題・フォーラムの提出前にセッションがタイムアウトしていないか確認します。",
+        "message": "Make sure the session has not timed out before submitting quizzes, assignments, and forums.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_auto_session_extension_enabled": {
-        "message": "セッションの自動延長",
+        "message": "Automatic session extension",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_auto_session_extension_enabled_description": {
-        "message": "Waseda Moodleのタブが読み込まれている間、自動的にセッションを延長します。",
+        "message": "Automatically extend the session as long as the Waseda Moodle tab is loaded.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_assignment_filename_enabled": {
-        "message": "課題のファイル名を自動的に変更する",
+        "message": "Rename assignment files",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_assignment_filename_enabled_description": {
-        "message": "課題提出ページでファイルをアップロードしたときに、ファイル名を指定した形式に変更します。科目の設定画面で個別設定できます。ファイル名の形式中の以下の文字列は、それぞれ以下のように置換されます。\n- `{course}`: 科目名\n- `{assignment}`: 課題名\n- `{filename}`: 拡張子を除いたファイル名\n- `{extension}`: ピリオドを含む拡張子",
+        "message": "When a file is uploaded on the assignment submission page, the file name is changed to the specified format. This can be set individually on the course's settings page. Each of the following strings in the file name format will be replaced as follows. \n- `{course}`: course name\n- `{assignment}`: assignment name\n- `{filename}`: file name without extension\n- `{extension}`: extension including period",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_assignment_filename_template": {
-        "message": "ファイル名の形式",
+        "message": "File name format",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_about_title": {
-        "message": "Better Waseda Moodleについて",
+        "message": "About Better Waseda Moodle",
         "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"
     },
     "options_page_section_about_disclaimer": {
-        "message": "Better Waseda MoodleはMITライセンスの下で公開されているフリーソフトウェアです。特に早稲田大学の許可を得るということはせずに公開しているので、自己責任で使用してください。作者はBetter Waseda Moodleの開発を引き継いでくれる学生をいつでも募集しています。",
+        "message": "Better Waseda Moodle is free software released under the MIT License. It is released without any specific permission from Waseda University, so use at your own risk. The author is always looking for students to take over the development of Better Waseda Moodle. The author is very poor at English, so please open an Issue on GitHub if the translation is not correct.",
         "description": "設定ページの「Better Waseda Moodleについて」セクションに表示するメッセージ"
     },
     "options_page_section_about_source_code": {
-        "message": "ソースコード",
+        "message": "Source code",
         "description": "設定ページの「Better Waseda Moodleについて」セクションに表示するメッセージ"
     },
     "launcher_better_waseda_moodle_settings": {
-        "message": "Better Waseda Moodleの設定",
+        "message": "Better Waseda Moodle Settings",
         "description": "browser_actionのコンテキストメニューに表示するメッセージ"
     },
     "launcher_waseda_moodle": {
@@ -566,87 +566,87 @@
         "description": "browser_actionのコンテキストメニューに表示するメッセージ"
     },
     "launcher_syllabus_search": {
-        "message": "シラバス検索",
+        "message": "Syllabus Search",
         "description": "browser_actionのコンテキストメニューに表示するメッセージ"
     },
     "launcher_grade_and_course_registration": {
-        "message": "成績照会・科目登録専用メニュー",
+        "message": "Login page for grade report and course registration",
         "description": "browser_actionのコンテキストメニューに表示するメッセージ"
     },
     "launcher_course_registration": {
-        "message": "科目登録",
+        "message": "Course Registration",
         "description": "browser_actionのコンテキストメニューに表示するメッセージ"
     },
     "launcher_grade_inquiry": {
-        "message": "成績照会",
+        "message": "Grade Report",
         "description": "browser_actionのコンテキストメニューに表示するメッセージ"
     },
     "launcher_waseda_email": {
-        "message": "Wasedaメール",
+        "message": "Waseda Mail",
         "description": "browser_actionのコンテキストメニューに表示するメッセージ"
     },
     "launcher_title": {
-        "message": "ページを開いています...",
+        "message": "Opening the page...",
         "description": "ランチャーのタイトル"
     },
     "course_overview_show_all": {
-        "message": "すべて",
+        "message": "All",
         "description": "コース概要の年度・学期選択ボックスに表示するメッセージ"
     },
     "course_overview_show_hidden_courses": {
-        "message": "非表示の科目を表示",
+        "message": "Show hidden courses",
         "description": "コース概要のメニューに表示するメッセージ"
     },
     "course_overview_reload_courses": {
-        "message": "科目一覧を再読み込み",
+        "message": "Reload the list of courses",
         "description": "コース概要のメニューに表示するメッセージ"
     },
     "course_overview_collect_course_information": {
-        "message": "科目情報を自動取得",
+        "message": "Retrieve course information",
         "description": "コース概要のメニューに表示するメッセージ"
     },
     "course_overview_add_custom_course": {
-        "message": "科目を追加",
+        "message": "Add a course",
         "description": "コース概要のメニューに表示するメッセージ"
     },
     "course_overview_no_timetable_data_tip": {
-        "message": "時間割が設定されていないため、時間割表が表示されていません。各科目のメニューから手動で設定するか、右上のメニューの「科目情報を自動取得」で自動取得してください。",
+        "message": "The timetable is not displayed because the timetable information has not been set. Please set it manually from the menu for each course, or retrieve it automatically by using \"Retrieve course information\" from the menu in the upper right corner.",
         "description": "コース概要に表示するメッセージ"
     },
     "course_overview_loading_message": {
-        "message": "科目一覧を読み込んでいます。しばらくお待ちください。",
+        "message": "Loading the list of courses. Please wait a moment...",
         "description": "コース概要に表示するメッセージ"
     },
     "course_overview_course_face_to_face": {
-        "message": "対面",
+        "message": "Face-to-face",
         "description": "コース概要に表示するメッセージ"
     },
     "course_overview_course_realtime_streaming": {
-        "message": "リアルタイム",
+        "message": "Realtime streaming",
         "description": "コース概要に表示するメッセージ"
     },
     "course_overview_course_on_demand": {
-        "message": "オンデマンド",
+        "message": "On-demand",
         "description": "コース概要に表示するメッセージ"
     },
     "course_overview_open_syllabus": {
-        "message": "シラバスを開く",
+        "message": "Open the syllabus",
         "description": "科目のメニューに表示するメッセージ"
     },
     "course_overview_unhide_course": {
-        "message": "非表示を解除",
+        "message": "Unhide",
         "description": "科目のメニューに表示するメッセージ"
     },
     "course_overview_hide_course": {
-        "message": "非表示",
+        "message": "Hide",
         "description": "科目のメニューに表示するメッセージ"
     },
     "course_overview_course_settings": {
-        "message": "設定",
+        "message": "Settings",
         "description": "科目のメニューに表示するメッセージ"
     },
     "course_settings_dialog_title": {
-        "message": "「$course_name$」の設定",
+        "message": "Setting of \"$course_name$\"",
         "description": "科目詳細ダイアログのタイトル",
         "placeholders": {
             "course_name": {
@@ -656,15 +656,15 @@
         }
     },
     "course_settings_dialog_general_tab": {
-        "message": "一般",
+        "message": "General",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_tab": {
-        "message": "時間割",
+        "message": "Timetable",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_course_name": {
-        "message": "科目名",
+        "message": "Name",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_custom_course_url": {
@@ -672,67 +672,67 @@
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_streaming_url": {
-        "message": "配信URL",
+        "message": "Streaming URL",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_color": {
-        "message": "色",
+        "message": "Color",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_filename_template": {
-        "message": "課題のファイル名の形式",
+        "message": "File name format of assignments",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_note": {
-        "message": "メモ",
+        "message": "Note",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_syllabus": {
-        "message": "シラバス",
+        "message": "Syllabus",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_general_delivery_method": {
-        "message": "授業方式",
+        "message": "Class modality category",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_header_year": {
-        "message": "年度",
+        "message": "Year",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_header_term": {
-        "message": "学期",
+        "message": "Term",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_header_day": {
-        "message": "曜日",
+        "message": "Day",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_header_period_start": {
-        "message": "開始時限",
+        "message": "Start time",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_header_period_end": {
-        "message": "終了時限",
+        "message": "End time",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_header_classroom": {
-        "message": "教室",
+        "message": "Classroom",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_header_delete_entry": {
-        "message": "削除",
+        "message": "Delete",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_add_entry": {
-        "message": "項目を追加",
+        "message": "Add an item",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_no_entries": {
-        "message": "時間割の設定はありません",
+        "message": "No timetable information is set",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_timetable_conflict_with_nth_entry": {
-        "message": "$nth$番目の項目と重複しています。",
+        "message": "Overlaps with the $nth$ item.",
         "description": "科目設定ダイアログに表示するメッセージ",
         "placeholders": {
             "nth": {
@@ -742,63 +742,63 @@
         }
     },
     "course_settings_dialog_timetable_conflict_with_other_course": {
-        "message": "他の科目と重複しています。",
+        "message": "Overlaps with another course.",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_delete": {
-        "message": "この科目を削除",
+        "message": "Delete this course",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_set": {
-        "message": "設定",
+        "message": "OK",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_error_timetable_conflict": {
-        "message": "時間割が重複しているため設定できません。",
+        "message": "Cannot be set due to overlapping timetables.",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_error_invalid_syllabus_url": {
-        "message": "シラバスのURLが正しくありません。",
+        "message": "The URL of the syllabus is incorrect.",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "course_settings_dialog_confirm_delete_message": {
-        "message": "本当に科目「$1」を削除しますか？",
+        "message": "Do you really want to delete the course \"$1\"?",
         "description": "科目設定ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_title": {
-        "message": "科目情報の自動取得",
+        "message": "Retrieve course information",
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_description": {
-        "message": "科目名・科目キーからシラバスを検索し、時間割情報を取得します。シラバスの情報が実状と異なる場合は誤った情報が設定される可能性があります。",
+        "message": "Search the syllabus by course name and course key to retrieve the timetable information. If the information in the syllabus differs from the actual situation, incorrect information may be set.",
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_only_specified_year": {
-        "message": "指定した年度のみ",
+        "message": "Only for the specified year",
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_only_courses_without_timetable_data": {
-        "message": "時間割が設定されていない科目のみ",
+        "message": "Only courses for which timetable information is not set",
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_cancel": {
-        "message": "キャンセル",
+        "message": "Cancel",
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_start": {
-        "message": "開始",
+        "message": "Start",
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_progress_title": {
-        "message": "取得中…",
+        "message": "Retrieving...",
         "description": "科目情報の自動取得の進捗ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_progress_fetching_courses": {
-        "message": "科目一覧を取得しています...",
+        "message": "Retrieving a list of courses...",
         "description": "科目情報の自動取得の進捗ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_progress_searching_syllabus": {
-        "message": "科目「$course_name$」のシラバスを検索しています...($current$/$total$)",
+        "message": "Searching the syllabus for the course \"$course_name$\"... ($current$/$total$)",
         "description": "科目情報の自動取得の進捗ダイアログに表示するメッセージ",
         "placeholders": {
             "course_name": {
@@ -816,7 +816,7 @@
         }
     },
     "collect_syllabus_information_progress_fetching_syllabus": {
-        "message": "科目「$course_name$」のシラバスを取得しています...($current$/$total$)",
+        "message": "Retrieving the syllabus for the course \"$course_name$\"... ($current$/$total$)",
         "description": "科目情報の自動取得の進捗ダイアログに表示するメッセージ",
         "placeholders": {
             "course_name": {
@@ -834,79 +834,79 @@
         }
     },
     "collect_syllabus_information_progress_setting_course_info": {
-        "message": "科目情報を保存しています...",
+        "message": "Storing course information...",
         "description": "科目情報の自動取得の進捗ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_result_title": {
-        "message": "取得完了",
+        "message": "Retrieval completed",
         "description": "科目情報の自動取得の結果ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_result_description": {
-        "message": "科目情報の自動取得が完了しました。",
+        "message": "Retrieval of course information has been completed.",
         "description": "科目情報の自動取得の結果ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_result_failed_courses": {
-        "message": "取得に失敗した科目",
+        "message": "Failed to retrieve the following courses:",
         "description": "科目情報の自動取得の結果ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_result_close": {
-        "message": "閉じる",
+        "message": "Close",
         "description": "科目情報の自動取得の結果ダイアログに表示するメッセージ"
     },
     "quiz_remind_unanswered_questions_dialog_message": {
-        "message": "以下の問題が未解答のようです。このまま進みますか？",
+        "message": "The following question appears to be unanswered. Would you like to proceed?",
         "description": "未回答の問題があるときに表示するメッセージ"
     },
     "quiz_remind_unanswered_questions_dialog_continue": {
-        "message": "このまま進む",
+        "message": "Proceed",
         "description": "未回答の問題があるときに表示するメッセージ"
     },
     "quiz_remind_unanswered_questions_dialog_back": {
-        "message": "解答に戻る",
+        "message": "Back to Answers",
         "description": "未回答の問題があるときに表示するメッセージ"
     },
     "check_session_checking": {
-        "message": "セッションを確認しています…",
+        "message": "Checking the session...",
         "description": "小テストの解答などの送信前にセッションを確認しているときに表示するメッセージ"
     },
     "check_session_expired": {
-        "message": "セッションがタイムアウトしたようです。このまま提出することはできないので、**提出する内容を控えた上で**リロードするなどして提出してください。",
+        "message": "The session appears to have timed out. You cannot submit in this state, so please note what you are submitting and reload the page.",
         "description": "セッションがタイムアウトしている状態で送信しようとしたときに表示するメッセージ"
     },
     "timeline_title": {
-        "message": "タイムライン",
+        "message": "Timeline",
         "description": "タイムラインに表示するメッセージ"
     },
     "timeline_hide_event": {
-        "message": "非表示",
+        "message": "Hide",
         "description": "タイムラインのイベントのメニューに表示するメッセージ"
     },
     "timeline_hide_course": {
-        "message": "この科目を非表示",
+        "message": "Hide this course",
         "description": "タイムラインのイベントのメニューに表示するメッセージ"
     },
     "timeline_hide_type": {
-        "message": "この種類を非表示",
+        "message": "Hide this type",
         "description": "タイムラインのイベントのメニューに表示するメッセージ"
     },
     "timeline_reload": {
-        "message": "再読み込み",
+        "message": "Reload",
         "description": "タイムラインに表示するメッセージ"
     },
     "timeline_loading": {
-        "message": "読み込み中…",
+        "message": "Loading…",
         "description": "タイムラインに表示するメッセージ"
     },
     "timeline_empty": {
-        "message": "イベントはありません",
+        "message": "There are no events.",
         "description": "タイムラインに表示するメッセージ"
     },
     "add_custom_course_dialog_title": {
-        "message": "科目を追加",
+        "message": "Add a course",
         "description": "カスタム科目追加ダイアログのタイトル"
     },
     "add_custom_course_dialog_course_name": {
-        "message": "科目名",
+        "message": "Name",
         "description": "カスタム科目追加ダイアログに表示するメッセージ"
     },
     "add_custom_course_dialog_course_url": {
@@ -914,31 +914,31 @@
         "description": "カスタム科目追加ダイアログに表示するメッセージ"
     },
     "add_custom_course_dialog_course_name_button_add": {
-        "message": "追加",
+        "message": "Add",
         "description": "カスタム科目追加ダイアログに表示するメッセージ"
     },
     "add_syllabus_to_timetable_button_not_added": {
-        "message": "この科目を時間割表に追加",
+        "message": "Add this course to the timetable",
         "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
     },
     "add_syllabus_to_timetable_button_adding": {
-        "message": "追加しています…",
+        "message": "Adding…",
         "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
     },
     "add_syllabus_to_timetable_button_added": {
-        "message": "追加しました",
+        "message": "Added",
         "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
     },
     "add_syllabus_to_timetable_button_already_added": {
-        "message": "時間割表に追加済み",
+        "message": "Already added to timetable",
         "description": "シラバスを時間割表に追加する機能で表示するメッセージ"
     },
     "add_syllabus_to_timetable_conflict_dialog_message": {
-        "message": "この時間帯には既に他の科目が登録されています。このまま追加しますか？",
+        "message": "There are already other courses registered for this time slot. Would you like to add it anyway?",
         "description": "時間割表に追加しようとしたときに他の科目と時間が重複しているときに表示するメッセージ"
     },
     "add_syllabus_to_timetable_conflict_dialog_continue": {
-        "message": "このまま追加",
+        "message": "Add",
         "description": "時間割表に追加しようとしたときに他の科目と時間が重複しているときに表示するメッセージ"
     }
 }
