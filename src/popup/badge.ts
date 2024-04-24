@@ -1,6 +1,5 @@
 import { ActionEvent } from "@/common/api/moodle/calendar";
 import { ConfigKey, addOnConfigChangeListener, getConfig } from "@/common/config/config";
-import { PRIMARY_COLOR } from "@/common/react/theme/BWMTheme";
 import { fetchMoodleTimeline } from "@/common/timeline/timeline";
 import { combinePromise } from "@/common/util/combine-promise";
 
@@ -36,6 +35,11 @@ export const updateBadge = combinePromise(async () => {
 
     let events: ActionEvent[] | undefined = undefined;
     try {
+        if (!(await browser.browserAction.getBadgeText({}))) {
+            browser.browserAction.setBadgeBackgroundColor({ color: "#555" });
+            browser.browserAction.setBadgeText({ text: "..." });
+        }
+
         for await (const value of fetchMoodleTimeline()) {
             events = value;
         }
@@ -47,7 +51,7 @@ export const updateBadge = combinePromise(async () => {
         const count = events.filter((event) => event.timesort < until).length;
 
         browser.browserAction.setBadgeText({ text: count.toString() });
-        browser.browserAction.setBadgeBackgroundColor({ color: count > 0 ? PRIMARY_COLOR : "#555" });
+        browser.browserAction.setBadgeBackgroundColor({ color: count > 0 ? "#eb0014" : "#555" });
         browser.browserAction.setBadgeTextColor({ color: "#fff" });
     } catch (e) {
         console.warn("failed to update badge", e);
