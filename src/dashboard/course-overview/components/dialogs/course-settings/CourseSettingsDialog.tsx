@@ -172,7 +172,7 @@ const CourseSettingsDialogContent: FC<CourseSettingsDialogContentProps> = ({ cou
             </IconButton>
 
             <TabContext value={tab}>
-                <TabList onChange={(e, value) => setTab(value)} sx={{ borderBottom: "1px solid #e8e8e8" }}>
+                <TabList onChange={(e, value) => setTab(value)} sx={{ borderBottom: 1, borderColor: "divider" }}>
                     <Tab label={browser.i18n.getMessage("course_settings_dialog_general_tab")} value="general" />
                     <Tab label={browser.i18n.getMessage("course_settings_dialog_timetable_tab")} value="timetable" />
                 </TabList>
