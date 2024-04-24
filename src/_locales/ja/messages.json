@@ -318,11 +318,11 @@
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_merge_custom_courses": {
-        "message": "カスタム科目を統合する",
+        "message": "自動的に科目を統合する",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_course_overview_merge_custom_courses_description": {
-        "message": "ユーザーが追加した科目と同じ科目がMoodleに追加されたときに、自動的に統合します。",
+        "message": "シラバスから追加した科目がMoodleに追加されたときに、自動的に統合します。",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
     "options_page_section_quiz_title": {
@@ -450,7 +450,7 @@
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_reduce_course_content_padding_enabled_description": {
-        "message": "科目のコンテンツの余白を減らし、より多くの項目を同時に表示します。",
+        "message": "科目のコンテンツの余白を減らします。",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
     },
     "options_page_section_fix_style_remove_floating_action_buttons_enabled": {
@@ -482,7 +482,7 @@
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_remove_loading_video_enabled": {
-        "message": "動画コンテンツの読み込み中に再生される動画をスキップする",
+        "message": "動画コンテンツの再生前に再生される動画をスキップする",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_remove_loading_video_enabled_description": {
@@ -770,7 +770,7 @@
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_description": {
-        "message": "科目名・科目キーからシラバスを検索し、時間割情報を取得します。シラバスの情報が実状と異なる場合は誤った情報が設定される可能性があります。Moodleの科目名がシラバスの科目名と異なる場合は取得できません。",
+        "message": "科目名・科目キーからシラバスを検索し、時間割情報を取得します。シラバスの情報が実状と異なる場合は誤った情報が設定される可能性があります。",
         "description": "科目情報の自動取得のダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_dialog_only_specified_year": {
