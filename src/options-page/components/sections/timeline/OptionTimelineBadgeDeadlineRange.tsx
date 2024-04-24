@@ -23,7 +23,7 @@ export const OptionTimelineBadgeDeadlineRange: FC = () => {
                 primary={browser.i18n.getMessage("options_page_section_timeline_badge_deadline_range")}
                 primaryTypographyProps={{ color }}
             />
-            <div style={{ display: "flex", alignItems: "baseline" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
                 <Typography variant="body1" color={color}>
                     {browser.i18n.getMessage("options_page_section_timeline_badge_deadline_range_before")}
                 </Typography>

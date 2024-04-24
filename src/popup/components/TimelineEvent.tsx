@@ -95,7 +95,7 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
         >
             <div
                 style={{
-                    width: 48,
+                    width: timeFormat.resolvedOptions().hour12 ? 64 : 48,
                     height: "100%",
                     display: "flex",
                     alignItems: "center",
