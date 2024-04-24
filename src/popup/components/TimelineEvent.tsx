@@ -1,15 +1,5 @@
 import { ActionEvent } from "@/common/api/moodle/calendar";
-import {
-    Divider,
-    IconButton,
-    ListItemIcon,
-    ListItemText,
-    Menu,
-    MenuItem,
-    Typography,
-    alpha,
-    useTheme,
-} from "@mui/material";
+import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography, useTheme } from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
 import { TimelineEventIcon } from "./TimelineEventIcon";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -30,7 +20,6 @@ const timeFormat = new DateTimeFormat({
 
 export const TimelineEvent: FC<TimelineEventProps> = (props) => {
     const theme = useTheme();
-    const textPrimaryColor = theme.palette.text.primary;
 
     const handleLinkClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
         const href = (event.target as HTMLAnchorElement).href;
@@ -89,7 +78,10 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                 display: "flex",
                 alignItems: "center",
                 height: 48,
-                borderBottom: `1px solid ${alpha(textPrimaryColor, 0.25)}`,
+                borderBottom: 1,
+                borderBottomStyle: "solid",
+                borderBottomColor: theme.palette.divider,
+                borderColor: theme.palette.divider,
                 gap: 8,
             }}
         >
