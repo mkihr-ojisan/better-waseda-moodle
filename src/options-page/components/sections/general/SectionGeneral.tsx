@@ -4,8 +4,6 @@ import React from "react";
 import { OptionsPageSection } from "../../OptionsPage";
 import { OptionBackupConfig } from "./OptionBackupConfig";
 import { OptionRestoreConfig } from "./OptionRestoreConfig";
-import { StorageUsage } from "./StorageUsage";
-import { DevModeOnly } from "../../items/DevMode";
 
 export default {
     id: "general",
@@ -17,10 +15,6 @@ export default {
                 <OptionBackupConfig />
                 <Divider />
                 <OptionRestoreConfig />
-                <DevModeOnly>
-                    <Divider />
-                    <StorageUsage />
-                </DevModeOnly>
             </List>
         );
     },
