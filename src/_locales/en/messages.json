@@ -437,6 +437,22 @@
         "message": "Restore the timeline to the position where it was previously displayed in the dashboard",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
+    "options_page_section_timeline_date_border_offset": {
+        "message": "Change the boundary of a day",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
+    "options_page_section_timeline_date_border_offset_description": {
+        "message": "Change the time to divide a day. For example, if you set it to 1:00, assignments until 1:00 on January 2nd will be displayed in the section for January 1st.",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
+    "options_page_section_timeline_date_border_offset_value": {
+        "message": "Time",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
+    "options_page_section_timeline_date_border_offset_hours": {
+        "message": ":00",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
     "options_page_section_fix_style_title": {
         "message": "Style Modifications",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
@@ -911,6 +927,10 @@
     },
     "timeline_empty": {
         "message": "There are no events.",
+        "description": "タイムラインに表示するメッセージ"
+    },
+    "timeline_next_day": {
+        "message": "$1 next day",
         "description": "タイムラインに表示するメッセージ"
     },
     "add_custom_course_dialog_title": {

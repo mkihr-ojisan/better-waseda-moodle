@@ -9,6 +9,7 @@ import { HiddenEventsDialog } from "./HiddenEventsDialog";
 import { OptionTimelineDateRange } from "./OptionTimelineDateRange";
 import { OptionTimelineBadgeDeadlineRange } from "./OptionTimelineBadgeDeadlineRange";
 import { ConfigDisableOptions } from "../../items/DisableOptions";
+import { OptionTimelineDateBorderOffset } from "./OptionTimelineDateBorderOffset";
 
 export default {
     id: "timeline",
@@ -49,6 +50,8 @@ export default {
                     message="options_page_section_timeline_show_in_dashboard"
                     description="options_page_section_timeline_show_in_dashboard_description"
                 />
+                <Divider />
+                <OptionTimelineDateBorderOffset />
 
                 <HiddenEventsDialog open={hiddenEventsDialogOpen} onClose={handleHiddenEventsDialogClose} />
             </List>

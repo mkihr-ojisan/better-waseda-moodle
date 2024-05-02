@@ -21,6 +21,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNotify } from "@/common/react/notification";
 import LaunchIcon from "@mui/icons-material/Launch";
+import { useConfig } from "@/common/config/useConfig";
+import { isSameDay } from "date-fns";
 
 export type TimelineEventProps = {
     event: ActionEvent;
@@ -37,6 +39,8 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
     const theme = useTheme();
     const notify = useNotify();
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
+
+    const [dateBorderOffset] = useConfig(ConfigKey.TimelineDateBorderOffset);
 
     const handleLinkClick = useCallback(
         (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -122,6 +126,7 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
     };
 
     const denseMenu = props.variant === "popup";
+    const isNextDay = !isSameDay(props.event.timesort * 1000, props.event.timesort * 1000 - dateBorderOffset);
 
     return (
         <div
@@ -145,7 +150,11 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                     flexShrink: 0,
                 }}
             >
-                <Typography variant="caption">{timeFormat.format(props.event.timesort * 1000)}</Typography>
+                <Typography variant="caption" textAlign="center">
+                    {isNextDay
+                        ? browser.i18n.getMessage("timeline_next_day", timeFormat.format(props.event.timesort * 1000))
+                        : timeFormat.format(props.event.timesort * 1000)}
+                </Typography>
             </div>
             <div style={{ width: 32, height: 32, flexShrink: 0 }}>
                 <TimelineEventIcon event={props.event} />

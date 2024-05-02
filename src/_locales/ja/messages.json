@@ -437,6 +437,22 @@
         "message": "以前まで標準でタイムラインが表示されていた位置にタイムラインを復元します。",
         "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
     },
+    "options_page_section_timeline_date_border_offset": {
+        "message": "日付の境界を変更する",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
+    "options_page_section_timeline_date_border_offset_description": {
+        "message": "一日を区切る時刻を変更します。例えば、1時に設定した場合、1月2日1:00までの課題が1月1日のセクションに表示されます。",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
+    "options_page_section_timeline_date_border_offset_value": {
+        "message": "時刻",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
+    "options_page_section_timeline_date_border_offset_hours": {
+        "message": "時",
+        "description": "設定ページの「タイムライン」セクションに表示するメッセージ"
+    },
     "options_page_section_fix_style_title": {
         "message": "スタイルの修正",
         "description": "設定ページの「スタイルの修正」セクションに表示するメッセージ"
@@ -911,6 +927,10 @@
     },
     "timeline_empty": {
         "message": "イベントはありません",
+        "description": "タイムラインに表示するメッセージ"
+    },
+    "timeline_next_day": {
+        "message": "翌$1",
         "description": "タイムラインに表示するメッセージ"
     },
     "add_custom_course_dialog_title": {

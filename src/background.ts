@@ -26,6 +26,7 @@ import { callMoodleMobileAPI, getWebServiceToken } from "./common/api/moodle/mob
 import { initBlockTracking } from "./block-tracking/background";
 import { initMoreVisibleRemainingTime } from "./quiz/more-visible-remaining-time/background";
 import { initWordCounter } from "./word-counter/background";
+import { fetchMoodleTimeline } from "./common/timeline/timeline";
 
 assertExtensionContext("background");
 
@@ -78,5 +79,6 @@ function debug() {
         setTimetableData,
         getWebServiceToken,
         callMoodleMobileAPI,
+        fetchMoodleTimeline,
     });
 }

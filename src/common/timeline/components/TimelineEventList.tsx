@@ -51,10 +51,11 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
     return (
         <Stack p={props.variant === "popup" ? 1 : 0} sx={{ overflowY: "auto" }}>
             {props.events.map((event, i) => {
-                const eventDate = new Date(event.timesort * 1000);
+                const prevEventDate = i > 0 ? props.events[i - 1].timesort * 1000 : 0;
+                const eventDate = event.timesort * 1000;
                 return (
                     <Fragment key={event.id}>
-                        {!isSameDay(eventDate, props.events[i - 1]?.timesort * 1000) && (
+                        {!isSameDay(eventDate - dateBorderOffset, prevEventDate - dateBorderOffset) && (
                             <Typography
                                 variant="body2"
                                 color={isPast(eventDate) ? "error.main" : "text.primary"}
@@ -62,8 +63,8 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
                                 sx={{ mt: 0.5 }}
                             >
                                 {isSameYear(eventDate, new Date())
-                                    ? dateFormat.format(eventDate)
-                                    : dateWithYearFormat.format(eventDate)}
+                                    ? dateFormat.format(eventDate - dateBorderOffset)
+                                    : dateWithYearFormat.format(eventDate - dateBorderOffset)}
                             </Typography>
                         )}
                         <TimelineEvent event={event} reloadTimeline={props.reloadTimeline} variant={props.variant} />
