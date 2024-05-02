@@ -4,7 +4,7 @@ import { useNotify } from "@/common/react/notification";
 import { call } from "@/common/util/messenger/client";
 import { CircularProgress, Typography } from "@mui/material";
 import React, { FC, useEffect } from "react";
-import { TimelineEventList } from "./TimelineEventList";
+import { TimelineEventList } from "../../../common/timeline/components/TimelineEventList";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 export const Timeline: FC = () => {
@@ -27,6 +27,6 @@ export const Timeline: FC = () => {
             <Typography variant="body1">{browser.i18n.getMessage("timeline_empty")}</Typography>
         </div>
     ) : (
-        <TimelineEventList events={events} reloadTimeline={reload} />
+        <TimelineEventList events={events} reloadTimeline={reload} variant="dashboard" />
     );
 };

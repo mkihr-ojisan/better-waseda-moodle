@@ -10,6 +10,7 @@ import { DateTimeFormat } from "@/common/util/intl";
 export type TimelineEventListProps = {
     events: ActionEvent[];
     reloadTimeline: () => void;
+    variant: "popup" | "dashboard";
 };
 
 const dateFormat = new DateTimeFormat({
@@ -48,7 +49,7 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
     }
 
     return (
-        <Stack sx={{ overflowY: "auto" }}>
+        <Stack p={props.variant === "popup" ? 1 : 0} sx={{ overflowY: "auto" }}>
             {props.events.map((event, i) => {
                 const eventDate = new Date(event.timesort * 1000);
                 return (
@@ -65,7 +66,7 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
                                     : dateWithYearFormat.format(eventDate)}
                             </Typography>
                         )}
-                        <TimelineEvent event={event} reloadTimeline={props.reloadTimeline} />
+                        <TimelineEvent event={event} reloadTimeline={props.reloadTimeline} variant={props.variant} />
                     </Fragment>
                 );
             })}

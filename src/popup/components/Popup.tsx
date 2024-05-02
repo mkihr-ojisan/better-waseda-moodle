@@ -3,7 +3,7 @@ import { call } from "@/common/util/messenger/client";
 import { Box, Typography } from "@mui/material";
 import React, { FC, useCallback, useEffect } from "react";
 import { PopupHeader } from "./PopupHeader";
-import { TimelineEventList } from "./TimelineEventList";
+import { TimelineEventList } from "../../common/timeline/components/TimelineEventList";
 import { useNotify } from "@/common/react/notification";
 import { errorToString } from "@/common/error";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -57,7 +57,9 @@ export const Popup: FC = () => {
                     </Typography>
                 </div>
             )}
-            {events && events.length > 0 && <TimelineEventList events={events} reloadTimeline={reload} />}
+            {events && events.length > 0 && (
+                <TimelineEventList events={events} reloadTimeline={reload} variant="popup" />
+            )}
         </Box>
     );
 };

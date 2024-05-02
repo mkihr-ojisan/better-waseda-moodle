@@ -1,17 +1,31 @@
 import { ActionEvent } from "@/common/api/moodle/calendar";
-import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography, useTheme } from "@mui/material";
+import {
+    Button,
+    Divider,
+    IconButton,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    Theme,
+    Typography,
+    useMediaQuery,
+    useTheme,
+} from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
-import { TimelineEventIcon } from "./TimelineEventIcon";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { DateTimeFormat } from "@/common/util/intl";
-import LaunchIcon from "@mui/icons-material/Launch";
+import { TimelineEventIcon } from "./TimelineEventIcon";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNotify } from "@/common/react/notification";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 export type TimelineEventProps = {
     event: ActionEvent;
     reloadTimeline: () => void;
+    variant: "popup" | "dashboard";
 };
 
 const timeFormat = new DateTimeFormat({
@@ -22,15 +36,21 @@ const timeFormat = new DateTimeFormat({
 export const TimelineEvent: FC<TimelineEventProps> = (props) => {
     const theme = useTheme();
     const notify = useNotify();
+    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down("sm"));
 
-    const handleLinkClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
-        const href = (event.target as HTMLAnchorElement).href;
-        if (href) {
-            window.open(href, "_blank");
-            window.close();
-            event.preventDefault();
-        }
-    }, []);
+    const handleLinkClick = useCallback(
+        (event: React.MouseEvent<HTMLAnchorElement>) => {
+            if (props.variant === "popup") {
+                const href = (event.target as HTMLAnchorElement).href;
+                if (href) {
+                    window.open(href, "_blank");
+                    window.close();
+                    event.preventDefault();
+                }
+            }
+        },
+        [props.variant]
+    );
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const handleOpenMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,18 +62,29 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
 
     const handleClickAction = useCallback(() => {
         if (!props.event.action?.url) return;
-        window.open(props.event.action.url, "_blank");
-        window.close();
-    }, [props.event.action]);
+        switch (props.variant) {
+            case "popup":
+                window.open(props.event.action.url, "_blank");
+                window.close();
+                break;
+            case "dashboard":
+                location.href = props.event.action.url;
+                break;
+        }
+        handleCloseMenu();
+    }, [handleCloseMenu, props.event.action?.url, props.variant]);
 
     const showHideMessage = () => {
-        if (getConfig(ConfigKey.HiddenTips).includes("hide_timeline_event_popup")) return;
+        if (getConfig(ConfigKey.HiddenTips).includes(`hide_timeline_event_${props.variant}`)) return;
         notify({
             type: "info",
             message: browser.i18n.getMessage("timeline_hide_message"),
             action: browser.i18n.getMessage("hide_tip_long"),
             onAction: () => {
-                setConfig(ConfigKey.HiddenTips, [...getConfig(ConfigKey.HiddenTips), "hide_timeline_event_popup"]);
+                setConfig(ConfigKey.HiddenTips, [
+                    ...getConfig(ConfigKey.HiddenTips),
+                    `hide_timeline_event_${props.variant}`,
+                ]);
             },
             closeOnAction: true,
         });
@@ -90,6 +121,8 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
         showHideMessage();
     };
 
+    const denseMenu = props.variant === "popup";
+
     return (
         <div
             style={{
@@ -99,7 +132,6 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                 borderBottom: 1,
                 borderBottomStyle: "solid",
                 borderBottomColor: theme.palette.divider,
-                borderColor: theme.palette.divider,
                 gap: 8,
             }}
         >
@@ -177,6 +209,20 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
                 </Typography>
             </div>
 
+            {!isMobile && props.event.action && props.event.action.actionable && (
+                <Button
+                    variant="outlined"
+                    LinkComponent="a"
+                    href={props.event.action.url}
+                    sx={{
+                        flexShrink: 0,
+                        whiteSpace: "nowrap",
+                    }}
+                >
+                    {props.event.action.name}
+                </Button>
+            )}
+
             <div style={{ flexShrink: 0 }}>
                 <IconButton size="small" onClick={handleOpenMenu}>
                     <MoreVertIcon />
@@ -184,31 +230,32 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
             </div>
 
             <Menu open={!!anchorEl} anchorEl={anchorEl} onClose={handleCloseMenu}>
-                {props.event.action &&
+                {isMobile &&
+                    props.event.action &&
                     props.event.action.actionable && [
-                        <MenuItem dense onClick={handleClickAction} key="menu">
+                        <MenuItem dense={denseMenu} key="menu" onClick={handleClickAction}>
                             <ListItemIcon>
-                                <LaunchIcon />
+                                {props.variant === "popup" && <LaunchIcon />}
+                                {props.variant === "dashboard" && <ArrowForwardIcon />}
                             </ListItemIcon>
                             <ListItemText>{props.event.action.name}</ListItemText>
                         </MenuItem>,
                         <Divider key="divider" />,
                     ]}
-
-                <MenuItem dense onClick={handleHideEvent}>
+                <MenuItem dense={denseMenu} onClick={handleHideEvent}>
                     <ListItemIcon>
                         <VisibilityOffIcon />
                     </ListItemIcon>
                     <ListItemText>{browser.i18n.getMessage("timeline_hide_event")}</ListItemText>
                 </MenuItem>
                 {props.event.course && (
-                    <MenuItem dense onClick={handleHideCourse}>
+                    <MenuItem dense={denseMenu} onClick={handleHideCourse}>
                         <ListItemIcon />
                         <ListItemText>{browser.i18n.getMessage("timeline_hide_course")}</ListItemText>
                     </MenuItem>
                 )}
                 {props.event.modulename && (
-                    <MenuItem dense onClick={handleHideType}>
+                    <MenuItem dense={denseMenu} onClick={handleHideType}>
                         <ListItemIcon />
                         <ListItemText>{browser.i18n.getMessage("timeline_hide_type")}</ListItemText>
                     </MenuItem>
