@@ -27,6 +27,7 @@ import { initBlockTracking } from "./block-tracking/background";
 import { initMoreVisibleRemainingTime } from "./quiz/more-visible-remaining-time/background";
 import { initWordCounter } from "./word-counter/background";
 import { fetchMoodleTimeline } from "./common/timeline/timeline";
+import { initDisableUnloadEvent } from "./faster-back-and-forward/background";
 
 assertExtensionContext("background");
 
@@ -50,6 +51,7 @@ assertExtensionContext("background");
     initBlockTracking();
     initMoreVisibleRemainingTime();
     initWordCounter();
+    initDisableUnloadEvent();
 
     if (process.env.NODE_ENV === "development") {
         debug();

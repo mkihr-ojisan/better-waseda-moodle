@@ -561,6 +561,14 @@
         "message": "Display the number of words entered in the editor on the assignment submission page, etc.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
+    "options_page_section_others_disable_fast_back_and_forward": {
+        "message": "Speed up the back and forward operations",
+        "description": "設定ページの「その他」セクションに表示するメッセージ"
+    },
+    "options_page_section_others_disable_fast_back_and_forward_description": {
+        "message": "When you press the browser's back and forward buttons, you will move quickly without reloading the page.",
+        "description": "設定ページの「その他」セクションに表示するメッセージ"
+    },
     "options_page_section_about_title": {
         "message": "About Better Waseda Moodle",
         "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"

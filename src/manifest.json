@@ -42,7 +42,8 @@
         "res/videos/dummy-video.mp4",
         "block-xhr-requests/inject.js",
         "fix-syllabus-link/inject.js",
-        "assignment-filename/inject.js"
+        "assignment-filename/inject.js",
+        "faster-back-and-forward/inject.js"
     ],
     "__firefox__browser_specific_settings": {
         "gecko": {

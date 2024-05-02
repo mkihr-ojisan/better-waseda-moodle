@@ -76,6 +76,12 @@ export default {
                     message="options_page_section_others_word_counter_enabled"
                     description="options_page_section_others_word_counter_enabled_description"
                 />
+                <Divider />
+                <ConfigToggleOption
+                    configKey={ConfigKey.FasterBackAndForward}
+                    message="options_page_section_others_disable_fast_back_and_forward"
+                    description="options_page_section_others_disable_fast_back_and_forward_description"
+                />
             </List>
         );
     },

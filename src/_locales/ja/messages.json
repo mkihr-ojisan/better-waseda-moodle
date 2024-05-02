@@ -561,6 +561,14 @@
         "message": "課題提出ページ等のエディタに入力した文字数を表示します。",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
+    "options_page_section_others_disable_fast_back_and_forward": {
+        "message": "戻る・進む操作を高速化する",
+        "description": "設定ページの「その他」セクションに表示するメッセージ"
+    },
+    "options_page_section_others_disable_fast_back_and_forward_description": {
+        "message": "ブラウザの戻る・進むボタンを押したときに、ページを再読み込みせずに高速に移動します。",
+        "description": "設定ページの「その他」セクションに表示するメッセージ"
+    },
     "options_page_section_about_title": {
         "message": "Better Waseda Moodleについて",
         "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"

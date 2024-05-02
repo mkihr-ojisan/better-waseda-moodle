@@ -120,6 +120,8 @@ module.exports = {
                 "src/assignment-filename/inject.ts",
                 "src/common/auto-login/auto-login-checkbox.ts",
                 "src/word-counter/content.ts",
+                "src/faster-back-and-forward/content.ts",
+                "src/faster-back-and-forward/inject.js",
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })
