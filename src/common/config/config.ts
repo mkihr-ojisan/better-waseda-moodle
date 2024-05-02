@@ -116,7 +116,12 @@ export const CONFIG_VALUE_TYPE_DEF = {
     [ConfigKey.LastVersion]: "string",
     [ConfigKey.HiddenTips]: {
         arrayElements: {
-            enumItems: ["no_timetable_data"],
+            enumItems: [
+                "no_timetable_data",
+                "hide_course",
+                "hide_timeline_event_popup",
+                "hide_timeline_event_dashboard",
+            ],
         },
     },
     [ConfigKey.DevMode]: "boolean",

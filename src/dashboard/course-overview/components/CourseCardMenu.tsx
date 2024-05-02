@@ -2,13 +2,14 @@ import { CourseWithSetHidden } from "@/common/course/course";
 import { ListItemIcon, ListItemText, Menu, MenuItem } from "@mui/material";
 import React, { FC, useCallback, useState } from "react";
 import { useConfig } from "@/common/config/useConfig";
-import { ConfigKey } from "@/common/config/config";
+import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
 import LaunchIcon from "@mui/icons-material/Launch";
 import { getURLFromKey } from "@/common/api/waseda/syllabus";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { CourseSettingsDialog } from "./dialogs/course-settings/CourseSettingsDialog";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useNotify } from "@/common/react/notification";
 
 export type CourseCardMenuProps = {
     course: CourseWithSetHidden;
@@ -21,6 +22,8 @@ export type CourseCardMenuProps = {
 };
 
 export const CourseCardMenu: FC<CourseCardMenuProps> = (props) => {
+    const notify = useNotify();
+
     const syllabusKey = useConfig(ConfigKey.CourseSyllabusKeys)[0][props.course.id];
 
     const handleOpenSyllabus = useCallback(() => {
@@ -41,7 +44,18 @@ export const CourseCardMenu: FC<CourseCardMenuProps> = (props) => {
     const handleHideCourse = useCallback(() => {
         props.course.setHidden(true);
         props.onClose();
-    }, [props]);
+        if (!getConfig(ConfigKey.HiddenTips).includes("hide_course")) {
+            notify({
+                type: "info",
+                message: browser.i18n.getMessage("course_overview_hide_course_message"),
+                action: browser.i18n.getMessage("hide_tip_long"),
+                onAction: () => {
+                    setConfig(ConfigKey.HiddenTips, [...getConfig(ConfigKey.HiddenTips), "hide_course"]);
+                },
+                closeOnAction: true,
+            });
+        }
+    }, [notify, props]);
     const handleUnhideCourse = useCallback(() => {
         props.course.setHidden(false);
         props.onClose();

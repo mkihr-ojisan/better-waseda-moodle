@@ -127,6 +127,10 @@
         "message": "今後表示しない",
         "description": "ヒントを非表示にするボタンのテキスト"
     },
+    "hide_tip_long": {
+        "message": "このメッセージを今後表示しない",
+        "description": "ヒントを非表示にするボタンのテキスト"
+    },
     "ok": {
         "message": "OK",
         "description": "OKボタンのテキスト"
@@ -645,6 +649,10 @@
         "message": "設定",
         "description": "科目のメニューに表示するメッセージ"
     },
+    "course_overview_hide_course_message": {
+        "message": "非表示にした科目は、右上のメニューの「非表示の科目を表示」から表示できます。",
+        "description": "科目のメニューから非表示にしたときに表示するメッセージ"
+    },
     "course_settings_dialog_title": {
         "message": "「$course_name$」の設定",
         "description": "科目詳細ダイアログのタイトル",
@@ -888,6 +896,10 @@
     "timeline_hide_type": {
         "message": "この種類を非表示",
         "description": "タイムラインのイベントのメニューに表示するメッセージ"
+    },
+    "timeline_hide_message": {
+        "message": "非表示にした項目はBetter Waseda Moodleの設定ページから再表示できます。",
+        "description": "タイムラインのイベントのメニューから非表示にしたときに表示するメッセージ"
     },
     "timeline_reload": {
         "message": "再読み込み",

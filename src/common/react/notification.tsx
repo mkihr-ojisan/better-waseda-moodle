@@ -1,4 +1,4 @@
-import { Alert, AlertColor, AlertTitle, Snackbar, SnackbarCloseReason } from "@mui/material";
+import { Alert, AlertColor, AlertTitle, Button, Snackbar, SnackbarCloseReason } from "@mui/material";
 import React, { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
 import { errorToString } from "../error";
 
@@ -6,6 +6,9 @@ export type Notification = {
     type: AlertColor;
     title?: string;
     message: string;
+    action?: string;
+    onAction?: () => void;
+    closeOnAction?: boolean;
 };
 
 const NotificationContext = createContext<((notification: Notification) => void) | undefined>(undefined);
@@ -31,6 +34,15 @@ export const NotificationContextProvider: FC<NotificationContextProviderProps> =
         setOpen(true);
     }, []);
 
+    const handleAction = useCallback(() => {
+        if (notification?.onAction) {
+            notification.onAction();
+        }
+        if (notification?.closeOnAction) {
+            setOpen(false);
+        }
+    }, [notification]);
+
     return (
         <>
             <Snackbar
@@ -41,7 +53,18 @@ export const NotificationContextProvider: FC<NotificationContextProviderProps> =
                     transform: offset && `translate(${offset[0]}px, ${offset[1]}px)`,
                 }}
             >
-                <Alert severity={notification?.type}>
+                <Alert
+                    severity={notification?.type}
+                    variant="filled"
+                    action={
+                        notification?.action && (
+                            <Button color="inherit" size="small" onClick={handleAction}>
+                                {notification.action}
+                            </Button>
+                        )
+                    }
+                    sx={{ color: "white" }}
+                >
                     {notification?.title && <AlertTitle>{notification.title}</AlertTitle>}
                     {notification?.message}
                 </Alert>

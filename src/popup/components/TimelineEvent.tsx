@@ -7,6 +7,7 @@ import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { DateTimeFormat } from "@/common/util/intl";
 import LaunchIcon from "@mui/icons-material/Launch";
+import { useNotify } from "@/common/react/notification";
 
 export type TimelineEventProps = {
     event: ActionEvent;
@@ -20,6 +21,7 @@ const timeFormat = new DateTimeFormat({
 
 export const TimelineEvent: FC<TimelineEventProps> = (props) => {
     const theme = useTheme();
+    const notify = useNotify();
 
     const handleLinkClick = useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
         const href = (event.target as HTMLAnchorElement).href;
@@ -44,7 +46,20 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
         window.close();
     }, [props.event.action]);
 
-    const handleHideEvent = useCallback(async () => {
+    const showHideMessage = () => {
+        if (getConfig(ConfigKey.HiddenTips).includes("hide_timeline_event_popup")) return;
+        notify({
+            type: "info",
+            message: browser.i18n.getMessage("timeline_hide_message"),
+            action: browser.i18n.getMessage("hide_tip_long"),
+            onAction: () => {
+                setConfig(ConfigKey.HiddenTips, [...getConfig(ConfigKey.HiddenTips), "hide_timeline_event_popup"]);
+            },
+            closeOnAction: true,
+        });
+    };
+
+    const handleHideEvent = async () => {
         if (!props.event.id) return;
         await setConfig(ConfigKey.TimelineHiddenEventIds, [
             ...getConfig(ConfigKey.TimelineHiddenEventIds),
@@ -52,8 +67,9 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
         ]);
         handleCloseMenu();
         props.reloadTimeline();
-    }, [handleCloseMenu, props]);
-    const handleHideCourse = useCallback(async () => {
+        showHideMessage();
+    };
+    const handleHideCourse = async () => {
         if (!props.event.course?.id) return;
         await setConfig(ConfigKey.TimelineHiddenCourses, [
             ...getConfig(ConfigKey.TimelineHiddenCourses),
@@ -61,8 +77,9 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
         ]);
         handleCloseMenu();
         props.reloadTimeline();
-    }, [handleCloseMenu, props]);
-    const handleHideType = useCallback(async () => {
+        showHideMessage();
+    };
+    const handleHideType = async () => {
         if (!props.event.modulename) return;
         await setConfig(ConfigKey.TimelineHiddenModuleNames, [
             ...getConfig(ConfigKey.TimelineHiddenModuleNames),
@@ -70,7 +87,8 @@ export const TimelineEvent: FC<TimelineEventProps> = (props) => {
         ]);
         handleCloseMenu();
         props.reloadTimeline();
-    }, [handleCloseMenu, props]);
+        showHideMessage();
+    };
 
     return (
         <div
