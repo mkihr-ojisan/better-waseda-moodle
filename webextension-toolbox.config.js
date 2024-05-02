@@ -8,6 +8,7 @@ const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const { readdir, readFile } = require("fs/promises");
 
 module.exports = {
     webpack: (config, { dev, vendor }) => {
@@ -122,6 +123,32 @@ module.exports = {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })
         );
+
+        if (!dev && !process.env.SKIP_MESSAGE_CHECK) {
+            (async () => {
+                const locales = await readdir(resolve(__dirname, "src", "_locales"));
+
+                const messages = await Promise.all(
+                    locales.map(async (locale) => {
+                        const messages = await readFile(
+                            resolve(__dirname, "src", "_locales", locale, "messages.json"),
+                            "utf-8"
+                        );
+                        return [locale, Object.keys(JSON.parse(messages))];
+                    })
+                );
+
+                const allMessages = new Set(messages.map(([, messages]) => messages).flat());
+
+                for (const [locale, localeMessages] of messages) {
+                    for (const message of allMessages) {
+                        if (!localeMessages.includes(message)) {
+                            throw Error(`Missing message '${message}' in locale '${locale}'`);
+                        }
+                    }
+                }
+            })();
+        }
 
         config.target = ["web"];
 
