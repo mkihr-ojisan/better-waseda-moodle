@@ -70,8 +70,10 @@ export default {
                             <Launch
                                 text="Reset Config"
                                 onClick={() => {
-                                    browser.storage.sync.clear();
-                                    browser.runtime.reload();
+                                    if (confirm("Reset all config values?")) {
+                                        browser.storage.sync.clear();
+                                        browser.runtime.reload();
+                                    }
                                 }}
                             />
                             <Divider />
