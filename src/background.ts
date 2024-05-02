@@ -25,6 +25,7 @@ import { DayOfWeek, Term, getTimetableData, setTimetableData } from "./common/co
 import { callMoodleMobileAPI, getWebServiceToken } from "./common/api/moodle/mobileAPI";
 import { initBlockTracking } from "./block-tracking/background";
 import { initMoreVisibleRemainingTime } from "./quiz/more-visible-remaining-time/background";
+import { initWordCounter } from "./word-counter/background";
 
 assertExtensionContext("background");
 
@@ -47,6 +48,7 @@ assertExtensionContext("background");
     initAssignmentFilename();
     initBlockTracking();
     initMoreVisibleRemainingTime();
+    initWordCounter();
 
     if (process.env.NODE_ENV === "development") {
         debug();

@@ -24,3 +24,9 @@ export class NumberFormat extends Intl.NumberFormat {
         super(getExtensionLocale(), options);
     }
 }
+
+export class PluralRules extends Intl.PluralRules {
+    constructor(options?: Intl.PluralRulesOptions) {
+        super(getExtensionLocale(), options);
+    }
+}

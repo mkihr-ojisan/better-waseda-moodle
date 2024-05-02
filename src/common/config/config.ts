@@ -107,6 +107,8 @@ export enum ConfigKey {
     AssignmentFilenameTemplateCourse = 39,
     /** IntelliBoardのトラッキングをブロックする */
     BlockTracking = 38,
+    /** 文字数カウンターを有効にする */
+    WordCounterEnabled = 45,
 }
 
 /** configの値の型を定義する。オブジェクトを圧縮するのに使用する。 */
@@ -265,6 +267,7 @@ export const CONFIG_VALUE_TYPE_DEF = {
         recordValues: "string",
     },
     [ConfigKey.BlockTracking]: "boolean",
+    [ConfigKey.WordCounterEnabled]: "boolean",
 } as const satisfies Record<ConfigKey, TypeDef>;
 
 export type ConfigValue<T extends ConfigKey> = TypeOfTypeDef<(typeof CONFIG_VALUE_TYPE_DEF)[T]>;
@@ -324,6 +327,7 @@ export const CONFIG_DEFAULT_VALUES = {
     [ConfigKey.AssignmentFilenameTemplate]: "1X999999_早稲田太郎_{course}_{assignment}{extension}",
     [ConfigKey.AssignmentFilenameTemplateCourse]: {},
     [ConfigKey.BlockTracking]: false,
+    [ConfigKey.WordCounterEnabled]: true,
 } satisfies { [K in ConfigKey]: ConfigValue<K> };
 
 let cache: any = undefined;

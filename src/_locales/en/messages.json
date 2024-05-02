@@ -533,6 +533,14 @@
         "message": "File name format",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
+    "options_page_section_others_word_counter_enabled": {
+        "message": "Enable word counter",
+        "description": "設定ページの「その他」セクションに表示するメッセージ"
+    },
+    "options_page_section_others_word_counter_enabled_description": {
+        "message": "Display the number of words entered in the editor on the assignment submission page, etc.",
+        "description": "設定ページの「その他」セクションに表示するメッセージ"
+    },
     "options_page_section_about_title": {
         "message": "About Better Waseda Moodle",
         "description": "設定ページの「Better Waseda Moodleについて」セクションのタイトル"
@@ -932,5 +940,61 @@
     "add_syllabus_to_timetable_conflict_dialog_continue": {
         "message": "Add",
         "description": "時間割表に追加しようとしたときに他の科目と時間が重複しているときに表示するメッセージ"
+    },
+    "word_counter_char_count_zero": {
+        "message": "$1 characters",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_char_count_one": {
+        "message": "$1 character",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_char_count_two": {
+        "message": "$1 characters",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_char_count_few": {
+        "message": "$1 characters",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_char_count_many": {
+        "message": "$1 characters",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_char_count_other": {
+        "message": "$1 characters",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_word_count_zero": {
+        "message": "$1 words",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_word_count_one": {
+        "message": "$1 word",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_word_count_two": {
+        "message": "$1 words",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_word_count_few": {
+        "message": "$1 words",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_word_count_many": {
+        "message": "$1 words",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_word_count_other": {
+        "message": "$1 words",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_selection": {
+        "message": "Selection: $1",
+        "description": "文字数カウンタに表示するメッセージ"
+    },
+    "word_counter_tooltip": {
+        "message": "Click to switch between character count and word count",
+        "description": "文字数カウンタに表示するメッセージ"
     }
 }

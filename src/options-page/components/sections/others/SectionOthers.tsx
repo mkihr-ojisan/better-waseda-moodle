@@ -70,6 +70,12 @@ export default {
                         textBoxWidth="100%"
                     />
                 </ConfigDisableOptions>
+                <Divider />
+                <ConfigToggleOption
+                    configKey={ConfigKey.WordCounterEnabled}
+                    message="options_page_section_others_word_counter_enabled"
+                    description="options_page_section_others_word_counter_enabled_description"
+                />
             </List>
         );
     },
