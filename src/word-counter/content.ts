@@ -151,6 +151,8 @@ function initCounter(editorElem: HTMLElement) {
     });
 
     counter.title = browser.i18n.getMessage("word_counter_tooltip");
+
+    updateCount();
 }
 
 // editor_atto_wrapの要素が追加されたら文字数カウンターを初期化する
@@ -162,3 +164,8 @@ const observer = new MutationObserver((records) => {
     }
 });
 observer.observe(document.body, { attributes: true, attributeFilter: ["class"], subtree: true });
+
+// 既にeditor_atto_wrapの要素が存在する場合も初期化する
+for (const elem of Array.from(document.getElementsByClassName("editor_atto_wrap"))) {
+    initCounter(elem as HTMLElement);
+}
