@@ -122,6 +122,8 @@ module.exports = {
                 "src/word-counter/content.ts",
                 "src/faster-back-and-forward/content.ts",
                 "src/faster-back-and-forward/inject.js",
+                "src/fix-portal-link/content.ts",
+                "src/fix-portal-link/inject.js",
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })
@@ -154,6 +156,21 @@ module.exports = {
         }
 
         config.target = ["web"];
+
+        config.module.rules.push({
+            test: /\.[jt]sx?$/,
+            use: [
+                {
+                    loader: "webpack-preprocessor-loader",
+                    options: {
+                        params: {
+                            DEV: dev,
+                            VENDOR: vendor,
+                        },
+                    },
+                },
+            ],
+        });
 
         // Important: return the modified config
         return config;

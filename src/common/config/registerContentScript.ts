@@ -4,13 +4,13 @@ import { ConfigKey, addOnConfigChangeListener } from "./config";
  * configの値に応じてコンテンツスクリプトの登録・解除を行う。
  *
  * @param configKeys - configのキー
- * @param contentScriptOptions - 登録するコンテンツスクリプト
+ * @param scripts - 登録するコンテンツスクリプト
  */
 export default function registerContentScript(
     configKeys: ConfigKey | ConfigKey[],
-    contentScriptOptions: browser.contentScripts.RegisteredContentScriptOptions
+    scripts: browser.scripting.RegisteredContentScript[]
 ): void {
-    let registeredContentScript: Promise<browser.contentScripts.RegisteredContentScript> | null = null;
+    let registerPromise: Promise<void> | null = null;
 
     if (!(configKeys instanceof Array)) {
         configKeys = [configKeys];
@@ -25,12 +25,21 @@ export default function registerContentScript(
                 values[key] = newValue;
 
                 if (Object.values(values).every((v) => !!v)) {
-                    if (!registeredContentScript)
-                        registeredContentScript = browser.contentScripts.register(contentScriptOptions);
+                    if (!registerPromise)
+                        registerPromise = (async () => {
+                            try {
+                                await browser.scripting.registerContentScripts(scripts);
+                            } catch (e) {
+                                // Chromeの場合、同じidで登録しようとするとエラーになるので無視
+                                if (process.env.VENDOR === "firefox") {
+                                    throw e;
+                                }
+                            }
+                        })();
                 } else {
-                    registeredContentScript?.then((r) => {
-                        r.unregister();
-                        registeredContentScript = null;
+                    registerPromise?.then(() => {
+                        browser.scripting.unregisterContentScripts({ ids: scripts.map((s) => s.id) });
+                        registerPromise = null;
                     });
                 }
             },

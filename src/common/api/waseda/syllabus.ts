@@ -492,7 +492,11 @@ export type Syllabus = {
  * @param language - 言語
  */
 export async function fetchSyllabus(key: string, language: "jp" | "en"): Promise<Syllabus> {
-    const doc = await fetchHTML(`https://www.wsl.waseda.jp/syllabus/JAA104.php?pKey=${key}&pLng=${language}`);
+    const doc = new DOMParser().parseFromString(
+        await (await fetch(`https://www.wsl.waseda.jp/syllabus/JAA104.php?pKey=${key}&pLng=${language}`)).text(),
+        "text/html"
+    );
+
     return parseSyllabus(key, doc);
 }
 

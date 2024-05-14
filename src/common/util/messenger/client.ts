@@ -14,7 +14,7 @@ export async function call<T extends keyof typeof messengerCommands>(
     const result = (await browser.runtime.sendMessage({ command, args })) as MessengerResponse<T>;
 
     if ("ret" in result) {
-        return result.ret;
+        return result.ret.value;
     } else if ("error" in result) {
         throw new Error(result.error);
     } else if ("generator" in result) {
@@ -33,6 +33,8 @@ export async function call<T extends keyof typeof messengerCommands>(
                         // @ts-ignore
                         nextArg = yield value;
                     }
+                } else if ("error" in nextResult) {
+                    throw new Error(nextResult.error);
                 } else {
                     throw new Error("unexpected response");
                 }

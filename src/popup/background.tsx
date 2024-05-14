@@ -9,9 +9,9 @@ export function initTimeline(): void {
         ConfigKey.TimelineEnabled,
         (enabled) => {
             if (enabled) {
-                browser.browserAction.enable();
+                browser.action.enable();
             } else {
-                browser.browserAction.disable();
+                browser.action.disable();
             }
         },
         true

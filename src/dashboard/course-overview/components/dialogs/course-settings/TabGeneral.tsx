@@ -1,19 +1,11 @@
-import {
-    FormControl,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    MenuItem,
-    Popover,
-    Select,
-    TextField,
-} from "@mui/material";
-import React, { FC, useRef, useState } from "react";
+import { FormControl, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import React, { FC } from "react";
 import ReplayIcon from "@mui/icons-material/Replay";
-import { SketchPicker } from "react-color";
-import { DEFAULT_COURSE_COLOR } from "@/common/course/course-color";
+// import { SketchPicker } from "react-color";
 import { useConfig } from "@/common/config/useConfig";
 import { ConfigKey, getConfig } from "@/common/config/config";
+import { ColorPicker } from "@/common/react/components/color-picker/ColorPicker";
+import { DEFAULT_COURSE_COLOR } from "@/common/course/course-color";
 
 export type TabGeneralProps = {
     value: TabGeneralValues;
@@ -34,9 +26,6 @@ export type TabGeneralValues = {
 };
 
 export const TabGeneral: FC<TabGeneralProps> = ({ value, setValue, defaultName, defaultColor }) => {
-    const [colorPickerOpen, setColorPickerOpen] = useState(false);
-    const colorPickerAnchor = useRef<HTMLDivElement>(null);
-
     const [assignmentFilenameEnabled] = useConfig(ConfigKey.AssignmentFilenameEnabled);
 
     return (
@@ -105,47 +94,16 @@ export const TabGeneral: FC<TabGeneralProps> = ({ value, setValue, defaultName, 
                 />
             )}
 
-            <TextField
-                label={browser.i18n.getMessage("course_settings_dialog_general_color")}
-                fullWidth
-                margin="dense"
-                value={value.color ?? ""}
-                onChange={(e) => setValue({ ...value, color: e.target.value })}
-                ref={colorPickerAnchor}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment
-                            position="start"
-                            component="div"
-                            style={{
-                                backgroundColor: value.color ?? DEFAULT_COURSE_COLOR,
-                                width: "1.5em",
-                                height: "1.5em",
-                            }}
-                        />
-                    ),
-                    endAdornment: defaultColor ? (
-                        <SetToDefaultButton onClick={() => setValue({ ...value, color: defaultColor })} />
-                    ) : undefined,
+            <ColorPicker
+                textFieldProps={{
+                    label: browser.i18n.getMessage("course_settings_dialog_general_color"),
+                    fullWidth: true,
+                    margin: "dense",
                 }}
-                inputProps={{
-                    onClick: () => setColorPickerOpen(true),
-                }}
+                value={value.color ?? DEFAULT_COURSE_COLOR}
+                defaultValue={defaultColor}
+                onChange={(color) => setValue({ ...value, color })}
             />
-            <Popover
-                open={colorPickerOpen}
-                onClose={() => setColorPickerOpen(false)}
-                anchorEl={colorPickerAnchor.current}
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                }}
-            >
-                <SketchPicker
-                    color={value.color ?? DEFAULT_COURSE_COLOR}
-                    onChange={(color) => setValue({ ...value, color: color.hex })}
-                />
-            </Popover>
 
             {assignmentFilenameEnabled && (
                 <TextField

@@ -22,6 +22,7 @@ assertExtensionContext("background");
  * 返り値として利用できるのは、Web Messaging APIで送受信できる値、またはそれを返すPromise、AsyncGenerator。
  */
 export const messengerCommands = {
+    ping: () => undefined,
     doAutoLogin,
     fetchCourses,
     invalidateCourseCache: fetchCourses.invalidateCache,
@@ -53,7 +54,7 @@ export type MessengerMessage<T extends keyof typeof messengerCommands> =
 
 export type MessengerResponse<T extends keyof typeof messengerCommands> =
     | {
-          ret: Awaited<ReturnType<(typeof messengerCommands)[T]>>;
+          ret: { value: Awaited<ReturnType<(typeof messengerCommands)[T]>> };
       }
     | {
           error: string;
@@ -65,12 +66,18 @@ export type MessengerResponse<T extends keyof typeof messengerCommands> =
           generatorNext: { value: any; done: boolean };
       };
 
-/** `MessengerServer`を初期化する。バックグラウンドスクリプト上で実行する。 */
-export function initMessengerServer(): void {
+/**
+ * `MessengerServer`を初期化する。バックグラウンドスクリプト上で実行する。
+ *
+ * @param initPromise - バックグラウンドスクリプトの初期化処理が完了したときに解決されるPromise
+ */
+export function initMessengerServer(initPromise: Promise<void>): void {
     const generators = new Map<string, AsyncGenerator<any, any, any>>();
 
-    browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    browser.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         (async () => {
+            await initPromise;
+
             if (typeof message !== "object" || message === null) {
                 throw new Error("Invalid message");
             }
@@ -87,7 +94,7 @@ export function initMessengerServer(): void {
                         generators.set(id, result);
                         sendResponse({ generator: { id } });
                     } else {
-                        sendResponse({ ret: result });
+                        sendResponse({ ret: { value: result } });
                     }
                 } catch (error) {
                     sendResponse({ error: errorToString(error) });
@@ -99,12 +106,16 @@ export function initMessengerServer(): void {
                     throw new Error("Invalid generator ID");
                 }
 
-                const { value, done } = await generator.next(message.generatorNext.value);
-                if (done) {
-                    generators.delete(id);
-                }
+                try {
+                    const { value, done } = await generator.next(message.generatorNext.value);
+                    if (done) {
+                        generators.delete(id);
+                    }
 
-                sendResponse({ generatorNext: { value, done } });
+                    sendResponse({ generatorNext: { value, done } });
+                } catch (error) {
+                    sendResponse({ error: errorToString(error) });
+                }
             }
         })();
 

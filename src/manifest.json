@@ -5,7 +5,7 @@
     "version": "0.8.0",
     "author": "mkihr-ojisan",
     "homepage_url": "https://github.com/mkihr-ojisan/better-waseda-moodle",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "default_locale": "ja",
     "incognito": "not_allowed",
     "icons": {
@@ -14,7 +14,8 @@
         "__chrome__128": "res/images/icon-128.png"
     },
     "background": {
-        "scripts": ["background.js"]
+        "__firefox__scripts": ["background.js"],
+        "__chrome__service_worker": "background.js"
     },
     "content_scripts": [
         {
@@ -28,27 +29,41 @@
             "run_at": "document_end"
         }
     ],
-    "permissions": [
-        "*://*.waseda.jp/*",
-        "https://login.microsoftonline.com/*",
+    "__firefox__permissions": [
         "storage",
-        "webRequest",
-        "webRequestBlocking",
         "contextMenus",
-        "alarms"
+        "alarms",
+        "scripting",
+        "declarativeNetRequestWithHostAccess",
+        "webRequest",
+        "webRequestBlocking"
     ],
+    "__chrome__permissions": ["storage", "contextMenus", "alarms", "scripting", "declarativeNetRequestWithHostAccess"],
+    "host_permissions": ["https://login.microsoftonline.com/*", "*://*.waseda.jp/*"],
     "web_accessible_resources": [
-        "common/auto-login/auto-login-page.html",
-        "res/videos/dummy-video.mp4",
-        "block-xhr-requests/inject.js",
-        "fix-syllabus-link/inject.js",
-        "assignment-filename/inject.js",
-        "faster-back-and-forward/inject.js"
+        {
+            "resources": [
+                "common/auto-login/auto-login-page.html",
+                "res/videos/dummy-video.mp4",
+                "block-xhr-requests/inject.js",
+                "assignment-filename/inject.js",
+                "faster-back-and-forward/inject.js"
+            ],
+            "matches": ["https://wsdmoodle.waseda.jp/*"]
+        },
+        {
+            "resources": ["fix-syllabus-link/inject.js"],
+            "matches": ["https://www.wsl.waseda.jp/*"]
+        },
+        {
+            "resources": ["fix-portal-link/inject.js"],
+            "matches": ["https://coursereg.waseda.jp/*"]
+        }
     ],
     "__firefox__browser_specific_settings": {
         "gecko": {
             "id": "better-waseda-moodle@mkihr-ojisan.com",
-            "strict_min_version": "78.0"
+            "strict_min_version": "109.0"
         }
     },
     "__firefox__options_ui": {
@@ -56,11 +71,11 @@
         "open_in_tab": true
     },
     "__chrome__options_page": "options-page/options-page.html",
-    "browser_action": {
+    "action": {
         "default_icon": {
             "__firefox__256": "res/images/icon.svg",
-            "__chrome|opera|edge__48": "res/images/icon-48.png",
-            "__chrome|opera|edge__128": "res/images/icon-128.png"
+            "__chrome__48": "res/images/icon-48.png",
+            "__chrome__128": "res/images/icon-128.png"
         },
         "default_title": "__MSG_extension_name__",
         "default_popup": "popup/popup.html"

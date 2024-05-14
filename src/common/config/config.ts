@@ -1,5 +1,7 @@
 import equal from "fast-deep-equal";
 import { compressObject, decompressObject, TypeDef, TypeOfTypeDef } from "../../common/util/object-compression";
+import { getCurrentExtensionContext } from "../util/context";
+import { call } from "../util/messenger/client";
 
 /** configのキーを列挙する。互換性がなくなるので値は変えないほうが良い。512個まで */
 export enum ConfigKey {
@@ -397,7 +399,7 @@ export function getConfig<K extends ConfigKey>(key: K): ConfigValue<K> {
  * @param value - 設定する値
  * @returns 値の設定が完了したときにresolveされるPromise
  */
-export function setConfig<K extends ConfigKey>(key: K, value: ConfigValue<K>): Promise<void> {
+export async function setConfig<K extends ConfigKey>(key: K, value: ConfigValue<K>): Promise<void> {
     if (!cache) throw Error("config is not initialized");
 
     const keyListeners = listeners.get(key.toString());
@@ -415,11 +417,16 @@ export function setConfig<K extends ConfigKey>(key: K, value: ConfigValue<K>): P
 
     if (equal(value, CONFIG_DEFAULT_VALUES[key])) {
         delete cache[key];
-        return browser.storage.sync.remove(key.toString());
+        await browser.storage.sync.remove(key.toString());
     } else {
         const compressed = compressObject(CONFIG_VALUE_TYPE_DEF[key], value as any);
         cache[key] = compressed;
-        return browser.storage.sync.set({ [key.toString()]: compressed });
+        await browser.storage.sync.set({ [key.toString()]: compressed });
+    }
+
+    // バックグラウンドスクリプト以外からconfigが変更された場合、変更を適用するためにバックグラウンドスクリプトを起こす
+    if (getCurrentExtensionContext() !== "background") {
+        await call("ping");
     }
 }
 

@@ -6,7 +6,10 @@ export type ExtensionContext = "background" | "content_script" | "extension_page
  * @returns 現在のコンテキスト
  */
 export function getCurrentExtensionContext(): ExtensionContext {
-    if (location.pathname === "/_generated_background_page.html") {
+    if (
+        (process.env.VENDOR === "firefox" && location.pathname === "/_generated_background_page.html") ||
+        (process.env.VENDOR === "chrome" && location.pathname === "/background.js")
+    ) {
         return "background";
     } else if ("permissions" in browser) {
         return "extension_page";

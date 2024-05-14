@@ -1,4 +1,4 @@
-import { initAutoLogin } from "./common/auto-login/web-request";
+import { initAutoLogin } from "./common/auto-login/background";
 import { ConfigKey, getConfig, initConfig, setConfig } from "./common/config/config";
 import { initMessengerServer } from "./common/util/messenger/server";
 import { migrateConfig } from "./common/config/migration";
@@ -29,13 +29,27 @@ import { initWordCounter } from "./word-counter/background";
 import { fetchMoodleTimeline } from "./common/timeline/timeline";
 import { initDisableUnloadEvent } from "./faster-back-and-forward/background";
 
+// #!if VENDOR === "chrome"
+import "@/common/polyfills/DOMParser";
+// #!endif
+
 assertExtensionContext("background");
 
 (async () => {
-    await migrateConfig();
-    await initConfig();
+    const initPromise = (async () => {
+        await migrateConfig();
+        await initConfig();
+    })();
 
-    initMessengerServer();
+    // browser.runtime.onMessage.addListenerは同期的に呼び出される必要がある
+    initMessengerServer(initPromise);
+    // browser.runtime.onInstalled.addListener、browser.contextMenus.onClicked.addListenerも同期的に呼び出される必要がある
+    initLauncher();
+    // ブラウザ起動時に拡張機能のバックグラウンドスクリプトを読み込んでほしい
+    browser.runtime.onStartup.addListener(() => undefined);
+
+    await initPromise;
+
     initAutoLogin();
     initBlockXhrRequests();
     initFixStyle();
@@ -46,7 +60,6 @@ assertExtensionContext("background");
     initFixSyllabusLink();
     initTimeline();
     initAutoSessionExtension();
-    initLauncher();
     initAssignmentFilename();
     initBlockTracking();
     initMoreVisibleRemainingTime();

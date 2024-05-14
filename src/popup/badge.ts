@@ -29,15 +29,15 @@ export function initBadge(): void {
 
 export const updateBadge = combinePromise(async () => {
     if (!getConfig(ConfigKey.TimelineEnabled) || !getConfig(ConfigKey.TimelineBadgeEnabled)) {
-        browser.browserAction.setBadgeText({ text: "" });
+        browser.action.setBadgeText({ text: "" });
         return;
     }
 
     let events: ActionEvent[] | undefined = undefined;
     try {
-        if (!(await browser.browserAction.getBadgeText({}))) {
-            browser.browserAction.setBadgeBackgroundColor({ color: "#555" });
-            browser.browserAction.setBadgeText({ text: "..." });
+        if (!(await browser.action.getBadgeText({}))) {
+            browser.action.setBadgeBackgroundColor({ color: "#555" });
+            browser.action.setBadgeText({ text: "..." });
         }
 
         for await (const value of fetchMoodleTimeline()) {
@@ -50,9 +50,9 @@ export const updateBadge = combinePromise(async () => {
         const until = (now + getConfig(ConfigKey.TimelineBadgeDeadlineRange)) / 1000;
         const count = events.filter((event) => event.timesort < until).length;
 
-        browser.browserAction.setBadgeText({ text: count.toString() });
-        browser.browserAction.setBadgeBackgroundColor({ color: count > 0 ? "#eb0014" : "#555" });
-        browser.browserAction.setBadgeTextColor({ color: "#fff" });
+        browser.action.setBadgeText({ text: count.toString() });
+        browser.action.setBadgeBackgroundColor({ color: count > 0 ? "#eb0014" : "#555" });
+        browser.action.setBadgeTextColor({ color: "#fff" });
     } catch (e) {
         console.warn("failed to update badge", e);
     }
