@@ -1,4 +1,5 @@
 import { IDBCacheStorage } from "./CacheStorage";
+import { combinePromise } from "./combine-promise";
 
 export type WithCacheOptions = {
     /** キャッシュの有効期限。デフォルトは1ヶ月 */
@@ -33,6 +34,8 @@ export function withCache<T>(
 
     const storage = new IDBCacheStorage<T>(cacheName, cacheTtlMs, dbVersion, 1);
 
+    const combined = combinePromise(f);
+
     const func = async function* () {
         const cache = await storage.get(cacheName);
         if (cache) {
@@ -43,7 +46,7 @@ export function withCache<T>(
             return;
         }
 
-        const value = await f();
+        const value = await combined();
         storage.set(cacheName, value);
         yield value;
     };

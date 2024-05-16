@@ -15,14 +15,14 @@ export function initBadge(): void {
         }
     });
 
-    addOnConfigChangeListener(ConfigKey.TimelineEnabled, updateBadge);
-    addOnConfigChangeListener(ConfigKey.TimelineForwardDays, updateBadge);
-    addOnConfigChangeListener(ConfigKey.TimelineBackwardDays, updateBadge);
-    addOnConfigChangeListener(ConfigKey.TimelineHiddenCourses, updateBadge);
-    addOnConfigChangeListener(ConfigKey.TimelineHiddenEventIds, updateBadge);
-    addOnConfigChangeListener(ConfigKey.TimelineHiddenModuleNames, updateBadge);
-    addOnConfigChangeListener(ConfigKey.TimelineBadgeEnabled, updateBadge);
-    addOnConfigChangeListener(ConfigKey.TimelineBadgeDeadlineRange, updateBadge);
+    addOnConfigChangeListener(ConfigKey.TimelineEnabled, updateBadge, false);
+    addOnConfigChangeListener(ConfigKey.TimelineForwardDays, updateBadge, false);
+    addOnConfigChangeListener(ConfigKey.TimelineBackwardDays, updateBadge, false);
+    addOnConfigChangeListener(ConfigKey.TimelineHiddenCourses, updateBadge, false);
+    addOnConfigChangeListener(ConfigKey.TimelineHiddenEventIds, updateBadge, false);
+    addOnConfigChangeListener(ConfigKey.TimelineHiddenModuleNames, updateBadge, false);
+    addOnConfigChangeListener(ConfigKey.TimelineBadgeEnabled, updateBadge, false);
+    addOnConfigChangeListener(ConfigKey.TimelineBadgeDeadlineRange, updateBadge, false);
 
     updateBadge();
 }
