@@ -11,6 +11,8 @@ export type LoginOptions = {
     skipCheck?: boolean;
     /** セッションキーの取得をスキップするかどうか */
     skipSessionKey?: boolean;
+    /** https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=offへのアクセスをスキップするかどうか */
+    skipMoodleAuthSaml2Login?: boolean;
 };
 
 /**
@@ -110,10 +112,12 @@ export const login = combinePromise(
                         form,
                         { redirect: "manual" }
                     );
-                    await fetchWithCredentials(
-                        "https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off",
-                        { redirect: "manual" }
-                    );
+                    if (!options?.skipMoodleAuthSaml2Login) {
+                        await fetchWithCredentials(
+                            "https://wsdmoodle.waseda.jp/auth/saml2/login.php?wants=https%3A%2F%2Fwsdmoodle.waseda.jp%2F&idp=fcc52c5d2e034b1803ea1932ae2678b0&passive=off",
+                            { redirect: "manual" }
+                        );
+                    }
                 }
             }
 

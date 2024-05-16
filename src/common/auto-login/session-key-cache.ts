@@ -5,14 +5,14 @@ assertExtensionContext("background");
 
 const SESSION_KEY_CACHE_DURATION = 2 * 60 * 60 * 1000;
 
-let cache: { sessionKey: string; expireAt: Date } | null = null;
-
 /**
  * Waseda Moodleのセッションキーを取得する。
  * キャッシュが有効な場合はキャッシュを返す。
  */
 export async function getSessionKey(): Promise<string> {
-    if (cache === null || cache.expireAt < new Date()) {
+    const cache = (await browser.storage.local.get("session_key_cache")).session_key_cache;
+
+    if (!cache || cache.expireAt < new Date().getTime()) {
         await doAutoLogin();
         if (!cache) throw Error("cache is null"); // doAutoLogin内でキャッシュが設定されるはずである
     }
@@ -24,6 +24,8 @@ export async function getSessionKey(): Promise<string> {
  *
  * @param sessionKey - セッションキー
  */
-export function setSessionKeyCache(sessionKey: string): void {
-    cache = { sessionKey, expireAt: new Date(Date.now() + SESSION_KEY_CACHE_DURATION) };
+export async function setSessionKeyCache(sessionKey: string): Promise<void> {
+    await browser.storage.local.set({
+        session_key_cache: { sessionKey, expireAt: Date.now() + SESSION_KEY_CACHE_DURATION },
+    });
 }

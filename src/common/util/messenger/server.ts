@@ -1,11 +1,9 @@
 import { fetchCourses, setCourseHidden } from "@/common/course/course";
 import { doAutoLogin } from "../../../common/auto-login/auto-login";
 import { assertExtensionContext } from "../context";
-import { collectSyllabusInformation } from "@/common/course/collect-syllabus-information";
 import { getConstants } from "@/common/constants/constants";
 import { core_session_touch } from "@/common/api/moodle/touch";
 import { fetchMoodleTimeline } from "@/common/timeline/timeline";
-import { serializeError } from "@/common/error";
 import { setSessionKeyCache } from "@/common/auto-login/session-key-cache";
 import { fetchMoodleCourses } from "@/common/course/provider/moodle";
 import { addCustomCourse, deleteCustomCourse } from "@/common/course/provider/custom";
@@ -14,14 +12,17 @@ import { callMoodleAPI } from "@/common/api/moodle/moodle";
 import { callMoodleMobileAPI } from "@/common/api/moodle/mobileAPI";
 import { core_course_get_contents } from "@/common/api/moodle/core_course";
 import { updateBadge } from "@/popup/badge";
+import { errorToString } from "@/common/error";
+import { collectSyllabusInformation } from "@/common/course/collect-syllabus-information";
 
 assertExtensionContext("background");
 
 /**
  * `MessengerServer`が実行できる関数を定義する。
- * 返り値として利用できるのは、Web Messaging APIで送受信できる値、またはそれを返すPromise、Generator、AsyncGenerator。
+ * 返り値として利用できるのは、Web Messaging APIで送受信できる値、またはそれを返すPromise、AsyncGenerator。
  */
 export const messengerCommands = {
+    ping: () => undefined,
     doAutoLogin,
     fetchCourses,
     invalidateCourseCache: fetchCourses.invalidateCache,
@@ -42,69 +43,99 @@ export const messengerCommands = {
     updateBadge,
 } as const satisfies Record<string, (...args: any[]) => any>;
 
-/** `MessengerServer`を初期化する。バックグラウンドスクリプト上で実行する。 */
-export function initMessengerServer(): void {
-    browser.runtime.onConnect.addListener((port) => {
-        let disconnected = false;
-        const iterators: Map<string, Generator | AsyncGenerator> = new Map();
-        port.onMessage.addListener(async (message: any) => {
+export type MessengerMessage<T extends keyof typeof messengerCommands> =
+    | {
+          command: T;
+          args: Parameters<(typeof messengerCommands)[T]>;
+      }
+    | {
+          generatorNext: { id: string; value: any };
+      };
+
+export type MessengerResponse<T extends keyof typeof messengerCommands> =
+    | {
+          ret: { value: Awaited<ReturnType<(typeof messengerCommands)[T]>> };
+      }
+    | {
+          error: string;
+      }
+    | {
+          generator: { id: string };
+      }
+    | {
+          generatorNext: { value: any; done: boolean };
+      };
+
+/**
+ * `MessengerServer`を初期化する。バックグラウンドスクリプト上で実行する。
+ *
+ * @param initPromise - バックグラウンドスクリプトの初期化処理が完了したときに解決されるPromise
+ */
+export function initMessengerServer(initPromise: Promise<void>): void {
+    const generators = new Map<string, AsyncGenerator<any, any, any>>();
+
+    browser.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+        (async () => {
+            await initPromise;
+
+            if (typeof message !== "object" || message === null) {
+                throw new Error("Invalid message");
+            }
+
             if ("command" in message) {
-                const id: string = message.id;
-                const command: string = message.command;
-                const args: any[] = message.args;
+                const command = message.command as keyof typeof messengerCommands;
+                const args = message.args as Parameters<(typeof messengerCommands)[typeof command]>;
 
-                const func = messengerCommands[command as keyof typeof messengerCommands] as any;
-
-                let result;
                 try {
-                    result = await func(...args);
+                    const result = await (messengerCommands[command] as any)(...args);
 
-                    if (typeof result === "object" && "next" in result && typeof result.next === "function") {
-                        const iterator = result;
-                        iterators.set(id, iterator);
-                        if (!disconnected) port.postMessage({ id, iter: null });
+                    if (isAsyncGenerator(result)) {
+                        const id = Math.random().toString(36).slice(2);
+                        generators.set(id, result);
+                        sendResponse({ generator: { id } });
                     } else {
-                        if (!disconnected) port.postMessage({ id, ret: { value: result } });
+                        sendResponse({ ret: { value: result } });
                     }
                 } catch (error) {
-                    if (!disconnected)
-                        port.postMessage({
-                            id,
-                            error: serializeError(error),
-                        });
+                    sendResponse({ error: errorToString(error) });
                 }
-            } else if ("iter_next" in message) {
-                const id: string = message.id;
-                const iterator = iterators.get(id);
-
-                if (!iterator) {
-                    console.warn("iterator not found");
-                    return;
+            } else if ("generatorNext" in message) {
+                const id = message.generatorNext.id as string;
+                const generator = generators.get(id);
+                if (!generator) {
+                    throw new Error("Invalid generator ID");
                 }
 
-                let result;
                 try {
-                    result = await iterator.next(message.iter_next.value);
+                    const { value, done } = await generator.next(message.generatorNext.value);
+                    if (done) {
+                        generators.delete(id);
+                    }
+
+                    sendResponse({ generatorNext: { value, done } });
                 } catch (error) {
-                    if (!disconnected)
-                        port.postMessage({
-                            id,
-                            error: serializeError(error),
-                        });
-                    return;
+                    sendResponse({ error: errorToString(error) });
                 }
-
-                if (result.done) {
-                    iterators.delete(id);
-                }
-
-                if (!disconnected) port.postMessage({ id, iter_next: { value: result } });
-            } else {
-                console.warn("invalid message", message);
             }
-        });
-        port.onDisconnect.addListener(() => {
-            disconnected = true;
-        });
+        })();
+
+        return true;
     });
+}
+
+/**
+ * valueがGeneratorかAsyncGeneratorかどうかを判定する。
+ *
+ * @param value - 判定する値
+ * @returns valueがGeneratorかAsyncGeneratorの場合true、そうでない場合false
+ */
+function isAsyncGenerator<T>(value: any): value is AsyncGenerator<T, any, any> {
+    return (
+        typeof value === "object" &&
+        value !== null &&
+        typeof value.next === "function" &&
+        typeof value.return === "function" &&
+        typeof value.throw === "function" &&
+        typeof value[Symbol.asyncIterator] === "function"
+    );
 }

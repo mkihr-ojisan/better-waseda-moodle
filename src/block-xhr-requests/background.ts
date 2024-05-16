@@ -8,9 +8,15 @@ assertExtensionContext("background");
  *ダッシュボードから発行されるリクエストをブロックしてサーバー負荷を軽減する機能を初期化する
  */
 export function initBlockXhrRequests(): void {
-    registerContentScript([ConfigKey.CourseOverviewEnabled], {
-        matches: ["https://wsdmoodle.waseda.jp/my/"],
-        js: [{ file: "block-xhr-requests/content.js" }],
-        runAt: "document_start",
-    });
+    registerContentScript(
+        [ConfigKey.CourseOverviewEnabled],
+        [
+            {
+                id: "block-xhr-requests",
+                matches: ["https://wsdmoodle.waseda.jp/my/"],
+                js: ["block-xhr-requests/content.js"],
+                runAt: "document_start",
+            },
+        ]
+    );
 }
