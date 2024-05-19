@@ -10,3 +10,7 @@
     pointer-events: none !important;
     border: none !important;
 }
+
+.show-drawer-right #quiz-timer {
+    right: 315px !important;
+}
