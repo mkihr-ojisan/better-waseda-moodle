@@ -10,7 +10,6 @@ import { fetchSyllabus, searchOldSyllabus, searchSyllabus } from "./common/api/w
 import { collectSyllabusInformation } from "./common/course/collect-syllabus-information";
 import { getCourseColor } from "./common/course/course-color";
 import { fetchUserProfile } from "./common/api/moodle/user-profile";
-import { getConstants } from "./common/constants/constants";
 import { initRemoveLoadingVideo } from "./remove-loading-video/background";
 import { initViewInBrowser } from "./view-in-browser/background";
 import { initCheckNotesOnSubmitting } from "./check-notes-on-submitting/background";
@@ -86,7 +85,6 @@ function debug() {
         fetchSyllabus,
         collectSyllabusInformation,
         getCourseColor,
-        getConstants,
         core_calendar_get_action_events_by_timesort,
         Term,
         DayOfWeek,

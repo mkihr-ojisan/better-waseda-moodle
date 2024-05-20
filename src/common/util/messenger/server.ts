@@ -1,7 +1,6 @@
 import { fetchCourses, setCourseHidden } from "@/common/course/course";
 import { doAutoLogin } from "../../../common/auto-login/auto-login";
 import { assertExtensionContext } from "../context";
-import { getConstants } from "@/common/constants/constants";
 import { core_session_touch } from "@/common/api/moodle/touch";
 import { fetchMoodleTimeline } from "@/common/timeline/timeline";
 import { setSessionKeyCache } from "@/common/auto-login/session-key-cache";
@@ -28,7 +27,6 @@ export const messengerCommands = {
     invalidateCourseCache: fetchCourses.invalidateCache,
     setCourseHidden,
     collectSyllabusInformation,
-    getConstants,
     core_session_touch,
     fetchMoodleTimeline,
     invalidateMoodleTimelineCache: fetchMoodleTimeline.invalidateCache,

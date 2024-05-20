@@ -1,15 +1,12 @@
-import { Constants } from "@/common/constants/constants";
 import { CourseWithSetHidden } from "@/common/course/course";
 import { DayOfWeek, TimetableData, YearTerm } from "@/common/course/timetable";
-import { errorToString } from "@/common/error";
-import { useNotify } from "@/common/react/notification";
 import { Box, useTheme } from "@mui/material";
 import { clsx } from "clsx";
 import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { CourseCard } from "./CourseCard";
-import { useConstants } from "@/common/constants/useConstants";
 import { useConfig } from "@/common/config/useConfig";
 import { ConfigKey } from "@/common/config/config";
+import { PERIODS, PeriodInfo } from "@/common/constants/periods";
 
 export type TimetableViewProps = {
     courses: readonly CourseWithSetHidden[];
@@ -85,26 +82,14 @@ export const Timetable: FC<TimetableViewProps> = (props) => {
         return cells;
     }, [columns, props.courses, props.selectedYearTerm, props.timetableData, rows]);
 
-    const { value: constant, error: constantError } = useConstants();
-    const notify = useNotify();
-
-    useEffect(() => {
-        if (constantError) {
-            notify({
-                type: "error",
-                message: errorToString(constantError),
-            });
-        }
-    }, [constantError, notify]);
-
     const periodData = useMemo(() => {
         if (!props.selectedYearTerm) return undefined;
         const term = props.selectedYearTerm.toApproximateInterval();
 
-        return constant?.period?.find(
+        return PERIODS.find(
             (p) => (!p.since || p.since <= term.start.getTime()) && (!p.until || p.until > term.end.getTime())
         );
-    }, [constant?.period, props.selectedYearTerm]);
+    }, [props.selectedYearTerm]);
 
     const currentDayOfWeek = useCurrentDayOfWeek();
     const currentPeriod = useCurrentPeriod(periodData);
@@ -249,7 +234,7 @@ function timeToString(time: readonly [number, number]) {
  * @param periodData - Constants
  * @returns 現在の時限
  */
-function useCurrentPeriod(periodData: NonNullable<Constants["period"]>[number] | undefined): number | null {
+function useCurrentPeriod(periodData: NonNullable<PeriodInfo>[number] | undefined): number | null {
     const [currentPeriod, setCurrentPeriod] = useState<number | null>(null);
 
     /**
