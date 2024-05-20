@@ -941,6 +941,14 @@
         "message": "翌$1",
         "description": "タイムラインに表示するメッセージ"
     },
+    "timeline_warning_title": {
+        "message": "タイムラインに関する注意",
+        "description": "タイムラインに表示するメッセージ"
+    },
+    "timeline_warning": {
+        "message": "Better Waseda Moodleのタイムラインは、[2023年6月に削除された](https://wnpspt.waseda.jp/teacher/wsdmoodle/?p=8247)Waseda Moodleのタイムラインと同等の機能です。教員側の設定によってはタイムラインに表示されない課題等があることに注意してください。",
+        "description": "タイムラインに表示するメッセージ"
+    },
     "add_custom_course_dialog_title": {
         "message": "科目を追加",
         "description": "カスタム科目追加ダイアログのタイトル"

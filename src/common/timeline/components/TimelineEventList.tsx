@@ -1,11 +1,12 @@
 import { ActionEvent } from "@/common/api/moodle/calendar";
-import { Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Button, Stack, Typography } from "@mui/material";
 import React, { FC, Fragment } from "react";
 import { TimelineEvent } from "./TimelineEvent";
 import { useConfig } from "@/common/config/useConfig";
-import { ConfigKey } from "@/common/config/config";
+import { ConfigKey, getConfig, setConfig } from "@/common/config/config";
 import { isSameDay as dateFnsIsSameDay, isPast, isSameYear } from "date-fns";
 import { DateTimeFormat } from "@/common/util/intl";
+import ReactMarkdown from "react-markdown";
 
 export type TimelineEventListProps = {
     events: ActionEvent[];
@@ -27,6 +28,7 @@ const dateWithYearFormat = new DateTimeFormat({
 
 export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
     const [dateBorderOffset] = useConfig(ConfigKey.TimelineDateBorderOffset);
+    const showWarning = !useConfig(ConfigKey.HiddenTips)[0].includes("timeline_warning");
 
     /**
      * 日付の境界のオフセットを考慮した isSameDay
@@ -50,6 +52,8 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
 
     return (
         <Stack p={props.variant === "popup" ? 1 : 0} sx={{ overflowY: "auto" }}>
+            {showWarning && <Warning />}
+
             {props.events.map((event, i) => {
                 const prevEventDate = i > 0 ? props.events[i - 1].timesort * 1000 : 0;
                 const eventDate = event.timesort * 1000;
@@ -72,5 +76,36 @@ export const TimelineEventList: FC<TimelineEventListProps> = (props) => {
                 );
             })}
         </Stack>
+    );
+};
+
+const Warning = () => {
+    return (
+        <Alert
+            variant="outlined"
+            severity="warning"
+            action={
+                <Button
+                    sx={{ alignSelf: "center" }}
+                    onClick={() => {
+                        setConfig(ConfigKey.HiddenTips, [...getConfig(ConfigKey.HiddenTips), "timeline_warning"]);
+                    }}
+                >
+                    {browser.i18n.getMessage("hide_tip")}
+                </Button>
+            }
+            sx={{
+                flexWrap: "wrap",
+                "& .MuiAlert-message": {
+                    maxWidth: "calc(100% - 34px)",
+                },
+                "& .MuiAlert-action": {
+                    paddingTop: 0,
+                },
+            }}
+        >
+            <AlertTitle>{browser.i18n.getMessage("timeline_warning_title")}</AlertTitle>
+            <ReactMarkdown>{browser.i18n.getMessage("timeline_warning")}</ReactMarkdown>
+        </Alert>
     );
 };

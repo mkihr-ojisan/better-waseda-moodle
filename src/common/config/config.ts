@@ -125,6 +125,7 @@ export const CONFIG_VALUE_TYPE_DEF = {
                 "hide_course",
                 "hide_timeline_event_popup",
                 "hide_timeline_event_dashboard",
+                "timeline_warning",
             ],
         },
     },

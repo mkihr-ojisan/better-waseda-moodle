@@ -941,6 +941,14 @@
         "message": "$1 next day",
         "description": "タイムラインに表示するメッセージ"
     },
+    "timeline_warning_title": {
+        "message": "Note on Timelines",
+        "description": "タイムラインに表示するメッセージ"
+    },
+    "timeline_warning": {
+        "message": "The timeline in Better Waseda Moodle is equivalent to the Waseda Moodle timeline that was [removed in June 2023](https://wnpspt.waseda.jp/teacher/wsdmoodle/?p=8247). Please note that some assignments may not appear on the timeline depending on the faculty member's settings.",
+        "description": "タイムラインに表示するメッセージ"
+    },
     "add_custom_course_dialog_title": {
         "message": "Add a course",
         "description": "カスタム科目追加ダイアログのタイトル"

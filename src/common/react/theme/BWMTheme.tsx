@@ -17,6 +17,9 @@ export const globalStyleOverride: CSSInterpolation = {
     "[role=button]:focus": {
         boxShadow: "unset",
     },
+    p: {
+        marginBottom: "unset",
+    },
 };
 
 export const bwmThemeOptions: ThemeOptions = {
