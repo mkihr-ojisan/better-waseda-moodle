@@ -37,7 +37,7 @@ export const callMoodleAPI = limitRate(
                     typeof r.exception === "object" &&
                     r.exception &&
                     "errorcode" in r.exception &&
-                    r.exception.errorcode === "servicerequireslogin" &&
+                    (r.exception.errorcode === "servicerequireslogin" || r.exception.errorcode === "invalidsesskey") &&
                     !options.noRetryOnSessionExpired
                 ) {
                     // セッションキーが期限切れの場合は再ログインしてリトライ
