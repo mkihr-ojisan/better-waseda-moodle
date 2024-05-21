@@ -27,6 +27,7 @@ import { initMoreVisibleRemainingTime } from "./quiz/more-visible-remaining-time
 import { initWordCounter } from "./word-counter/background";
 import { fetchMoodleTimeline } from "./common/timeline/timeline";
 import { initDisableUnloadEvent } from "./faster-back-and-forward/background";
+import { initMoodleAPI } from "./common/api/moodle/moodle";
 
 // #!if VENDOR === "chrome"
 import "@/common/polyfills/DOMParser";
@@ -49,6 +50,7 @@ assertExtensionContext("background");
 
     await initPromise;
 
+    initMoodleAPI();
     initAutoLogin();
     initBlockXhrRequests();
     initFixStyle();

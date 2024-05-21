@@ -14,7 +14,7 @@ let nextRuleId = 1;
  * @param configKey - ConfigKey
  * @param rules - Declarative Net Requestルール
  */
-export function registerNetRequestRules(configKey: ConfigKey, rules: DeclarativeNetRequestRule[]): void {
+export function registerNetRequestRules(configKey: ConfigKey | null, rules: DeclarativeNetRequestRule[]): void {
     const ruleIds = rules.map(() => nextRuleId++);
 
     const rulesWithId = rules.map((rule, index) => ({
@@ -22,20 +22,27 @@ export function registerNetRequestRules(configKey: ConfigKey, rules: Declarative
         ...rule,
     }));
 
-    addOnConfigChangeListener(
-        configKey,
-        (value) => {
-            if (value) {
-                browser.declarativeNetRequest.updateSessionRules({
-                    addRules: rulesWithId,
-                    removeRuleIds: ruleIds,
-                });
-            } else {
-                browser.declarativeNetRequest.updateSessionRules({
-                    removeRuleIds: ruleIds,
-                });
-            }
-        },
-        true
-    );
+    if (configKey !== null) {
+        addOnConfigChangeListener(
+            configKey,
+            (value) => {
+                if (value) {
+                    browser.declarativeNetRequest.updateSessionRules({
+                        addRules: rulesWithId,
+                        removeRuleIds: ruleIds,
+                    });
+                } else {
+                    browser.declarativeNetRequest.updateSessionRules({
+                        removeRuleIds: ruleIds,
+                    });
+                }
+            },
+            true
+        );
+    } else {
+        browser.declarativeNetRequest.updateSessionRules({
+            addRules: rulesWithId,
+            removeRuleIds: ruleIds,
+        });
+    }
 }

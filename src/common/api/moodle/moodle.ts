@@ -3,6 +3,7 @@ import { getSessionKey } from "../../auto-login/session-key-cache";
 import { postJSON } from "../../util/fetch";
 import { limitRate } from "../../util/limit-rate";
 import { doAutoLogin } from "@/common/auto-login/auto-login";
+import { registerNetRequestRules } from "@/common/config/declarativeNetRequest";
 
 assertExtensionContext("background");
 
@@ -14,6 +15,31 @@ export type MoodleRequest<T = unknown> = {
 export type MoodleResponse<T = unknown> = MoodleSuccessResponse<T> | MoodleErrorResponse;
 export type MoodleSuccessResponse<T = unknown> = { error: false; data: T }[];
 export type MoodleErrorResponse = { error: true; exception: { message: string } }[] | { error: string };
+
+/**
+ * MoodleのAPIを呼び出すための初期化処理。
+ */
+export function initMoodleAPI(): void {
+    // APIを呼び出すときのUser-Agentを"MoodleMobile"にする
+    // こうしないと使えないAPIがある
+    registerNetRequestRules(null, [
+        {
+            condition: {
+                urlFilter: "|https://wsdmoodle.waseda.jp/lib/ajax/service.php*",
+            },
+            action: {
+                type: "modifyHeaders",
+                requestHeaders: [
+                    {
+                        header: "User-Agent",
+                        operation: "set",
+                        value: "MoodleMobile",
+                    },
+                ],
+            },
+        },
+    ]);
+}
 
 /**
  * MoodleのWeb APIを呼び出す。セッションキーは自動的に取得される。

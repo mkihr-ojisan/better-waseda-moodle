@@ -47,6 +47,12 @@ module.exports = {
                 maxChunks: 1,
             })
         );
+        // よくわからないけどeagerにしないとchunkが分割される
+        config.module.parser = {
+            javascript: {
+                dynamicImportMode: "eager",
+            },
+        };
 
         // CSS
         config.module.rules.push({
@@ -124,6 +130,7 @@ module.exports = {
                 "src/faster-back-and-forward/inject.js",
                 "src/fix-portal-link/content.ts",
                 "src/fix-portal-link/inject.js",
+                ...(vendor === "chrome" ? ["src/common/api/moodle/qrlogin/qr-scanner.ts"] : []),
             ].map((entry) => {
                 return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
             })

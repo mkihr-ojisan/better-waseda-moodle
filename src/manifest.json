@@ -38,7 +38,14 @@
         "webRequest",
         "webRequestBlocking"
     ],
-    "__chrome__permissions": ["storage", "contextMenus", "alarms", "scripting", "declarativeNetRequestWithHostAccess"],
+    "__chrome__permissions": [
+        "storage",
+        "contextMenus",
+        "alarms",
+        "scripting",
+        "declarativeNetRequestWithHostAccess",
+        "offscreen"
+    ],
     "host_permissions": ["https://login.microsoftonline.com/*", "*://*.waseda.jp/*"],
     "web_accessible_resources": [
         {

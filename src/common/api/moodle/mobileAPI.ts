@@ -2,6 +2,7 @@ import { limitRate } from "@/common/util/limit-rate";
 import md5 from "md5";
 import { MoodleRequest } from "./moodle";
 import { ensureLogin } from "@/common/auto-login/auto-login";
+import { getWebServiceTokenFromQRCode } from "./qrlogin/qrlogin";
 
 /**
  * Moodle Mobile App用のAPIトークンを取得する
@@ -9,46 +10,53 @@ import { ensureLogin } from "@/common/auto-login/auto-login";
 export async function getWebServiceToken(): Promise<string> {
     await ensureLogin();
 
-    const passport = Math.random() * 1000;
-    const url = `https://wsdmoodle.waseda.jp/admin/tool/mobile/launch.php?service=moodle_mobile_app&passport=${passport}&urlscheme=moodlemobile`;
+    if (process.env.VENDOR === "firefox") {
+        // FirefoxではWebRequestを使ってリダイレクト先のURLを取得できる
 
-    const redirectUrlPromise = new Promise<string>((resolve, reject) => {
-        const listener = (details: browser.webRequest._OnHeadersReceivedDetails) => {
-            browser.webRequest.onHeadersReceived.removeListener(listener);
+        const passport = Math.random() * 1000;
+        const url = `https://wsdmoodle.waseda.jp/admin/tool/mobile/launch.php?service=moodle_mobile_app&passport=${passport}&urlscheme=moodlemobile`;
 
-            const location = details.responseHeaders?.find((header) => header.name.toLowerCase() === "location");
-            if (!location || !location.value) {
-                reject(new Error("No location header"));
-                return;
-            }
-            resolve(location.value);
-        };
+        const redirectUrlPromise = new Promise<string>((resolve, reject) => {
+            const listener = (details: browser.webRequest._OnHeadersReceivedDetails) => {
+                browser.webRequest.onHeadersReceived.removeListener(listener);
 
-        browser.webRequest.onHeadersReceived.addListener(listener, { urls: [url] }, ["responseHeaders"]);
-    });
+                const location = details.responseHeaders?.find((header) => header.name.toLowerCase() === "location");
+                if (!location || !location.value) {
+                    reject(new Error("No location header"));
+                    return;
+                }
+                resolve(location.value);
+            };
 
-    fetch(url).catch(() => {
-        // ltgopenlmsapp://〜みたいなURLにリダイレクトされるのでエラーになる
-    });
+            browser.webRequest.onHeadersReceived.addListener(listener, { urls: [url] }, ["responseHeaders"]);
+        });
 
-    const redirectUrl = await redirectUrlPromise;
-    if (!redirectUrl.startsWith("ltgopenlmsapp://token=")) {
-        throw new Error("Invalid redirect URL");
+        fetch(url).catch(() => {
+            // ltgopenlmsapp://〜みたいなURLにリダイレクトされるのでエラーになる
+        });
+
+        const redirectUrl = await redirectUrlPromise;
+        if (!redirectUrl.startsWith("ltgopenlmsapp://token=")) {
+            throw new Error("Invalid redirect URL");
+        }
+
+        const base64 = redirectUrl.substring("ltgopenlmsapp://token=".length);
+        const str = atob(base64);
+        const split = str.split(":::");
+        if (split.length !== 2) {
+            throw new Error("Invalid token");
+        }
+        const [signature, token] = split;
+
+        if (signature !== md5(`https://wsdmoodle.waseda.jp${passport}`)) {
+            throw new Error("Invalid signature");
+        }
+
+        return token;
+    } else {
+        // ChromeではWebRequestが使えないので、プロファイルページのQRコードからトークンを取得する
+        return getWebServiceTokenFromQRCode();
     }
-
-    const base64 = redirectUrl.substring("ltgopenlmsapp://token=".length);
-    const str = atob(base64);
-    const split = str.split(":::");
-    if (split.length !== 2) {
-        throw new Error("Invalid token");
-    }
-    const [signature, token] = split;
-
-    if (signature !== md5(`https://wsdmoodle.waseda.jp${passport}`)) {
-        throw new Error("Invalid signature");
-    }
-
-    return token;
 }
 
 let webServiceTokenCache: string | null = null;
