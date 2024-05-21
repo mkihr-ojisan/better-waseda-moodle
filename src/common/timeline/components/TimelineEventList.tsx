@@ -105,7 +105,9 @@ const Warning = () => {
             }}
         >
             <AlertTitle>{browser.i18n.getMessage("timeline_warning_title")}</AlertTitle>
-            <ReactMarkdown>{browser.i18n.getMessage("timeline_warning")}</ReactMarkdown>
+            <ReactMarkdown components={{ a: (props) => <a {...props} target="_blank" /> }}>
+                {browser.i18n.getMessage("timeline_warning")}
+            </ReactMarkdown>
         </Alert>
     );
 };
