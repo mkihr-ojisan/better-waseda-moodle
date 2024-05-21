@@ -1,5 +1,5 @@
 import { CollectSyllabusInformationResult } from "@/common/course/collect-syllabus-information";
-import { call } from "@/common/util/messenger/client";
+import { call, cancelGenerator } from "@/common/util/messenger/client";
 import { getSchoolYear } from "@/common/util/school-year";
 import {
     Box,
@@ -15,7 +15,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import React, { FC, useCallback, useState } from "react";
+import React, { FC, useCallback, useRef, useState } from "react";
 
 export type CollectCourseInformationDialogProps = {
     open: boolean;
@@ -66,6 +66,8 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
     const [progress, setProgress] = useState<number | undefined>(undefined);
     const [message, setMessage] = useState("");
     const [result, setResult] = useState<CollectSyllabusInformationResult>();
+    const isCanceled = useRef(false);
+    const [isCanceling, setIsCanceling] = useState(false);
     const handleStart = useCallback(async () => {
         setState("progress");
 
@@ -83,10 +85,15 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
                 setProgress(value.progress);
                 setMessage(value.message);
             }
+            if (isCanceled.current) {
+                cancelGenerator(generator);
+                props.onClose();
+                break;
+            }
         }
 
         setState("result");
-    }, [onlyCoursesWithoutTimetableInfo, onlySpecifiedYear, specifiedYear]);
+    }, [onlyCoursesWithoutTimetableInfo, onlySpecifiedYear, props, specifiedYear]);
 
     return state === "options" ? (
         <>
@@ -138,33 +145,44 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
             <DialogTitle>{browser.i18n.getMessage("collect_syllabus_information_progress_title")}</DialogTitle>
             <DialogContent>
                 <Box my={1} sx={{ minHeight: "3em" }}>
-                    {message}
+                    {isCanceling ? browser.i18n.getMessage("collect_syllabus_information_progress_canceling") : message}
                 </Box>
                 <LinearProgress
-                    variant={progress === undefined ? "indeterminate" : "determinate"}
+                    variant={progress === undefined || isCanceling ? "indeterminate" : "determinate"}
                     value={progress && progress * 100}
                 />
             </DialogContent>
+            <DialogActions>
+                <Button
+                    onClick={() => {
+                        isCanceled.current = true;
+                        setIsCanceling(true);
+                    }}
+                >
+                    {browser.i18n.getMessage("cancel")}
+                </Button>
+            </DialogActions>
         </>
     ) : state === "result" ? (
         <>
             <DialogTitle>{browser.i18n.getMessage("collect_syllabus_information_result_title")}</DialogTitle>
             <DialogContent>
-                <Box mb={1}>
-                    <Typography variant="body1">
-                        {browser.i18n.getMessage("collect_syllabus_information_result_description")}
-                    </Typography>
-                </Box>
-                <Box>
-                    <Typography variant="body1">
-                        {browser.i18n.getMessage("collect_syllabus_information_result_failed_courses")}
-                    </Typography>
-                    {result?.failedCourses.map((course) => (
-                        <Typography variant="body2" color="text.secondary" key={course.id}>
-                            {course.name}
-                        </Typography>
-                    ))}
-                </Box>
+                {result && result.failedCourses.length > 0 && (
+                    <details>
+                        <summary>
+                            <Typography variant="body1" component="span" color="text.secondary">
+                                {browser.i18n.getMessage("collect_syllabus_information_result_failed_courses")}
+                            </Typography>
+                        </summary>
+                        <ul>
+                            {result?.failedCourses.map((course) => (
+                                <Typography component="li" variant="body2" color="text.secondary" key={course.id}>
+                                    {course.name}
+                                </Typography>
+                            ))}
+                        </ul>
+                    </details>
+                )}
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.onClose}>

@@ -877,12 +877,12 @@
         "message": "科目情報を保存しています...",
         "description": "科目情報の自動取得の進捗ダイアログに表示するメッセージ"
     },
-    "collect_syllabus_information_result_title": {
-        "message": "取得完了",
-        "description": "科目情報の自動取得の結果ダイアログに表示するメッセージ"
+    "collect_syllabus_information_progress_canceling": {
+        "message": "キャンセルしています...",
+        "description": "科目情報の自動取得の進捗ダイアログに表示するメッセージ"
     },
-    "collect_syllabus_information_result_description": {
-        "message": "科目情報の自動取得が完了しました。",
+    "collect_syllabus_information_result_title": {
+        "message": "科目情報の自動取得が完了しました",
         "description": "科目情報の自動取得の結果ダイアログに表示するメッセージ"
     },
     "collect_syllabus_information_result_failed_courses": {

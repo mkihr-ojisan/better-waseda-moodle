@@ -116,6 +116,15 @@ export function initMessengerServer(initPromise: Promise<void>): void {
                 } catch (error) {
                     sendResponse({ error: errorToString(error) });
                 }
+            } else if ("generatorCancel" in message) {
+                const id = message.generatorCancel as string;
+                if (!generators.has(id)) {
+                    throw new Error("Invalid generator ID");
+                }
+                generators.delete(id);
+            } else {
+                sendResponse({ error: "Invalid message" });
+                throw new Error("Invalid message");
             }
         })();
 

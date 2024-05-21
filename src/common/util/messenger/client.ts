@@ -19,7 +19,7 @@ export async function call<T extends keyof typeof messengerCommands>(
         throw new Error(result.error);
     } else if ("generator" in result) {
         const id = result.generator.id;
-        return (async function* () {
+        const generator = (async function* () {
             let nextArg: any = undefined;
             while (true) {
                 const nextResult = (await browser.runtime.sendMessage({
@@ -40,7 +40,26 @@ export async function call<T extends keyof typeof messengerCommands>(
                 }
             }
         })() as any;
+
+        generator.cancel = () => {
+            browser.runtime.sendMessage({ generatorCancel: id });
+        };
+
+        return generator;
     } else {
         throw new Error("unexpected response");
     }
+}
+
+/**
+ * MessengerServerで実行中のジェネレータをキャンセルする
+ *
+ * @param generator - キャンセルするジェネレータ
+ */
+export function cancelGenerator(generator: AsyncGenerator<unknown, unknown, unknown>): void {
+    if (!("cancel" in generator) || typeof generator.cancel !== "function") {
+        throw new Error("not a generator");
+    }
+
+    generator.cancel();
 }
