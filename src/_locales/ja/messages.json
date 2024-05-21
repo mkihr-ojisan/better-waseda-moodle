@@ -321,6 +321,14 @@
         "message": "シラバスから追加した科目がMoodleに追加されたときに、自動的に統合します。",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
+    "options_page_section_course_overview_hide_tabs_before_enrollment": {
+        "message": "入学より前のタブを非表示にする",
+        "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+    },
+    "options_page_section_course_overview_hide_tabs_before_enrollment_description": {
+        "message": "入学より前かつ時間割の設定がない期間のタブを非表示にします。",
+        "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+    },
     "options_page_section_quiz_title": {
         "message": "小テスト",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"

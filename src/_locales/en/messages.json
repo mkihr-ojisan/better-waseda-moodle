@@ -321,6 +321,14 @@
         "message": "Automatically merge courses added from the syllabus when they are added to Moodle.",
         "description": "設定ページの「コース概要」セクションに表示するメッセージ"
     },
+    "options_page_section_course_overview_hide_tabs_before_enrollment": {
+        "message": "Hide tabs for terms prior to enrollment",
+        "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+    },
+    "options_page_section_course_overview_hide_tabs_before_enrollment_description": {
+        "message": "Hide tabs for terms prior to enrollment and for which no timetable has been set.",
+        "description": "設定ページの「コース概要」セクションに表示するメッセージ"
+    },
     "options_page_section_quiz_title": {
         "message": "Quiz",
         "description": "設定ページの「小テスト」セクションに表示するメッセージ"

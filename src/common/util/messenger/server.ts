@@ -13,6 +13,7 @@ import { core_course_get_contents } from "@/common/api/moodle/core_course";
 import { updateBadge } from "@/popup/badge";
 import { errorToString } from "@/common/error";
 import { collectSyllabusInformation } from "@/common/course/collect-syllabus-information";
+import { getEnrollmentYear } from "@/common/user/user";
 
 assertExtensionContext("background");
 
@@ -39,6 +40,7 @@ export const messengerCommands = {
     callMoodleMobileAPI,
     core_course_get_contents,
     updateBadge,
+    getEnrollmentYear,
 } as const satisfies Record<string, (...args: any[]) => any>;
 
 export type MessengerMessage<T extends keyof typeof messengerCommands> =

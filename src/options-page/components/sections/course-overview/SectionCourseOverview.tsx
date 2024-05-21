@@ -114,6 +114,12 @@ export default {
                         message="options_page_section_course_overview_merge_custom_courses"
                         description="options_page_section_course_overview_merge_custom_courses_description"
                     />
+                    <Divider />
+                    <ConfigToggleOption
+                        configKey={ConfigKey.HideTabsBeforeEnrollment}
+                        message="options_page_section_course_overview_hide_tabs_before_enrollment"
+                        description="options_page_section_course_overview_hide_tabs_before_enrollment_description"
+                    />
                 </ConfigDisableOptions>
 
                 <CollectCourseInformationDialog
