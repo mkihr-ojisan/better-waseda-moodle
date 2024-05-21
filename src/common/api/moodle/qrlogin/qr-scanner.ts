@@ -30,8 +30,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
             context.fillRect(0, 0, canvas.width, canvas.height);
             context.drawImage(image, 0, 0);
 
-            const result = await QrScanner.scanImage(canvas, {});
-            sendResponse({ data: result });
+            const result = await QrScanner.scanImage(canvas, { returnDetailedScanResult: true });
+            sendResponse({ data: result.data });
         } catch (e) {
             sendResponse({ error: String(e) });
         }
