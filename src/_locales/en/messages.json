@@ -506,7 +506,7 @@
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_remove_loading_video_enabled_description": {
-        "message": "[This video](https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4) will not be played.",
+        "message": "[This video](https://wcms.waseda.jp/settings/viewer/uniplayer/intro.mp4?) will not be played.",
         "description": "設定ページの「その他」セクションに表示するメッセージ"
     },
     "options_page_section_others_check_notes_on_submitting_enabled": {
