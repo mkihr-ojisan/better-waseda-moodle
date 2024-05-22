@@ -28,12 +28,11 @@ export default function registerContentScript(
                     if (!registerPromise)
                         registerPromise = (async () => {
                             try {
-                                await browser.scripting.registerContentScripts(scripts);
+                                await browser.scripting.registerContentScripts(
+                                    scripts.map((s) => ({ ...s, persistAcrossSessions: false }))
+                                );
                             } catch (e) {
-                                // Chromeの場合、同じidで登録しようとするとエラーになるので無視
-                                if (process.env.VENDOR === "firefox") {
-                                    throw e;
-                                }
+                                // 同じidで登録しようとするとエラーになるので無視
                             }
                         })();
                 } else {
