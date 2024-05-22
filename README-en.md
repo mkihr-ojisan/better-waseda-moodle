@@ -6,7 +6,7 @@ A browser extension that makes Waseda Moodle a little easier to use.
 
 ## Install
 
-- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.9.0/better-waseda-moodle.v0.9.0.firefox.xpi)
+- [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.9.1/better-waseda-moodle.v0.9.1.firefox.xpi)
 - [Chrome](https://chrome.google.com/webstore/detail/better-waseda-moodle/omijfabnmlifcmmghegpbmoieibfbmmj)
 
 ## Main features

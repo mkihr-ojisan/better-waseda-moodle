@@ -2,7 +2,7 @@
     "name": "__MSG_extension_name__",
     "short_name": "__MSG_extension_shortname__",
     "description": "__MSG_extension_description__",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "author": "mkihr-ojisan",
     "homepage_url": "https://github.com/mkihr-ojisan/better-waseda-moodle",
     "manifest_version": 3,
