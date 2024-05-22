@@ -31,7 +31,7 @@ export const doAutoLogin = combinePromise(
             options
         );
 
-        if (sessionKey) setSessionKeyCache(sessionKey);
+        if (sessionKey) await setSessionKeyCache(sessionKey);
         lastEnsureLogin = Date.now();
     })
 );
