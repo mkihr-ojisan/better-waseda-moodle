@@ -1,4 +1,4 @@
-import { Autocomplete, IconButton, InputAdornment, TextField, TextFieldProps } from "@mui/material";
+import { Autocomplete, Box, IconButton, InputAdornment, TextField, TextFieldProps } from "@mui/material";
 import React, { FC } from "react";
 import ReplayIcon from "@mui/icons-material/Replay";
 
@@ -65,8 +65,8 @@ export const ColorPicker: FC<ColorPickerProps> = (props) => {
                         startAdornment: (
                             <InputAdornment
                                 position="start"
-                                component="div"
-                                style={{
+                                component={Box}
+                                sx={{
                                     backgroundColor: props.value as string,
                                     margin: "0 8px",
                                     width: "1.5em",
@@ -89,8 +89,8 @@ export const ColorPicker: FC<ColorPickerProps> = (props) => {
             )}
             renderOption={(props, option) => (
                 <li {...props} key={option}>
-                    <div
-                        style={{
+                    <Box
+                        sx={{
                             backgroundColor: option,
                             margin: "0 8px",
                             width: "1.5em",
