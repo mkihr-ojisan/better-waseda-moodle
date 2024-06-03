@@ -51,7 +51,6 @@
         {
             "resources": [
                 "common/auto-login/auto-login-page.html",
-                "res/videos/dummy-video.mp4",
                 "block-xhr-requests/inject.js",
                 "assignment-filename/inject.js",
                 "faster-back-and-forward/inject.js"
@@ -65,6 +64,10 @@
         {
             "resources": ["fix-portal-link/inject.js"],
             "matches": ["https://coursereg.waseda.jp/*"]
+        },
+        {
+            "resources": ["res/videos/dummy-video.mp4"],
+            "matches": ["<all_urls>"]
         }
     ],
     "__firefox__browser_specific_settings": {
