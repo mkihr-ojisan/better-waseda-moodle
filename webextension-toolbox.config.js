@@ -132,7 +132,13 @@ module.exports = {
                 "src/fix-portal-link/inject.js",
                 ...(vendor === "chrome" ? ["src/common/api/moodle/qrlogin/qr-scanner.ts"] : []),
             ].map((entry) => {
-                return [entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""), resolve(__dirname, entry)];
+                return [
+                    entry.replace(/^src\//, "").replace(/\.[^.]+$/, ""),
+                    [
+                        "src/common/error-log.ts", // すべてのエントリーポイントでエラーログを有効にする
+                        resolve(__dirname, entry),
+                    ],
+                ];
             })
         );
 
@@ -178,6 +184,12 @@ module.exports = {
                 },
             ],
         });
+
+        config.plugins.push(
+            new webpack.ProvidePlugin({
+                errorLog: "src/common/error-log",
+            })
+        );
 
         // Important: return the modified config
         return config;

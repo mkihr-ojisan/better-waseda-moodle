@@ -64,6 +64,9 @@ assertExtensionContext(["content_script", "extension_page"]);
                     case "/moodle-api-client/moodle-api-client.html":
                         import("./moodle-api-client/moodle-api-client");
                         break;
+                    case "/error-log/error-log.html":
+                        import("./error-log/error-log");
+                        break;
                 }
             }
             break;

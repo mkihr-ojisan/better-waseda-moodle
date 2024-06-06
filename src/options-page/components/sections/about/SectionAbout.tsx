@@ -77,6 +77,11 @@ export default {
                                 }}
                             />
                             <Divider />
+                            <Launch
+                                text="Error Log"
+                                onClick={() => window.open(browser.runtime.getURL("/error-log/error-log.html"))}
+                            />
+                            <Divider />
                             <StorageUsage />
                         </DevModeOnly>
                     </List>
