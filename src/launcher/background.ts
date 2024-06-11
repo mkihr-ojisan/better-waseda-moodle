@@ -21,7 +21,9 @@ export function initLauncher(): void {
         }
     });
 
-    browser.runtime.onInstalled.addListener(() => {
+    (async () => {
+        await browser.contextMenus.removeAll();
+
         [
             "launcher_better_waseda_moodle_settings",
             "launcher_waseda_moodle",
@@ -61,5 +63,5 @@ export function initLauncher(): void {
                 parentId: "grade_and_course_registration",
             });
         });
-    });
+    })();
 }
