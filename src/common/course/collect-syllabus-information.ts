@@ -20,6 +20,8 @@ export type CollectSyllabusInformationOptions = {
     onlyCoursesWithoutTimetableInfo?: boolean;
     /** 指定した場合、その年度の科目のみ取得する。指定しない場合はすべての科目を取得する。 */
     year?: number;
+    /** 科目の英語名を設定する。デフォルトはfalse */
+    setEnglishName?: boolean;
 };
 
 export type CollectSyllabusInformationProgress = {
@@ -65,7 +67,7 @@ export async function* collectSyllabusInformation(
 
     const oldSyllabusSearchYearList = await fetchOldSyllabusSearchYearList();
 
-    const language = browser.i18n.getUILanguage() === "ja" ? "jp" : "en";
+    const language = !options?.setEnglishName && browser.i18n.getUILanguage() === "ja" ? "jp" : "en";
 
     const succeededCourses: MoodleCourse[] = [];
     const failedCourses: MoodleCourse[] = [];
@@ -147,6 +149,7 @@ export async function* collectSyllabusInformation(
     const newTimetableData: Record<string, TimetableData> = {};
     const newCourseSyllabusKeys: Record<string, ConfigValue<ConfigKey.CourseSyllabusKeys>[string]> = {};
     const newCourseDeliveryMethods: Record<string, ConfigValue<ConfigKey.CourseDeliveryMethods>[string]> = {};
+    const newNameOverrides: Record<string, string> = {};
     for (const [courseId, syllabus] of Object.entries(syllabuses)) {
         const timetableData = getTimetableDataFromSyllabus(syllabus);
         if (timetableData) {
@@ -159,6 +162,10 @@ export async function* collectSyllabusInformation(
         if (classDeliveryMethod) {
             newCourseDeliveryMethods[courseId] = classDeliveryMethod;
         }
+
+        if (options?.setEnglishName && syllabus.courseInformation.courseTitle) {
+            newNameOverrides[courseId] = syllabus.courseInformation.courseTitle;
+        }
     }
 
     setTimetableData(mergeTimetableData(getTimetableData(), newTimetableData));
@@ -169,6 +176,10 @@ export async function* collectSyllabusInformation(
     setConfig(ConfigKey.CourseDeliveryMethods, {
         ...getConfig(ConfigKey.CourseDeliveryMethods),
         ...newCourseDeliveryMethods,
+    });
+    setConfig(ConfigKey.CourseNameOverrides, {
+        ...getConfig(ConfigKey.CourseNameOverrides),
+        ...newNameOverrides,
     });
 
     return { succeededCourses, failedCourses };

@@ -45,6 +45,7 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
     const [onlySpecifiedYear, setOnlySpecifiedYear] = useState(true);
     const [specifiedYear, setSpecifiedYear] = useState(() => getSchoolYear(new Date()));
     const [onlyCoursesWithoutTimetableInfo, setOnlyCoursesWithoutTimetableInfo] = useState(true);
+    const [setEnglishName, setSetEnglishName] = useState(false);
 
     const handleChangeOnlySpecifiedYear = useCallback(
         (_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
@@ -63,6 +64,10 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
         []
     );
 
+    const handleChangeSetEnglishName = useCallback((_event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+        setSetEnglishName(checked);
+    }, []);
+
     const [progress, setProgress] = useState<number | undefined>(undefined);
     const [message, setMessage] = useState("");
     const [result, setResult] = useState<CollectSyllabusInformationResult>();
@@ -74,6 +79,7 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
         const generator = await call("collectSyllabusInformation", {
             onlyCoursesWithoutTimetableInfo,
             year: onlySpecifiedYear ? specifiedYear : undefined,
+            setEnglishName,
         });
 
         for (;;) {
@@ -93,7 +99,7 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
         }
 
         setState("result");
-    }, [onlyCoursesWithoutTimetableInfo, onlySpecifiedYear, props, specifiedYear]);
+    }, [onlyCoursesWithoutTimetableInfo, onlySpecifiedYear, props, setEnglishName, specifiedYear]);
 
     return state === "options" ? (
         <>
@@ -105,31 +111,37 @@ const CollectCourseInformationDialogContent: FC<CollectCourseInformationDialogPr
                     </Typography>
                 </Box>
 
-                <Stack direction="row" alignItems="center">
+                <Stack>
+                    <Stack direction="row" alignItems="center">
+                        <FormControlLabel
+                            control={<Checkbox checked={onlySpecifiedYear} onChange={handleChangeOnlySpecifiedYear} />}
+                            label={browser.i18n.getMessage("collect_syllabus_information_dialog_only_specified_year")}
+                        />
+                        <TextField
+                            variant="standard"
+                            type="number"
+                            value={specifiedYear}
+                            disabled={!onlySpecifiedYear}
+                            sx={{ width: 100 }}
+                            onChange={handleChangeSpecifiedYear}
+                        />
+                    </Stack>
                     <FormControlLabel
-                        control={<Checkbox checked={onlySpecifiedYear} onChange={handleChangeOnlySpecifiedYear} />}
-                        label={browser.i18n.getMessage("collect_syllabus_information_dialog_only_specified_year")}
+                        control={
+                            <Checkbox
+                                checked={onlyCoursesWithoutTimetableInfo}
+                                onChange={handleChangeOnlyCoursesWithoutTimetableData}
+                            />
+                        }
+                        label={browser.i18n.getMessage(
+                            "collect_syllabus_information_dialog_only_courses_without_timetable_data"
+                        )}
                     />
-                    <TextField
-                        variant="standard"
-                        type="number"
-                        value={specifiedYear}
-                        disabled={!onlySpecifiedYear}
-                        sx={{ width: 100 }}
-                        onChange={handleChangeSpecifiedYear}
+                    <FormControlLabel
+                        control={<Checkbox checked={setEnglishName} onChange={handleChangeSetEnglishName} />}
+                        label={browser.i18n.getMessage("collect_syllabus_information_dialog_set_english_name")}
                     />
                 </Stack>
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={onlyCoursesWithoutTimetableInfo}
-                            onChange={handleChangeOnlyCoursesWithoutTimetableData}
-                        />
-                    }
-                    label={browser.i18n.getMessage(
-                        "collect_syllabus_information_dialog_only_courses_without_timetable_data"
-                    )}
-                />
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.onClose}>
