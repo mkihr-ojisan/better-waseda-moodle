@@ -1,12 +1,10 @@
-import format from "string-format";
-
 (() => {
-    const File_prototype_name = Object.getOwnPropertyDescriptor(File.prototype, "name")!.get!;
+    const File_prototype_name = Object.getOwnPropertyDescriptor(File.prototype, "name").get;
 
     // ファイル名の形式
     let template = "{filename}{extension}";
     // formatに渡す引数
-    let formatArgs: Record<string, string> = {};
+    let formatArgs = {};
 
     /**
      * 変更されたファイル名を取得する
@@ -14,8 +12,8 @@ import format from "string-format";
      * @param file - ファイル
      * @returns 変更されたファイル名
      */
-    const getFilename = (file: File) => {
-        const originalFilename: string = File_prototype_name.call(file);
+    const getFilename = (file) => {
+        const originalFilename = File_prototype_name.call(file);
 
         // ピリオドを含む拡張子
         let extension;
@@ -29,11 +27,7 @@ import format from "string-format";
             filename = originalFilename;
         }
 
-        return format(template, {
-            ...formatArgs,
-            filename,
-            extension,
-        });
+        return format(template, { filename, extension, ...formatArgs });
     };
 
     // ファイルがドラッグアンドドロップされたときに、ファイル名を変更する
@@ -58,10 +52,25 @@ import format from "string-format";
     // ファイル選択ダイアログでファイルが選択されたときに、ファイル名を変更する
     document.addEventListener("change", (event) => {
         if (event.target instanceof HTMLInputElement && event.target.name === "repo_upload_file") {
-            const titleField = event.target.form?.querySelector("input[name=title]") as HTMLInputElement | null;
+            const titleField = event.target.form?.querySelector("input[name=title]");
             if (titleField) {
-                titleField.value = getFilename(event.target.files![0]);
+                titleField.value = getFilename(event.target.files[0]);
             }
         }
     });
+
+    /**
+     * 文字列をフォーマットする
+     *
+     * @param template - "{key}" 形式のテンプレート
+     * @param args - テンプレートに埋め込む値
+     * @returns フォーマットされた文字列
+     */
+    function format(template, args) {
+        let ret = template;
+        for (const key in args) {
+            ret = ret.replaceAll(`{${key}}`, args[key]);
+        }
+        return ret;
+    }
 })();

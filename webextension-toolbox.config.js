@@ -116,20 +116,15 @@ module.exports = {
                 "src/content.ts",
                 "src/common/auto-login/auto-login-page.ts",
                 "src/block-xhr-requests/content.ts",
-                "src/block-xhr-requests/inject.js",
                 "src/check-notes-on-submitting/content.ts",
                 "src/fix-syllabus-link/content.ts",
-                "src/fix-syllabus-link/inject.js",
                 "src/auto-session-extension/content.ts",
                 "src/launcher/launcher.ts",
                 "src/assignment-filename/content.ts",
-                "src/assignment-filename/inject.ts",
                 "src/common/auto-login/auto-login-checkbox.ts",
                 "src/word-counter/content.ts",
                 "src/faster-back-and-forward/content.ts",
-                "src/faster-back-and-forward/inject.js",
                 "src/fix-portal-link/content.ts",
-                "src/fix-portal-link/inject.js",
                 ...(vendor === "chrome" ? ["src/common/api/moodle/qrlogin/qr-scanner.ts"] : []),
             ].map((entry) => {
                 return [
@@ -194,4 +189,5 @@ module.exports = {
         // Important: return the modified config
         return config;
     },
+    copyIgnore: ["**/*.ts", "**/*.tsx", "**/*.css"],
 };
