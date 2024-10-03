@@ -50,6 +50,11 @@ export const AddToTimetableButton: FC = () => {
 
             courseId.current = course.id;
 
+            if (isCustomCourse(course)) {
+                setState("added");
+                return;
+            }
+
             const timetableData = getConfig(ConfigKey.TimetableData)[course.id];
             if (timetableData && timetableData.length > 0) {
                 setState("already_added");
