@@ -8,8 +8,7 @@ import { initTimeline } from "./timeline/timeline";
     initCourseOverview();
     initTimeline();
 
-    const systemMaintenanceBlockElem = document.querySelector("#block-region-content > section:nth-of-type(2) > div");
-    if (systemMaintenanceBlockElem instanceof HTMLElement) {
-        systemMaintenanceBlockElem.style.cssText = "padding-left: 0 !important; padding-right: 0 !important;";
+    for (const elem of Array.from(document.querySelectorAll("#block-region-content .card-body")) as HTMLElement[]) {
+        elem.style.cssText = "padding-left: 0 !important; padding-right: 0 !important;";
     }
 })();

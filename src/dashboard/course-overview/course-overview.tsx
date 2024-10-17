@@ -13,9 +13,14 @@ assertExtensionContext("content_script");
  */
 export function initCourseOverview(): void {
     if (getConfig(ConfigKey.CourseOverviewEnabled)) {
-        const elem = document.getElementsByClassName("block-myoverview")[0]?.parentElement;
+        const elem = document.getElementsByClassName("block-starredcourses")[0]?.parentElement;
         if (!elem) return;
         (elem as HTMLElement).style.display = "none";
+
+        const titleElem = document.querySelector(".block_starredcourses h3");
+        if (titleElem) {
+            titleElem.textContent = browser.i18n.getMessage("options_page_section_course_overview_title");
+        }
 
         const root = document.createElement("div");
         root.id = "bwm-timetable-root";
