@@ -189,5 +189,5 @@ module.exports = {
         // Important: return the modified config
         return config;
     },
-    copyIgnore: ["**/*.ts", "**/*.tsx"],
+    copyIgnore: ["**/*.ts", "**/*.tsx", "**/manifest.json"],
 };
