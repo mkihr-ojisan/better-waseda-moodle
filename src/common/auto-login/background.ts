@@ -42,19 +42,6 @@ export function initAutoLogin(): void {
         });
     } else {
         // ログインページが開かれたとき、自動ログインページにリダイレクトする。
-        registerNetRequestRules(ConfigKey.AutoLoginEnabled, [
-            {
-                condition: {
-                    urlFilter: "https://wsdmoodle.waseda.jp/login/index.php",
-                    resourceTypes: ["main_frame"],
-                },
-                action: {
-                    type: "redirect",
-                    redirect: {
-                        extensionPath: "/common/auto-login/auto-login-page.html",
-                    },
-                },
-            },
-        ]);
+        registerNetRequestRules(ConfigKey.AutoLoginEnabled, "auto-login");
     }
 }

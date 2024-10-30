@@ -5,44 +5,26 @@ export type DeclarativeNetRequestRule = Omit<
     "id"
 >;
 
-let nextRuleId = 1;
-
 /**
  * 指定したConfigKeyが有効なときに適用されるDeclarative Net Requestルールを登録する。
- * ルールのidを動的に割り当てているため、この関数はバックグラウンドスクリプトの初期化時に無条件に呼び出す必要がある。
  *
  * @param configKey - ConfigKey
- * @param rules - Declarative Net Requestルール
+ * @param rulesetId - 有効・無効を切り替えるrulesetのid
  */
-export function registerNetRequestRules(configKey: ConfigKey | null, rules: DeclarativeNetRequestRule[]): void {
-    const ruleIds = rules.map(() => nextRuleId++);
-
-    const rulesWithId = rules.map((rule, index) => ({
-        id: ruleIds[index],
-        ...rule,
-    }));
-
-    if (configKey !== null) {
-        addOnConfigChangeListener(
-            configKey,
-            (value) => {
-                if (value) {
-                    browser.declarativeNetRequest.updateSessionRules({
-                        addRules: rulesWithId,
-                        removeRuleIds: ruleIds,
-                    });
-                } else {
-                    browser.declarativeNetRequest.updateSessionRules({
-                        removeRuleIds: ruleIds,
-                    });
-                }
-            },
-            true
-        );
-    } else {
-        browser.declarativeNetRequest.updateSessionRules({
-            addRules: rulesWithId,
-            removeRuleIds: ruleIds,
-        });
-    }
+export function registerNetRequestRules(configKey: ConfigKey, rulesetId: string): void {
+    addOnConfigChangeListener(
+        configKey,
+        (value) => {
+            if (value) {
+                browser.declarativeNetRequest.updateEnabledRulesets({
+                    enableRulesetIds: [rulesetId],
+                });
+            } else {
+                browser.declarativeNetRequest.updateEnabledRulesets({
+                    disableRulesetIds: [rulesetId],
+                });
+            }
+        },
+        true
+    );
 }

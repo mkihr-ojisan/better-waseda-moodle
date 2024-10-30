@@ -10,16 +10,7 @@ export function initFixPortalLink(): void {
     // 「ただいま処理中です。OKボタンを押して、しばらく待ってから再度メニューをクリックしてください。」
     // が出ないようにする。
 
-    registerNetRequestRules(ConfigKey.FixPortalLinkEnabled, [
-        {
-            condition: {
-                urlFilter: "|https://coursereg.waseda.jp/portal/common/fncControlSubmit.js|",
-            },
-            action: {
-                type: "block",
-            },
-        },
-    ]);
+    registerNetRequestRules(ConfigKey.FixPortalLinkEnabled, "fix-portal-link");
 
     registerContentScript(ConfigKey.FixPortalLinkEnabled, [
         {

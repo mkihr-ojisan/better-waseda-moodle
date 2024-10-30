@@ -1,4 +1,4 @@
-import { ConfigKey, addOnConfigChangeListener } from "@/common/config/config";
+import { ConfigKey, getConfig } from "@/common/config/config";
 import { registerNetRequestRules } from "@/common/config/declarativeNetRequest";
 
 /**
@@ -6,6 +6,17 @@ import { registerNetRequestRules } from "@/common/config/declarativeNetRequest";
  */
 export function initViewInBrowser(): void {
     if (process.env.VENDOR === "firefox") {
+        browser.webRequest.onHeadersReceived.addListener(
+            (details) => {
+                if (getConfig(ConfigKey.ViewInBrowserEnabled)) {
+                    return listener(details);
+                }
+            },
+            { urls: ["*://*/*"] },
+            ["blocking", "responseHeaders"]
+        );
+
+        // Content-Dispositionヘッダの"attachment"を削除することで、ブラウザで直接表示できるようにする
         const listener = (details: browser.webRequest._OnHeadersReceivedDetails) => {
             const headers = details.responseHeaders;
             if (!headers) return;
@@ -24,42 +35,9 @@ export function initViewInBrowser(): void {
                 return undefined;
             }
         };
-
-        addOnConfigChangeListener(
-            ConfigKey.ViewInBrowserEnabled,
-            (enabled) => {
-                // Content-Dispositionヘッダの"attachment"を削除することで、ブラウザで直接表示できるようにする
-                if (enabled) {
-                    browser.webRequest.onHeadersReceived.addListener(listener, { urls: ["*://*/*"] }, [
-                        "blocking",
-                        "responseHeaders",
-                    ]);
-                } else {
-                    browser.webRequest.onHeadersReceived.removeListener(listener);
-                }
-            },
-            true
-        );
     } else {
         // Content-Dispositionヘッダを全部inlineに書き換える
         // ファイル名の情報が消えるんじゃないかと思うけどよくわからん
-        registerNetRequestRules(ConfigKey.ViewInBrowserEnabled, [
-            {
-                condition: {
-                    urlFilter: "|https://wsdmoodle.waseda.jp/*",
-                    resourceTypes: ["main_frame"],
-                },
-                action: {
-                    type: "modifyHeaders",
-                    responseHeaders: [
-                        {
-                            header: "Content-Disposition",
-                            operation: "set",
-                            value: "inline",
-                        },
-                    ],
-                },
-            },
-        ]);
+        registerNetRequestRules(ConfigKey.ViewInBrowserEnabled, "view-in-browser");
     }
 }

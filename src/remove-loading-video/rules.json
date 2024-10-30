@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "condition": {
+            "urlFilter": "*.waseda.jp/settings/viewer/uniplayer/intro.mp4|",
+            "resourceTypes": ["media"]
+        },
+        "action": {
+            "type": "redirect",
+            "redirect": {
+                "extensionPath": "/res/videos/dummy-video.mp4"
+            }
+        }
+    }
+]

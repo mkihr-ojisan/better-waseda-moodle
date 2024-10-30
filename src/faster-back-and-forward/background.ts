@@ -15,22 +15,5 @@ export function initDisableUnloadEvent(): void {
         },
     ]);
 
-    registerNetRequestRules(ConfigKey.FasterBackAndForward, [
-        {
-            condition: {
-                urlFilter: "|https://wsdmoodle.waseda.jp/*",
-                resourceTypes: ["main_frame"],
-            },
-            action: {
-                type: "modifyHeaders",
-                responseHeaders: [
-                    {
-                        header: "Cache-Control",
-                        operation: "set",
-                        value: "private, no-cache, max-age=0, must-revalidate",
-                    },
-                ],
-            },
-        },
-    ]);
+    registerNetRequestRules(ConfigKey.FasterBackAndForward, "faster-back-and-forward");
 }

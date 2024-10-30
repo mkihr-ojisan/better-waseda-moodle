@@ -5,22 +5,5 @@ import { registerNetRequestRules } from "@/common/config/declarativeNetRequest";
  * トラッキングをブロックする機能を初期化する
  */
 export function initBlockTracking(): void {
-    registerNetRequestRules(ConfigKey.BlockTracking, [
-        {
-            condition: {
-                urlFilter: "|https://wsdmoodle.waseda.jp/lib/ajax/service.php?*local_intelldata_save_tracking",
-            },
-            action: {
-                type: "block",
-            },
-        },
-        {
-            condition: {
-                urlFilter: "|https://wsdmoodle.waseda.jp/local/intelliboard/ajax.php|",
-            },
-            action: {
-                type: "block",
-            },
-        },
-    ]);
+    registerNetRequestRules(ConfigKey.BlockTracking, "block-tracking");
 }

@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "condition": {
+            "urlFilter": "|https://wsdmoodle.waseda.jp/*",
+            "resourceTypes": ["main_frame"]
+        },
+        "action": {
+            "type": "modifyHeaders",
+            "responseHeaders": [
+                {
+                    "header": "Content-Disposition",
+                    "operation": "set",
+                    "value": "inline"
+                }
+            ]
+        }
+    }
+]

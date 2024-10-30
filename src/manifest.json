@@ -29,6 +29,45 @@
             "run_at": "document_end"
         }
     ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "block-tracking",
+                "enabled": false,
+                "path": "block-tracking/rules.json"
+            },
+            {
+                "id": "moodle-api",
+                "enabled": true,
+                "path": "common/api/moodle/rules.json"
+            },
+            {
+                "id": "auto-login",
+                "enabled": false,
+                "path": "common/auto-login/rules.json"
+            },
+            {
+                "id": "faster-back-and-forward",
+                "enabled": false,
+                "path": "faster-back-and-forward/rules.json"
+            },
+            {
+                "id": "fix-portal-link",
+                "enabled": false,
+                "path": "fix-portal-link/rules.json"
+            },
+            {
+                "id": "remove-loading-video",
+                "enabled": false,
+                "path": "remove-loading-video/rules.json"
+            },
+            {
+                "id": "view-in-browser",
+                "enabled": false,
+                "path": "view-in-browser/rules.json"
+            }
+        ]
+    },
     "__firefox__permissions": [
         "storage",
         "contextMenus",

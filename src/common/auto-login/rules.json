@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "condition": {
+            "urlFilter": "https://wsdmoodle.waseda.jp/login/index.php",
+            "resourceTypes": ["main_frame"]
+        },
+        "action": {
+            "type": "redirect",
+            "redirect": {
+                "extensionPath": "/common/auto-login/auto-login-page.html"
+            }
+        }
+    }
+]

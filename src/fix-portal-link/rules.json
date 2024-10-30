@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "condition": {
+            "urlFilter": "|https://coursereg.waseda.jp/portal/common/fncControlSubmit.js|"
+        },
+        "action": {
+            "type": "block"
+        }
+    }
+]
