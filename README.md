@@ -4,6 +4,9 @@
 
 Waseda Moodle の使い勝手を多少良くするブラウザ拡張機能。
 
+> [!WARNING]
+> 開発者が卒業したため、この拡張機能の開発は終了しています。既存の配布物は引き続き利用できますが、今後の更新は予定していません。
+
 ## インストール
 
 -   [Firefox](https://github.com/mkihr-ojisan/better-waseda-moodle/releases/download/v0.9.5/better-waseda-moodle.v0.9.5.firefox.xpi)
